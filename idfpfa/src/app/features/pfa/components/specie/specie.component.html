@@ -1,0 +1,59 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="specieAndTaglio$ | async as dataST">
+  <div class="col-md-12">
+    <div class="row">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th *ngFor="let col of specieHeader; let i = index">
+              {{ col.header }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let data of dataST.species; let i = index"
+            [class.active-color]="i === selectedRow"
+            (click)="getFieldId(i)"
+          >
+            <th>{{ data.volgare }}</th>
+            <td>{{ getPriorita(data.priorita) }}</td>
+            <td>{{ data.volumeSpecie }}</td>
+            <td>{{ data.udm }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Volume ramaglia (m<sup>³</sup>)</th>
+          <td>{{ dataST.dettagliDitaglio.volumeRamaglia }}</td>
+          <th>Stima massa retraibile (m<sup>³</sup>)</th>
+          <td>{{ dataST.dettagliDitaglio.stimaMassaRetraibileM3 }}</td>
+          <th>Viabilità utilizzata in fase di esbosco</th>
+          <td>{{ dataST.dettagliDitaglio.usoViabilita }}</td>
+        </tr>
+        <tr>
+          <th>Tipo di esbosco</th>
+          <td>{{ dataST.dettagliDitaglio.esbosco }}</td>
+          <th>Note esbosco</th>
+          <td>{{ dataST.dettagliDitaglio.noteEsbosco }}</td>
+          <th>Tipo istanza trasmessa</th>
+          <td>{{ dataST.dettagliDitaglio.tipoIstanzaTrasmessa }}</td>
+        </tr>
+        <tr>
+          <th>Data trasmissione</th>
+          <td>{{ dataST.dettagliDitaglio.dataTrasmissione }}</td>
+          <th>n. Istanza</th>
+          <td>{{ dataST.dettagliDitaglio.numeroIstanza }}</td>
+          <th></th>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-container>

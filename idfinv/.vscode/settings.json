@@ -1,0 +1,65 @@
+{
+    "psi-header.config": {
+        "copyrightHolder": "Regione Piemonte",
+        "license": "EUPL-1.2",
+        "forceToTop": true
+    },
+    "psi-header.templates": [
+        {
+            "language": "*",
+            "template": [
+                "SPDX-FileCopyrightText: (C) Copyright <<year>> <<copyrightHolder>>",
+                "",
+                "SPDX-License-Identifier: <<spdxid>>"
+            ]
+        }
+    ],
+    "psi-header.changes-tracking": {
+        "autoHeader": "autoSave",
+        "enforceHeader": true,
+        "includeGlob": ["./src/**/*"],
+        "excludeGlob": ["**/settings.json", "./src/assets/**/*"],
+        "exclude": ["jsonc","json"],
+        "updateLicenseVariables": true
+    },
+    "psi-header.lang-config": [
+        {
+            "language": "Java",
+            "begin": "/*",
+            "prefix": " * ",
+            "end": "*/",
+            "ignoreLines": []
+        },
+        {
+            "language": "JavaScript",
+            "begin": "/*!",
+            "prefix": " * ",
+            "ignoreLines": []
+        },
+        {
+            "language": "TypeScript",
+            "begin": "/*!",
+            "prefix": " * ",
+            "ignoreLines": []
+        },
+        {
+            "language": "CSS",
+            "begin": "/*!",
+            "prefix": " * ",
+            "end": "*/",
+            "ignoreLines": []
+        },
+        {
+            "language": "*",
+            "ignoreLines": []
+        }
+    ],
+    "commandOnAllFiles.commands": {
+        "Add copyright header comment to all files": {
+            "command": "psi-header.insertFileHeader",
+            "includeFileExtensions": [".java", ".js", ".css", ".ts", ".html"],
+            "includeFolders":  ["/src/app/*", "/src/app/", "/src/environments/", "/e2e/", "/buildfiles/"],
+            "excludeFolders": ["node_modules", "out", ".vscode-test", "media", ".git"]
+        }
+    }
+}

@@ -1,0 +1,202 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-md-12">
+  <div class="row my-4">
+    <p-accordion>
+      <p-accordionTab header="PGF: ricerca alfanumerica">
+        <div class="col-md-12">
+          <div class="row" *ngIf="ricercaForm">
+            <div class="col-md-12 my-4" [formGroup]="ricercaForm">
+              <div class="grey-form">
+                <div class="row">
+                  <div class="col-lg-2 col-md-6 col-12 mb-3">
+                    <label for="provincia" class="font-weight-bold"
+                      >Provincia
+                    </label>
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-12 mb-3">
+                    <ng-container
+                      *ngIf="provinciaDropdown$ | async as provinciaDropdown"
+                    >
+                      <p-dropdown
+                        [options]="provinciaDropdown"
+                        [placeholder]="'Select provincia'"
+                        formControlName="provincia"
+                        [style]="{ width: '100%' }"
+                        [showClear]="true"
+                        [autoWidth]="false"
+                        (onChange)="fillComune()"
+                        inputId="provincia"
+                      >
+                        <ng-template let-type pTemplate="item">
+                          <div
+                            class="ui-helper-clearfix"
+                            style="position: relative; height: 25px"
+                          >
+                            <div style="font-size: 14px">
+                              {{ type.label }}
+                            </div>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+                    </ng-container>
+                  </div>
+                  <div class="col-lg-1 col-md-6 col-12 mb-3">
+                    <label for="comune" class="font-weight-bold">Comune</label>
+                  </div>
+                  <div class="col-lg-5 col-md-6 col-12 mb-3">
+                    <ng-container>
+                      <p-dropdown
+                        inputId="comune"
+                        [options]="comuneDropdown ? comuneDropdown : []"
+                        [placeholder]="'Select comune'"
+                        formControlName="comune"
+                        [style]="{ width: '100%' }"
+                        [showClear]="true"
+                        [autoWidth]="false"
+                      >
+                        izmenio let-type u let-comune
+                        <ng-template let-type pTemplate="item">
+                          <div
+                            class="ui-helper-clearfix"
+                            style="position: relative; height: 25px"
+                          >
+                            <div style="font-size: 14px">
+                              {{ type.label }}
+                            </div>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-2 col-md-6 col-12 mb-3">
+                    <label for="denominazione" class="font-weight-bold"
+                      >Denominazione</label
+                    >
+                  </div>
+                  <div class="col-lg-10 col-md-6 col-12 mb-3">
+                    <!-- <input
+                      type="text"
+                      class="form-control"
+                      id="denominazione"
+                      name="denominazione"
+                      formControlName="denominazione"
+                    /> -->
+                    <p-autoComplete
+                      formControlName="denominazione"
+                      [forceSelection]="'true'"
+                      [required]="'true'"
+                      autoHighlight="true"
+                      [suggestions]="denominazioniList"
+                      (completeMethod)="filterDenominazione($event)"
+                      [minLength]="3"
+                      [dropdown]="true"
+                      [forceSelection]="true"
+                      emptyMessage="'Nessun risultato trovato'"
+                      field="label"
+                      inputId="denominazione"
+                      [styleClass]="
+                        'autoComplete d-flex formControlName.invalid?autoComplete-touched:autoComplete-touched'
+                      "
+                      [inputStyleClass]="'autoComplete-input'"
+                    >
+                    </p-autoComplete>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-2 col-md-6 col-12 mb-3">
+                    <p class="font-weight-bold">Validit&agrave;</p>
+                  </div>
+                  <div class="col-lg-10 col-md-12 col-12 mb-3">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <label
+                          for="dataRilevamentoFrom"
+                          class="font-weight-bold"
+                          >Da</label
+                        >
+                        <p-calendar
+                          [locale]="it"
+                          [yearNavigator]="true"
+                          [monthNavigator]="true"
+                          yearRange="1970:{{ currentYear }}"
+                          dateFormat="dd-mm-yy"
+                          inputId="dataRilevamentoFrom"
+                          formControlName="dataRilevamentoFrom"
+                          [style]="{
+                            width: '60%'
+                          }"
+                          [inputStyle]="{ width: '100%' }"
+                          showButtonBar="true"
+                          [showIcon]="true"
+                        ></p-calendar>
+                      </div>
+                      <div class="col">
+                        <label for="dataRilevamentoTo" class="font-weight-bold"
+                          >&nbsp;A</label
+                        >
+                        <p-calendar
+                          [locale]="it"
+                          [yearNavigator]="true"
+                          [monthNavigator]="true"
+                          yearRange="1970:{{ currentYear }}"
+                          dateFormat="dd-mm-yy"
+                          inputId="dataRilevamentoTo"
+                          formControlName="dataRilevamentoTo"
+                          [style]="{
+                            width: '60%'
+                          }"
+                          [inputStyle]="{ width: '100%' }"
+                          showButtonBar="true"
+                          [showIcon]="true"
+                        ></p-calendar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row justify-content-between">
+                  <p-button
+                    label="Pulisci"
+                    [styleClass]="
+                      'mb-3 f-18 font-weight-bold intervento-button'
+                    "
+                    (onClick)="pulsici()"
+                  ></p-button>
+                  <p-button
+                    label="Ricerca"
+                    [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+                    (onClick)="ricerca()"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <app-gestiti-pfa
+              *ngIf="searchEnable"
+              [pfas]="pfas"
+              [cols]="cols"
+              (emitLoadPfa)="getUpdatedTable($event)"
+              [totalItems]="totalCount"
+            >
+            </app-gestiti-pfa>
+          </div>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="PGF: ricerca geografica">
+        <p-button
+          label="Ricerca su mappa"
+          (onClick)="openMappa()"
+          [styleClass]="'mb-3 btn-geco'"
+        ></p-button>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>

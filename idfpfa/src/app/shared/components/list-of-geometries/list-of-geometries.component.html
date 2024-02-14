@@ -1,0 +1,22 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div *ngIf="tableData && tableData.length > 0">
+  <div class="row_header font-weight-bold mb-3">
+    <h3>Dettaglio</h3>
+  </div>
+  <p>Superficie totale (ha): {{ formatNumber(supTotIntervento) }}</p>
+  <div class="scrollbar-table scrollbar-primary">
+    <app-reusable-front-table
+      [initiallySortedColumn]="sortedColumn"
+      [headers]="tableHeaders"
+      [data]="tableData"
+    >
+    </app-reusable-front-table>
+  </div>
+</div>
+<div *ngIf="!tableData || tableData.length == 0">
+  <strong>Nessuna geometria inserita!</strong>
+</div>

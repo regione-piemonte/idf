@@ -1,0 +1,269 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<app-subtitle [subtitle]="'Dati tecnici evento'"></app-subtitle>
+<ng-container *ngIf="eventoForm">
+  <div class="my-4" [formGroup]="eventoForm">
+    <div class="grey-form">
+      <div class="row">
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="progressivoEventoPfa"
+              >N. evento <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="progressivoEventoPfa"
+              formControlName="progressivoEventoPfa"
+            />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="nomeBreve">Nome breve</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nomeBreve"
+              formControlName="nomeBreve"
+              name="nomeBreve"
+            />
+          </div>
+          <div
+            *ngIf="
+              eventoForm.controls['nomeBreve'].invalid &&
+              (eventoForm.controls['nomeBreve'].dirty ||
+                eventoForm.controls['nomeBreve'].touched)
+            "
+            class="alert alert-danger"
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="localita"
+              >Località <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="localita"
+              formControlName="localita"
+              name="localita"
+            />
+          </div>
+          <div
+            *ngIf="
+              eventoForm.controls['localita'].invalid &&
+              (eventoForm.controls['localita'].dirty ||
+                eventoForm.controls['localita'].touched)
+            "
+            class="alert alert-danger"
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="idgeoPlParticelaForest"
+              >N. particella forestale <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="idgeoPlParticelaForest"
+              formControlName="idgeoPlParticelaForest"
+              name="idgeoPlParticelaForest"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="tipoEvento"
+              >Tipo evento<span class="text-danger">*</span></label
+            >
+            <select
+              class="form-control"
+              id="tipoEvento"
+              name="tipoEvento"
+              formControlName="tipoEvento"
+            >
+              <option *ngFor="let tip of tipoEventi" [value]="tip.idTipoEvento">
+                {{ tip.descrTipoEvento }}
+              </option>
+            </select>
+          </div>
+          <div
+            *ngIf="
+              eventoForm.controls['tipoEvento'].invalid &&
+              (eventoForm.controls['tipoEvento'].dirty ||
+                eventoForm.controls['tipoEvento'].touched)
+            "
+            class="alert alert-danger"
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="percDanno"
+              >% di danno<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="percDanno"
+              formControlName="percDanno"
+              name="percDanno"
+            />
+          </div>
+          <div
+            *ngIf="
+              eventoForm.controls['percDanno'].invalid &&
+              (eventoForm.controls['percDanno'].dirty ||
+                eventoForm.controls['percDanno'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="eventoForm.controls['percDanno'].errors.required">
+              Attenzione! Campo obbligatorio
+            </div>
+            <div *ngIf="!eventoForm.controls['percDanno'].errors.required">
+              Attenzione! Il valore inserito non è valido
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="supInteressataHa"
+              >Superficie interessata (ha)<span class="text-danger"
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="supInteressataHa"
+              formControlName="supInteressataHa"
+              name="supInteressataHa"
+            />
+          </div>
+          <div
+            *ngIf="
+              eventoForm.controls['supInteressataHa'].invalid &&
+              (eventoForm.controls['supInteressataHa'].dirty ||
+                eventoForm.controls['supInteressataHa'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="eventoForm.controls['supInteressataHa'].errors.required"
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="!eventoForm.controls['supInteressataHa'].errors.required"
+            >
+              Attenzione! Il valore inserito non è valido
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-3 mb-3">
+          <div class="form-group">
+            <label for="data-evento"
+              >Data evento<span class="text-danger">*</span></label
+            >
+            <p-calendar
+              [locale]="it"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              dateFormat="yy-mm-dd"
+              yearRange="{{ currentYear }}:{{ currentYear + 20 }}"
+              inputId="data-evento"
+              formControlName="dataEvento"
+              showButtonBar="true"
+              [showIcon]="true"
+            ></p-calendar>
+          </div>
+          <div
+            *ngIf="
+              eventoForm.controls['dataEvento'].invalid &&
+              (eventoForm.controls['dataEvento'].dirty ||
+                eventoForm.controls['dataEvento'].touched)
+            "
+            class="alert alert-danger"
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="descrEvento"
+              >Descrizione <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="descrEvento"
+              formControlName="descrEvento"
+              name="descrEvento"
+            />
+          </div>
+          <div
+            *ngIf="
+              eventoForm.controls['descrEvento'].invalid &&
+              (eventoForm.controls['descrEvento'].dirty ||
+                eventoForm.controls['descrEvento'].touched)
+            "
+            class="alert alert-danger"
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-4 mb-3">
+      <p-button
+        label="Indietro"
+        [styleClass]="'indietro-button'"
+        (onClick)="backToTabs()"
+      ></p-button>
+    </div>
+    <div class="col-sm-12 col-md-4 text-center mb-3">
+      <p-button
+        *ngIf="editMode && disabledFields"
+        label="Modifica"
+        [styleClass]="'modifica'"
+        (onClick)="enableButtons()"
+        ><i class="fas fa-edit"></i
+      ></p-button>
+    </div>
+    <div class="col-sm-12 col-md-4 text-right mb-3">
+      <p-button
+        *ngIf="!editMode"
+        label="Salva e prosegui "
+        [styleClass]="'form-button'"
+        (onClick)="saveForm()"
+        [disabled]="!isFormValid"
+      ></p-button>
+      <p-button
+        *ngIf="editMode"
+        label="Salva e prosegui "
+        [styleClass]="'form-button'"
+        (onClick)="saveForm()"
+        [disabled]="!isFormValid || disabledFields"
+      ></p-button>
+    </div>
+  </div>
+</ng-container>

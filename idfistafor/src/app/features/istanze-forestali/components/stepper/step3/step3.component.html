@@ -1,0 +1,100 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container
+  *ngIf="this.descriptionOfTheForestForm.get('headings').value[0].id"
+>
+  <div
+    class="section"
+    *ngFor="
+      let header of descriptionOfTheForestForm.get('headings')['controls'];
+      let i = index
+    "
+  >
+    <h4>
+      {{ header.controls.name.value | slice : 4 }}
+      {{
+        header.controls.type.value === "checkbox"
+          ? "(barrare le caselle interessate)"
+          : "(prevalente)"
+      }}
+    </h4>
+    <ng-container
+      *ngFor="
+        let subHeader of header.controls.subheadings.controls;
+        let subI = index
+      "
+    >
+      <div
+        [className]="
+          header.controls.type.value === 'checkbox'
+            ? 'custom-control custom-checkbox'
+            : 'custom-control custom-radio'
+        "
+      >
+        <input
+          [type]="header.controls.type.value"
+          class="custom-control-input"
+          [name]="
+            header.controls.type.value === 'checkbox'
+              ? 'tipoAccreditamento3' + subHeader.controls.id.value
+              : 'tipoAccreditamento3' + header.controls.id.value
+          "
+          [id]="'customControlValidation3' + subHeader.controls.id.value"
+          [value]="subHeader.controls.id.value"
+          [checked]="subHeader.controls.checked.value"
+          (change)="onChange(i, subI, $event)"
+          [disabled]="
+            (header.controls.id.value === 2 && disableCategoriaForestale) ||
+            (header.controls.id.value === 4 && subHeader.controls.id.value === 9
+              ? true
+              : false)
+              ? true
+              : false
+          "
+        />
+        <!-- [disabled]="(((header.controls.id.value === 2 && disableCategoriaForestale) || header.controls.id.value === 3) || (header.controls.id.value === 4 && subHeader.controls.id.value === 9 ? true : false)) ? true : false" -->
+        <label
+          [className]="
+            header.controls.type.value === 'checkbox'
+              ? 'custom-control-label checkbox'
+              : 'custom-control-label'
+          "
+          [for]="'customControlValidation3' + subHeader.controls.id.value"
+        >
+          {{ subHeader.controls.name.value }}</label
+        >
+      </div>
+    </ng-container>
+    <div *ngIf="i == 2" class="rif-normativo">
+      Riferimento DGR n. 826-6658 del 12/5/1988 “Classificazione e ripartizione
+      del territorio regionale fra montagna, collina e pianura.”
+    </div>
+  </div>
+</ng-container>
+<hr class="black-hr" />
+<div
+  class="d-flex justify-content-between buttons"
+  *ngIf="!boMode && !isIstanzaInviata"
+>
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva"
+    (onClick)="save()"
+    [disabled]="invalid"
+  ></p-button>
+
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva e prosegui"
+    (onClick)="continue()"
+    [disabled]="invalid"
+  ></p-button>
+</div>
+<!-- <app-error-dialog></app-error-dialog> -->

@@ -1,0 +1,88 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row justify-content-center my-4">
+  <div class="col-md-12">
+    <div class="col-lg-6 col-md-12 col-12 text-center">
+      <a (click)="checkUserAndRedirect()" href="#" class="block-links">
+        <h2
+          class="block-text blue-block font-weight-bold border border border-dark"
+        >
+          <span class="d-block">
+            {{ "piani forestali aziendali " | titlecase }}</span
+          >
+          (gestione)
+        </h2>
+      </a>
+    </div>
+    <!-- <div class="col-lg-6 col-md-12 col-12 text-center">
+        <a routerLink="/" class="block-links">
+          <h2 class="block-text blue-block font-weight-bold border border border-dark">
+            <span class="d-block">
+              {{ "piani forestali aziendali " | titlecase }}</span
+            >
+            (consultazione)
+          </h2>
+        </a>
+      </div> -->
+
+    <div class="row mt-2 mb-3">
+      <div class="col-md-12 text-center">
+        <div class="green-block border border border-dark">
+          <a
+            href="{{ redirectionUrl }}/idfinv"
+            class="block-links"
+            target="_blank"
+          >
+            <h2 class="block-bottom-text font-weight-bold">
+              Inventario forestale regionale
+            </h2>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-md-12 text-center">
+        <div class="yellow-block border border border-dark">
+          <a
+            href="{{ redirectionUrl }}/idfistafor"
+            class="block-links"
+            target="_blank"
+          >
+            <h2 class="block-bottom-text font-weight-bold">
+              Sistema di gestione delle istanze forestali della Regione Piemonte
+            </h2>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--div class="row my-3">
+      <div class="col-md-12 text-center">
+        <div class="orange-block border border border-dark">
+          <a href="{{redirectionUrl}}/idfrep" class="block-links">
+            <h2 class="block-bottom-text font-weight-bold">
+              Elaborazioni e reportistica
+            </h2>
+          </a>
+        </div>
+      </div>
+    </div-->
+  </div>
+  <p-dialog
+    header="Errore"
+    [responsive]="true"
+    [resizable]="false"
+    [style]="{ width: '150vw' }"
+    [(visible)]="showDialog"
+    [baseZIndex]="10000"
+  >
+    <div class="modal_body">
+      <i class="pi pi-exclamation-triangle"></i> Nessun diritto di accesso.
+    </div>
+    <div class="modal_footer">
+      <button type="button" pButton (click)="closeModal()" label="Ok"></button>
+    </div>
+  </p-dialog>
+</div>

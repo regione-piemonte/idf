@@ -1,0 +1,226 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="grey1">
+  <form [formGroup]="ricadenzeForm">
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        ><h3 class="mb-0">Ricadenze</h3></label
+      >
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label">In Aree Protette</label>
+      <div class="row-sm-12 categorie">
+        <!-- <input type="text" class="form-control" formControlName='ricadenzaAreeProtette'> -->
+        <ng-container
+          formArrayName="ricadenzaAreeProtette"
+          *ngFor="
+            let ricadenzaInCategorieForestali of ricadenzeForm.get(
+              'ricadenzaAreeProtette'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              -
+              {{ ricadenzaInCategorieForestali.get("nome").value }}
+              -
+              {{
+                formatTwoDecimal(
+                  ricadenzaInCategorieForestali.get("percentualeRicadenza")
+                    .value
+                )
+              }}%;
+            </span>
+          </ng-container>
+        </ng-container>
+        &nbsp;
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label">In Rete Natura 2000</label>
+      <div class="row-sm-12 categorie">
+        <!-- <input type="text" class="form-control" formControlName='ricadenzaNatura2000'> -->
+        <ng-container
+          formArrayName="ricadenzaNatura2000"
+          *ngFor="
+            let ricadenzaInCategorieForestali of ricadenzeForm.get(
+              'ricadenzaNatura2000'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              -
+              {{ ricadenzaInCategorieForestali.get("nome").value }}
+              -
+              {{
+                formatTwoDecimal(
+                  ricadenzaInCategorieForestali.get("percentualeRicadenza")
+                    .value
+                )
+              }}%;
+            </span>
+          </ng-container>
+        </ng-container>
+        &nbsp;
+      </div>
+    </div>
+
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label">In popolamenti da seme</label>
+      <div class="row-sm-12 categorie">
+        <!-- <input type="text" class="form-control" formControlName='ricadenzaNatura2000'> -->
+        <ng-container
+          formArrayName="ricadenzaPopolamentiDaSeme"
+          *ngFor="
+            let ricadenzaInCategorieForestali of ricadenzeForm.get(
+              'ricadenzaPopolamentiDaSeme'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{ ricadenzaInCategorieForestali.get("nome").value }} -
+              {{
+                formatTwoDecimal(
+                  ricadenzaInCategorieForestali.get("percentualeRicadenza")
+                    .value
+                )
+              }}%;
+            </span>
+          </ng-container>
+        </ng-container>
+        &nbsp;
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label">In Portaseme</label>
+      <div class="row-sm-12 categorie">
+        <ng-container
+          formArrayName="ricadenzaPortaSeme"
+          *ngFor="
+            let ricadenzaInCategorieForestali of ricadenzeForm.get(
+              'ricadenzaPortaSeme'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{ ricadenzaInCategorieForestali?.get("localita")?.value }} -
+              {{ ricadenzaInCategorieForestali?.get("specie")?.value }}
+            </span>
+          </ng-container>
+        </ng-container>
+        &nbsp;
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label">In categorie forestali</label>
+      <div class="form-group row">
+        <div class="col-lg-12 col-md-8 col-12 categorie">
+          <ng-container
+            formArrayName="ricadenzaCategorieForestali"
+            *ngFor="
+              let ricadenzaInCategorieForestali of ricadenzeForm.get(
+                'ricadenzaCategorieForestali'
+              )['controls'];
+              let i = index
+            "
+          >
+            <ng-container [formGroupName]="i">
+              <span
+                >{{ ricadenzaInCategorieForestali.get("nome").value }} -
+                {{
+                  formatTwoDecimal(
+                    ricadenzaInCategorieForestali.get("percentualeRicadenza")
+                      .value
+                  )
+                }}%;
+              </span>
+              <!-- <input type="text" class="form-control"
+                formControlName='name' placeholder="Ricadenza in
+                Categorie Forestali"> -->
+            </ng-container>
+          </ng-container>
+          &nbsp;
+        </div>
+
+        <!--div class="col-lg-4 col-md-4 col-12 text-right mt-3 mb-3">
+          <p-button
+            [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+            label="Modifica"
+            icon="pi pi-info-circle"
+            (click)="edit()"
+          ></p-button>
+        </div-->
+      </div>
+    </div>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="row-sm-12 col-form-label"
+            >In beni paesaggistici tutelati ai sensi dell'art. 136 del Dlgs
+            42/2004</label
+          >
+        </div>
+      </div>
+      <!-- <app-reusable-table *ngIf="valorizzata"
+    [headers]="tableHeaders"
+    [data]= "tableData ? tableData : []"
+    ></app-reusable-table> -->
+
+      <ng-template [ngIf]="tableData?.length > 0" [ngIfElse]="noData">
+        <table>
+          <thead>
+            <tr>
+              <th *ngFor="let col of tableHeaders">
+                {{ col.header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ric of tableData">
+              <td>{{ ric?.tipoVincolo }}</td>
+              <td>{{ ric?.nomeVincolo }}</td>
+              <td>{{ ric?.provvedimento }}</td>
+              <td>{{ ric?.percentuale }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+      <ng-template #noData>
+        <div class="form-group col">
+          <div class="col-md-12 categorie">
+            <label class="row-sm-12 mb-0">Nessuna</label>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <app-add-entry
+      [display]="display"
+      [searchForm]="ricadenzeForm"
+      (emitAddEntry)="getAddEntry($event)"
+    ></app-add-entry>
+  </form>
+</div>
+<div [formGroup]="ricadenzeForm">
+  <!-- <hr class="black-hr" />
+  <label for="annotazioni">Annotazioni</label>
+   <p>Compilare solo se ci sono incongruenze sui dati importati da catasto o altro
+    da segnalare (max 10000 caratteri)
+</p>
+<textarea class="w-100" formControlName="annotazioni" (change)='changeValueAnnotazioni($event)'></textarea> -->
+</div>

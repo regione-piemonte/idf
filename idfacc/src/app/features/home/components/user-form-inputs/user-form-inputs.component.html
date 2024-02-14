@@ -1,0 +1,111 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row" *ngIf="userForm">
+  <div class="col-md-12 my-4" [formGroup]="userForm">
+    <div class="grey-form">
+      <div class="form-group">
+        <label for="codiceFiscale" class="font-weight-bold"
+          >Codice fiscale <span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="codiceFiscale"
+          formControlName="codiceFiscale"
+          name="codiceFiscale"
+        />
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <label for="cognome" class="font-weight-bold"
+            >Cognome <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="cognome"
+            formControlName="cognome"
+            name="cognome"
+          />
+        </div>
+        <div class="col">
+          <label for="nome" class="font-weight-bold"
+            >Nome <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            formControlName="nome"
+            name="nome"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="nrTelefonico" class="font-weight-bold"
+          >Recapito telefonico <span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="nrTelefonico"
+          formControlName="nrTelefonico"
+          name="nrTelefonico"
+        />
+        <input
+          class="form-control w-100"
+          type="hidden"
+          id="idSoggetto"
+          name="idSoggetto"
+          formControlName="idSoggetto"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email" class="font-weight-bold"
+          >E-mail <span class="text-danger">*</span></label
+        >
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          name="email"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="alert alert-info agree-alert py-4" role="alert">
+  Il/La sottoscritto/a dichiara di avere preso visione dell'
+  <a
+    rel="noopener noreferrer"
+    href="{{ hrefPrivacy }}"
+    target="_blank"
+    class="external-link"
+    title="Il link si apre in una nuova pagina"
+    >informativa sulla privacy
+  </a>
+  ai sensi del GDPR 2016/679.
+</div>
+<p-checkbox
+  name="agree"
+  binary="true"
+  label="Confermo"
+  inputId="Confermo"
+  [(ngModel)]="isConfirmed"
+  [styleClass]="'my-3 font-weight-bold'"
+></p-checkbox>
+<hr class="black-hr" />
+<div class="row">
+  <div class="col-md-12 text-right">
+    <p-button
+      label="Conferma"
+      (onClick)="sendUserForm()"
+      [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+      [disabled]="!isConfirmed || userForm.invalid"
+    ></p-button>
+  </div>
+</div>

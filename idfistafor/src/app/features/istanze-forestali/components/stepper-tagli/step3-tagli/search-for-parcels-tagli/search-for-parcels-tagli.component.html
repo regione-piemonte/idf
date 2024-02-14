@@ -1,0 +1,302 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div *ngIf="searchForParcelsForm" class="grey1">
+  <form [formGroup]="searchForParcelsForm">
+    <div class="row">
+      <div class="" style="margin: auto; width: 100%">
+        <h4 class="row header">Ricerca particelle catastali</h4>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-12">
+            <label
+              for="provincia"
+              class="row-lg-6 col-form-label font-weight-bold"
+              >Provincia</label
+            >
+            <div class="row-lg-6">
+              <p-autoComplete
+                formControlName="provincia"
+                [forceSelection]="'true'"
+                [required]="'true'"
+                [suggestions]="provincia"
+                (completeMethod)="filterProvincia($event)"
+                id="provincia"
+                autoHighlight="true"
+                [minLength]="3"
+                [dropdown]="true"
+                [forceSelection]="true"
+                emptyMessage="{{ emptyMessageAC }}"
+                field="denominazioneProv"
+                [styleClass]="'autoComplete d-flex'"
+                [inputStyleClass]="'autoComplete-input'"
+                (onSelect)="onSelectProvincia($event)"
+                (onClear)="onClearProvincia($event)"
+                placeholder="Ricerca..."
+              >
+              </p-autoComplete>
+            </div>
+            <div
+              *ngIf="
+                searchForParcelsForm.controls['provincia'].invalid &&
+                (searchForParcelsForm.controls['provincia'].dirty ||
+                  searchForParcelsForm.controls['provincia'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  searchForParcelsForm.controls['provincia'].errors.required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+              <div
+                *ngIf="
+                  searchForParcelsForm.controls['provincia'].errors.maxlength
+                "
+              >
+                Attenzione! La stringa digitata è troppo lunga
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12">
+            <label for="comune" class="row-lg-6 col-form-label font-weight-bold"
+              >Comune catastale</label
+            >
+            <div class="row-lg-6">
+              <p-autoComplete
+                formControlName="comuneCatastale"
+                [forceSelection]="'true'"
+                [required]="'true'"
+                [suggestions]="comune"
+                id="comune"
+                [minLength]="3"
+                [dropdown]="true"
+                [forceSelection]="true"
+                autoHighlight="true"
+                emptyMessage="{{ emptyMessageAC }}"
+                field="denominazioneComune"
+                [styleClass]="'autoComplete d-flex'"
+                placeholder="Ricerca..."
+                [inputStyleClass]="'autoComplete-input'"
+                (completeMethod)="filterComune($event)"
+                (onSelect)="onSelectComune($event)"
+                (onClear)="onClearComune($event)"
+              >
+              </p-autoComplete>
+            </div>
+            <div
+              *ngIf="
+                searchForParcelsForm.controls['comuneCatastale'].invalid &&
+                (searchForParcelsForm.controls['comuneCatastale'].dirty ||
+                  searchForParcelsForm.controls['comuneCatastale'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  searchForParcelsForm.controls['comuneCatastale'].errors
+                    .required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+              <div
+                *ngIf="
+                  searchForParcelsForm.controls['comuneCatastale'].errors
+                    .maxlength
+                "
+              >
+                Attenzione! La stringa digitata è troppo lunga
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-12">
+            <label class="row-lg-6 col-form-label font-weight-bold"
+              >Sezione</label
+            >
+            <div class="row-lg-6">
+              <!-- <input  id="sezione" class="form-control" -->
+              <p-autoComplete
+                formControlName="sezione"
+                [forceSelection]="'true'"
+                [required]="'true'"
+                [suggestions]="sezione"
+                id="sezione"
+                [minLength]="1"
+                [dropdown]="true"
+                [forceSelection]="true"
+                autoHighlight="true"
+                emptyMessage="{{ emptyMessageAC }}"
+                field="nome_sezione"
+                [styleClass]="
+                  'autoComplete form-control d-flex justify-content-end'
+                "
+                placeholder="Ricerca..."
+                [inputStyleClass]="'autoComplete-input'"
+                (completeMethod)="filtertSezione($event)"
+                (onSelect)="onSelectSezione($event)"
+                (onClear)="onClearSezione($event)"
+              >
+              </p-autoComplete>
+            </div>
+            <div
+              *ngIf="
+                searchForParcelsForm.controls['sezione'].invalid &&
+                (searchForParcelsForm.controls['sezione'].dirty ||
+                  searchForParcelsForm.controls['sezione'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  searchForParcelsForm.controls['sezione'].errors.maxlength
+                "
+              >
+                Attenzione! La stringa digitata è troppo lunga
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-12">
+            <label class="row-lg-6 col-form-label font-weight-bold"
+              >Foglio</label
+            >
+            <div class="row-lg-6">
+              <!-- <input formControlName='foglio' id="foglio" class="form-control"> -->
+              <p-autoComplete
+                formControlName="foglio"
+                [forceSelection]="'true'"
+                [required]="'true'"
+                [suggestions]="foglio"
+                id="foglio"
+                [minLength]="1"
+                [dropdown]="true"
+                [forceSelection]="true"
+                autoHighlight="true"
+                emptyMessage="{{ emptyMessageAC }}"
+                field="foglio"
+                [styleClass]="
+                  'autoComplete form-control d-flex justify-content-end'
+                "
+                placeholder="Ricerca..."
+                [inputStyleClass]="'autoComplete-input'"
+                (completeMethod)="filterFoglio($event)"
+                (onSelect)="onSelectFoglio($event)"
+                (onClear)="onClearFoglio($event)"
+              >
+              </p-autoComplete>
+            </div>
+            <div
+              *ngIf="
+                searchForParcelsForm.controls['foglio'].invalid &&
+                (searchForParcelsForm.controls['foglio'].dirty ||
+                  searchForParcelsForm.controls['foglio'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="searchForParcelsForm.controls['foglio'].errors.required"
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+              <div
+                *ngIf="searchForParcelsForm.controls['foglio'].errors.pattern"
+              >
+                Attenzione! Il campo deve essere numerico
+              </div>
+              <div
+                *ngIf="searchForParcelsForm.controls['foglio'].errors.maxlength"
+              >
+                Attenzione! La stringa digitata è troppo lunga
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-12">
+            <label class="row-lg-6 col-form-label font-weight-bold"
+              >Particella</label
+            >
+            <div class="row-lg-6">
+              <!-- <input formControlName='particella' id="particella" class="form-control"> -->
+              <p-autoComplete
+                formControlName="particella"
+                [forceSelection]="'true'"
+                [required]="'true'"
+                [suggestions]="particella"
+                id="particella"
+                [minLength]="1"
+                [dropdown]="true"
+                [forceSelection]="true"
+                autoHighlight="true"
+                emptyMessage="{{ emptyMessageAC }}"
+                field="particella"
+                [styleClass]="
+                  'autoComplete form-control d-flex justify-content-end'
+                "
+                placeholder="Ricerca..."
+                [inputStyleClass]="'autoComplete-input'"
+                (completeMethod)="filterParticella($event)"
+                (onSelect)="onSelectParticella($event)"
+                (onClear)="onClearParticella($event)"
+              >
+              </p-autoComplete>
+            </div>
+            <div
+              *ngIf="
+                searchForParcelsForm.controls['particella'].invalid &&
+                (searchForParcelsForm.controls['particella'].dirty ||
+                  searchForParcelsForm.controls['particella'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  searchForParcelsForm.controls['particella'].errors.required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+              <div
+                *ngIf="
+                  searchForParcelsForm.controls['particella'].errors.maxlength
+                "
+              >
+                Attenzione! La stringa digitata è troppo lunga
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col text-right mt-3 mb-3">
+            <p-button
+              [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+              label="Inserisci in elenco"
+              [disabled]="searchForParcelsForm.invalid"
+              (onClick)="inserisciInElenco()"
+            ></p-button>
+          </div>
+        </div>
+        <div class="row" *ngIf="duplicatedItem">
+          <div class="col text-right mt-3 mb-3 alert alert-danger">
+            Attenzione! Particella già inserita
+          </div>
+        </div>
+        <div class="row" *ngIf="particellaNotFound">
+          <div class="col text-right mt-3 mb-3 alert alert-danger">
+            Attenzione! La particella non esiste.
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-2">
+        <a href="#">
+          <img [src]="'assets/img/GEKO.png'" class="w-100 pt-5" alt="map" pTooltip="Consulta mappa" tooltipPosition="left"/>
+        </a>
+      </div> -->
+    </div>
+  </form>
+</div>
+<hr class="black-hr" />

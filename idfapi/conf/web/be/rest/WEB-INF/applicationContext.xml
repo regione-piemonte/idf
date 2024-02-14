@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+  SPDX-License-Identifier: EUPL-1.2
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+   	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	   http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+	   http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util 
+	   http://www.springframework.org/schema/util/spring-util.xsd
+	   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+	<import resource="dao-beans.xml" />
+
+	<bean
+		class="it.csi.idf.idfapi.business.SpringApplicationContextHelper"></bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="@jndi.name@" />
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
+	</bean>
+	
+	<bean id="apiManagerServiceHelper" 
+     	class="it.csi.idf.idfapi.business.be.service.helper.ApiManagerServiceHelper">
+     	<constructor-arg index="0" value="@idf.token.url@" />
+    </bean>
+	
+	<bean id="aaepServiceHelper" 
+     	class="it.csi.idf.idfapi.business.be.service.helper.AaepServiceHelper">
+        <constructor-arg index="0" value="@aaep.api.url@"/>
+        <property name="apiManagerServiceHelper" ref="apiManagerServiceHelper" />
+    </bean>
+
+	<bean id="bdtreServiceHelper" 
+     	class="it.csi.idf.idfapi.business.be.service.helper.BDTREServiceHelper">
+        <constructor-arg index="0" value="@bdtre.url@"/>
+		<constructor-arg index="1" value="@idf.token.urlInternet@"/>
+    </bean>
+    
+    <bean id="sigmaterServiceHelper" 
+     	class="it.csi.idf.idfapi.business.be.service.helper.SigmaterServiceHelper">
+        <constructor-arg index="0" value="@sigalf.api.url@"/>
+        <constructor-arg index="1" value="@sigws.api.url@"/>
+        <constructor-arg index="2" value="@sigmater.userpass@"/>
+        <property name="apiManagerServiceHelper" ref="apiManagerServiceHelper" />
+    </bean>
+    
+    <bean id="parkapiServiceHelper" 
+     	class="it.csi.idf.idfapi.business.be.service.helper.ParkApiServiceHelper">
+        <constructor-arg index="0" value="@park.api.url.areeprot@"/>
+        <constructor-arg index="1" value="@park.api.url.sic@"/>
+        <constructor-arg index="2" value="@park.api.url.zps@"/>
+        <property name="apiManagerServiceHelper" ref="apiManagerServiceHelper" />
+    </bean>
+    
+    <bean id="indexServiceHelper"
+    	class="it.csi.idf.idfapi.business.be.service.helper.IndexServiceHelper">
+    	<constructor-arg index="0" value="@index.ws.url@"/>
+    </bean>
+    
+    <bean id="geecoServiceHelper"
+    	class="it.csi.idf.idfapi.business.be.service.helper.GeecoServiceHelper">
+    	<constructor-arg index="0" value="@geeco.api.url@"/>
+    	<constructor-arg index="1" value="@geeco.env@"/>
+    </bean>
+    
+    <bean id="siforsrvCategorieForestaliServiceHelper" 
+     	class="it.csi.idf.idfapi.business.be.service.helper.SiforsrvCategorieForestaliServiceHelper">
+        <constructor-arg index="0" value="@sifor.categorieforestali.api.url@"/>
+        <property name="apiManagerServiceHelper" ref="apiManagerServiceHelper" />
+    </bean>
+    
+    
+    <bean id="primpaforservServiceHelper" 
+     	class="it.csi.idf.idfapi.business.be.service.helper.PrimpaforservServiceHelper">
+        <constructor-arg index="0" value="@primpaforserv.ws.url@"/>
+    </bean>
+    
+    <bean id="actaServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.ActaServiceHelper">
+		<constructor-arg index="0" value="@acta.backoffice.api.url@"></constructor-arg>
+    	<constructor-arg index="1" value="@acta.management.api.url@"></constructor-arg>
+    	<constructor-arg index="2" value="@acta.multifiling.api.url@"></constructor-arg>
+    	<constructor-arg index="3" value="@acta.navigation.api.url@"></constructor-arg>
+    	<constructor-arg index="4" value="@acta.object.api.url@"></constructor-arg>
+    	<constructor-arg index="5" value="@acta.officialbook.api.url@"></constructor-arg>
+    	<constructor-arg index="6" value="@acta.relationships.api.url@"></constructor-arg>
+    	<constructor-arg index="7" value="@acta.document.api.url@"></constructor-arg>
+    	<constructor-arg index="8" value="@acta.repository.api.url@"></constructor-arg>
+    	<constructor-arg index="9" value="@acta.sms.api.url@"></constructor-arg>
+    	<constructor-arg index="10" value="@acta.subjectregistry.api.url@"></constructor-arg>
+    	<property name="apiManagerServiceHelper" ref="apiManagerServiceHelper" />
+	</bean>
+
+	<bean id="taifService"
+		  class="it.csi.idf.idfapi.business.be.service.impl.TAIFServiceImpl">
+		<constructor-arg name="apiUrl"  value="@taif.api.url@"></constructor-arg>
+	</bean>
+
+	<cache:annotation-driven cache-manager="simpleCacheManager"/>
+	<bean id="simpleCacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" >
+					<property name="name" value="aziendeTAIF"/>
+				</bean>
+			</set>
+		</property>
+	</bean>
+
+	<!-- <bean id="backendService" class="it.csi.tstang2.tstang2web.business.impl.BackendServiceImpl"> 
+		</bean> -->
+
+<!--	<context:component-scan base-package="it.csi.idf.idfapi.business.impl" />-->
+	<context:component-scan base-package="it.csi.idf.idfapi.business.be.impl" />
+	<context:component-scan base-package="it.csi.idf.idfapi.business.be.service.impl" />
+	<context:component-scan base-package="it.csi.idf.idfapi.business.be.scheduler" />
+	<context:component-scan base-package="it.csi.idf.idfapi.business.be.mock" />
+	<context:component-scan base-package="it.csi.idf.idfapi.business.be.vincolo.*" />
+	
+	 <!--  task:scheduled-tasks scheduler="protocolScheduler">
+  <task:scheduled ref="actaScheduler" method="schedule" fixed-delay="3000" />
+ </task:scheduled-tasks>
+ 
+ <task:scheduler id="protocolScheduler" /-->
+
+</beans>

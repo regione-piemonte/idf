@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+  SPDX-License-Identifier: EUPL-1.2
+-->
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="csipiemonte" module="testivy" />
+	<dependencies>
+
+		<dependency transitive="false" org="json" name="json-simple" rev="1.1.1">
+			<artifact name="json-simple-1.1.1" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache" name="log4j" rev="1.2.16" />
+		<dependency transitive="false" org="others" name="jboss" rev="eap-6.0">
+			<artifact name="jboss-jsp-api_2.2_spec-1.0.1.Final-redhat-1" type="jar" />
+			<artifact name="jboss-el-api_2.2_spec-1.0.2.Final-redhat-1" type="jar" />
+			<artifact name="jboss-servlet-api_3.0_spec-1.0.1.Final-redhat-1" type="jar" />
+			<artifact name="jackson-core-asl-1.9.2-redhat-1" type="jar" />
+			<artifact name="jackson-mapper-asl-1.9.2-redhat-1" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache" name="commons-logging" rev="1.1">
+			<artifact name="commons-logging-1.1" type="jar" />
+			<artifact name="commons-logging-api-1.1" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="others" name="aopalliance" rev="1.0">
+		</dependency>
+		<dependency transitive="false" org="others" name="spring" rev="4.1.3.RELEASE">
+			<artifact name="spring-aop-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-beans-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-context-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-context-support-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-core-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-expression-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-jdbc-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-orm-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-tx-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-web-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-webmvc-4.1.3.RELEASE" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache" name="commons-io" rev="2.2" />
+		<dependency transitive="false" org="apache" name="commons-httpclient" rev="3.1" />
+		<dependency transitive="false" org="apache" name="commons-codec" rev="1.7" />
+		<dependency transitive="false" org="redhat" name="resteasy-jaxb-provider" rev="2.3.10.Final-redhat-1" />
+		<dependency transitive="false" org="apache" name="commons-discovery" rev="0.2" >
+		  <artifact name="commons-discovery-0.2" type="jar" />
+		</dependency> 
+		<dependency transitive="false" org="others" name="wsdl4j" rev="1.6.2" >
+		  <artifact name="wsdl4j-1.6.2" type="jar" />
+		</dependency>
+
+		<dependency org="apache" name="httpcore" rev="4.4.4">
+			<artifact name="httpcore-4.4.4" ext="jar" />
+		</dependency>
+		<dependency org="jboss" name="jaxrs-api" rev="3.0.7.Final">
+			<artifact name="jaxrs-api-3.0.7.Final" ext="jar" />
+		</dependency>
+
+        <dependency org="postgresql" name="postgresql-jdbc" rev="9.0-801.jdbc3"/><!-- ATTENZIONE RIMUOVERE QUESTA LIBRERIA PER IL DEPLOY IN PRODUZIONE, COLLAUDO, TEST E SVILUPPO, E' UTILIZZATA SOLO IN LOCALE -->
+    	<!--dependency transitive="false" org="oracle" name="jdbc" rev="11.2.0.3.0" /-->
+		<dependency org="apache" name="commons-lang3" rev="3.2.1" />
+
+		
+
+		<dependency org="others" name="antlr" rev="2.7.5" />		
+		<!--dependency org="codehaus" name="jackson" rev="2.1.5" / -->
+		<!-- <dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.1.4"/> <dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.1.4"/> -->
+		<dependency org="apache" name="commons-beanutils" rev="1.9.1" />
+		<dependency org="apache" name="commons-collections" rev="4.4.1" />
+		<dependency org="apache" name="commons-collections" rev="3.2.2" />
+		<dependency org="apache" name="commons-digester" rev="2.1" />
+		<dependency org="apache" name="commons-javaflow" rev="20060411" />
+		<dependency org="apache" name="commons-lang" rev="2.6" />
+		<dependency org="apache" name="commons-logging" rev="1.1.1" />
+		<dependency org="sun" name="persistence-api" rev="1.0" />
+		<!-- <dependency org="javax.servlet" name="servlet-api" rev="2.4"/> -->
+		<dependency org="codehaus" name="jaxen" rev="1.1.1" />
+		<dependency org="mondrian" name="mondrian" rev="3.1.1.12687" />		
+		<dependency org="others" name="barbecue" rev="1.5-beta1" />
+		<dependency org="others" name="jexcelapi" rev="2.6.10" />
+		<!-- <dependency org="org.apache.ant" name="ant" rev="1.7.1"/> -->
+		<!-- <dependency org="org.apache.bcel" name="bcel" rev="5.2" conf="compile->*"/> -->
+		<!-- conf="javaflow->*" because of bcel inside xalan -->
+		<dependency org="apache" name="httpclient" rev="4.3.4" />
+		<!-- <dependency org="org.apache.httpcomponents" name="httpcore" rev="4.3.2"/> -->
+		<dependency org="apache" name="lucene-analyzers-common" rev="4.5.1" />
+		<dependency org="apache" name="lucene-core" rev="4.5.1" />
+		<dependency org="apache" name="lucene-queryparser" rev="4.5.1" />
+		<!-- <dependency org="apache" name="poi-ooxml" rev="3.10.1"/> -->
+		<dependency org="apache" name="poi" rev="3.10.1" />
+		<dependency org="apache" name="velocity" rev="1.7" />		
+		<dependency org="others" name="beanshell" rev="2.0b4" />			
+		<dependency org="jfree" name="jcommon" rev="1.0.23" />
+		<dependency org="jfree" name="jfreechart" rev="1.0.19" />
+		<dependency org="mozilla" name="rhino" rev="1.7.6" />
+
+		<dependency org="joda" name="joda-time" rev="1.6" />
+		<dependency org="apache" name="xerces" rev="2.9.1" />
+
+		<!-- FINE JASPER -->
+		
+		<!-- INDEX -->
+		<dependency org="doqui" name="ecmengine-ws-client" rev="12.2.0">
+			<artifact name="ecmengine-ws-client-12.2.0" type="jar" />
+		</dependency>
+		<dependency org="doqui" name="ecmengine-common" rev="12.2.0">
+			<artifact name="ecmengine-common-12.2.0" type="jar" />
+		</dependency>
+		<dependency org="apache" name="commons-io" rev="2.2"/>
+		<dependency org="apache" name="axis" rev="1.4" transitive="false">
+    		<artifact name="axis-jaxrpc-1.4" type="jar" />
+    	</dependency>
+		<dependency org="csipiemonte" name="axiscsi" rev="1.0.0" transitive="false"/>
+		<dependency org="apache" name="commons-discovery" rev="0.2" transitive="false"/>
+		
+
+		<!-- AUTENTICAZIONE APIMBBONE -->
+		<dependency org="square" name="okhttp3" rev="4.6.0">
+			<artifact name="okhttp-4.6.0" type="jar" />
+		</dependency>
+		<dependency org="jetbrains" name="kotlin-stdlib" rev="1.3.72">
+			<artifact name="kotlin-stdlib-1.3.72" type="jar" />
+		</dependency>
+		<dependency org="square" name="okio" rev="2.6.0">
+			<artifact name="okio-2.6.0" type="jar" />
+		</dependency>
+		<dependency org="json" name="json" rev="20180813">
+			<artifact name="json-20180813" type="jar" />
+		</dependency>
+
+		<!-- Cosmo -->
+		<dependency org="others" name="swagger-annotations" rev="1.5.18">
+			<artifact name="swagger-annotations-1.5.18" type="jar" />
+		</dependency>
+		<dependency org="google" name="gson" rev="2.2.4"/>
+		
+		<!-- Mail -->
+		<dependency org="sun" name="mail" rev="1.2">
+			<artifact name="mail-1.2" type="jar" />
+		</dependency>
+		
+		<!--- mymetype -->
+		<dependency org="apache" name="tika" rev="1.3"/>
+		
+		<!--  DA ESCLUDERE DAL PACCHETTO -->
+		<dependency org="sun" name="jaxb" rev="2.2.6" />
+
+		<conflict org="others" module="jboss" manager="all" />		
+		<conflict org="apache" module="commons-collections" manager="all" />
+	</dependencies>
+</ivy-module>

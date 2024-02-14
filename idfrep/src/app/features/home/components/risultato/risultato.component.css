@@ -1,0 +1,20 @@
+/*!
+ * SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+ * 
+ * SPDX-License-Identifier: EUPL-1.2
+*/
+.area-list{display: none;}
+
+ul.list-none li a{
+  line-height: 50px;
+}
+
+@media (max-width: 767.98px){
+  .cont-map{
+    display: none;
+  }
+  .area-list{display: block; margin-top: 20px; list-style: none;}
+  .area-list li{ margin: 15px 0;}
+  .area-list a{font-weight: bold;}
+}
+

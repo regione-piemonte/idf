@@ -1,0 +1,56 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row my-3">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div
+            class="col-lg-4 col-md-6 field-text-size content-field mb-1"
+            *ngFor="let group of datiStazionali.group1.items"
+          >
+            <ng-container *ngIf="group">
+              <app-dati-stazionali-field [item]="group">
+              </app-dati-stazionali-field>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div
+            class="col-lg-4 col-md-6 field-text-size content-field mb-1"
+            *ngFor="let group of datiStazionali.group2.items"
+          >
+            <ng-container *ngIf="group">
+              <app-dati-stazionali-field [item]="group">
+              </app-dati-stazionali-field>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div
+            class="col-lg-4 col-md-6 field-text-size content-field mb-1"
+            *ngFor="let group of datiStazionali.group3.items"
+          >
+            <ng-container *ngIf="group">
+              <app-dati-stazionali-field [item]="group">
+              </app-dati-stazionali-field>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

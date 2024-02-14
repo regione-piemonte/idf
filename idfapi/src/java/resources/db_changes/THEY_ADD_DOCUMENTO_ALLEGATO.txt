@@ -1,0 +1,9 @@
+#-------------------------------------------------------------------------------
+# SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+# SPDX-License-Identifier: EUPL-1.2
+#-------------------------------------------------------------------------------
+ALTER TABLE idf_t_documento_allegato   ADD COLUMN uid_index character varying(500);
+
+ALTER TABLE idf_t_documento_allegato   ADD COLUMN id_doc_doqui character varying(500);
+
+ALTER TABLE idf_t_documento_allegato   ADD COLUMN ud_classificazione_doqui character varying(500);

@@ -1,0 +1,23 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="my-3">
+  <ng-container *ngIf="grayPanel">
+    <app-tipologia-panel [panelData]="grayPanel"> </app-tipologia-panel>
+  </ng-container>
+</div>
+<!-- <p-steps *ngIf="steps" [model]="steps" [styleClass]="'first-steps'" [readonly]="false" [(activeIndex)]="activeIndex"></p-steps> -->
+
+<app-stepper *ngIf="steps" [steps-config]="steps" [active-step]="0">
+</app-stepper>
+
+<!-- <app-dati-stazionali-tabs-first *ngIf="stepper.activeStep.activeIndex === 1" [id]="id" [grayPanel]="grayPanel" (datiStazionaliFirstEmitter)="getGreyPanel()"></app-dati-stazionali-tabs-first>
+<app-dati-stazionali-tabs-second *ngIf="stepper.activeStep.activeIndex === 2" [id]="id" [grayPanel]="grayPanel" (datiStazionaliSecondEmitter)="getGreyPanel()"></app-dati-stazionali-tabs-second>
+<ng-container>
+    <app-alberi-campione-step *ngIf="stepper.activeStep.activeIndex === 3" [id]="id" [grayPanel]="grayPanel" (thirdFormEmitter)="getGreyPanel()"></app-alberi-campione-step>
+    <ng-container>
+        <app-alberi-cavallettati-step [hidden]="stepper.activeStep.activeIndex !== 4" [id]="id" (fourthFormEmitter)="sendFourthForm()"></app-alberi-cavallettati-step>
+    </ng-container>
+</ng-container> -->

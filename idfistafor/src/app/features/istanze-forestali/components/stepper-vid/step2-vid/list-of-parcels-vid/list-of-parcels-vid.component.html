@@ -1,0 +1,30 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div>
+  <h4 class="row header" style="margin-bottom: 1rem">
+    Elenco particelle catastali su cui ricade il bosco
+  </h4>
+  <app-reusable-front-table
+    [initiallySortedColumn]="sortedColumn"
+    [headers]="tableHeaders"
+    [data]="tableData"
+    (rowIdEmitter)="getRowId($event)"
+    (updateTableChanges)="getUpdatedTable($event)"
+    [delete]="true"
+    [fieldToDelete]="'id'"
+    (deleteRow)="deleteRow($event)"
+  ></app-reusable-front-table>
+  <div class="text-center mt-3 mb-3">
+    <p-button
+      (click)="createPolygon()"
+      [disabled]="!enabledGeneraPoligono"
+      [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+      label="ACQUISISCI PARTICELLE E GENERA POLIGONO xxx"
+    >
+    </p-button>
+  </div>
+</div>
+<hr class="black-hr" />

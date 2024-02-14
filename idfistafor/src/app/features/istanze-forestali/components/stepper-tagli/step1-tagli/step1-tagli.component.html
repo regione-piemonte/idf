@@ -1,0 +1,235 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="!false">
+  <div *ngIf="datiGeneraliForm" class="grey1">
+    <form [formGroup]="datiGeneraliForm" class="grey-form">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label
+            for="categoriaIntervento"
+            class="row-lg-6 col-form-label font-weight-bold"
+          >
+            Categoria di intervento selvicolturale
+            <span class="text-danger">*</span>
+          </label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 mb-3">
+          <p-dropdown
+            formControlName="categoriaIntervento"
+            id="categoriaIntervento"
+            [options]="categorieSelvicolturali"
+            placeholder="Seleziona categoria intervento"
+            optionLabel="descrCategoriaSelvicolturale"
+            [showClear]="true"
+            [required]="'true'"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          >
+          </p-dropdown>
+          <div
+            *ngIf="
+              datiGeneraliForm.controls['categoriaIntervento'].invalid &&
+              (datiGeneraliForm.controls['categoriaIntervento'].dirty ||
+                datiGeneraliForm.controls['categoriaIntervento'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                datiGeneraliForm.controls['categoriaIntervento'].errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label for="proprieta" class="font-weight-bold">
+            Proprietà <span class="text-danger">*</span>
+          </label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 mb-3">
+          <p-dropdown
+            formControlName="proprieta"
+            id="proprieta"
+            [options]="proprietaSelvicolturali"
+            placeholder="Seleziona proprietà"
+            optionLabel="descrProprieta"
+            [showClear]="true"
+            [required]="'true'"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          >
+          </p-dropdown>
+          <div
+            *ngIf="
+              datiGeneraliForm.controls['proprieta'].invalid &&
+              (datiGeneraliForm.controls['proprieta'].dirty ||
+                datiGeneraliForm.controls['proprieta'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="datiGeneraliForm.controls['proprieta'].errors.required">
+              Attenzione! Campo obbligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label for="annataSilvana" class="font-weight-bold">
+            Annata silvana <span class="text-danger">*</span>
+          </label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="annataSilvana"
+            id="annataSilvana"
+          />
+          <div
+            *ngIf="
+              datiGeneraliForm.controls['annataSilvana'].invalid &&
+              (datiGeneraliForm.controls['annataSilvana'].dirty ||
+                datiGeneraliForm.controls['annataSilvana'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="datiGeneraliForm.controls['annataSilvana'].errors.required"
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label for="annataSilvana" class="font-weight-bold">
+            Data presunta di inizio intervento
+            <span class="text-danger">*</span>
+          </label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 mb-3">
+          <p-calendar
+            [yearNavigator]="true"
+            [monthNavigator]="true"
+            yearRange="1970:{{ currentYear + 2 }}"
+            dateFormat="dd-mm-yy"
+            id="dataPresaInCarico"
+            formControlName="dataPresaInCarico"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '93%' }"
+            showButtonBar="true"
+            [locale]="it"
+            [showIcon]="true"
+            [minDate]="minDateVal"
+          >
+          </p-calendar>
+          <div
+            *ngIf="
+              datiGeneraliForm.controls['dataPresaInCarico'].invalid &&
+              (datiGeneraliForm.controls['dataPresaInCarico'].dirty ||
+                datiGeneraliForm.controls['dataPresaInCarico'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                datiGeneraliForm.controls['dataPresaInCarico'].errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label for="statoIntervento" class="font-weight-bold">
+            Stato intervento <span class="text-danger">*</span>
+          </label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="statoIntervento"
+            id="statoIntervento"
+            [attr.disabled]="true"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label for="suggest" class="font-weight-bold">
+            Intervento compensativo della trasformazione del bosco nr
+          </label>
+          <small class="text-muted">
+            <i>Ricerca per Num.istanza, Anno, Richiedente, Comune</i>
+          </small>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 mb-3">
+          <p-autoComplete
+            formControlName="interventoCompensativo"
+            [(ngModel)]="trasformazione"
+            [suggestions]="trasformazioni"
+            (completeMethod)="searchTrasformazioni($event)"
+            id="interventoCompensativo"
+            autoHighlight="true"
+            [minLength]="3"
+            [dropdown]="true"
+            emptyMessage="{{ emptyMessageAC }}"
+            [field]="'displayItem'"
+            [styleClass]="'autoComplete d-flex'"
+            [inputStyleClass]="'autoComplete-input'"
+            placeholder="Seleziona intervento compensativo"
+          >
+          </p-autoComplete>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr />
+
+  <!--<div class="d-flex justify-content-between buttons" *ngIf="!boMode && !isIstanzaInviata">-->
+  <div
+    class="d-flex justify-content-between buttons"
+    *ngIf="!boMode && !isIstanzaInviata"
+  >
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva"
+      (onClick)="save()"
+      [disabled]="datiGeneraliForm ? datiGeneraliForm.invalid : false"
+    ></p-button>
+
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva e prosegui"
+      (onClick)="continue()"
+      [disabled]="datiGeneraliForm ? datiGeneraliForm.invalid : false"
+    >
+    </p-button>
+  </div>
+</ng-container>

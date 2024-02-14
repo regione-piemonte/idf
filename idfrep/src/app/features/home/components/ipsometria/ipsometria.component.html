@@ -1,0 +1,62 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<div class="row justify-content-center my-4">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-lg-4 col-md-12 col-12 text-center">
+        <label class="font-weight-bold mt-4">Filtro</label>
+        <select id="ipsometriaFilter">
+          <option value="">-- Seleziona --</option>
+          <optgroup label="Categoria forestale">
+            <option *ngFor="let item of filtersData.categorieForestali">
+              {{ item }}
+            </option>
+          </optgroup>
+          <optgroup label="Specie">
+            <option *ngFor="let item of filtersData.specie">{{ item }}</option>
+          </optgroup>
+          <optgroup label="Tipo forestale">
+            <option *ngFor="let item of filtersData.tipiForestali">
+              {{ item }}
+            </option>
+          </optgroup>
+        </select>
+        <div style="color: red; font-size: 16px; padding-top: 10px">
+          {{ formError }}
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-12 col-12 text-center">
+        <br /><br />
+        <p-button label="Filtra report" (onClick)="executeFilter()"> </p-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--app-table [data]="ipsometriaDataInfo1" [title]="'Totali per specie'"></!--app-table-->
+<app-table
+  [data]="ipsometriaDataInfo2"
+  [title]="'Totali per specie'"
+></app-table>
+<div class="scrollbar-table scrollbar-primary">
+  <app-combo-chart
+    [title]="'Curva ipsometrica '"
+    [description]="formulaRetta"
+    [id]="'pointsNormal'"
+    [mainType]="'scatter'"
+    [label1]="'Diametri/Altezze'"
+    [data1]="pointsNormal"
+    [borderColor1]="'rgb(255, 99, 132)'"
+    [backgroundColor1]="'rgb(255, 99, 132)'"
+    [options]="options"
+    [secondType]="'line'"
+    [label2]="'Interpolazione'"
+    [data2]="pointsInterpolation"
+    [borderColor2]="'rgb(54, 162, 235)'"
+  ></app-combo-chart>
+</div>

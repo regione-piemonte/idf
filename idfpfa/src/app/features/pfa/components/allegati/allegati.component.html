@@ -1,0 +1,152 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-md-12">
+  <div class="col-md-12 my-4" [formGroup]="allegatiForm" *ngIf="!viewMode">
+    <div class="grey-form">
+      <div class="row form-group">
+        <div class="col-sm-12 col-md-6">
+          <label for="tipoAllegato">Tipologia allegato</label>
+          <ng-container *ngIf="tipoAllegato && allegatiForm">
+            <select
+              class="form-control"
+              id="tipoAllegato"
+              name="tipoAllegato"
+              formControlName="tipoAllegato"
+            >
+              <option
+                *ngFor="let tipo of tipoAllegato"
+                [value]="tipo.idTipoAllegato"
+              >
+                {{ tipo.descrTipoAllegato }}
+              </option>
+            </select>
+          </ng-container>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label for="note">Note</label>
+          <textarea
+            id="note"
+            name="note"
+            formControlName="note"
+            cols="30"
+            class="resize"
+          ></textarea>
+        </div>
+        <div class="col-md-3">
+          <!-- <p-button
+            label="Allega"
+            [styleClass]="'mb-3 font-weight-bold form-button'"
+            (onClick)="updateAllegato()"
+          ></p-button> -->
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="sr-only">Allega file</label>
+        <p-fileUpload
+          id="idfileUploadPfa"
+          aria-labelledby="idfileUploadPfa"
+          chooseLabel="Scegli file"
+          uploadLabel="Carica"
+          cancelLabel="Cancella"
+          name="pfa"
+          maxFileSize="5000000"
+          customUpload="true"
+          (uploadHandler)="uploadFile($event)"
+          chooseLabel="Scegli File"
+        ></p-fileUpload>
+      </div>
+      <br />
+      <div class="text-danger f-18" *ngIf="errorsOnAllegati == true">
+        Attenzione! Sono obbligatori i seguenti allegati: "Cartografia - area di
+        intervento" e "Progetto di intervento"
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="allegatiFiles && allegatiFiles.length > 0">
+    <app-subtitle [subtitle]="'Elenco allegati'"></app-subtitle>
+    <!-- table -->
+    <table class="table table-bordered table-hover my-3">
+      <thead>
+        <tr>
+          <th *ngFor="let col of allegatiHeader">
+            {{ col.header }}
+          </th>
+          <th>Download</th>
+          <th *ngIf="!viewMode">Elimina</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let data of allegatiFiles; let i = index"
+          [class.active-color]="i === selectedRow"
+          (click)="getFieldId(data.idDocumentoAllegato)"
+        >
+          <td>{{ data.descrTipoAllegato }}</td>
+          <td>{{ data.nomeAllegato }}</td>
+          <td>{{ data.note }}</td>
+          <td class="text-number">
+            {{
+              formatNumber(
+                data.dimensioneAllegatoKB
+                  | convertKB : data.dimensioneAllegatoKB
+              )
+            }}
+          </td>
+          <td
+            (click)="documentToDownload(data.idDocumentoAllegato)"
+            class="text-center"
+          >
+            <i class="fas fa-download"></i>
+          </td>
+          <td
+            *ngIf="!viewMode"
+            (click)="deleteDocumento(data.idDocumentoAllegato)"
+            class="text-center"
+          >
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <div class="row my-4 justify-content-lg-between">
+    <p-button
+      *ngIf="enableSalvaButton"
+      label="Indietro"
+      [styleClass]="'mb-3 font-weight-bold indietro-button'"
+      (onClick)="goToDettaglio()"
+    ></p-button>
+    <p-button
+      *ngIf="enableSalvaButton"
+      label="Salva in bozza e prosegui"
+      [styleClass]="'mb-3 font-weight-bold form-button'"
+      (onClick)="proceed()"
+    ></p-button>
+  </div>
+</div>
+<p-dialog
+  header=""
+  [(visible)]="filePopUp"
+  [contentStyle]="{ 'max-height': '600px' }"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+>
+  <p-header> Errore </p-header>
+  <h5 class="red">
+    Il nome del file con il tipo scelto esiste già! Modificare il nome / tipo di
+    file o eliminare quello vecchio dalla tabella.
+  </h5>
+  <p-footer>
+    <p-button
+      (click)="closeDialog()"
+      label="Chiudi"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>

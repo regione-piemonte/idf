@@ -1,0 +1,119 @@
+/*!
+ * SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+ * 
+ * SPDX-License-Identifier: EUPL-1.2
+*/
+footer{
+    display: block;
+}
+
+footer {
+    color: #fff;
+    margin-top: 5rem;
+  }
+  
+  footer .footer-author {
+    text-align: left;
+  }
+  
+  footer .upper-footer {
+    background: #006CB4;
+    padding: 2rem 0;
+  }
+  
+  footer .blu {
+    background: #213366;    padding: 40px 0;
+  }
+  
+  footer .blu img {
+    margin: 20px auto 0 auto;
+  }
+  
+  footer .blu .logo_csi img{
+    margin: 0px auto 40px auto;
+  }
+  
+  footer .blu a, footer .blu a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  footer .blu ul {
+    margin-top: 5rem;
+    padding: 0;
+    margin-bottom: 0;
+  }
+  
+  footer .blu ul li {
+    display: inline;
+    padding: 0;
+  }
+  
+  footer .blu ul li a {
+    padding: 25px 0px 25px 0;
+  }
+  
+  footer .blu ul li a:after {
+    content: "-";
+    display: inline-block;
+    margin-left: 12px;
+    margin-right: 8px;
+  }
+  
+  footer .blu ul li:last-child a:after {
+    content: "";
+    margin: 0;
+  }
+  .hr{
+      border-bottom: 1px solid #939393;
+  }
+  footer .blu p {
+    margin-bottom: 0;
+    margin-top: 8px;
+  }
+  footer .blu .logo_csi {
+      text-align:right;
+    }
+  @media (max-width: 991.98px) {
+    footer {
+      font-size: 14px;
+    }
+    footer .blu img {
+      margin: 20px 10px;
+    }
+  
+    footer .blu .logo_csi img {
+      margin: 0px auto 20px auto;
+    }
+    footer .blu ul {
+      padding: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    footer, footer .footer-author, 
+    footer .blu .logo_csi {
+      text-align:center;
+    }
+    footer .blu img {
+      margin: 20px 10px;
+    }
+    footer .blu .logo_csi img{
+      margin: 20px auto 40px auto;
+    }
+    footer .blu ul {
+      padding: 0;
+    }
+    footer .blu ul li {
+      display: block;
+      padding: 5px 0px 5px 0;
+    }
+    footer .blu ul li a {
+      padding: 15px 15px 15px 0;
+    }
+    footer .blu ul li a:after {
+      content: "";
+      margin: 0;
+    }
+  }
+

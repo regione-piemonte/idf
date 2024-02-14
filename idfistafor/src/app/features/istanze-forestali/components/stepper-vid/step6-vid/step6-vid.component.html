@@ -1,0 +1,335 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div
+  *ngIf="dichiarazioniForm"
+  [formGroup]="dichiarazioniForm"
+  class="grey-form"
+>
+  <div>
+    <h4>
+      <strong
+        >Il richiedente, in qualità di soggetto che intende operare l’intervento
+        in oggetto, consapevole che chiunque rilascia dichiarazioni mendaci è
+        punito ai sensi del codice penale e delle leggi speciali in materia, ai
+        sensi dell'art. 47 del DPR n. 445/2000, DICHIARA:</strong
+      >
+    </h4>
+    <div>
+      <div>
+        <input
+          type="radio"
+          value="true"
+          formControlName="flagProprieta"
+          id="flagProprieta"
+        />
+        <label class="font-weight-bold" for="flagProprieta"
+          >di essere proprietario/comproprietario legittimo, avente diritto
+          sulle superfici oggetto dell'intervento;</label
+        >
+      </div>
+      <div class="d-flex">
+        <input
+          class="mt5"
+          type="radio"
+          value="false"
+          formControlName="flagProprieta"
+          id="nonProprieta"
+        />
+        <label class="font-weight-bold" for="nonProprieta"
+          >di NON essere proprietario/comproprietario legittimo, ma di avere la
+          disponibilità delle superfici oggetto dell'intervento e di aver
+          acquisito l'assenso della proprietà all'intervento stesso;</label
+        >
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          id="flagDissensi"
+          formControlName="flagDissensi"
+        />
+        <label class="font-weight-bold" for="flagDissensi"
+          >di non aver ricevuto atti di dissenso da parte di eventuali soggetti
+          risultanti in comproprietà/eredità ai fini della presente
+          richiesta</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <hr class="black-hr" />
+
+  <div>
+    <h4>
+      <strong
+        >Il richiedente inoltre comunica che l’importo dei lavori è:</strong
+      >
+    </h4>
+    <div class="">
+      <input
+        type="radio"
+        value="false"
+        formControlName="flagImporto"
+        id="infa1"
+      />
+      <label class="font-weight-bold" for="infa1"
+        >inferiore a € 1.000.000;</label
+      >
+    </div>
+    <div class="">
+      <input
+        type="radio"
+        value="true"
+        formControlName="flagImporto"
+        id="supa1"
+      />
+      <label class="font-weight-bold" for="supa1"
+        >superiore a € 1.000.000;</label
+      >
+      <div class="">
+        <input
+          type="checkbox"
+          id="flagConfServizi"
+          formControlName="flagConfServizi"
+        />
+        <label class="font-weight-bold" for="flagConfServizi"
+          >che l'intervento è/sarà valutato in sede di Conferenza di Servizi e
+          dà atto che i tempi del procedimento sono definiti dalla normativa
+          specifica.</label
+        >
+      </div>
+      <div class="">
+        <input type="checkbox" id="flagSuap" formControlName="flagSuap" />
+        <label class="font-weight-bold" for="flagSuap"
+          >che la richiesta di autorizzazione è presentata per il tramite di un
+          SUAP</label
+        >
+      </div>
+      <div class="">
+        <input
+          type="checkbox"
+          id="flagCopiaConforme"
+          formControlName="flagCopiaConforme"
+        />
+        <label class="font-weight-bold" for="flagCopiaConforme"
+          >che richiede copia conforme all'originale del provvedimento
+          finale</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <hr class="black-hr" />
+
+  <div *ngIf="!isProroga">
+    <h4><strong>Diritti di istruttoria</strong></h4>
+    <div>
+      <div class="d-flex">
+        <input
+          class="mt5"
+          type="checkbox"
+          id="flagSpeseIstruttoria"
+          formControlName="flagSpeseIstruttoria"
+        />
+        <label class="font-weight-bold" for="flagSpeseIstruttoria"
+          >dichiara di aver provveduto al versamento per rimborso spese di
+          istruttoria (il procedimento è soggetto al pagamento dei diritti di
+          istruttoria ai sensi della legge regionale 4 maggio 2012, n.5).</label
+        >
+      </div>
+      <div class="">
+        <p>
+          Si ricorda che il versamento può avvenire solamente con la modalità
+          "PiemontePAY".
+        </p>
+      </div>
+    </div>
+  </div>
+  <hr class="black-hr" *ngIf="!isProroga" />
+
+  <div>
+    <h4><strong>Marca da bollo</strong></h4>
+    <div>
+      <div class="">
+        <input
+          type="radio"
+          value="true"
+          id="flagEsenzioneMarcaBollo"
+          formControlName="flagEsenzioneMarcaBollo"
+          (change)="marcaBolloChange(true)"
+        />
+        <label class="font-weight-bold" for="flagEsenzioneMarcaBollo"
+          >dichiara di essere esente dal pagamento della marca da bollo (dpr 642
+          del 26/10/1972)</label
+        >
+      </div>
+      <div class="">
+        <input
+          type="radio"
+          value="false"
+          id="nonprovMarcaBollo"
+          formControlName="flagEsenzioneMarcaBollo"
+          (change)="marcaBolloChange(false)"
+        />
+        <label class="font-weight-bold" for="nonprovMarcaBollo"
+          >dichiara di aver provveduto al pagamento della marca da bollo del
+          valore di Euro {{ marca }}</label
+        >
+      </div>
+      <div class="">
+        <label for="nMarcaBollo"
+          >Numero identificativo della marca da bollo</label
+        >
+        <input
+          type="text"
+          id="nMarcaBollo"
+          formControlName="nMarcaBollo"
+          maxlength="14"
+        />
+        <div
+          *ngIf="
+            dichiarazioniForm.controls['nMarcaBollo'].invalid &&
+            (dichiarazioniForm.controls['nMarcaBollo'].dirty ||
+              dichiarazioniForm.controls['nMarcaBollo'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              dichiarazioniForm.controls['nMarcaBollo'].value == 1 &&
+              dichiarazioniForm.controls['nMarcaBollo'].errors.required
+            "
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+          <div *ngIf="dichiarazioniForm.controls['nMarcaBollo'].errors.pattern">
+            Attenzione! Il campo ammette solo valori interi
+          </div>
+          <div
+            *ngIf="dichiarazioniForm.controls['nMarcaBollo'].errors.minlength"
+          >
+            Attenzione! La stringa inserita è troppo corta.
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <p>
+          Consapevole delle sanzioni penali previste dall'art. 76 del D.P.R.
+          445/2000, si dichiara che la marca da bollo è stata annullata per la
+          presentazione della domanda di iscrizione all'albo e non sarà
+          utilizzata per qualsiasi altro adempimento che richiede l'apposizione
+          (art. 3 D.M. 17/11/11)..
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="black-hr" />
+
+  <h4><strong>Allegati</strong></h4>
+  <table
+    *ngIf="tipiAllegato != null && tipiAllegato.length > 0"
+    class="table table-striped"
+  >
+    <caption>
+      Seleziona la tipologia di allegato
+    </caption>
+    <thead>
+      <tr>
+        <td></td>
+        <th>Tipo di allegato</th>
+        <th>Obbligatorio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tipo of tipiAllegato">
+        <td class="radio">
+          <input
+            type="radio"
+            name="radiogroup"
+            [value]="tipo.idTipoAllegato"
+            (change)="onTipoAllegatoChange(tipo.idTipoAllegato)"
+          />
+        </td>
+        <td>{{ tipo.descrTipoAllegato }}</td>
+        <td>{{ tipo.flgObbligatorio ? "Sì" : "" }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <input
+      type="radio"
+      name="radio-docFirma"
+      [checked]="versioneDoc == 'firma'"
+      (change)="changeDocType('firma')"
+      [disabled]="isDocRadioDisabled"
+    />
+    <label style="padding-left: 5px; padding-right: 30px"
+      >FIRMATO DIGITALMENTE
+    </label>
+    <input
+      type="radio"
+      name="radio-docFirma"
+      [checked]="versioneDoc == 'noFirma'"
+      (change)="changeDocType('noFirma')"
+      [disabled]="isDocRadioDisabled"
+    />
+    <label style="padding-left: 5px; padding-right: 30px"
+      >NON FIRMATO DIGITALMENTE
+    </label>
+    <p-fileUpload
+      accept="{{ versioneDoc == 'firma' ? '.pdf,.p7m' : '.pdf,.jpg,.jpeg' }}"
+      [disabled]="!versioneDoc"
+      id="fileUpload"
+      chooseLabel="Scegli file"
+      uploadLabel="Carica"
+      cancelLabel="Cancella"
+      name="file"
+      accept="{{ versioneDoc == 'firma' ? '.pdf,.p7m' : '.pdf' }}"
+      maxFileSize="50000000"
+      customUpload="true"
+      (uploadHandler)="uploadFile($event)"
+      [styleClass]="'mb-3'"
+    ></p-fileUpload>
+  </div>
+
+  <h4 class="header">ELENCO ALLEGATI</h4>
+  <app-reusable-front-table
+    *ngIf="filteredTable && filteredTable.length > 0; else nodata"
+    [data]="filteredTable"
+    [headers]="allegatiTableHeaders"
+    [download]="true"
+    [delete]="true"
+    [fieldToDownload]="'idDocumentoAllegato'"
+    [fieldToDelete]="'idDocumentoAllegato'"
+    (deleteRow)="fieldToDelete($event, 'elenco')"
+    (downloadEmitter)="fieldToDownload($event)"
+  >
+  </app-reusable-front-table>
+  <ng-template #nodata>Nessun documento presente</ng-template>
+</div>
+
+<hr class="black-hr" />
+
+<div class="d-flex justify-content-between buttons">
+  <p-button
+    [disabled]="disableSave()"
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva"
+    (onClick)="save()"
+  ></p-button>
+
+  <p-button
+    [disabled]="disableSave()"
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva e prosegui"
+    (onClick)="continue()"
+  ></p-button>
+</div>

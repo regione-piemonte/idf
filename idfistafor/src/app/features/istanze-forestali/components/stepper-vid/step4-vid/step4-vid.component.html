@@ -1,0 +1,111 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div [formGroup]="cauzioneForm" class="grey-form">
+  <div class="custom-control custom-radio">
+    <input
+      type="radio"
+      name="flagCauzione"
+      class="custom-control-input"
+      id="flagCauzione1"
+      formControlName="flagCauzione"
+      value="1"
+    />
+    <label class="custom-control-label" for="flagCauzione1">{{
+      text[0].title
+    }}</label>
+    <div
+      style="text-align: center; padding-top: 6px; font-size: large"
+      *ngIf="cauzioneForm.controls['flagCauzione'].value == 1"
+    >
+      <strong
+        >Valore calcolato sulla base dell'estensione della geometria:
+        {{ cauzione }}€</strong
+      >
+    </div>
+  </div>
+
+  <br />
+
+  <p>{{ text[1].title }}</p>
+  <div style="padding-left: 30px">
+    <div class="custom-control custom-radio">
+      <input
+        type="radio"
+        name="flagCauzione"
+        class="custom-control-input"
+        id="flagCauzione2"
+        formControlName="flagCauzione"
+        value="2"
+      />
+      <label class="custom-control-label" for="flagCauzione2">{{
+        text[1].subTitle[0]
+      }}</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input
+        type="radio"
+        name="flagCauzione"
+        class="custom-control-input"
+        id="flagCauzione3"
+        formControlName="flagCauzione"
+        value="3"
+      />
+      <label class="custom-control-label" for="flagCauzione3">{{
+        text[1].subTitle[1]
+      }}</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input
+        type="radio"
+        name="flagCauzione"
+        class="custom-control-input"
+        id="flagCauzione4"
+        formControlName="flagCauzione"
+        value="4"
+      />
+      <label class="custom-control-label" for="flagCauzione4">{{
+        text[1].subTitle[2]
+      }}</label>
+    </div>
+  </div>
+  <br />
+
+  <div class="custom-control custom-radio">
+    <input
+      type="radio"
+      name="flagCauzione"
+      class="custom-control-input"
+      id="flagCauzione5"
+      formControlName="flagCauzione"
+      value="5"
+    />
+    <label class="custom-control-label" for="flagCauzione5">{{
+      text[2].title
+    }}</label>
+  </div>
+</div>
+
+<hr class="black-hr" />
+
+<div class="d-flex justify-content-between buttons">
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    [disabled]="cauzioneForm.invalid"
+    label="Salva"
+    (onClick)="save()"
+  ></p-button>
+
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    [disabled]="cauzioneForm.invalid"
+    label="Salva e prosegui"
+    (onClick)="continue()"
+  ></p-button>
+</div>

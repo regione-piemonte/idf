@@ -1,0 +1,118 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div *ngIf="searchForParcelsForm && visibleSearchForParcels" class="grey">
+  <div class="font-weight-bold">
+    <label>Ricerca particelle catastali*</label>
+  </div>
+  <form [formGroup]="searchForParcelsForm">
+    <div class="grey-form">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 mb-3">
+          <label for="comune">Comune</label>
+          <p-autoComplete
+            formControlName="comune"
+            [forceSelection]="'true'"
+            [required]="'true'"
+            [suggestions]="comune"
+            inputId="comune"
+            [minLength]="3"
+            [dropdown]="true"
+            [forceSelection]="true"
+            (completeMethod)="filterComune($event)"
+            (onSelect)="onSelectComune($event)"
+            (onClear)="onClearComune($event)"
+            autoHighlight="true"
+            emptyMessage="Nessun dato trovato nel database"
+            field="denominazioneComune"
+            [styleClass]="'autoComplete d-flex justify-content-end'"
+            [inputStyleClass]="'autoComplete-input'"
+          >
+          </p-autoComplete>
+        </div>
+        <div class="col-sm-12 col-md-2 mb-3">
+          <label for="sezione">Sezione</label>
+          <p-autoComplete
+            formControlName="sezione"
+            [forceSelection]="'true'"
+            [required]="'true'"
+            [suggestions]="sezioneData"
+            inputId="sezione"
+            [minLength]="1"
+            [dropdown]="true"
+            [forceSelection]="true"
+            (completeMethod)="filterSezione($event)"
+            [readonly]="true"
+            (onSelect)="onSelectSezione($event)"
+            autoHighlight="true"
+            emptyMessage="Nessun dato trovato nel database"
+            field="field"
+            [styleClass]="'autoComplete d-flex justify-content-end'"
+            [inputStyleClass]="'autoComplete-input'"
+          >
+          </p-autoComplete>
+        </div>
+
+        <div class="col-sm-12 col-md-2 mb-3">
+          <label for="foglio">Foglio</label>
+          <p-autoComplete
+            formControlName="foglio"
+            [forceSelection]="'true'"
+            [required]="'true'"
+            [suggestions]="foglioData"
+            inputId="foglio"
+            [minLength]="1"
+            [dropdown]="true"
+            [forceSelection]="true"
+            (completeMethod)="filterFoglio($event)"
+            [readonly]="true"
+            (onSelect)="onSelectFoglio($event)"
+            autoHighlight="true"
+            emptyMessage="Nessun dato trovato nel database"
+            field="field"
+            [styleClass]="'autoComplete d-flex justify-content-end'"
+            [inputStyleClass]="'autoComplete-input'"
+          >
+          </p-autoComplete>
+        </div>
+
+        <div class="col-sm-12 col-md-2 mb-3">
+          <label for="particella">Particella</label>
+          <p-autoComplete
+            formControlName="particella"
+            [forceSelection]="'true'"
+            [required]="'true'"
+            [suggestions]="particellaData"
+            inputId="particella"
+            [minLength]="1"
+            [dropdown]="true"
+            [forceSelection]="true"
+            (completeMethod)="filterParticella($event)"
+            (onSelect)="onSelectParticela($event)"
+            autoHighlight="true"
+            emptyMessage="Nessun dato trovato nel database"
+            field="field"
+            [styleClass]="'autoComplete d-flex justify-content-end'"
+            [inputStyleClass]="'autoComplete-input'"
+          >
+          </p-autoComplete>
+        </div>
+      </div>
+      <!--/row -->
+    </div>
+    <!--/grey-form -->
+
+    <div class="row">
+      <div class="col text-right mt-3 mb-3">
+        <p-button
+          [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+          label="Inserisci in elenco"
+          [disabled]="formDisabled"
+          (onClick)="inserisciInElenco()"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+</div>

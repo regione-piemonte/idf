@@ -1,0 +1,643 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div *ngIf="userRole === 'FO'">
+  <div *ngIf="!datiPersonaliForm">
+    <form
+      [formGroup]="personalDataForm"
+      (ngSubmit)="onConfirmation()"
+      *ngIf="personalDataForm"
+    >
+      <div class="ilModoDiCandidarsi">
+        <div>
+          Il servizio a cui stai accedendo permette la compilazione on-line e la
+          presentazione al Settore regionale territorialmente competente in
+          materia di foreste di:
+        </div>
+        <ng-container *ngFor="let ambito of ambitoInstanza; let i = index">
+          <div
+            class="custom-control custom-radio comunicazione"
+            [ngClass]="{
+              hide:
+                (ambito.idAmbitoIstanza == 4 || ambito.idAmbitoIstanza == 5) &&
+                isEnviromentProd
+            }"
+          >
+            <input
+              type="radio"
+              name="tipoIstanzaId"
+              class="custom-control-input"
+              id="customControlValidation{{ i }}"
+              formControlName="tipoIstanzaId"
+              [value]="ambito.idAmbitoIstanza"
+            />
+            <label
+              class="custom-control-label"
+              for="customControlValidation{{ i }}"
+              >{{ ambito.descrAmbitoIstanza }}</label
+            >
+          </div>
+        </ng-container>
+      </div>
+      <div *ngIf="datiPersonali">
+        <hr />
+        <h5 class="header" style="background-color: #ffe66f">
+          Attenzione: per accedere al sistema è necessario completare la
+          <span (click)="showDatiPersonali()" class="link-scheda"
+            >scheda dei propri dati personali.</span
+          >
+        </h5>
+      </div>
+      <hr />
+      <div class="ilModoDiCandidarsi">
+        <div>
+          Per proseguire seleziona con quale titolarità vuoi presentare
+          l’istanza:
+        </div>
+        <div
+          class="custom-control custom-radio"
+          *ngIf="
+            (homedata.fkProfiloUtente == 7 || homedata.fkProfiloUtente == 8) &&
+            personalDataForm.get('tipoIstanzaId').value == 2
+          "
+        >
+          <input
+            type="radio"
+            name="fkTipoAccreditamento"
+            class="custom-control-input"
+            id="customControlValidation6"
+            formControlName="fkTipoAccreditamento"
+            [value]="TipoAccreditamento.SPORTELLO"
+          />
+          <label class="custom-control-label" for="customControlValidation6"
+            >SPORTELLO</label
+          >
+        </div>
+        <ng-container
+          *ngIf="
+            personalDataForm.value.fkTipoAccreditamento ===
+            TipoAccreditamento.SPORTELLO
+          "
+        >
+          <p-dropdown
+            formControlName="sportello"
+            [options]="sportelli"
+            optionLabel="denominazione"
+            [required]="'true'"
+            [showClear]="true"
+            [style]="{ width: '100%' }"
+            placeholder="Seleziona lo sportello di appartenenza"
+            [styleClass]="'form-control d-flex justify-content-end'"
+          >
+          </p-dropdown>
+        </ng-container>
+
+        <div class="custom-control custom-radio">
+          <input
+            type="radio"
+            name="fkTipoAccreditamento"
+            class="custom-control-input"
+            id="customControlValidation4"
+            formControlName="fkTipoAccreditamento"
+            [value]="TipoAccreditamento.RICHIEDENTE"
+          />
+          <label class="custom-control-label" for="customControlValidation4"
+            >RICHIEDENTE: il richiedente dell’istanza che intendo presentare
+            sono io, o l’Azienda di cui sono Titolare/Legale Rappresentante o
+            l’ente che dirigo.</label
+          >
+        </div>
+        <div class="custom-control custom-radio">
+          <input
+            type="radio"
+            name="fkTipoAccreditamento"
+            class="custom-control-input"
+            id="customControlValidation5"
+            formControlName="fkTipoAccreditamento"
+            [value]="TipoAccreditamento.PROFESSIONISTA"
+          />
+          <label class="custom-control-label" for="customControlValidation5"
+            >PROFESSIONISTA: inserisco istanze in qualità di delegato del
+            Richiedente formalmente incaricato.</label
+          >
+        </div>
+        <div
+          class="custom-control custom-radio"
+          *ngIf="homedata.fkProfiloUtente == 8"
+        >
+          <input
+            type="radio"
+            name="fkTipoAccreditamento"
+            class="custom-control-input"
+            id="customControlValidation66"
+            formControlName="fkTipoAccreditamento"
+            [value]="TipoAccreditamento.GESTORE"
+          />
+          <label class="custom-control-label" for="customControlValidation66"
+            >GESTORE</label
+          >
+        </div>
+
+        <div *ngIf="showProfessionistaForm">
+          <label class="col-2 col-form-label label indicare">Indicare:</label>
+          <div
+            class="form-group row"
+            *ngIf="personalDataForm.controls['tipoIstanzaId'].value > 1"
+          >
+            <div
+              class="col-lg-3 col-md-6 col-12 d-flex flex-column mt-md-2 mt-sm-2"
+            >
+              <label for="categoriaProfessionale" class="font-weight-bold"
+                >Categoria Professionale
+                <span class="text-danger">*</span></label
+              >
+
+              <ng-container *ngIf="personalDataForm.value.tipoIstanzaId !== 2">
+                <p-autoComplete
+                  formControlName="categoriaProfessionale"
+                  [forceSelection]="'true'"
+                  [required]="'true'"
+                  [suggestions]="categorieProfessionali"
+                  (completeMethod)="filterCategorieProfessionali($event)"
+                  inputId="categoriaProfessionale"
+                  autoHighlight="true"
+                  [minLength]="3"
+                  [dropdown]="true"
+                  [forceSelection]="true"
+                  emptyMessage="{{ emptyMessageAC }}"
+                  field="descrCategoriaProfessionale"
+                  [styleClass]="'autoComplete d-flex'"
+                  [inputStyleClass]="'autoComplete-input'"
+                  placeholder="Seleziona categoria professionale"
+                >
+                  <option [ngValue]="provaTipo">Choose your profile</option>
+                </p-autoComplete>
+                <div
+                  *ngIf="
+                    personalDataForm.controls['categoriaProfessionale']
+                      .invalid &&
+                    (personalDataForm.controls['categoriaProfessionale']
+                      .dirty ||
+                      personalDataForm.controls['categoriaProfessionale']
+                        .touched)
+                  "
+                  class="alert alert-danger"
+                >
+                  <div
+                    *ngIf="
+                      personalDataForm.controls['categoriaProfessionale'].errors
+                        .required
+                    "
+                  >
+                    Attenzione! Campo obbligatorio
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="personalDataForm.value.tipoIstanzaId === 2">
+                <p-dropdown
+                  formControlName="categoriaProfessionale"
+                  id="categoriaProfessionale"
+                  [options]="categorieProfessionali"
+                  optionLabel="descrCategoriaProfessionale"
+                  optionValue="idCategoriaProfessionale"
+                  [showClear]="true"
+                  [style]="{ width: '100%' }"
+                  [styleClass]="
+                    'autoComplete form-control d-flex justify-content-end'
+                  "
+                  [autoDisplayFirst]="'true'"
+                >
+                </p-dropdown>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div
+              class="col-lg-3 col-md-6 col-12 d-flex flex-column mt-md-2 mt-sm-2"
+            >
+              <label for="partitaIva" class="font-weight-bold"
+                >Partita iva <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="partitaIva"
+                formControlName="partitaIva"
+              />
+              <div
+                *ngIf="
+                  personalDataForm.controls['partitaIva'].invalid &&
+                  (personalDataForm.controls['partitaIva'].dirty ||
+                    personalDataForm.controls['partitaIva'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalDataForm.controls['partitaIva'].errors.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div
+                  *ngIf="personalDataForm.controls['partitaIva'].errors.pattern"
+                >
+                  Attenzione! Il campo deve essere numerico
+                </div>
+                <div
+                  *ngIf="
+                    personalDataForm.controls['partitaIva'].errors.maxlength
+                  "
+                >
+                  Attenzione! La stringa digitata è troppo lunga
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-lg-3 col-md-6 col-12 d-flex flex-column mt-md-2 mt-sm-2"
+            >
+              <label for="pec" class="font-weight-bold"
+                >Pec <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="pec"
+                formControlName="pec"
+              />
+              <div
+                *ngIf="
+                  personalDataForm.controls['pec'].invalid &&
+                  (personalDataForm.controls['pec'].dirty ||
+                    personalDataForm.controls['pec'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="personalDataForm.controls['pec'].errors.required">
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div *ngIf="personalDataForm.controls['pec'].errors.pattern">
+                  Attenzione! Indirizzo mail non valido
+                </div>
+                <div *ngIf="personalDataForm.controls['pec'].errors.maxlength">
+                  Attenzione! La stringa digitata è troppo lunga
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-lg-3 col-md-6 col-12 d-flex flex-column mt-md-2 mt-sm-2"
+            >
+              <label for="provinciaOrdine" class="font-weight-bold"
+                >Provincia ordine <span class="text-danger">*</span></label
+              >
+              <p-autoComplete
+                [forceSelection]="'true'"
+                autoHighlight="true"
+                [suggestions]="provincies"
+                formControlName="provinciaOrdine"
+                inputId="provinciaOrdine"
+                [minLength]="2"
+                [dropdown]="true"
+                [forceSelection]="true"
+                field="denominazioneProv"
+                emptyMessage="{{ emptyMessageAC }}"
+                [styleClass]="'autoComplete d-flex justify-content-end'"
+                [inputStyleClass]="'autoComplete-input'"
+                (completeMethod)="getProvincia($event)"
+                (onSelect)="onChangeDropdownValue($event)"
+              >
+              </p-autoComplete>
+              <div
+                *ngIf="
+                  personalDataForm.controls['provinciaOrdine'].invalid &&
+                  (personalDataForm.controls['provinciaOrdine'].dirty ||
+                    personalDataForm.controls['provinciaOrdine'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalDataForm.controls['provinciaOrdine'].errors.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-lg-3 col-md-6 col-12 d-flex flex-column mt-md-2 mt-sm-2 margin-bottom"
+            >
+              <label for="numeroIscrizione" class="font-weight-bold"
+                >Numero iscrizione <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="numeroIscrizione"
+                formControlName="numeroIscrizione"
+              />
+              <div
+                *ngIf="
+                  personalDataForm.controls['numeroIscrizione'].invalid &&
+                  (personalDataForm.controls['numeroIscrizione'].dirty ||
+                    personalDataForm.controls['numeroIscrizione'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalDataForm.controls['numeroIscrizione'].errors
+                      .required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div
+                  *ngIf="
+                    personalDataForm.controls['numeroIscrizione'].errors.pattern
+                  "
+                >
+                  Attenzione! Il campo deve essere numerico
+                </div>
+                <div
+                  *ngIf="
+                    personalDataForm.controls['numeroIscrizione'].errors
+                      .maxlength
+                  "
+                >
+                  Attenzione! La stringa digitata è troppo lunga
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12" style="font-size: initial">
+              <span style="font-size: smaller"
+                >Indicare il Codice Fiscale della persona fisica o giuridica per
+                conto della quale si inserisce la domanda:</span
+              >
+              <span class="question-badge" (click)="op.toggle($event)"
+                ><i
+                  class="fa fa-question-circle icon-question-size mx-2"
+                  aria-hidden="true"
+                ></i
+              ></span>
+              <span class="font-weight-bold"
+                >Attenzione: con la compilazione di questo campo si dichiara di
+                aver acquisito la delega ad operare da parte del
+                richiedente.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="showProfessionistaForm">
+        <div class="col text-center mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Conferma scelta {{
+              personalDataForm.value.fkTipoAccreditamento
+            }}"
+            [disabled]="datiPersonali || personalDataForm.invalid"
+          >
+          </p-button>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!showProfessionistaForm">
+        <div class="col text-center mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Conferma scelta {{
+              personalDataForm.value.fkTipoAccreditamento
+            }}"
+            [disabled]="
+              datiPersonali ||
+              (personalDataForm.value.fkTipoAccreditamento === 'Sportello' &&
+                personalDataForm.get('sportello').invalid)
+            "
+          >
+          </p-button>
+        </div>
+      </div>
+    </form>
+
+    <div class="row" *ngIf="showProfessionistaForm">
+      <div
+        class="col-lg-3 col-md-6 col-12 d-flex flex-column mt-md-2 mt-sm-2"
+      ></div>
+      <div class="col-lg-6 col-md-6 col-12 d-flex flex-column mt-md-2 mt-sm-2">
+        <h4 class="header text-center">ELENCO DELEGHE</h4>
+        <div *ngIf="listDeleghe.length > 0">
+          <app-reusable-no-select-table
+            [data]="listDeleghe"
+            [headers]="delegheTableHeaders"
+            [simpleTable]="true"
+            [delete]="true"
+            [download]="true"
+            [fieldToDelete]="'cfDelegante'"
+            [fieldToDownload]="'uidIndex'"
+            (deleteRow)="deleteDelega($event)"
+            (downloadEmitter)="downloadDelega($event)"
+          >
+          </app-reusable-no-select-table>
+        </div>
+        <div class="text-center" *ngIf="listDeleghe.length == 0">
+          Nessuna delega presente
+        </div>
+        <div class="col text-center mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Inserisci delega"
+            (onClick)="showFormDelega()"
+          >
+          </p-button>
+        </div>
+      </div>
+    </div>
+
+    <p-dialog
+      header=""
+      [(visible)]="delegaForm"
+      [style]="{ left: '0px' }"
+      [transitionOptions]="'0ms'"
+      [modal]="true"
+    >
+      <p-header> Edit </p-header>
+      <div
+        style="padding-top: 20px; width: 900px; height: 650px"
+        *ngIf="delegaForm"
+      >
+        <div class="div-title">Inserisci nuova delega</div>
+        <div class="col-md-12 my-4" [formGroup]="delegaForm">
+          <div class="grey-form">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <label for="cfDelegante" class="font-weight-bold"
+                  >Codice Fiscale <span class="text-danger">*</span></label
+                >
+              </div>
+              <div class="col-lg-6 col-md-6 col-12 mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="cfDelegante"
+                  id="cfDelegante"
+                  maxlength="16"
+                />
+                <div
+                  *ngIf="
+                    delegaForm.controls['cfDelegante'].invalid &&
+                    (delegaForm.controls['cfDelegante'].dirty ||
+                      delegaForm.controls['cfDelegante'].touched)
+                  "
+                  class="alert alert-danger"
+                >
+                  <div
+                    *ngIf="delegaForm.controls['cfDelegante'].errors.required"
+                  >
+                    Attenzione! Campo obbligatorio
+                  </div>
+                  <div
+                    *ngIf="delegaForm.controls['cfDelegante'].errors.cfOrPiva"
+                  >
+                    Attenzione! Il valore del campo deve essere di 11 oppure di
+                    16 caratteri
+                  </div>
+                  <div
+                    *ngIf="
+                      delegaForm.controls['cfDelegante'].errors.codiceFiscale
+                    "
+                  >
+                    Attenzione! Il codice fiscale ha un formato non valido
+                  </div>
+                  <div
+                    *ngIf="delegaForm.controls['cfDelegante'].errors.partitaIva"
+                  >
+                    Attenzione! La partita IVA ha un formato non valido
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <label for="dataFine" class="font-weight-bold"
+                  >Data scadenza <span class="text-danger">*</span></label
+                >
+              </div>
+              <div class="col-lg-6 col-md-6 col-12 mb-3">
+                <p-calendar
+                  [locale]="it"
+                  [yearNavigator]="true"
+                  yearRange="{{ currentYear }}:{{ currentYear + 5 }}"
+                  [monthNavigator]="true"
+                  [minDate]="tomorrow"
+                  dateFormat="dd-mm-yy"
+                  inputId="dataFine"
+                  formControlName="dataFine"
+                  [style]="{ width: '100%' }"
+                  [inputStyle]="{ width: '93%' }"
+                  showButtonBar="true"
+                  [showIcon]="true"
+                >
+                </p-calendar>
+                <div
+                  *ngIf="
+                    delegaForm.controls['dataFine'].invalid &&
+                    (delegaForm.controls['dataFine'].dirty ||
+                      delegaForm.controls['dataFine'].touched)
+                  "
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="delegaForm.controls['dataFine'].errors.required">
+                    Attenzione! Campo obbligatorio
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <label for="file" class="font-weight-bold"
+                  >Delega firmata <span class="text-danger">*</span></label
+                >
+              </div>
+              <div class="col-lg-12 col-md-6 col-12 mb-3">
+                <!-- <input type="file" id="fiscale" 
+                maxFileSize="1000000" (change)="handleFileInput($event.target.files)"
+                customUpload="false"> -->
+
+                <p-fileUpload
+                  [showUploadButton]="false"
+                  [showCancelButton]="false"
+                  id="fileUpload_106"
+                  chooseLabel="Scegli file"
+                  (onSelect)="onFileUpload($event)"
+                  (onRemove)="onFileRemove($event)"
+                  name="image"
+                  accept=".pdf,.p7m"
+                  maxFileSize="50000000"
+                  customUpload="true"
+                  (uploadHandler)="handleFileInput($event)"
+                  [styleClass]="'mb-3'"
+                ></p-fileUpload>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="col-md-12 text-center">
+          <p-button
+            [styleClass]="
+              'mr-2 f-18 font-weight-bold form-button  justify-content-between'
+            "
+            label="ANNULLA"
+            (onClick)="annullaEditDelega()"
+          ></p-button>
+          <p-button
+            [styleClass]="
+              'mr-2 f-18 font-weight-bold form-button  justify-content-between'
+            "
+            label="SALVA"
+            (onClick)="saveDelega()"
+            [disabled]="delegaForm.invalid || !fileToUpload"
+          ></p-button>
+        </div>
+      </div>
+    </p-dialog>
+
+    <p-dialog
+      header="Modifica "
+      [(visible)]="display"
+      [contentStyle]="{ 'max-height': '600px' }"
+      [transitionOptions]="'0ms'"
+      [modal]="true"
+      [closeOnEscape]="false"
+      (onHide)="onHide()"
+    >
+      <p-header> Errore </p-header>
+      <h3 class="red">Codice Fiscale non valido</h3>
+      <p-footer>
+        <p-button
+          (click)="close()"
+          label="Chiudi"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+        ></p-button>
+      </p-footer>
+    </p-dialog>
+  </div>
+</div>
+<app-home-persona-form
+  *ngIf="datiPersonaliForm"
+  [personHome]="personHome"
+  (emitCompleted)="setCompleted($event)"
+>
+</app-home-persona-form>
+<div *ngIf="userRole === 'BO'">
+  <app-search-in-arhive (homeNavigationEmitter)="returnToHome()">
+  </app-search-in-arhive>
+</div>
+<p-overlayPanel #op [showCloseIcon]="true" [style]="{ width: '450px' }">
+  <p>{{ dialogText }}</p>
+</p-overlayPanel>

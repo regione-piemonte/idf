@@ -1,0 +1,384 @@
+<div *ngIf="!boModificaOn">
+  <h5 class="light-bottom-border font-weight-bold hai-selezionato">Hai selezionato:</h5>
+
+    <div class="grey1">
+      <app-selezionato-tagli></app-selezionato-tagli>
+      <div class="selection f-15" *ngIf="newPlan">Inserisci nuova</div>
+    </div>
+      <div class="d-flex justify-content-between buttons ng-star-inserted mt-3">
+
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna a elenco istanze"
+            icon="fa fa-fast-backward fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="goVisualizza()"
+          ></p-button>
+
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna alla home"
+            icon="fa fa-home fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="goHome()"
+          ></p-button>
+
+      </div>
+
+</div>
+<div class="col-12 col-md-12 col-lg-12 col-xl-12" *ngIf="boModificaOn">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col text-left mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna all'elenco risultati"
+            icon="fa fa-fast-backward fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="returnToArhiveList()"
+          ></p-button>
+        </div>
+        <div class="col text-right mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna alla home"
+            icon="fa fa-home fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="goHome()"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="black-hr" />
+<div class="nav nav-tabs wizard d-flex justify-content-center" [ngClass]="{'disabledALL': modificaModeOn}">
+  <p-steps
+    [model]="items"
+    [readonly]="false"
+    [(activeIndex)]="activeIndex"
+    (activeIndexChange)="onChangeStep($event)"
+    styleClass="steps-custom"
+  ></p-steps>
+</div>
+<div *ngIf="modificaModeOn && !viewModeOn">
+  <div class="alert alert-warning" role="alert">Scheda incompleta. Per poter effettuare l’invio è necessario completare la sezione corrente e le eventuali successive sezioni evidenziate in giallo </div>
+  <div class="pbutton d-flex justify-content-center" style="margin-top: 1rem;">
+  <p-button (onClick)="backward()" [styleClass]="'conferma'" label="Procedi"></p-button>
+</div>
+</div>
+<div *ngIf="boModificaOn">
+  <div *ngIf="!isCompleted && istanzaInviata && !istanzaInviata.dataInvio">
+    <div class="alert alert-warning" role="alert">Scheda non inviata.</div>
+  </div>
+  <div *ngIf="false && personaOwner !== undefined && instanzaOwnership === 'Professionista'" class="persona-ric-wrapper">
+    <div class="row mt-3">
+      <div class="col">
+        <span class="font-weight-bold mt-2">Professionista</span>
+      </div>
+      <div class="col" style="text-align: end;">
+        <p-button (click)="getAllProfessionals($event)" label="Modificare soggeto"></p-button>
+      </div>
+    </div>
+    <div class="row" style="width: 100%; margin: auto; margin-bottom: 2rem;">
+      <div class="col">
+        <label for="codiceFiscale" class="font-weight-bold">Codice fiscale <span class="text-danger">*</span></label>
+        <p-dropdown [ngClass]="{'disabledALL': editProfessionista }" [options]='allProfessionals' (onChange)="changeOwner($event)"
+          autoHighlight="true" inputId="codiceFiscale" [styleClass]="'autoComplete form-control d-flex justify-content-end'">
+      </p-dropdown>
+      </div>
+      <div class="col" [ngClass]="{'disabledALL': instanzaOwnership === 'Professionista'}">
+        <label for="nome" class="font-weight-bold">Nome</label>
+        <input class="form-control" type="text" id="nome" value="{{personaOwner.richNome}}">
+      </div>
+      <div class="col" [ngClass]="{'disabledALL': instanzaOwnership === 'Professionista'}">
+        <label for="cognome" class="font-weight-bold">Cognome</label>
+        <input class="form-control" type="text" id="cognome" value="{{personaOwner.richCognome}}">
+      </div>
+    </div>
+  </div>
+  <div *ngIf="false && personaOwner !== undefined && instanzaOwnership === 'Richiedente'" class="persona-ric-wrapper" [ngClass]="{'disabledALL': instanzaOwnership === 'Richiedente'}">
+    <div class="row" style="margin: auto;">
+      <span class="font-weight-bold mt-2">Richiedente</span>
+    </div>
+    <div class="row" style="width: 100%; margin: auto; margin-bottom: 2rem;">
+      <div class="col">
+        <label for="codiceFiscale" class="font-weight-bold">Codice Fiscale</label>
+        <input class="form-control" type="text" id="codiceFiscale" value="{{personaOwner.richCodiceFiscale}}">
+      </div>
+      <div class="col">
+        <label for="nome" class="font-weight-bold">Nome</label>
+        <input class="form-control" type="text" id="nome" value="{{personaOwner.richNome}}">
+      </div>
+      <div class="col">
+        <label for="cognome" class="font-weight-bold">Cognome</label>
+        <input class="form-control" type="text" id="cognome" value="{{personaOwner.richCognome}}">
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="istanzaInviata && istanzaInviata.fkStatoIstanza < 3 && user && user.ruolo != 5">
+    <div class="col-md">
+      <label for="uploadDocuments" class="font-weight-bold">Associare ulteriori documenti.</label>
+      <p-fileUpload
+        chooseLabel='Scegli file'
+        uploadLabel='Carica'
+        cancelLabel='Cancella'
+        name="image"
+        maxFileSize="50000000"
+        customUpload="true"
+        [styleClass]="'mb-3'"
+        id="uploadDocuments"
+        (uploadHandler)="upload($event, 39)"
+        >
+      </p-fileUpload>
+    </div>
+  </div>
+  <div *ngIf="tableData && tableData.length > 0 && istanzaInviata.fkStatoIstanza == 2; else nodata">
+    <label for="elanco" class="font-weight-bold">ELENCO ALLEGATI CARICATI DAL GESTORE</label>
+      <app-reusable-front-table
+        id="elanco"
+        [data]="tableData"
+        [headers]="allegatiTableHeaders"
+        [fieldToDelete]="'idDocumentoAllegato'"
+        (deleteRow)="fieldToDelete($event, 'elenco')"
+<<<<<<< HEAD
+        [delete]="true"
+        [fieldToDownload]="'idDocumentoAllegato'"
+        (downloadEmitter)="fieldToDownload($event)"
+        [download]="true">
+=======
+        [delete]="toDelete()">
+>>>>>>> c5a60897912a71e7c15e182fb9dbd99995249ca1
+      </app-reusable-front-table>
+  </div>
+  <div style="margin: auto; text-align: center;">
+    <label for="" class="font-weight-bold d-block">
+      <span class="invisible">invisible</span>
+    </label>
+  </div>
+  <div *ngIf='!boFinishedAssociareDocumenti'>
+    <h4 class="header" class="font-weight-bold mt-3 mb-3" style=" text-align: center;">Documenti aggiuntivi sono associati.</h4>
+  </div>
+  <div class="pbutton d-flex justify-content-center" style="margin-top: 1rem;"
+    *ngIf="istanzaInviata && istanzaInviata.fkStatoIstanza == 2 && user && user.ruolo != 5">
+    <p-button *ngIf="istanzaInviata.fkTipoIstanza === 2" (click)="verificaIstanza()" [disabled]="!istanzaInviata || istanzaInviata.fkStatoIstanza != 2" [styleClass]="'mr-2 f-18 font-weight-bold form-button'" label="Verificata e accolta"></p-button>
+    <p-button *ngIf="istanzaInviata.fkTipoIstanza === 3" (click)="autorizzaIstanza()" [disabled]="!istanzaInviata || istanzaInviata.fkStatoIstanza != 2" [styleClass]="'mr-2 f-18 font-weight-bold form-button'" label="Autorizzata"></p-button>
+    <p-button *ngIf="istanzaInviata.fkTipoIstanza === 2" (click)="onRifiutataClick()" [disabled]="!istanzaInviata || istanzaInviata.fkStatoIstanza != 2" [styleClass]="'mr-2 f-18 font-weight-bold form-button'" label="Verificata e negata"></p-button>
+    <p-button *ngIf="istanzaInviata.fkTipoIstanza === 3" (click)="onRifiutataClick()" [disabled]="!istanzaInviata || istanzaInviata.fkStatoIstanza != 2" [styleClass]="'mr-2 f-18 font-weight-bold form-button'" label="Non autorizzata"></p-button>
+  </div>
+</div>
+
+<div class="card" *ngIf="!modificaModeOn">
+  <app-dynamic-header-tagli [activeIndex]="activeIndex"></app-dynamic-header-tagli>
+  <div [ngClass]="{'disabledALL': viewModeOn}">
+    <step1-tagli
+      *ngIf="activeIndex === 0"
+      (emitNextStep)="setActiveIndex()"
+      [editMode] = "editMode"
+      [boMode] = "boModificaOn"
+      [isIstanzaInviata] = "isIstanzaInviata"
+      (emitIdIstanze)="setIdIstanze($event)"
+    ></step1-tagli>
+    <ng-container *ngIf="secondFormData$ | async as secondFormData">
+      <step2-tagli
+        *ngIf="activeIndex === 1"
+        [editMode]="editMode"
+        [secondFormData]="secondFormData"
+        [boMode] = "boModificaOn"
+        [isIstanzaInviata] = "isIstanzaInviata"
+        (emitNextStep)="setActiveIndex()">
+      </step2-tagli>
+    </ng-container>
+    <ng-container *ngIf="thirdFormData$ | async as thirdFormData">
+      <step3-tagli
+        *ngIf="activeIndex === 2"
+        [editMode]="editMode"
+        [boMode] = "boModificaOn"
+        [isIstanzaInviata] = "isIstanzaInviata"
+        [thirdFormData]="thirdFormData"
+        (emitNextStep)="setActiveIndex()"
+      ></step3-tagli>
+      </ng-container>
+    <ng-container *ngIf="fourthFormData$ | async as fourthFormData">
+      <step4-tagli
+        *ngIf="activeIndex === 3"
+        [editMode]="editMode"
+        [boMode] = "boModificaOn"
+        [isIstanzaInviata] = "isIstanzaInviata"
+        [fourthFormData]="fourthFormData"
+        (nextStepEmitter)="setActiveIndex()"
+      ></step4-tagli>
+    </ng-container>
+    <ng-container *ngIf="fifthFormData$ | async as fifthFormData">
+      <step5-tagli
+        *ngIf="activeIndex === 4"
+        [editMode]="editMode"
+        [boMode] = "boModificaOn"
+        [isIstanzaInviata] = "isIstanzaInviata"
+        [fifthFormData]="fifthFormData"
+        (nextStepEmitter)="setActiveIndex()"
+      ></step5-tagli>
+    </ng-container>
+  </div>
+  <ng-container>
+    <app-signature-tagli *ngIf="activeIndex === 5 && istanzaInviata"
+      (emitCompleted)="setCompleted($event)"
+      [editMode]="editMode"
+      [viewMode]="viewModeOn"
+      [activeIndex]="activeIndex"
+      [boMode]="boModificaOn"
+      [istanzaInviata]="istanzaInviata"
+      [boOperatingEnabled]="boOperatingEnabled"
+      [idTipoRichiedente]="idTipoRichiedente"
+      [user]="user"
+    ></app-signature-tagli>
+  </ng-container>
+</div>
+<div *ngIf="istanzaInviata && istanzaInviata.dataInvio && activeIndex < 5">
+  <p-button style="padding-bottom: 5px;" (click)="mostraDettaglioFinale()"
+    label="Torna a dettaglio iniziale" [styleClass]="'mr-2 f-18 font-weight-bold form-button'">
+  </p-button>
+</div>
+
+
+<p-dialog header="" [(visible)]="filePopUp" [contentStyle]="{'max-height':'600px'}" [transitionOptions]="'0ms'"
+  [modal]="true" [closeOnEscape]="true">
+  <p-header>
+    Errore
+  </p-header>
+  <h5 class='red'>Il nome del file esiste già! Cambia il nome del file o elimina quello vecchio dalla tabella.</h5>
+  <p-footer>
+    <p-button (click)="closeDialog()" label="Chiudi" [styleClass]="'mr-2 f-18 font-weight-bold form-button'"></p-button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog header="" [(visible)]="rifiutoPupUp" [contentStyle]="{'max-height':'600px'}" [transitionOptions]="'0ms'"
+  [modal]="true">
+  <p-header>
+    <b>Motivazione rifiuto </b>(almeno 20 caratteri)
+  </p-header>
+  <textarea (keyup)="onMotivoRifiutoChange($event)" id="w3review" name="w3review"
+      maxlength="1990" rows="4" cols="50">
+  </textarea>
+  <p-footer>
+    <p-button (click)="rifiutataIstanza()" label="Conferma" [disabled]="disabledRifiuto()"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"></p-button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="" [(visible)]="autorizzaPopUp"  [transitionOptions]="'0ms'" [modal]="true" [closeOnEscape]="true">
+  <p-header>
+    Autorizza
+  </p-header>
+  <div *ngIf="autorizzaForm" [formGroup]="autorizzaForm" style="width: 1000px; height: 600px;">
+    <div class="grey-form" >
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label for="dataVerifica" class="row-lg-6 col-form-label font-weight-bold">
+            Data autorizzazione
+          </label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <p-calendar
+            [yearNavigator]="true"
+            [locale]="it"
+            [monthNavigator]="true"
+            yearRange="1970:{{ currentYear }}"
+            dateFormat="dd-mm-yy"
+            id="dataVerifica"
+            formControlName="dataVerifica"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+            showButtonBar="true" [showIcon]="true">
+          </p-calendar>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label for="nrDeterminaAutoriz" class="row-lg-6 col-form-label font-weight-bold">
+            Numero determina autorizzazione
+          </label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <input type="text" formControlName="nrDeterminaAutoriz" class="form-control"
+            id="nrDeterminaAutoriz" maxlength="20">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label for="dataTermineAut" class="row-lg-6 col-form-label font-weight-bold">
+            Data scadenza provvedimento
+          </label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <p-calendar
+            (onSelect)="onChangeDataTermineAut()"
+            [yearNavigator]="true"
+            [locale]="it"
+            [monthNavigator]="true"
+            yearRange="{{currentYear}}:{{ currentYear + 10 }}"
+            dateFormat="dd-mm-yy"
+            id="dataTermineAut"
+            formControlName="dataTermineAut"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+            showButtonBar="true" [showIcon]="true">
+          </p-calendar>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-12 mb-3"></div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <input type="checkbox" formControlName="definitaNelProvvedimentoUnicoFinale"
+            id="definitaNelProvvedimentoUnicoFinale" (change)="onChangeCheckboxDefinitaData()">
+          <label for="definitaNelProvvedimentoUnicoFinale" style="padding-left: 15px;"
+            class="row-lg-6 col-form-label font-weight-bold">
+            definita nel provvedimento unico finale
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label for="dataFineIntervento" class="row-lg-6 col-form-label font-weight-bold">
+            Data termine intervento (opzionale)
+          </label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <p-calendar
+            [yearNavigator]="true"
+            [locale]="it"
+            [monthNavigator]="true"
+            yearRange="{{currentYear}}:{{ currentYear + 10 }}"
+            dateFormat="dd-mm-yy"
+            id="dataFineIntervento"
+            formControlName="dataFineIntervento"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+            showButtonBar="true" [showIcon]="true">
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+
+    <div class="pbutton d-flex justify-content-center" style="margin-top: 1rem;">
+      <p-button (click)="confermaAutorizzazione()"
+        label="Conferma autorizzazione" style="margin-top: 10px;" [disabled]="!isAutorizzaFormValid()"
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'">
+      </p-button>
+    </div>
+  </div>
+  <p-footer>
+    <p-button (click)="closeAutorizzazione()" label="Chiudi" [styleClass]="'mr-2 f-18 font-weight-bold form-button'"></p-button>
+  </p-footer>
+</p-dialog>
+
+
+

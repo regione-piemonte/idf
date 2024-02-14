@@ -1,0 +1,1691 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<h3 class="header mt-5">Ricerca istanze in archivio</h3>
+<div class="row" *ngIf="searchForm && !showArhive">
+  <div class="col-md-12 my-4" [formGroup]="searchForm">
+    <div class="grey-form">
+      <div class="text-right mt-3 mb-3">
+        <p-button
+          [styleClass]="'mr-0 f-18 font-weight-bold form-outline-button'"
+          label="Pulisci"
+          (onClick)="resetForm()"
+        ></p-button>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-7 col-md-6 col-12 mb-3">
+          <label for="tipologiaIstanza" class="font-weight-bold"
+            >Tipologia di istanza</label
+          >
+          <p-dropdown
+            [options]="tipologiaIstanza"
+            [optionLabel]="'descrDettTipoIstanza'"
+            formControlName="tipologiaIstanza"
+            dataKey="idTipoIstanza"
+            autoHighlight="true"
+            inputId="tipologiaIstanza"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+            (onChange)="tipologiaIstanzaChange()"
+          ></p-dropdown>
+
+          <div
+            *ngIf="
+              searchForm.controls['tipologiaIstanza'].invalid &&
+              (searchForm.controls['tipologiaIstanza'].dirty ||
+                searchForm.controls['tipologiaIstanza'].touched)
+            "
+            class="alert alert-danger"
+          ></div>
+        </div>
+        <div class="col-lg-5 col-md-6 col-12 mb-3">
+          <label for="numeroIstanza" class="font-weight-bold"
+            >Numero istanza</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="numeroIstanza"
+            id="numeroIstanza"
+          />
+          <div
+            *ngIf="
+              searchForm.controls['numeroIstanza'].invalid &&
+              (searchForm.controls['numeroIstanza'].dirty ||
+                searchForm.controls['numeroIstanza'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['numeroIstanza'].errors.pattern">
+              Attenzione! Il campo deve essere numerico
+            </div>
+            <div *ngIf="searchForm.controls['numeroIstanza'].errors.maxlength">
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6 col-12 mb-3">
+          <label for="statoIstanza" class="font-weight-bold"
+            >Stato istanza</label
+          >
+          <p-dropdown
+            [options]="statoIstanza"
+            [optionLabel]="'descrStatoIstanza'"
+            formControlName="statoIstanza"
+            dataKey="idStatoIstanza"
+            [autoDisplayFirst]="false"
+            [showClear]="true"
+            autoHighlight="true"
+            inputId="statoIstanza"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          ></p-dropdown>
+        </div>
+        <div class="col-lg-5 col-md-6 col-12 mb-3">
+          <label for="annoIstanza" class="font-weight-bold">Anno istanza</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="annoIstanza"
+            id="annoIstanza"
+          />
+          <div
+            *ngIf="
+              searchForm.controls['annoIstanza'].invalid &&
+              (searchForm.controls['annoIstanza'].dirty ||
+                searchForm.controls['annoIstanza'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['annoIstanza'].errors.pattern">
+              <div
+                *ngIf="
+                  searchForm.controls['annoIstanza'].value.length !== 4;
+                  else is_equal_to_four
+                "
+              >
+                Attenzione! L'anno deve avere quattro numeri
+              </div>
+              <ng-template #is_equal_to_four>
+                <div
+                  *ngIf="
+                    searchForm.controls['annoIstanza'].value < 1900 ||
+                      searchForm.controls['annoIstanza'].value > 2199;
+                    else not_number
+                  "
+                >
+                  Attenzione! Il campo deve essere numerico tra 1900 e 2199
+                </div>
+                <ng-template #not_number>
+                  Attenzione! Il campo deve essere numerico
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-12">
+          <label class="font-weight-bold">Data presentazione</label>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="dataPresentazioneDa"
+              >Da
+            </label>
+            <p-calendar
+              class="col-lg-8 col-md-8 col-8 pl-0"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              yearRange="1970:{{ currentYear }}"
+              dateFormat="dd-mm-yy"
+              inputId="dataPresentazioneDa"
+              formControlName="dataPresentazioneDa"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              showButtonBar="true"
+              [showIcon]="true"
+              (onSelect)="checkFromToValitation('dataPresentazione', 'date')"
+            >
+            </p-calendar>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="dataPresentazioneA"
+              >A
+            </label>
+            <p-calendar
+              class="col-lg-8 col-md-8 col-8 pl-0"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              yearRange="1970:{{ currentYear }}"
+              dateFormat="dd-mm-yy"
+              inputId="dataPresentazioneA"
+              formControlName="dataPresentazioneA"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              showButtonBar="true"
+              [showIcon]="true"
+              (onSelect)="checkFromToValitation('dataPresentazione', 'date')"
+            >
+            </p-calendar>
+          </div>
+        </div>
+        <div
+          *ngIf="!dataPresentazioneValidation"
+          class="alert alert-danger col-lg-12 col-md-12 col-12 mb-3"
+        >
+          Attenzione! Primo campo deve avere un valore inferiore rispetto al
+          secondo campo
+        </div>
+      </div>
+
+      <hr *ngIf="isIstanzaTagli" />
+      <div class="row" *ngIf="isIstanzaTagli">
+        <div class="col-lg-7 col-md-6 col-12 mb-3">
+          <label for="tipoIstanzaTaglio" class="font-weight-bold"
+            >Tipo istanza taglio</label
+          >
+          <p-dropdown
+            [options]="tipoIstanzaTaglio"
+            [optionLabel]="'descrDettTipoIstanza'"
+            formControlName="tipoIstanzaTaglio"
+            dataKey="idTipoIstanza"
+            [autoDisplayFirst]="false"
+            [showClear]="true"
+            autoHighlight="true"
+            inputId="tipoIstanzaTaglio"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          >
+          </p-dropdown>
+
+          <div
+            *ngIf="
+              searchForm.controls['tipoIstanzaTaglio'].invalid &&
+              (searchForm.controls['tipoIstanzaTaglio'].dirty ||
+                searchForm.controls['tipoIstanzaTaglio'].touched)
+            "
+            class="alert alert-danger"
+          ></div>
+        </div>
+        <div class="col-lg-5 col-md-6 col-12 mb-3">
+          <label for="descrizione" class="font-weight-bold">Descrizione</label>
+          <textarea
+            type="text"
+            class="form-control"
+            formControlName="descrizione"
+            id="descrizione"
+          >
+          </textarea>
+          <div
+            *ngIf="
+              searchForm.controls['descrizione'].invalid &&
+              (searchForm.controls['descrizione'].dirty ||
+                searchForm.controls['descrizione'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['descrizione'].errors.minlength">
+              Attenzione! La stringa digitata deve essere di alemno 3 caratteri
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr *ngIf="isIstanzaTagli" />
+      <div
+        class="row"
+        *ngIf="tipoIstanza == 4 || tipoIstanza == 5 || isIstanzaTagli"
+      >
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="annoAutorizzazione" class="font-weight-bold"
+            >Anno autorizzazione</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="annoAutorizzazione"
+            id="annoAutorizzazione"
+          />
+          <div
+            *ngIf="
+              searchForm.controls['annoAutorizzazione'].invalid &&
+              (searchForm.controls['annoAutorizzazione'].dirty ||
+                searchForm.controls['annoIstanza'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="searchForm.controls['annoAutorizzazione'].errors.pattern"
+            >
+              <div
+                *ngIf="
+                  searchForm.controls['annoAutorizzazione'].value.length !== 4;
+                  else is_equal_to_four
+                "
+              >
+                Attenzione! L'anno deve avere quattro numeri
+              </div>
+              <ng-template #is_equal_to_four>
+                <div
+                  *ngIf="
+                    searchForm.controls['annoAutorizzazione'].value < 1900 ||
+                      searchForm.controls['annoAutorizzazione'].value > 2199;
+                    else not_number
+                  "
+                >
+                  Attenzione! Il campo deve essere numerico tra 1900 e 2199
+                </div>
+                <ng-template #not_number>
+                  Attenzione! Il campo deve essere numerico
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="numAutorizzazione" class="font-weight-bold"
+            >N. det. di autorizzazione</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="numAutorizzazione"
+            id="numAutorizzazione"
+          />
+          <div
+            *ngIf="
+              searchForm.controls['numAutorizzazione'].invalid &&
+              (searchForm.controls['numAutorizzazione'].dirty ||
+                searchForm.controls['numAutorizzazione'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="searchForm.controls['numAutorizzazione'].errors.maxlength"
+            >
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        *ngIf="tipoIstanza == 4 || tipoIstanza == 5 || isIstanzaTagli"
+      >
+        <div class="col-lg-12 col-md-12 col-12">
+          <label class="font-weight-bold">Data scadenza provvedimento</label>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="dataScadenzaProvDa"
+              >Da
+            </label>
+            <p-calendar
+              class="col-lg-8 col-md-8 col-8 pl-0"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              yearRange="1970:{{ currentYear + 10 }}"
+              dateFormat="dd-mm-yy"
+              inputId="dataScadenzaProvDa"
+              formControlName="dataScadenzaProvDa"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              showButtonBar="true"
+              [showIcon]="true"
+              (onSelect)="checkFromToValitation('dataScadenzaProv', 'date')"
+            >
+            </p-calendar>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="dataScadenzaProvA"
+              >A
+            </label>
+            <p-calendar
+              class="col-lg-8 col-md-8 col-8 pl-0"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              yearRange="1970:{{ currentYear + 10 }}"
+              dateFormat="dd-mm-yy"
+              inputId="dataScadenzaProvA"
+              formControlName="dataScadenzaProvA"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              showButtonBar="true"
+              [showIcon]="true"
+              (onSelect)="checkFromToValitation('dataScadenzaProv', 'date')"
+            >
+            </p-calendar>
+          </div>
+        </div>
+        <div
+          *ngIf="!dataScadenzaProvValidation"
+          class="alert alert-danger col-lg-12 col-md-12 col-12 mb-3"
+        >
+          Attenzione! Primo campo deve avere un valore inferiore rispetto al
+          secondo campo
+        </div>
+      </div>
+
+      <div
+        class="row"
+        *ngIf="tipoIstanza == 4 || tipoIstanza == 5 || isIstanzaTagli"
+      >
+        <div class="col-lg-12 col-md-12 col-12">
+          <label class="font-weight-bold">Data conclusione intervento</label>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="dataConclusioneIntervDa"
+              >Da
+            </label>
+            <p-calendar
+              class="col-lg-8 col-md-8 col-8 pl-0"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              yearRange="1970:{{ currentYear + 10 }}"
+              dateFormat="dd-mm-yy"
+              inputId="dataConclusioneIntervDa"
+              formControlName="dataConclusioneIntervDa"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              showButtonBar="true"
+              [showIcon]="true"
+              (onSelect)="
+                checkFromToValitation('dataConclusioneInterv', 'date')
+              "
+            >
+            </p-calendar>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="dataConclusioneIntervA"
+              >A
+            </label>
+            <p-calendar
+              class="col-lg-8 col-md-8 col-8 pl-0"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              yearRange="1970:{{ currentYear + 10 }}"
+              dateFormat="dd-mm-yy"
+              inputId="dataConclusioneIntervA"
+              formControlName="dataConclusioneIntervA"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              showButtonBar="true"
+              [showIcon]="true"
+              (onSelect)="
+                checkFromToValitation('dataConclusioneInterv', 'date')
+              "
+            >
+            </p-calendar>
+          </div>
+        </div>
+        <div
+          *ngIf="!dataConclusioneIntervValidation"
+          class="alert alert-danger col-lg-12 col-md-12 col-12 mb-3"
+        >
+          Attenzione! Primo campo deve avere un valore inferiore rispetto al
+          secondo campo
+        </div>
+      </div>
+
+      <hr *ngIf="isIstanzaTagli" />
+      <div class="row" *ngIf="isIstanzaTagli">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="categoriaInterventoSelvicolturale"
+            class="font-weight-bold"
+            >Categoria Intervento Selvicolturale</label
+          >
+          <p-dropdown
+            [options]="categorieInterventoSelvicolturale"
+            [optionLabel]="'descrCategoriaSelvicolturale'"
+            formControlName="categoriaInterventoSelvicolturale"
+            dataKey="categoriaInterventoSelvicolturale"
+            [autoDisplayFirst]="false"
+            [showClear]="true"
+            autoHighlight="true"
+            inputId="categoriaInterventoSelvicolturale"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          >
+          </p-dropdown>
+
+          <div
+            *ngIf="
+              searchForm.controls['categoriaInterventoSelvicolturale']
+                .invalid &&
+              (searchForm.controls['categoriaInterventoSelvicolturale'].dirty ||
+                searchForm.controls['categoriaInterventoSelvicolturale']
+                  .touched)
+            "
+            class="alert alert-danger"
+          ></div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="proprieta" class="font-weight-bold">Proprieta</label>
+          <p-dropdown
+            [options]="proprieta"
+            [optionLabel]="'descrProprieta'"
+            formControlName="proprieta"
+            dataKey="idProprieta"
+            autoHighlight="true"
+            inputId="proprieta"
+            [autoDisplayFirst]="false"
+            [showClear]="true"
+            autoHighlight="true"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          >
+          </p-dropdown>
+
+          <div
+            *ngIf="
+              searchForm.controls['proprieta'].invalid &&
+              (searchForm.controls['proprieta'].dirty ||
+                searchForm.controls['proprieta'].touched)
+            "
+            class="alert alert-danger"
+          ></div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="formaGoverno"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Forma di Governo
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="formaGoverno"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              inputid="formaGoverno"
+              [suggestions]="formaGoverno"
+              (completeMethod)="filterGovernoSelv($event)"
+              (onSelect)="changeGovernoSelv($event)"
+              (onClear)="clearGovernoSelv($event)"
+              [minLength]="3"
+              [dropdown]="true"
+              type="search"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descrGoverno"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="tipoInterventoSelvicolturale"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Tipo Intervento Selvicolturale
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="tipoInterventoSelvicolturale"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              inputid="tipoInterventoSelvicolturale"
+              [suggestions]="tipoInterventoSelvicolturale"
+              (completeMethod)="filterTipiInterventoSelv($event)"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              type="search"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descrTipoIntervento"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="statoInterventoSelvicolturale"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Stato Intervento Selvicolturale
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="statoInterventoSelvicolturale"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              inputid="statoInterventoSelvicolturale"
+              [suggestions]="statoInterventoSelvicolturale"
+              (completeMethod)="filterStatoInterventoSelv($event)"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              type="search"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descrStatoIntervento"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="provincia"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Provincia
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="provincia"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              type="search"
+              [suggestions]="provincia"
+              (completeMethod)="filterProvincia($event)"
+              inputId="provincia"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="denominazioneProv"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+              (onSelect)="onChangeDropdownValue('select', ['comune'])"
+              (onClear)="onChangeDropdownValue('clear', ['comune'])"
+            >
+            </p-autoComplete>
+          </div>
+          <div
+            *ngIf="
+              searchForm.controls['provincia'].invalid &&
+              (searchForm.controls['provincia'].dirty ||
+                searchForm.controls['provincia'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['provincia'].errors.maxlength">
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="comune" class="row-lg-6 col-form-label font-weight-bold"
+            >Comune
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="comune"
+              autoHighlight="true"
+              [suggestions]="comune"
+              (completeMethod)="filterComune($event)"
+              inputId="comune"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="denominazioneComune"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+              type="search"
+              (onSelect)="
+                onChangeDropdownValue('select', [
+                  'sezione',
+                  'foglio',
+                  'particella'
+                ])
+              "
+              (onClear)="
+                onChangeDropdownValue('clear', [
+                  'sezione',
+                  'foglio',
+                  'particella'
+                ])
+              "
+            >
+            </p-autoComplete>
+          </div>
+          <div
+            *ngIf="
+              searchForm.controls['comune'].invalid &&
+              (searchForm.controls['comune'].dirty ||
+                searchForm.controls['comune'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['comune'].errors.maxlength">
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label class="row-lg-6 col-form-label font-weight-bold" for="sezione"
+            >Sezione
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="sezione"
+              autoHighlight="true"
+              [suggestions]="sezione"
+              (completeMethod)="filterSezione($event)"
+              inputId="sezione"
+              [minLength]="1"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="value"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              (onClear)="cleanFields(['sezione', 'foglio', 'particella'])"
+              type="search"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+          <div
+            *ngIf="
+              searchForm.controls['sezione'].invalid &&
+              (searchForm.controls['sezione'].dirty ||
+                searchForm.controls['sezione'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['sezione'].errors.maxlength">
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label class="row-lg-6 col-form-label font-weight-bold" for="foglio"
+            >Foglio
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="foglio"
+              autoHighlight="true"
+              [suggestions]="foglio"
+              (completeMethod)="filterFoglio($event)"
+              inputId="foglio"
+              [minLength]="1"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="value"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              (onClear)="cleanFields(['foglio', 'particella'])"
+              type="search"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+          <div
+            *ngIf="
+              searchForm.controls['foglio'].invalid &&
+              (searchForm.controls['foglio'].dirty ||
+                searchForm.controls['foglio'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['foglio'].errors.maxlength">
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label
+            class="row-lg-6 col-form-label font-weight-bold"
+            for="particella"
+            >Particella
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="particella"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [suggestions]="particella"
+              (completeMethod)="filterParticella($event)"
+              inputId="particella"
+              [minLength]="1"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="value"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              (onClear)="cleanFields(['particella'])"
+              type="search"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+          <div
+            *ngIf="
+              searchForm.controls['particella'].invalid &&
+              (searchForm.controls['particella'].dirty ||
+                searchForm.controls['particella'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="searchForm.controls['particella'].errors.maxlength">
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row" *ngIf="!isIstanzaTagli">
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label
+            for="richiedentePF"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Richiedente (PF)
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="richiedentePF"
+              autoHighlight="true"
+              [suggestions]="richiedentePF"
+              (completeMethod)="filterRichiedentePF($event)"
+              inputId="richiedentePF"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('richiedentePF')"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label
+            for="richiedentePG"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Richiedente (PG)
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="richiedentePG"
+              autoHighlight="true"
+              [suggestions]="richiedentePG"
+              (completeMethod)="filterRichiedentePG($event)"
+              inputId="richiedentePG"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('richiedentePG')"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-12 mb-3" *ngIf="tipoIstanza == 1">
+          <label
+            for="professionista"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Professionista
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="professionista"
+              autoHighlight="true"
+              [suggestions]="professionista"
+              (completeMethod)="filterProfessionista($event)"
+              inputId="professionista"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('professionista')"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="isIstanzaTagli">
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label
+            for="tipoRichiedente"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Tipo Richiedente
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="tipoRichiedente"
+              autoHighlight="true"
+              [suggestions]="tipoRichiedente"
+              (completeMethod)="filterTipoRichiedente($event)"
+              inputId="tipoRichiedente"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              type="search"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descrTipoRichiedente"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label
+            for="richiedentePF"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Richiedente (PF)
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="richiedentePF"
+              autoHighlight="true"
+              [suggestions]="richiedentePF"
+              (completeMethod)="filterRichiedenteTagliPF($event)"
+              inputId="richiedentePF"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('richiedentePF')"
+              type="search"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label
+            for="richiedentePG"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Richiedente (PG)
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="richiedentePG"
+              autoHighlight="true"
+              [suggestions]="richiedentePG"
+              (completeMethod)="filterRichiedenteTagliPG($event)"
+              inputId="richiedentePG"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('richiedentePG')"
+              type="search"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="isIstanzaTagli">
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label
+            for="utilizzatorePF"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Utilizzatore (PF)
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="utilizzatorePF"
+              autoHighlight="true"
+              [suggestions]="utilizzatorePF"
+              (completeMethod)="filterUtilizzatorePF($event)"
+              inputId="utilizzatorePF"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('utilizzatorePF')"
+              type="search"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <label
+            for="utilizzatorePG"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Utilizzatore (PG)
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="utilizzatorePG"
+              autoHighlight="true"
+              [suggestions]="utilizzatorePG"
+              (completeMethod)="filterUtilizzatorePG($event)"
+              inputId="utilizzatorePG"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('utilizzatorePG')"
+              type="search"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-3">
+          <div class="row-lg-6">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                formControlName="utilizzatoreNonDefinito"
+                id="utilizzatoreNonDefinito"
+              />
+              <label
+                class="custom-control-label font-weight-bold checkbox"
+                for="utilizzatoreNonDefinito"
+                >Utilizzatore da Individuare</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 col-12 mb-3">
+          <label
+            for="professionista"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Tecnico Forestale
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="professionista"
+              autoHighlight="true"
+              [suggestions]="professionista"
+              (completeMethod)="filterTecniciForestali($event)"
+              inputId="professionista"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('professionista')"
+              type="search"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row-lg-6">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                formControlName="ricadenzaAAPP"
+                id="ricadenzaAAPP"
+              />
+              <label
+                class="custom-control-label font-weight-bold checkbox"
+                for="ricadenzaAAPP"
+                >Ricadenza in Aree Protette regionali
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row-lg-6">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                formControlName="ricadenzaRN2000"
+                id="ricadenzaRN2000"
+              />
+              <label
+                class="custom-control-label font-weight-bold checkbox"
+                for="ricadenzaRN2000"
+                >Ricadenza in siti della Rete Natura 2000
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row-lg-6">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                formControlName="ricadenzaPopSeme"
+                id="ricadenzaPopSeme"
+              />
+              <label
+                class="custom-control-label font-weight-bold checkbox"
+                for="ricadenzaPopSeme"
+                >Ricadenza in Popolamenti da Seme
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12 mb-3" *ngIf="tipoIstanza == 1">
+          <div class="row-lg-6">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                formControlName="ricadenzaVincIdro"
+                id="ricadenzaVincIdro"
+              />
+              <label
+                class="custom-control-label font-weight-bold checkbox"
+                for="ricadenzaVincIdro"
+                >Ricadenza in Vincolo Idrogeologico
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3" *ngIf="isIstanzaTagli">
+          <div class="row-lg-6">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                formControlName="ricadenzaPFA"
+                id="ricadenzaPFA"
+              />
+              <label
+                class="custom-control-label font-weight-bold checkbox"
+                for="ricadenzaPFA"
+                >Ricadenza in PGF
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row" *ngIf="isIstanzaTagli">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="categoriaForestale"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Categoria Forestale
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="categoriaForestale"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [suggestions]="categoriaForestale"
+              (completeMethod)="filterCategoriaForestaleTagli($event)"
+              inputId="categoriaForestale"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              type="search"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+      <hr *ngIf="isIstanzaTagli" />
+
+      <div
+        class="row"
+        *ngIf="tipoIstanza == 4 || tipoIstanza == 5 || isIstanzaTagli"
+      >
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="varianti" class="font-weight-bold">Varianti</label>
+          <select
+            formControlName="varianti"
+            class="'autoComplete form-control d-flex justify-content-end'"
+            id="varianti"
+          >
+            <option value="">-- Seleziona --</option>
+            <option value="cv">Autorizzazioni con varianti</option>
+            <option value="sv">Cerca solo varianti</option>
+          </select>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="proroghe" class="font-weight-bold">Proroghe</label>
+          <select
+            formControlName="proroghe"
+            class="'autoComplete form-control d-flex justify-content-end'"
+            id="proroghe"
+          >
+            <option value="">-- Seleziona --</option>
+            <option value="cp">Autorizzazioni con proroghe</option>
+            <option value="sp">Cerca solo proroghe</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="tipoIstanza == 4 || tipoIstanza == 5">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="compensazioneVincolo" class="font-weight-bold"
+            >Compensazione</label
+          >
+          <select
+            formControlName="compensazioneVincolo"
+            class="'autoComplete form-control d-flex justify-content-end'"
+            id="compensazioneVincolo"
+          >
+            <option value="">-- Seleziona --</option>
+            <option value="F">Fisica</option>
+            <option value="M">Monetaria</option>
+            <option value="N">Non necessaria</option>
+          </select>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="cauzione" class="font-weight-bold">Cauzione</label>
+          <select
+            formControlName="cauzione"
+            class="'autoComplete form-control d-flex justify-content-end'"
+            id="cauzione"
+          >
+            <option value="">-- Seleziona --</option>
+            <option value="S">Dovuta</option>
+            <option value="N">Non dovuta</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="tipoIstanza == 1">
+        <div class="col-lg-12 col-md-12 col-12 mb-3">
+          <label for="compensazione" class="font-weight-bold"
+            >Compensazione</label
+          >
+          <p-dropdown
+            [options]="compensazione"
+            [optionLabel]="'value'"
+            formControlName="compensazione"
+            [dataKey]="'value'"
+            [autoDisplayFirst]="false"
+            [showClear]="true"
+            inputId="compensazione"
+            autoHighlight="true"
+            inputId="compensazione"
+            [styleClass]="'autoComplete d-flex justify-content-end'"
+            (onChange)="updateNecessery()"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div
+        class="tab"
+        *ngIf="
+          this.searchForm.get('compensazione').value &&
+          this.searchForm.get('compensazione').value['value'] ===
+            'NON NECESSARIA'
+        "
+      >
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            formControlName="flgA"
+            id="flgA"
+          />
+          <label class="custom-control-label checkbox" for="flgA">
+            {{ checkboxText[0] }}</label
+          >
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            formControlName="flgB"
+            id="flgB"
+          />
+          <label class="custom-control-label checkbox" for="flgB">
+            {{ checkboxText[1] }}</label
+          >
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="flgC"
+            formControlName="flgC"
+          />
+          <label class="custom-control-label checkbox" for="flgC">
+            {{ checkboxText[2] }}</label
+          >
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            formControlName="flgD"
+            id="flgD"
+          />
+          <label class="custom-control-label checkbox" for="flgD">
+            {{ checkboxText[3] }}</label
+          >
+        </div>
+        <!--div-- class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input"
+            formControlName="flgDbis" id="flgDbis"/>
+          <label class="custom-control-label checkbox" for="flgDbis">
+            {{ checkboxText[4] }}</label>
+        </!--div-->
+      </div>
+      <hr *ngIf="tipoIstanza == 1" />
+
+      <div class="row" *ngIf="tipoIstanza == 1">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="formaGoverno"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Forma di Governo
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="formaGoverno"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              inputid="formaGoverno"
+              [suggestions]="formaGoverno"
+              (completeMethod)="filterFormaGoverno($event)"
+              inputId="formaGoverno"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descParametroTrasf"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="categoriaForestale"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Categoria Forestale
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="categoriaForestale"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [suggestions]="categoriaForestale"
+              (completeMethod)="filterCategoriaForestale($event)"
+              inputId="categoriaForestale"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descParametroTrasf"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="ubicazione"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Ubicazione
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="ubicazione"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [suggestions]="ubicazione"
+              (completeMethod)="filterUbicazione($event)"
+              inputId="ubicazione"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descParametroTrasf"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label
+            for="tipologiaTrasformazione"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Tipologia trasformazione
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="tipologiaTrasformazione"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [suggestions]="tipologiaTrasformazione"
+              (completeMethod)="filterTipologiaTrasformazione($event)"
+              inputId="tipologiaTrasformazione"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="descParametroTrasf"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+      <hr *ngIf="tipoIstanza == 1" />
+
+      <div class="row" *ngIf="tipoIstanza == 1">
+        <div class="col-lg-12 col-md-12 col-12">
+          <label class="font-weight-bold"
+            >Calcolo economico compensazione (euro)</label
+          >
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="calcoloEconomicoCompensiazioneDa"
+              >Da
+            </label>
+            <input
+              type="text"
+              id="calcoloEconomicoCompensiazioneDa"
+              class="form-control col-lg-8 col-md-8 col-8"
+              formControlName="calcoloEconomicoCompensiazioneDa"
+              (change)="
+                checkFromToValitation(
+                  'calcoloEconomicoCompensiazione',
+                  'moneta'
+                )
+              "
+            />
+            <div
+              *ngIf="
+                searchForm.controls['calcoloEconomicoCompensiazioneDa']
+                  .invalid &&
+                (searchForm.controls['calcoloEconomicoCompensiazioneDa']
+                  .dirty ||
+                  searchForm.controls['calcoloEconomicoCompensiazioneDa']
+                    .touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  searchForm.controls['calcoloEconomicoCompensiazioneDa'].errors
+                    .pattern
+                "
+              >
+                Attenzione! Modello per il numero non è buono
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row ml-0">
+            <label
+              class="col-lg-2 col-md-2 col-2 text-right mr-0"
+              for="calcoloEconomicoCompensiazioneA"
+              >A
+            </label>
+            <input
+              type="text"
+              id="calcoloEconomicoCompensiazioneA"
+              class="form-control col-lg-8 col-md-8 col-8"
+              formControlName="calcoloEconomicoCompensiazioneA"
+              (change)="
+                checkFromToValitation(
+                  'calcoloEconomicoCompensiazione',
+                  'moneta'
+                )
+              "
+            />
+            <div
+              *ngIf="
+                searchForm.controls['calcoloEconomicoCompensiazioneA']
+                  .invalid &&
+                (searchForm.controls['calcoloEconomicoCompensiazioneA'].dirty ||
+                  searchForm.controls['calcoloEconomicoCompensiazioneA']
+                    .touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  searchForm.controls['calcoloEconomicoCompensiazioneA'].errors
+                    .pattern
+                "
+              >
+                Attenzione! Modello per il numero non è buono
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="!calcoloEconomicoCompensiazioneValidation"
+          class="alert alert-danger col-lg-12 col-md-12 col-12 mb-3"
+        >
+          Attenzione! Primo campo deve avere un valore inferiore rispetto al
+          secondo campo
+        </div>
+      </div>
+      <hr />
+
+      <div class="row" *ngIf="isIstanzaTagli">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <div class="row-lg-6">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                formControlName="interventoCompensativo"
+                id="interventoCompensativo"
+              />
+              <label
+                class="custom-control-label font-weight-bold checkbox"
+                for="interventoCompensativo"
+                >Intervento compensativo di trasformazione del bosco
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="isIstanzaTagli">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="sportello" class="font-weight-bold">Sportello </label>
+
+          <p-dropdown
+            *ngIf="isUtenteSportello"
+            [options]="sportello"
+            [optionLabel]="'field'"
+            [autoDisplayFirst]="true"
+            formControlName="sportello"
+            dataKey="idSoggetto"
+            inputId="sportello"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          >
+          </p-dropdown>
+
+          <p-autoComplete
+            *ngIf="!isUtenteSportello"
+            formControlName="sportello"
+            autoHighlight="true"
+            [suggestions]="sportello"
+            (completeMethod)="filterSportello($event)"
+            inputId="sportello"
+            [minLength]="3"
+            [dropdown]="true"
+            [forceSelection]="true"
+            type="search"
+            emptyMessage="{{ emptyMessageAC }}"
+            field="field"
+            [style]="{ width: '100%' }"
+            [styleClass]="
+              'autoComplete form-control d-flex justify-content-end'
+            "
+          >
+          </p-autoComplete>
+        </div>
+      </div>
+      <hr *ngIf="isIstanzaTagli" />
+
+      <p-button
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+        label="Ricerca"
+        (onClick)="ricerca()"
+        [disabled]="isRicercaDisabled()"
+      >
+      </p-button>
+    </div>
+  </div>
+</div>
+<div *ngIf="showArhive">
+  <div class="col-12 col-md-12 col-lg-12 col-xl-12" *ngIf="selectSingleRecord">
+    <h5 class="light-bottom-border font-weight-bold hai-selezionato">
+      Hai selezionato:
+    </h5>
+    <div class="row">
+      <div class="col">
+        <div class="grey1">
+          <!-- <app-selezionato></app-selezionato> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-button
+    [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    style="padding-top: 5px; padding-bottom: 8px"
+    label="Torna alla ricerca"
+    icon="fa fa-fast-backward fa-lg
+    ui-button-icon-left-home"
+    iconPos="left"
+    (onClick)="returnToSearch()"
+  ></p-button>
+  <p-button
+    *ngIf="selectSingleRecord"
+    [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    label="Torna all'elenco risultati"
+    icon="fa fa-fast-backward fa-lg
+    ui-button-icon-left-home"
+    iconPos="left"
+    (onClick)="returnToArhiveList()"
+  ></p-button>
+  <div style="padding-bottom: 5px" *ngIf="searchResultCount > 0">
+    <span style="font-weight: bold">Risultati trovati:</span> {{ totalCount }}
+  </div>
+  <app-gestore-no-select-table
+    *ngIf="!selectSingleRecord"
+    [totalSize]="totalCount"
+    [initiallySortedColumn]="sortedColumn"
+    [replaceTrueFalse]="['X', '']"
+    [headers]="tableHeaders"
+    [data]="tableData ? tableData : []"
+    [isGestore]="true"
+    (rowIdEmitter)="getRowId($event)"
+    (updateTableChanges)="getUpdatedTable($event)"
+    [visualizaTable]="true"
+    [fieldToEdit]="'idIstanza'"
+    [fieldToDelete]="'idIstanza'"
+    (editRowEmitter)="editRow($event)"
+    (viewRowEmitter)="viewRow($event)"
+    (deleteRow)="deleteRow($event)"
+    [isSportello]="isUtenteSportello"
+  >
+  </app-gestore-no-select-table>
+  <p-button
+    *ngIf="searchResultCount > 0"
+    class="full-width-media"
+    label="Visualizza su mappa"
+    [styleClass]="'btn-geco'"
+    (onClick)="openGeeco()"
+  >
+  </p-button>
+  <p-button
+    *ngIf="searchResultCount > 0"
+    style="padding-left: 25px"
+    class="flex-1"
+    label="Esporta in excel"
+    (onClick)="downloadExcel()"
+    [styleClass]="
+      'font-weight-bold btn-block under-search-buttons d-flex flex-sm-column align-items-center justify-content-left justify-content-sm-center h-100'
+    "
+  >
+  </p-button>
+
+  <div *ngIf="searchResultCount === 0">
+    <h4 class="no-data-search">
+      Attenzione! Nessun risultato. Riprovare modificando i criteri di ricerca.
+    </h4>
+  </div>
+</div>

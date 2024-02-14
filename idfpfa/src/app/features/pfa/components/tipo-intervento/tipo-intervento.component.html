@@ -1,0 +1,53 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="tipoInterventoDettaglio$ | async as data">
+  <div class="col-md-12">
+    <div class="row">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Intervento conforme / in deroga al piano</th>
+          <td>{{ data.conformeDeroga }}</td>
+          <th>N. intervento</th>
+          <td>{{ data.progressivoIntervento }}</td>
+          <th>Stato intervento</th>
+          <td>{{ data.statoIntervento }}</td>
+        </tr>
+        <tr>
+          <th>Data presunta intervento</th>
+          <td>{{ data.dataPresuntaIntervento }}</td>
+          <th>Annata Silvana</th>
+          <td>{{ data.annataSilvana }}</td>
+          <th>Evento correlato</th>
+          <td>{{ data.eventoCorrelato }}</td>
+        </tr>
+        <tr>
+          <th>Governo</th>
+          <td>{{ data.governo }}</td>
+          <th>L’intervento richiede piedilista</th>
+          <td>{{ data.richiedePiedilsta }}</td>
+          <th>Tipo di intervento</th>
+          <td>{{ data.tipoIntervento }}</td>
+        </tr>
+        <tr>
+          <th>Descrizione</th>
+          <td>{{ data.descrizione }}</td>
+          <th>Località</th>
+          <td>{{ data.localita }}</td>
+          <th>Fascia altimetrica</th>
+          <td>{{ data.fasciaAltimetrica }}</td>
+        </tr>
+        <tr>
+          <th>Finalità taglio</th>
+          <td>{{ data.finalitaTaglio }}</td>
+          <th>Destinazione del legname</th>
+          <td>{{ data.destLegname }}</td>
+          <th></th>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-container>

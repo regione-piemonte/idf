@@ -1,0 +1,474 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<p>
+  {{ sixthStepData.etichetta }}
+</p>
+<div [formGroup]="sixthStepForm">
+  <div class="custom-control custom-radio mb-2">
+    <input
+      type="radio"
+      class="custom-control-input"
+      formControlName="proprieta"
+      [value]="true"
+      id="rb1"
+    />
+    <label class="custom-control-label" for="rb1">{{
+      sixthStepData.proprieta.etichetta1
+    }}</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input
+      type="radio"
+      class="custom-control-input"
+      formControlName="proprieta"
+      [value]="false"
+      id="rb2"
+    />
+    <label class="custom-control-label" for="rb2">{{
+      sixthStepData.proprieta.etichetta2
+    }}</label>
+  </div>
+  <hr class="black-hr" />
+  <div class="custom-control custom-checkbox">
+    <input
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="dissensi"
+      id="dissensi"
+    />
+    <label class="custom-control-label checkbox" for="dissensi">
+      {{ sixthStepData.dissensi.etichetta }}</label
+    >
+  </div>
+  <hr class="black-hr" />
+  <div class="custom-control custom-checkbox">
+    <input
+      disabled
+      (change)="onChangeCheckAutorizzazione($event)"
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="paesaggistica"
+      id="paesaggistica"
+    />
+    <label class="custom-control-label checkbox" for="paesaggistica">
+      {{ sixthStepData.paesaggistica.etichetta }}</label
+    >
+  </div>
+  <div class="grey1 px-3">
+    <div class="row">
+      <div class="col">
+        <label class="font-weight-bold" for="paesaggisticaNumero"
+          >Numero autorizzazione</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="paesaggisticaNumero"
+          formControlName="paesaggisticaNumero"
+        />
+      </div>
+      <div class="col">
+        <label for="paesaggisticaData" class="font-weight-bold"
+          >Data autorizzazione</label
+        >
+        <div>
+          <p-calendar
+            [yearNavigator]="true"
+            yearRange="1970:{{ currentYear }}"
+            [monthNavigator]="true"
+            dateFormat="dd-mm-yy"
+            inputId="paesaggisticaData"
+            formControlName="paesaggisticaData"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '93%' }"
+            showButtonBar="true"
+            [showIcon]="true"
+            (change)="onPaesaggisticaDataChange()"
+          >
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="paesaggisticaRilasciata" class="font-weight-bold"
+        >Rilasciata da</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="paesaggisticaRilasciata"
+        formControlName="paesaggisticaRilasciata"
+        name="paesaggisticaRilasciata"
+      />
+    </div>
+  </div>
+  <hr class="black-hr my-3" />
+  <div class="custom-control custom-checkbox">
+    <input
+      (change)="onChangeCheckAutorizzazione($event)"
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="vincIdrogeologico"
+      id="vincIdrogeologico"
+    />
+    <label class="custom-control-label checkbox" for="vincIdrogeologico">
+      {{ sixthStepData.vincIdrogeologico.etichetta }}</label
+    >
+  </div>
+  <div class="grey1 px-3">
+    <div class="row">
+      <div class="col">
+        <label class="font-weight-bold" for="vincIdrogeologicoNumero"
+          >Numero autorizzazione</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="vincIdrogeologicoNumero"
+          formControlName="vincIdrogeologicoNumero"
+        />
+      </div>
+      <div class="col">
+        <label for="vincIdrogeologicoData" class="font-weight-bold"
+          >Data autorizzazione</label
+        >
+        <p-calendar
+          [yearNavigator]="true"
+          [monthNavigator]="true"
+          yearRange="1970:{{ currentYear }}"
+          dateFormat="dd-mm-yy"
+          inputId="vincIdrogeologicoData"
+          formControlName="vincIdrogeologicoData"
+          [style]="{ width: '100%' }"
+          [inputStyle]="{ width: '93%' }"
+          showButtonBar="true"
+          [showIcon]="true"
+        >
+        </p-calendar>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="vincIdrogeologicoRilasciata" class="font-weight-bold"
+        >Rilasciata da</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="vincIdrogeologicoRilasciata"
+        formControlName="vincIdrogeologicoRilasciata"
+        name="vincIdrogeologicoRilasciata"
+      />
+    </div>
+  </div>
+  <hr class="black-hr my-3" />
+  <div class="custom-control custom-checkbox">
+    <input
+      (change)="onChangeCheckAutorizzazione($event)"
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="valIncidenza"
+      id="valIncidenza"
+    />
+    <label class="custom-control-label checkbox" for="valIncidenza">
+      {{ sixthStepData.valIncidenza.etichetta }}</label
+    >
+  </div>
+  <div class="grey1 px-3">
+    <div class="row">
+      <div class="col">
+        <label class="font-weight-bold" for="valIncidenzaNumero"
+          >Numero autorizzazione</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="valIncidenzaNumero"
+          formControlName="valIncidenzaNumero"
+        />
+      </div>
+      <div class="col">
+        <label for="valIncidenzaData" class="font-weight-bold"
+          >Data autorizzazione</label
+        >
+        <p-calendar
+          [yearNavigator]="true"
+          yearRange="1970:{{ currentYear }}"
+          [monthNavigator]="true"
+          dateFormat="dd-mm-yy"
+          inputId="valIncidenzaData"
+          formControlName="valIncidenzaData"
+          [style]="{ width: '100%' }"
+          [inputStyle]="{ width: '93%' }"
+          showButtonBar="true"
+          [showIcon]="true"
+        >
+        </p-calendar>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="valIncidenzaRilasciata" class="font-weight-bold"
+        >Rilasciata da</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="valIncidenzaRilasciata"
+        formControlName="valIncidenzaRilasciata"
+        name="valIncidenzaRilasciata"
+      />
+    </div>
+  </div>
+  <hr class="black-hr" />
+  <div class="custom-control custom-checkbox">
+    <input
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="altriPareri"
+      id="altriPareri"
+    />
+    <label class="custom-control-label checkbox" for="altriPareri">
+      {{ sixthStepData.altriPareri.etichetta }}</label
+    >
+  </div>
+
+  <label class="sr-only" for="altriPareriTesto">Aggiungi descrizione</label>
+  <input
+    type="text"
+    class="form-control my-3"
+    id="altriPareriTesto"
+    formControlName="altriPareriTesto"
+    name="altriPareriTesto"
+  />
+  <hr class="black-hr" />
+  <div
+    class="custom-control custom-checkbox"
+    *ngIf="sixthStepData.compFisica.visible"
+  >
+    <input
+      disabled="disabled"
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="compFisica"
+      id="compFisica"
+    />
+    <label class="custom-control-label checkbox" for="compFisica">
+      {{ sixthStepData.compFisica.etichetta }}</label
+    >
+  </div>
+  <p-fileUpload
+    id="fileUpload_5"
+    chooseLabel="Scegli file"
+    uploadLabel="Carica"
+    cancelLabel="Cancella"
+    [disabled]="
+      checkAllegatoByType('Ricevuta deposito cauzionale compensazione fisica')
+    "
+    *ngIf="sixthStepData.compFisica.visible"
+    name="slika"
+    maxFileSize="50000000"
+    customUpload="true"
+    (uploadHandler)="uploadImage($event, 5)"
+    [styleClass]="'mb-3'"
+    accept=".pdf,.jpeg',.jpg"
+  ></p-fileUpload>
+  <hr class="black-hr" *ngIf="sixthStepData.compFisica.visible" />
+  <div
+    class="custom-control custom-checkbox"
+    *ngIf="sixthStepData.compMonetaria.visible"
+  >
+    <input
+      disabled="disabled"
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="compMonetaria"
+      id="compMonetaria"
+    />
+    <label class="custom-control-label checkbox" for="compMonetaria">
+      {{ sixthStepData.compMonetaria.etichetta }}</label
+    >
+  </div>
+  <p-fileUpload
+    id="fileUpload_6"
+    chooseLabel="Scegli file"
+    uploadLabel="Carica"
+    cancelLabel="Cancella"
+    [disabled]="
+      checkAllegatoByType('Ricevuta versamento compensazione monetaria')
+    "
+    *ngIf="sixthStepData.compMonetaria.visible"
+    name="slika"
+    maxFileSize="50000000"
+    customUpload="true"
+    (uploadHandler)="uploadImage($event, 6)"
+    [styleClass]="'mb-3'"
+    accept=".pdf,.jpeg,.jpg"
+  ></p-fileUpload>
+  <hr class="black-hr" *ngIf="sixthStepData.compMonetaria.visible" />
+  <h4 class="header">
+    {{ "allega eventuale documentazione (max 1 allegato)" | uppercase }}
+  </h4>
+  <p-fileUpload
+    accept=".pdf,.jpg,.jpeg"
+    id="fileUpload_7"
+    chooseLabel="Scegli file"
+    uploadLabel="Carica"
+    cancelLabel="Cancella"
+    update="fileUploadAltro"
+    [disabled]="checkAllegatoByType('Altro')"
+    name="slika"
+    maxFileSize="50000000"
+    customUpload="true"
+    (uploadHandler)="uploadImage($event, 7)"
+    [styleClass]="'mb-3'"
+  ></p-fileUpload>
+  <h4 class="header">ELENCO ALLEGATI</h4>
+  <!-- <app-reusable-no-select-table
+    *ngIf="filteredTable && filteredTable.length > 0; else nodata"
+    [data]="filteredTable"
+    [headers]="allegatiTableHeaders"
+    [download]="true"
+    [delete]="true"
+    [fieldToDownload]="'idDocumentoAllegato'"
+    [fieldToDelete]="'idDocumentoAllegato'"
+    (deleteRow)="fieldToDelete($event, 'elenco')"
+    (downloadEmitter)="fieldToDownload($event)"
+  >
+  </app-reusable-no-select-table> -->
+  <app-reusable-front-table
+    *ngIf="filteredTable && filteredTable.length > 0; else nodata"
+    [data]="filteredTable"
+    [headers]="allegatiTableHeaders"
+    [download]="true"
+    [delete]="true"
+    [fieldToDownload]="'idDocumentoAllegato'"
+    [fieldToDelete]="'idDocumentoAllegato'"
+    (deleteRow)="fieldToDelete($event, 'elenco')"
+    (downloadEmitter)="fieldToDownload($event)"
+  >
+  </app-reusable-front-table>
+  <ng-template #nodata>Nessun documento presente</ng-template>
+  <hr class="black-hr mt-4 mb-2" />
+  <div
+    class="custom-control custom-checkbox"
+    *ngIf="sixthStepData.istanzi.visible"
+  >
+    <input
+      disabled
+      type="checkbox"
+      class="custom-control-input"
+      formControlName="istanzi"
+      id="istanzi"
+    />
+    <label class="custom-control-label checkbox" for="istanzi">
+      {{ sixthStepData.istanzi.etichetta }}</label
+    >
+  </div>
+  <div class="grey1 px-3" *ngIf="sixthStepData.istanzi.visible">
+    <div class="row">
+      <div class="col-md-9">
+        <label for="numeroInstanza" class="font-weight-bold"
+          >Numero istanza di intervento selvicolturale</label
+        >
+        <input
+          type="text"
+          maxlength="10"
+          class="form-control"
+          id="numeroInstanza"
+          formControlName="numeroInstanza"
+          (change)="(onChangeNumeroIstanza)"
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="" class="font-weight-bold d-block">
+          <span class="invisible">invisible</span>
+        </label>
+        <p-button
+          [disabled]="
+            !sixthStepForm.get('numeroInstanza').value ||
+            !sixthStepForm.get('numeroInstanza').valid
+          "
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+          label="Ricerca"
+          (onClick)="ricerca()"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+  <h4 class="header" *ngIf="sixthStepData.istanzi.visible">
+    ELENCO ISTANZE DI INTERVENTO SELVICOLTURALE PRESENTATE PER LA COMPENSAZIONE
+    FISICA:
+  </h4>
+  <ng-container *ngIf="sixthStepData.istanzi.visible">
+    <app-reusable-front-table
+      *ngIf="filteredIstanzi && filteredIstanzi.length > 0"
+      [data]="filteredIstanzi"
+      [headers]="elencoTableHeaders"
+      [delete]="true"
+      [fieldToDelete]="'numIstanza'"
+      (deleteRow)="fieldToDelete($event, 'istanza')"
+    >
+    </app-reusable-front-table>
+  </ng-container>
+  <hr class="black-hr" *ngIf="sixthStepData.istanzi.visible" />
+  <div class="grey1 px-3">
+    <div class="form-group">
+      <label for="notaTesto" class="font-weight-bold">{{
+        sixthStepData.nota.etichetta
+      }}</label>
+      <input
+        type="text"
+        class="form-control"
+        id="notaTesto"
+        formControlName="notaTesto"
+      />
+    </div>
+  </div>
+</div>
+<hr class="black-hr" />
+<div
+  class="d-flex justify-content-between buttons"
+  *ngIf="!boMode && !isIstanzaInviata"
+>
+  <p-button
+    [disabled]="disabledSave()"
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex
+    justify-content-between'
+    "
+    label="Salva"
+    (onClick)="save()"
+  ></p-button>
+
+  <p-button
+    [disabled]="disabledSave()"
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva e prosegui"
+    (onClick)="continue()"
+  ></p-button>
+</div>
+<p-dialog
+  header=""
+  [(visible)]="filePopUp"
+  [contentStyle]="{ 'max-height': '600px' }"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+>
+  <p-header> Errore </p-header>
+  <h5 class="red">
+    Il nome del file esiste già! Cambia il nome del file o elimina quello
+    vecchio dalla tabella.
+  </h5>
+  <p-footer>
+    <p-button
+      (click)="closeDialog()"
+      label="Chiudi"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>

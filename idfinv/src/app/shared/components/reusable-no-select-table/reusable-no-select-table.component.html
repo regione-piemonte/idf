@@ -1,0 +1,54 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div [hidden]="data?.length === 0" id="reusableNoSelectTable">
+  <div class="scrollbar-table scrollbar-primary">
+    <p-table
+      [columns]="headers"
+      [rows]="25"
+      [value]="data ? data : []"
+      [lazy]="true"
+      [paginator]="pagination"
+      [totalRecords]="pagination ? totalElements : ''"
+      [rowsPerPageOptions]="[25, 50, 100]"
+      (onLazyLoad)="updateData($event)"
+      [customSort]="sortable"
+      [sortField]="sortable ? initiallySortedColumn : ''"
+      [sortOrder]="sortable ? -1 : ''"
+      [tableStyleClass]="'no-select-table'"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th
+            *ngFor="let col of columns"
+            [pSortableColumn]="sortable ? col.field : ''"
+            [ngSwitch]="sortable ? col.field : ''"
+          >
+            {{ col.header }}
+            <p-sortIcon *ngIf="sortable" [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-car
+        let-columns="columns"
+        let-index="rowIndex"
+      >
+        <tr>
+          <td *ngFor="let col of columns">
+            {{ car[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<div
+  [hidden]="data.length !== 0"
+  class="text-center gray-field py-2 font-italic"
+>
+  No data
+</div>

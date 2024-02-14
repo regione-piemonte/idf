@@ -1,0 +1,143 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<app-denominazione [denominazione]="denom"></app-denominazione>
+<div class="ripresa-intervento" *ngIf="this.idIntervento">
+  <p-button
+    label="Consulta riprese"
+    [styleClass]="'font-weight-bold form-button'"
+    (onClick)="openShootingMirror()"
+    ><i class="fas fa-info-circle"></i
+  ></p-button>
+</div>
+<ngb-tabset>
+  <ngb-tab title="Dettaglio intervento">
+    <ng-template ngbTabContent>
+      <div class="col-md-12 my-3">
+        <p-accordion>
+          <p-accordionTab
+            header="Elenco particelle catastali in cui ricade intervento"
+          >
+            <app-elenco-particelle [propAndRicandeza$]="propAndRicandeza$">
+            </app-elenco-particelle>
+          </p-accordionTab>
+          <p-accordionTab header="Tipo intervento">
+            <app-tipo-intervento
+              [tipoInterventoDettaglio$]="tipoInterventoDettaglio$"
+            >
+            </app-tipo-intervento>
+          </p-accordionTab>
+          <p-accordionTab
+            header="Specie interessate al taglio e tipologia di istanza"
+            ><app-specie [specieAndTaglio$]="specieAndTaglio$"></app-specie>
+          </p-accordionTab>
+          <p-accordionTab header="Utilizzatore e tecnico forestale"
+            ><app-utilizzatore-dettaglio
+              [utilizzatoreDettaglio$]="utilizzatoreDettaglio$"
+            ></app-utilizzatore-dettaglio>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Allegati">
+    <ng-template ngbTabContent>
+      <app-subtitle [subtitle]="'Allegati intervento'"></app-subtitle>
+      <table
+        class="table table-bordered table-hover my-3"
+        *ngIf="allegatiFiles != null && allegatiFiles.length > 0"
+      >
+        <thead>
+          <tr>
+            <th *ngFor="let col of allegatiHeader">
+              {{ col.header }}
+            </th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let data of allegatiFiles; let i = index"
+            [class.active-color]="i === selectedRow"
+            (click)="getFieldId(i)"
+          >
+            <td>{{ data.descrTipoAllegato }}</td>
+            <td>{{ data.nomeAllegato }}</td>
+            <td>{{ data.note }}</td>
+            <td class="text-number">
+              {{
+                data.dimensioneAllegatoKB
+                  | convertKB : data.dimensioneAllegatoKB
+              }}
+            </td>
+            <td
+              (click)="documentToDownload(data.idDocumentoAllegato)"
+              class="text-center"
+            >
+              <i class="fas fa-download"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="allegatiFiles == null || allegatiFiles.length == 0">
+        Nessun allegato disponibile
+      </div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+<div class="row my-4">
+  <div class="col-md-12 d-flex justify-content-end mb-3">
+    <div *ngIf="tipoInterventoDettaglio$ | async as data">
+      <p-button
+        *ngIf="data.statoIntervento == statoIntervento.Programmato"
+        label="Modifica"
+        (click)="onModifica()"
+        [styleClass]="'mb-3 modifica'"
+        ><i class="fas fa-edit"></i
+      ></p-button>
+    </div>
+    <p-button
+      label="Visualizza su mappa"
+      [styleClass]="'btn-geco ml-2'"
+      (click)="openMappa()"
+    ></p-button>
+  </div>
+  <div class="col-md-12 mb-3">
+    <p-button
+      label="Indietro"
+      [styleClass]="'indietro-button'"
+      (onClick)="backToTabs()"
+    ></p-button>
+  </div>
+</div>
+
+<div (keydown.enter)="$event.preventDefault()">
+  <p-dialog
+    header=" Riprese"
+    [(visible)]="shootingMirrorVisible"
+    [contentStyle]="{
+      'max-height': '700px',
+      'min-width': '750px',
+      'max-width': '1200px'
+    }"
+    [transitionOptions]="'0ms'"
+    [modal]="true"
+    [closeOnEscape]="false"
+    (onHide)="onShootingMirrorDialogHide()"
+  >
+    <p-header></p-header>
+    <app-vertical-table
+      *ngIf="shootingMirrorVisible"
+      [data]="shootingMirrorData"
+      [disabled]="true"
+      [header]="tableHeaders"
+      [showTotal]="true"
+      [columnsForm]="shootingMirrorForm"
+      [summaryColumnData]="summaryColumnData"
+    ></app-vertical-table>
+
+    <p-footer> </p-footer>
+  </p-dialog>
+</div>

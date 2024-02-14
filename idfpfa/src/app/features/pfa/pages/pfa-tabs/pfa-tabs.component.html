@@ -1,0 +1,198 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-md-12">
+  <ng-container>
+    <app-denominazione
+      [denominazione]="denom"
+      class="my-lg-4"
+    ></app-denominazione
+  ></ng-container>
+  <ngb-tabset [activeId]="activeTabId" (tabChange)="tabCall($event)">
+    <ngb-tab title="PGF" id="pfa">
+      <ng-template ngbTabContent>
+        <app-dettaglio [denominazione]="denom"> </app-dettaglio>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Documenti di piano" id="documenti">
+      <ng-template ngbTabContent>
+        <div class="table-over2 my-3">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th *ngFor="let col of documentiHeader">
+                  {{ col.header }}
+                </th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let data of documenti; let i = index"
+                [class.active-color]="i === selectedRow2"
+                (click)="getFieldId(i)"
+              >
+                <td>{{ data.descrTipoAllegato }}</td>
+                <td>{{ data.nomeAllegato }}</td>
+                <td>{{ data.note }}</td>
+                <td class="text-number">
+                  {{
+                    formatNumber(
+                      data.dimensioneAllegatoKB
+                        | convertKB : data.dimensioneAllegatoKB
+                    )
+                  }}
+                </td>
+                <td
+                  (click)="documentToDownload(data.idDocumentoAllegato)"
+                  class="text-center"
+                >
+                  <i class="fas fa-download"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row justify-content-between">
+          <div class="col-md-6">
+            <p-button
+              label="Indietro"
+              [styleClass]="
+                'mb-3
+            indietro-button'
+              "
+              (onClick)="toPfaGestiti()"
+            ></p-button>
+          </div>
+          <div class="col-md-6 text-right">
+            <p-button
+              label="Torna alla home"
+              [styleClass]="
+                'mb-3
+            form-button'
+              "
+            ></p-button>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Registro eventi ed interventi" id="interventiEventiTab">
+      <ng-template ngbTabContent>
+        <ul role="tablist" class="nav nav-tabs justify-content-start">
+          <li class="nav-item">
+            <p-button
+              label="Interventi"
+              [styleClass]="
+                showTable && isInterventiTab === true
+                  ? 'nav-link active'
+                  : 'nav-link'
+              "
+              (onClick)="choseButtons(2)"
+            >
+            </p-button>
+          </li>
+          <li class="nav-item">
+            <p-button
+              label="Eventi"
+              [styleClass]="
+                showTable && isInterventiTab === false
+                  ? 'nav-link active'
+                  : 'nav-link'
+              "
+              (onClick)="choseButtons(1)"
+            >
+            </p-button>
+          </li>
+        </ul>
+        <h4 class="header mt-4" *ngIf="isInterventiTab === false && showTable">
+          Eventi
+        </h4>
+        <h4 class="header mt-4" *ngIf="isInterventiTab === true && showTable">
+          Interventi
+        </h4>
+        <hr />
+        <app-re-table
+          *ngIf="showTable === true"
+          [headers]="headers"
+          [values]="tableData"
+          (rowIdEmiter)="getTableDataId($event)"
+          (updateTableChanges)="getUpdateTable($event)"
+          [totalItems]="totalCount"
+          (click)="completa(tableData)"
+        ></app-re-table>
+        <div class="row my-4">
+          <div class="messagePopUp">
+            <p-messages [value]="message"></p-messages>
+          </div>
+          <div class="col-md-12">
+            <p-button
+              label="Elimina"
+              *ngIf="enableButtonElimina"
+              [styleClass]="'mb-3 f-18 font-weight-bold indietro-button'"
+              (onClick)="deleteEventiOrInterventi()"
+              [disabled]="disabledButton"
+            ></p-button>
+            <p-button
+              label="Dettaglio"
+              [styleClass]="
+                'mb-3 f-18 font-weight-bold form-button transparent-button'
+              "
+              (onClick)="goToDettaglio()"
+              [disabled]="disabledButton"
+            ></p-button>
+            <p-button
+              label="Visualizza su mappa"
+              [styleClass]="'mb-3 btn-geco'"
+              (onClick)="openMappa()"
+              [disabled]="disabledButton"
+            ></p-button>
+            <p-button
+              *ngIf="isInterventiTab"
+              label="Completa intervento"
+              [styleClass]="'mb-3'"
+              (onClick)="goToChiudi()"
+              [disabled]="disabledButton || !enableButtonCompleta"
+            ></p-button>
+          </div>
+        </div>
+        <hr />
+        <div class="row my-4 justify-content-start">
+          <div class="col-md-8">
+            <p-button
+              label="Indietro"
+              [styleClass]="'mb-3 indietro-button'"
+              (onClick)="toPfaGestiti()"
+            ></p-button>
+            <p-button
+              label="Scarica in excel"
+              [styleClass]="'mb-3 form-button'"
+              (onClick)="downloadExcel()"
+              [disabled]="!showTable"
+            ></p-button>
+            <p-button
+              label="Visualizza su mappa"
+              [styleClass]="'mb-3 btn-geco'"
+              [disabled]="!showTable"
+              (onClick)="_openMappa()"
+            ></p-button>
+          </div>
+          <div class="col-md-4 text-right">
+            <p-button
+              label="Inserisci nuovo"
+              [styleClass]="'mb-3 form-button'"
+              (onClick)="InserisciNuovo()"
+              [disabled]="!showTable"
+            ></p-button>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  <p-confirmDialog
+    header="Attenzione"
+    icon="pi pi-exclamation-triangle"
+    style="text-align: center"
+  ></p-confirmDialog>
+</div>

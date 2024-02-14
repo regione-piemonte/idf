@@ -1,0 +1,35 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="reportData?.areaSaggio">
+  <app-table
+    *ngIf="reportData.areaSaggio.length <= 50"
+    [data]="reportData.areaSaggio"
+    [title]="'Elaborazioni per area di saggio'"
+  ></app-table>
+  <app-paginated-table
+    *ngIf="reportData.areaSaggio.length > 50"
+    [data]="reportData.areaSaggio"
+    [title]="'Elaborazioni per area di saggio'"
+  ></app-paginated-table>
+</ng-container>
+<br />
+<ng-container *ngIf="reportData?.specie">
+  <app-table
+    [data]="reportData.specie"
+    [title]="adsType == 1 ? 'Dati per specie' : 'Area basimetrica per specie'"
+  ></app-table>
+</ng-container>
+<br />
+<ng-container *ngIf="reportData?.qualita">
+  <app-table-row-merge
+    [data]="reportData.qualita"
+    [title]="'Assetto evolutivo-colturale'"
+  ></app-table-row-merge>
+</ng-container>
+<br />
+<!--ng-container *ngIf="reportData?.totali">
+    <app-table [data]="reportData.totali" [title]="'Totali per file ads'"></app-table>
+</!--ng-container-->

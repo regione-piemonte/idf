@@ -1,0 +1,302 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!-- <div>
+  <div class="custom-control custom-radio">
+    <input type="radio" name="tipoAccreditamento41" class="custom-control-input" id="customControlValidation41" [(ngModel)]='necessariaValue'
+    [value]="41" (change)="necessariaRadio()">
+    <label class="custom-control-label" for="customControlValidation41">NON NECESSARIA: </label>
+  </div>
+    <p >l’art. 19, comma 7, della l.r. 4/2009 dichiara che la compensazione non è dovuta per interventi (selezione multipla):</p>
+  <div class="custom-control custom-radio section">
+    <input type="radio" name="tipoAccreditamento41" class="custom-control-input" id="customControlValidation42"
+    [value]="42" (change)="necessariaRadio()" [(ngModel)]='necessariaValue' >
+    <label class="custom-control-label" for="customControlValidation42">NECESSARIA (art. 19, comma 4)</label>
+  </div>
+</div> -->
+
+<!-- <div>
+  <div class="custom-control custom-radio">
+    <input type="radio" name="tipoAccreditamento41" class="custom-control-input" id="customControlValidation41" [(ngModel)]='necessariaValue'
+    [value]="41" (change)="necessariaRadio()">
+    <label class="custom-control-label" for="customControlValidation41">NON NECESSARIA: </label>
+  </div>
+    <p>l’art. 19, comma 7, della l.r. 4/2009 dichiara che la compensazione non è dovuta per interventi (selezione multipla):</p>
+    <div class="tab">
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked41"
+          [checked]="necessariaValue === 41 ? true : necessaria===null?false:(necessaria?false:null)" [disabled]="necessaria===null?true:(necessaria?true:false)">
+          <label class="custom-control-label checkbox" for="defaultUnchecked41" [class.disabled-control]="necessaria===null?true:(necessaria?true:false)">text[0]</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked42"
+          [checked]="necessaria===null?false:(necessaria?false:null)" [disabled]="necessaria===null?true:(necessaria?true:false)">
+          <label class="custom-control-label checkbox" for="defaultUnchecked42" [class.disabled-control]="necessaria===null?true:(necessaria?true:false)">b) finalizzati alla conservazione del paesaggio o al ripristino degli habitat di interesse comunitario, se previste dagli strumenti di gestione   	o pianificazione di dettaglio vigenti;</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked43"
+          [checked]="necessaria===null?false:(necessaria?false:null)" [disabled]="necessaria===null?true:(necessaria?true:false)">
+          <label class="custom-control-label checkbox" for="defaultUnchecked43" [class.disabled-control]="necessaria===null?true:(necessaria?true:false)">c) volti al recupero a fini produttivi per l'esercizio dell'attività agro-pastorale svolte da coltivatori diretti e da imprenditori agricoli singoli 	o associati, di boschi di neoformazione insediatisi su ex coltivi, prati e pascoli abbandonati da non oltre trent'anni;</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked44"
+          [checked]="necessaria===null?false:(necessaria?false:null)" [disabled]="necessaria===null?true:(necessaria?true:false)">
+          <label class="custom-control-label checkbox" for="defaultUnchecked44" [class.disabled-control]="necessaria===null?true:(necessaria?true:false)">d) per la realizzazione o adeguamento di opere di difesa dagli incendi, di opere pubbliche di difesa del suolo, se previsti dagli strumenti di 	gestione o pianificazione di dettaglio vigenti;</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked45"
+          [checked]="necessaria===null?false:(necessaria?false:null)" [disabled]="necessaria===null?true:(necessaria?true:false)">
+          <label class="custom-control-label checkbox" for="defaultUnchecked45" [class.disabled-control]="necessaria===null?true:(necessaria?true:false)">dbis) per la realizzazione di viabilità forestale in aree non servite.</label>
+      </div>
+    </div>
+  <div class="custom-control custom-radio section">
+    <input type="radio" name="tipoAccreditamento41" class="custom-control-input" id="customControlValidation42"
+    [value]="42" (change)="necessariaRadio()" [(ngModel)]='necessariaValue' >
+    <label class="custom-control-label" for="customControlValidation42">NECESSARIA (art. 19, comma 4)</label>
+  </div>
+  <div class="tab">
+    <div class="custom-control custom-radio">
+      <input type="radio" name="tipoAccreditamento42" class="custom-control-input" id="customControlValidation43"
+      value="43" [checked]="necessaria===null?false:(necessaria?null:false)" [disabled]="necessaria===null?true:(necessaria?false:true)">
+      <label class="custom-control-label" for="customControlValidation43" [class.disabled-control]="necessaria===null?true:(necessaria?false:true)">Compensazione fisica (con testo descrittivo)</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input type="radio" name="tipoAccreditamento42" class="custom-control-input" id="customControlValidation44"
+      value="44" [checked]="necessaria===null?false:(necessaria?null:false)" [disabled]="necessaria===null?true:(necessaria?false:true)" >
+      <label class="custom-control-label" for="customControlValidation44" [class.disabled-control]="necessaria===null?true:(necessaria?false:true)">Compensazione monetaria (con testo descrittivo)</label>
+    </div>
+  </div>
+</div> -->
+
+<div [formGroup]="fourthStepForm">
+  <div class="custom-control custom-radio section">
+    <input
+      type="radio"
+      formControlName="necessaria"
+      [value]="true"
+      class="custom-control-input"
+      id="customControlValidation42"
+      (change)="updateNecessery('necessaria')"
+    />
+    <label class="custom-control-label" for="customControlValidation42">{{
+      text[2].title
+    }}</label>
+  </div>
+  <div class="tab">
+    <div class="custom-control custom-radio">
+      <input
+        type="radio"
+        formControlName="compFisica"
+        [value]="true"
+        class="custom-control-input"
+        id="customControlValidation43"
+        (change)="updateComp('compFisica')"
+      />
+      <label class="custom-control-label" for="customControlValidation43">{{
+        text[2].subTitle[0]
+      }}</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input
+        type="radio"
+        formControlName="compMonetaria"
+        [value]="true"
+        class="custom-control-input"
+        id="customControlValidation44"
+        (change)="updateComp('compMonetaria')"
+      />
+      <label class="custom-control-label" for="customControlValidation44">
+        {{ text[2].subTitle[1] }}
+      </label>
+    </div>
+  </div>
+  <br />
+  <div class="custom-control custom-radio">
+    <input
+      type="radio"
+      class="custom-control-input"
+      formControlName="nonNecessaria"
+      [value]="true"
+      id="customControlValidation41"
+      (change)="updateNecessery('nonNecessaria')"
+    />
+    <label class="custom-control-label" for="customControlValidation41">{{
+      text[1].title
+    }}</label>
+  </div>
+  <p>
+    l’art. 19, comma 7, della l.r. 4/2009 vigente fino al 20/10/2021 dichiara
+    che la compensazione non è dovuta per interventi (selezione multipla):
+  </p>
+  <div class="tab">
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgA"
+        id="defaultUnchecked41"
+      />
+      <label class="custom-control-label checkbox" for="defaultUnchecked41">{{
+        text[1].subTitle[0]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgB"
+        id="defaultUnchecked42"
+      />
+      <label class="custom-control-label checkbox" for="defaultUnchecked42">{{
+        text[1].subTitle[1]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        id="defaultUnchecked43"
+        formControlName="flgC"
+      />
+      <label class="custom-control-label checkbox" for="defaultUnchecked43">{{
+        text[1].subTitle[2]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgD"
+        id="defaultUnchecked44"
+      />
+      <label class="custom-control-label checkbox" for="defaultUnchecked44">{{
+        text[1].subTitle[3]
+      }}</label>
+    </div>
+  </div>
+  <br />
+
+  <div class="custom-control custom-radio">
+    <input
+      type="radio"
+      class="custom-control-input"
+      formControlName="nonNecessaria21"
+      [value]="true"
+      id="nonNecessaria21"
+      (change)="updateNecessery('nonNecessaria21')"
+    />
+    <label class="custom-control-label" for="nonNecessaria21">{{
+      text[0].title
+    }}</label>
+  </div>
+  <p>
+    l’art. 19, comma 7, della l.r. 4/2009 vigente vigente dal 21/10/2021
+    dichiara che la compensazione non è dovuta per interventi (selezione
+    multipla):
+  </p>
+  <div class="tab">
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgA21"
+        id="flgA21"
+      />
+      <label class="custom-control-label checkbox" for="flgA21">{{
+        text[0].subTitle[0]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgB21"
+        id="flgB21"
+      />
+      <label class="custom-control-label checkbox" for="flgB21">{{
+        text[0].subTitle[1]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        id="flgC21"
+        formControlName="flgC21"
+      />
+      <label class="custom-control-label checkbox" for="flgC21">{{
+        text[0].subTitle[2]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgD21"
+        id="flgD21"
+      />
+      <label class="custom-control-label checkbox" for="flgD21">{{
+        text[0].subTitle[3]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgDter21"
+        id="flgDter21"
+      />
+      <label class="custom-control-label checkbox" for="flgDter21">{{
+        text[0].subTitle[4]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgDquater21"
+        id="flgDquater21"
+      />
+      <label class="custom-control-label checkbox" for="flgDquater21">{{
+        text[0].subTitle[5]
+      }}</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        formControlName="flgDquinquies21"
+        id="flgDquinquies21"
+      />
+      <label class="custom-control-label checkbox" for="flgDquinquies21">{{
+        text[0].subTitle[6]
+      }}</label>
+    </div>
+  </div>
+</div>
+<hr class="black-hr" />
+<div
+  class="d-flex justify-content-between buttons"
+  *ngIf="!boMode && !isIstanzaInviata"
+>
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex
+    justify-content-between'
+    "
+    label="Salva"
+    (onClick)="save()"
+    [disabled]="isSaveDisabled()"
+  ></p-button>
+
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva e prosegui"
+    (onClick)="continue()"
+    [disabled]="isSaveDisabled()"
+  ></p-button>
+</div>

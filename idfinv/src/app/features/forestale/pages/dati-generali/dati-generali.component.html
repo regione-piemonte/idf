@@ -1,0 +1,31 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row">
+  <div class="col-md-12">
+    <h3 class="light-bottom-border font-weight-bold">
+      Gestione scheda rilievo: tipologia e posizione dell'Area di Saggio
+    </h3>
+  </div>
+  <div class="col-md-12">
+    <ng-container *ngIf="datiGeneraliForm">
+      <app-dati-generali-form
+        [dettaglioAmbitoDropdown]="dettaglioAmbitoDropdown"
+        [comuneDropdown]="comuneDropdown"
+        [datiGeneraliForm]="datiGeneraliForm"
+        (resetFormEmitter)="resetForm()"
+        [allDropdownMens]="allDropdownMenus"
+        (loadDatiGeneraliEmitter)="loadDatiGenerali()"
+        (emitDatiGeneraliForm)="sendGeneraliForm($event)"
+        (emitProvinciaChange)="fillComune()"
+        (emitAmbito)="fillDettaglioAmbito()"
+        (emitAmbitoSpecifico)="enableAmbitoSpecifico()"
+        (emitDatiGeneraliBasicForm)="saveBasicInfo($event)"
+        [basicInfoSubmitted]="basicInfoSubmitted"
+        (emitTipologiaDiRilievoChange)="tipologiDiRilievoChange()"
+      ></app-dati-generali-form>
+    </ng-container>
+  </div>
+</div>

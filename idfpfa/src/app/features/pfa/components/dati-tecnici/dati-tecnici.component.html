@@ -1,0 +1,799 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<hr />
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12 py-5">
+      <p-accordion
+        [activeIndex]="activeIndex"
+        (onOpen)="firstAccord($event)"
+        [hidden]="isVisible"
+      >
+        <p-accordionTab header="Tipo Intervento">
+          <!-- TIPO INTERVENTO -->
+
+          <div
+            class="col-md-12 my-4"
+            [formGroup]="tipoForm"
+            *ngIf="this.tipoForm"
+          >
+            <div class="grey-form">
+              <div class="row">
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="interventionPlan"
+                      >Intervento conforme / in deroga al piano
+                    </label>
+                    <select
+                      class="form-control"
+                      id="interventionPlan"
+                      name="interventionPlan"
+                      formControlName="interventionPlan"
+                      (change)="conformeDerogaVal($event.target.value)"
+                    >
+                      <option value="C">{{ conformeDeroga.C }}</option>
+                      <option value="D">{{ conformeDeroga.D }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="noIntervento"
+                      >N. Intervento <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="noIntervento"
+                      formControlName="noIntervento"
+                      name="noIntervento"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="statoIntervento"
+                      >Stato intervento
+                      <span class="text-danger">*</span></label
+                    >
+                    <ng-container
+                      *ngIf="statoIntervento$ | async as statoInterve"
+                    >
+                      <select
+                        class="form-control"
+                        id="statoIntervento"
+                        name="statoIntervento"
+                        formControlName="statoIntervento"
+                      >
+                        <option
+                          *ngFor="let stato of statoInterve"
+                          [value]="stato.idStatoIntervento"
+                        >
+                          {{ stato.descrStatoIntervento }}
+                        </option>
+                      </select>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="dataIntervento"
+                      >Data presunto intervento
+                      <span class="text-danger">*</span></label
+                    >
+
+                    <p-calendar
+                      [locale]="it"
+                      [yearNavigator]="true"
+                      [monthNavigator]="true"
+                      yearRange="{{ currentYear }}:{{ currentYear + 20 }}"
+                      dateFormat="yy-mm-dd"
+                      inputId="dataIntervento"
+                      formControlName="dataIntervento"
+                      showButtonBar="true"
+                      [showIcon]="true"
+                    >
+                      <!--span
+                        class="ui-button-icon-left ui-icon ui-icon-calendar"
+                      ></span-->
+                    </p-calendar>
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('dataIntervento').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('dataIntervento').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="sylvanYear"
+                      >Annata silvana <span class="text-danger">*</span></label
+                    >
+
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="sylvanYear"
+                      formControlName="sylvanYear"
+                      name="sylvanYear"
+                    />
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('sylvanYear').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('sylvanYear').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="relatedEvent">Evento correlato</label>
+                    <ng-container
+                      *ngIf="eventoCorrelato$ | async as eventoCorrelato"
+                    >
+                      <select
+                        class="form-control"
+                        id="relatedEvent"
+                        name="relatedEvent"
+                        formControlName="relatedEvent"
+                      >
+                        <option value="">- Nessuno -</option>
+                        <option
+                          *ngFor="let evento of eventoCorrelato"
+                          [value]="evento.idEvento"
+                        >
+                          {{ evento.progressivoEvento }}/{{ evento.nomeBreve }}
+                        </option>
+                      </select>
+                    </ng-container>
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('relatedEvent').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('relatedEvent').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="government"
+                      >Governo <span class="text-danger">*</span></label
+                    >
+                    <ng-container *ngIf="governi$ | async as governi">
+                      <select
+                        class="form-control"
+                        id="government"
+                        name="government"
+                        (change)="onChangeGoverno()"
+                        formControlName="government"
+                      >
+                        <option
+                          *ngFor="let gov of governi"
+                          [value]="gov.idGoverno"
+                        >
+                          {{ gov.descrGoverno }}
+                        </option>
+                      </select>
+                    </ng-container>
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('government').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('government').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3 mt-4">
+                  <div class="form-group">
+                    <br />
+                    <label for="piedilista" class="font-weight-bold mr-3">
+                      L’intervento richiede piedilista
+                    </label>
+                    <p-checkbox
+                      binary="true"
+                      inputId="piedilista"
+                      name="piedilista"
+                      formControlName="piedilista"
+                    ></p-checkbox>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col mb-3">
+                  <div class="form-group">
+                    <label for="tipoIntervento"
+                      >Tipo di intervento
+                      <span class="text-danger">*</span></label
+                    >
+                    <ng-container
+                      *ngIf="tipoInterventi$ | async as tipoInterventi"
+                    >
+                      <select
+                        class="form-control"
+                        id="tipoIntervento"
+                        name="tipoIntervento"
+                        formControlName="tipoIntervento"
+                      >
+                        <option
+                          *ngFor="let tipo of tipoInterventi"
+                          [value]="tipo.idTipoIntervento"
+                        >
+                          {{ tipo.descrTipoIntervento }}
+                        </option>
+                      </select>
+                    </ng-container>
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('tipoIntervento').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('tipoIntervento').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 col-md-12 mb-3">
+                  <div class="form-group">
+                    <label for="descrizione" class="font-weight-bold mr-3"
+                      >Descrizione <span class="text-danger">*</span></label
+                    >
+                    <textarea
+                      id="descrizione"
+                      name="description"
+                      formControlName="description"
+                      class="w-100 description"
+                    ></textarea>
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('description').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('description').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col mb-3">
+                  <div class="form-group">
+                    <label for="localita" class="font-weight-bold mr-3">
+                      Località <span class="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="localita"
+                      formControlName="localita"
+                      name="localita"
+                    />
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('localita').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('localita').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+                <div class="col mb-3">
+                  <div class="form-group">
+                    <label for="fasciaAltemetrica"
+                      >Fascia altimetrica
+                      <span class="text-danger">*</span></label
+                    >
+                    <ng-container
+                      *ngIf="fasciaAltimetrica$ | async as fasciaAltimetrica"
+                    >
+                      <select
+                        class="form-control"
+                        id="fasciaAltemetrica"
+                        name="fasciaAltemetrica"
+                        formControlName="fasciaAltemetrica"
+                      >
+                        <option
+                          *ngFor="let fas of fasciaAltimetrica"
+                          [value]="fas.idFasciaAltimetrica"
+                        >
+                          {{ fas.fasciaAltimetricaMIN }} -
+                          {{ fas.fasciaAltimetricaMAX }}
+                        </option>
+                      </select>
+                    </ng-container>
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('fasciaAltemetrica').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('fasciaAltemetrica').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col mb-3">
+                  <div class="form-group">
+                    <label for="finalitaTaglio"
+                      >Finalità taglio <span class="text-danger">*</span></label
+                    >
+                    <ng-container
+                      *ngIf="finaliteTaglie$ | async as finaliteTaglie"
+                    >
+                      <select
+                        class="form-control"
+                        id="finalitaTaglio"
+                        name="finalitaTaglio"
+                        formControlName="finalitaTaglio"
+                      >
+                        <option
+                          *ngFor="let final of finaliteTaglie"
+                          [value]="final.idFinalitaTaglio"
+                        >
+                          {{ final.descrFinalitaTaglio }}
+                        </option>
+                      </select>
+                    </ng-container>
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('finalitaTaglio').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('finalitaTaglio').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+                <div class="col mb-3">
+                  <div class="form-group">
+                    <label for="destinazioneLegname"
+                      >Destinazione del legname
+                      <span class="text-danger">*</span></label
+                    >
+                    <ng-container *ngIf="destLegnami$ | async as destLegnami">
+                      <select
+                        class="form-control"
+                        id="destinazioneLegname"
+                        name="destinazioneLegname"
+                        formControlName="destinazioneLegname"
+                      >
+                        <option
+                          *ngFor="let dest of destLegnami"
+                          [value]="dest.idDestLegname"
+                        >
+                          {{ dest.descrDestLegname }}
+                        </option>
+                      </select>
+                    </ng-container>
+
+                    <div
+                      class="text-danger f-18"
+                      *ngIf="
+                        (tipoForm.get('destinazioneLegname').touched ||
+                          lastCompletedStep > 1) &&
+                        tipoForm.get('destinazioneLegname').errors?.required
+                      "
+                    >
+                      Attenzione! Campo obbligatorio
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p-button
+                label="Continua"
+                [styleClass]="'mt-3 font-weight-bold form-button'"
+                (onClick)="continue()"
+              ></p-button>
+            </div>
+          </div>
+
+          <!-- TIPO INTERVENTO -->
+        </p-accordionTab>
+
+        <p-accordionTab
+          header="Specie interessate al taglio e tipologia di istanza"
+          [disabled]="isDisabled"
+        >
+          <div class="row" [formGroup]="specieForm" *ngIf="this.specieForm">
+            <div class="col-md-12 col-sm-12">
+              <table class="table table-bordered v-bottom">
+                <thead>
+                  <tr>
+                    <th scope="col">Specie</th>
+                    <th scope="col">Priorità</th>
+                    <th scope="col" class="volume">Volume</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    formArrayName="specie"
+                    *ngFor="
+                      let spec of specieForm.get('specie')['controls'];
+                      let i = index
+                    "
+                  >
+                    <ng-container [formGroupName]="i">
+                      <td>
+                        <ng-container *ngIf="specie$ | async as specie">
+                          <select
+                            aria-label="Specie"
+                            [ngClass]="{
+                              'input-error': isSpecieError(spec.get('specie'))
+                            }"
+                            class="form-control"
+                            id="specie"
+                            name="specie"
+                            formControlName="specie"
+                            (change)="onSpecieQualitaChange(spec, i)"
+                          >
+                            <option
+                              *ngFor="let spe of specie"
+                              [value]="spe.idSpecie"
+                            >
+                              {{ spe.volgare }}
+                            </option>
+                          </select>
+                        </ng-container>
+                      </td>
+                      <td>
+                        <ng-container>
+                          <select
+                            aria-label="Priorita"
+                            [ngClass]="{
+                              'input-error': isSpecieError(spec.get('priorita'))
+                            }"
+                            class="form-control"
+                            id="priorita"
+                            name="priorita"
+                            formControlName="priorita"
+                            (change)="onSpecieQualitaChange(spec, i)"
+                          >
+                            <option value="P">Principale</option>
+                            <option value="S">Secondario</option>
+                            <option value="A">Altro</option>
+                          </select>
+                        </ng-container>
+                      </td>
+                      <td>
+                        <div class="row">
+                          <div class="col-4">
+                            <label for="m3-{{ i }}">m³</label>
+                            <input
+                              type="text"
+                              [ngClass]="{
+                                'input-error': isSpecieError(spec.get('m3'))
+                              }"
+                              class="form-control"
+                              id="m3-{{ i }}"
+                              formControlName="m3"
+                              name="m3"
+                              (keyup)="m3ToTon(i)"
+                            />
+                          </div>
+
+                          <div class="col-4">
+                            <label for="ton-{{ i }}">t</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="ton-{{ i }}"
+                              formControlName="ton"
+                              name="ton"
+                              (keyup)="tonToM3(i)"
+                            />
+                          </div>
+                          <div class="col-4">
+                            <label for="q-{{ i }}">q</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="q-{{ i }}"
+                              formControlName="q"
+                              name="q"
+                              (keyup)="qToM3(i)"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                      <td (click)="deleteFiledValue(i)" class="ico-action">
+                        <i *ngIf="i !== -1" class="fa fa-trash"></i>
+                      </td>
+                    </ng-container>
+                  </tr>
+                  <tr>
+                    <td colspan="6" class="text-right">
+                      <p-button
+                        type="button"
+                        [styleClass]="'f-18 font-weight-bold form-button'"
+                        icon="fa fa-plus"
+                        iconpos="right"
+                        label="Aggiungi"
+                        (onClick)="addSpecie()"
+                      ></p-button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div
+            class="col-md-12 my-4"
+            [formGroup]="plantsForm"
+            *ngIf="this.plantsForm"
+          >
+            <div class="grey-form">
+              <div class="row">
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="numeroDiPiante"> Numero di piante </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="numeroDiPiante"
+                      formControlName="numeroDiPiante"
+                      name="numeroDiPiante"
+                      (keyup)="onNumPianteChange()"
+                      maxlength="5"
+                    />
+                    <div
+                      *ngIf="
+                        plantsForm.controls['numeroDiPiante'].invalid &&
+                        (plantsForm.controls['numeroDiPiante'].dirty ||
+                          plantsForm.controls['numeroDiPiante'].touched ||
+                          lastCompletedStep > 1)
+                      "
+                      class="text-danger f-18"
+                    >
+                      <div
+                        *ngIf="
+                          plantsForm.controls['numeroDiPiante'].errors.required
+                        "
+                      >
+                        Attenzione! Campo obbligatorio
+                      </div>
+                      <div
+                        *ngIf="
+                          plantsForm.controls['numeroDiPiante'].errors.pattern
+                        "
+                      >
+                        Attenzione! Il campo deve essere numerico
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="volumeRamaglia"
+                      >Volume ramaglia (m<sup>³</sup>)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="volumeRamaglia"
+                      formControlName="volumeRamaglia"
+                      pattern="^\d+$"
+                      name="volumeRamaglia"
+                      (keyup)="volumeStima()"
+                    />
+                    <div
+                      *ngIf="
+                        plantsForm.controls['volumeRamaglia'].invalid &&
+                        (plantsForm.controls['volumeRamaglia'].dirty ||
+                          plantsForm.controls['volumeRamaglia'].touched ||
+                          lastCompletedStep > 1)
+                      "
+                      class="text-danger f-18"
+                    >
+                      <div
+                        *ngIf="
+                          plantsForm.controls['volumeRamaglia'].errors.required
+                        "
+                      >
+                        Attenzione! Campo obbligatorio
+                      </div>
+                      <div
+                        *ngIf="
+                          plantsForm.controls['volumeRamaglia'].errors.pattern
+                        "
+                      >
+                        Attenzione! Il campo deve essere numerico
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="stimaMassaRetraibile">
+                      Stima massa retraibile (m<sup>³</sup>)
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="stimaMassaRetraibile"
+                      formControlName="stimaMassaRetraibile"
+                      name="stimaMassaRetraibile"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="esbosco"
+                      >Viabilità utilizzata in fase di esbosco</label
+                    >
+                    <ng-container *ngIf="usoViabilita$ | async as usoViabilita">
+                      <select
+                        class="form-control"
+                        id="esbosco"
+                        name="esbosco"
+                        formControlName="esbosco"
+                      >
+                        <option
+                          *ngFor="let uso of usoViabilita"
+                          [value]="uso.idUsoViabilita"
+                        >
+                          {{ uso.descrUsoViabilita }}
+                        </option>
+                      </select>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="tipoEsbosco"> Tipo di esbosco </label>
+                    <ng-container *ngIf="esbosco$ | async as esbosco">
+                      <select
+                        class="form-control"
+                        id="tipoEsbosco"
+                        name="tipoEsbosco"
+                        formControlName="tipoEsbosco"
+                      >
+                        <option
+                          *ngFor="let esb of esbosco"
+                          [value]="esb.codEsbosco"
+                        >
+                          {{ esb.descrEsbosco }}
+                        </option>
+                      </select>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mb-3">
+                  <div class="form-group">
+                    <label for="istanzaDaPresentare">
+                      Tipologia di istanza da presentare
+                    </label>
+                    <input
+                      type="hidden"
+                      class="form-control"
+                      id="tipologia"
+                      formControlName="tipologia"
+                      name="tipologia"
+                      value="{{ conformeDerogaValue }}"
+                    />
+                    <input
+                      type="text"
+                      readonly
+                      class="form-control"
+                      name="tipologiaVis"
+                      id="istanzaDaPresentare"
+                      value="{{
+                        'CS' == conformeDerogaValue
+                          ? 'Comunicazione semplice'
+                          : 'Autorizzazione'
+                      }}"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col mb-3">
+                  <div class="form-group">
+                    <label for="noteEsbosco">Note esbosco</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="noteEsbosco"
+                      formControlName="noteEsbosco"
+                      name="noteEsbosco"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-0" [hidden]="!isVisible">
+      <!-- <app-shooting-mirror [shooting-mirror]="shootingMirrorData">
+      </app-shooting-mirror> -->
+
+      <!-- <app-vertical-table
+        *ngIf = "isVisible"
+        [data] = "shootingMirrorData"
+        [disabled] = "true"
+        [header] = "tableHeaders"
+        [showTotal] = "false"
+      ></app-vertical-table>-->
+      <p-button
+        label="Indietro"
+        [styleClass]="'mb-3 font-weight-bold indietro-button'"
+        (onClick)="showForm()"
+      ></p-button>
+    </div>
+  </div>
+  <hr class="separate" />
+  <div class="row justify-content-between">
+    <p-button
+      label="Indietro"
+      [styleClass]="'mb-3 font-weight-bold indietro-button'"
+      (onClick)="goToDettaglio()"
+    ></p-button>
+    <p-button
+      label="Salva in bozza e prosegui"
+      [styleClass]="'mb-3 font-weight-bold form-button'"
+      (onClick)="save()"
+    ></p-button>
+  </div>
+</div>

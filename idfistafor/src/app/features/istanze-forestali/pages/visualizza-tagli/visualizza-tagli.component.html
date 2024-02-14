@@ -1,0 +1,78 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div>
+  <h5 class="border-n">Hai selezionato:</h5>
+  <div class="ilModoDiCandidarsi">
+    <app-selezionato-tagli></app-selezionato-tagli>
+  </div>
+  <div class="row">
+    <div class="col text-right mt-3 mb-3">
+      <p-button
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+        label="Modifica selezione"
+        icon="fa fa-home fa-lg ui-button-icon-left-home"
+        iconPos="left"
+        (onClick)="goToHome()"
+      ></p-button>
+    </div>
+  </div>
+</div>
+<hr />
+<ng-container
+  *ngIf="
+    userChoice &&
+    userChoice.fkTipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+  "
+>
+  <div class="nav-ico">
+    <a routerLink="/ricerca-archivio-tagli" style="text-decoration: none">
+      <div class="container">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <span class="icon">Ricerca in archivio</span>
+      </div>
+    </a>
+  </div>
+  <hr />
+</ng-container>
+<div class="nav-ico">
+  <a routerLink="/inserisci-nuova-tagli" style="text-decoration: none">
+    <div class="container">
+      <i class="far fa-edit" aria-hidden="true"></i>
+      <span class="icon">Inserisci nuova</span>
+    </div>
+  </a>
+</div>
+<hr />
+
+<div>
+  <div class="row">
+    <div class="col-md-12 mb-4" *ngIf="tableData.length > 0">
+      <h4 class="header">
+        {{
+          userChoice &&
+          userChoice.fkTipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+            ? "Visualizza le bozze di cui sei compilatore:"
+            : "Visualizza le istanze di cui sei Richidente o delegato alla gestione:"
+        }}
+      </h4>
+    </div>
+  </div>
+
+  <app-reusable-no-select-table
+    [totalSize]="totalCount"
+    [initiallySortedColumn]="sortedColumn"
+    [headers]="tableHeaders"
+    [data]="tableData ? tableData : []"
+    (rowIdEmitter)="getRowId($event)"
+    (updateTableChanges)="getUpdatedTable($event)"
+    [visualizaTable]="true"
+    [fieldToEdit]="'idIntervento'"
+    [fieldToDelete]="'idIntervento'"
+    (editRowEmitter)="editRow($event)"
+    (viewRowEmitter)="viewRow($event)"
+    (deleteRow)="deleteRow($event)"
+  ></app-reusable-no-select-table>
+</div>

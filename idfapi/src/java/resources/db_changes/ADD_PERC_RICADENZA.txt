@@ -1,0 +1,8 @@
+#-------------------------------------------------------------------------------
+# SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+# SPDX-License-Identifier: EUPL-1.2
+#-------------------------------------------------------------------------------
+ALTER TABLE idf_r_pfa_rn_2000
+	ADD COLUMN perc_ricadenza numeric(3,0)
+ALTER TABLE idf_r_pfa_popseme
+	ADD COLUMN perc_ricadenza numeric(3,0)

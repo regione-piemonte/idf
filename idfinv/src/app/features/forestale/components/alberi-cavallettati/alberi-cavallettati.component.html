@@ -1,0 +1,20 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row my-3">
+  <div class="col-md-12">
+    <strong>Numero totale alberi: {{ totalElements }}</strong>
+    <app-reusable-no-select-table
+      id="tableAlberiCavallettati"
+      [initiallySortedColumn]="initiallySortedColumn"
+      [totalElements]="totalElements"
+      [headers]="tableHeaders"
+      [data]="alberiData"
+      (updateTableChanges)="getUpdatedTable($event)"
+      [sortable]="true"
+      [pagination]="true"
+    ></app-reusable-no-select-table>
+  </div>
+</div>

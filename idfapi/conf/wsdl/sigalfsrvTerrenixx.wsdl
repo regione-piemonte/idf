@@ -1,0 +1,1504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+  SPDX-License-Identifier: EUPL-1.2
+-->
+<wsdl:definitions targetNamespace="urn:sigalfsrvTerreni" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:sigalfsrvTerreni" xmlns:intf="urn:sigalfsrvTerreni" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Nov 13, 2013 (09:13:21 GMT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="urn:sigalfsrvTerreni" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="cercaElencoSubalterniTerreniConBelfioreESezione">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="xsd:string"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+      <element name="in2" type="xsd:long"/>
+      <element minOccurs="0" name="in3" type="xsd:string"/>
+      <element minOccurs="0" name="in4" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniConBelfioreESezioneResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSubalterniTerreniConBelfioreESezioneReturn" type="impl:IdentificativoCatastaleTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="IdentificativoCatastaleTerreno">
+    <sequence>
+     <element name="codComuneBelfiore" nillable="true" type="xsd:string"/>
+     <element name="dataAggiornamento" nillable="true" type="xsd:string"/>
+     <element name="foglio" type="xsd:long"/>
+     <element name="mappale" nillable="true" type="xsd:string"/>
+     <element name="sezione" nillable="true" type="xsd:string"/>
+     <element name="subalterno" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="CSIException">
+    <sequence>
+     <element name="nestedExcClassName" nillable="true" type="xsd:string"/>
+     <element name="nestedExcMsg" nillable="true" type="xsd:string"/>
+     <element name="stackTraceMessage" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="fault" type="impl:CSIException"/>
+   <complexType name="SystemException">
+    <complexContent>
+     <extension base="impl:CSIException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault1" type="impl:SystemException"/>
+   <complexType name="UnrecoverableException">
+    <complexContent>
+     <extension base="impl:CSIException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault2" type="impl:UnrecoverableException"/>
+   <element name="cercaElencoSubalterniTerreniConIstat">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="xsd:string"/>
+      <element name="in1" type="xsd:long"/>
+      <element minOccurs="0" name="in2" type="xsd:string"/>
+      <element minOccurs="0" name="in3" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniConIstatResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSubalterniTerreniConIstatReturn" type="impl:IdentificativoCatastaleTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniConIstatESezione">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="xsd:string"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+      <element name="in2" type="xsd:long"/>
+      <element minOccurs="0" name="in3" type="xsd:string"/>
+      <element minOccurs="0" name="in4" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniConIstatESezioneResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSubalterniTerreniConIstatESezioneReturn" type="impl:IdentificativoCatastaleTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniConBelfiore">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="xsd:string"/>
+      <element name="in1" type="xsd:long"/>
+      <element minOccurs="0" name="in2" type="xsd:string"/>
+      <element minOccurs="0" name="in3" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniConBelfioreResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSubalterniTerreniConBelfioreReturn" type="impl:IdentificativoCatastaleTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSezioniCensuarieDiUnComuneByIstat">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="xsd:string"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSezioniCensuarieDiUnComuneByIstatResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSezioniCensuarieDiUnComuneByIstatReturn" type="impl:SezioneCensuaria"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="SezioneCensuaria">
+    <sequence>
+     <element name="dataAggiornamento" nillable="true" type="xsd:string"/>
+     <element name="descrSezioneCensuaria" nillable="true" type="xsd:string"/>
+     <element name="sezioneCensuaria" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="cercaElencoSezioniCensuarieDiUnComuneByBelfiore">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="xsd:string"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreReturn" type="impl:SezioneCensuaria"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisica">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentitaPersonaFisica"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="IdentitaPersonaFisica">
+    <sequence>
+     <element name="codBelfioreComuneDiNascita" nillable="true" type="xsd:string"/>
+     <element name="codBelfioreComuneDiRicerca" nillable="true" type="xsd:string"/>
+     <element name="codFiscale" nillable="true" type="xsd:string"/>
+     <element name="cognome" nillable="true" type="xsd:string"/>
+     <element name="dataNascita" nillable="true" type="xsd:string"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaReturn" type="impl:IdentificativoCatastaleTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridica">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentitaPersonaGiuridica"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="IdentitaPersonaGiuridica">
+    <sequence>
+     <element name="codBelfioreComuneDiRicerca" nillable="true" type="xsd:string"/>
+     <element name="codBelfioreSedeLegale" nillable="true" type="xsd:string"/>
+     <element name="denominazione" nillable="true" type="xsd:string"/>
+     <element name="partitaIva" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaReturn" type="impl:IdentificativoCatastaleTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaDettaglioDatiTerreno">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentificativoCatastaleTerreno"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaDettaglioDatiTerrenoResponse">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="cercaDettaglioDatiTerrenoReturn" type="impl:DettaglioDatiTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="DettaglioDatiTerreno">
+    <sequence>
+     <element name="annoNota" nillable="true" type="xsd:string"/>
+     <element name="annotazione" nillable="true" type="xsd:string"/>
+     <element name="are" nillable="true" type="xsd:string"/>
+     <element name="centiare" nillable="true" type="xsd:string"/>
+     <element name="classe" nillable="true" type="xsd:string"/>
+     <element name="codCausale" nillable="true" type="xsd:string"/>
+     <element name="codComuneBelfiore" nillable="true" type="xsd:string"/>
+     <element name="dataAggiornamento" nillable="true" type="xsd:string"/>
+     <element name="dataEfficacia" nillable="true" type="xsd:string"/>
+     <element name="dataRegistrazione" nillable="true" type="xsd:string"/>
+     <element name="denominatore" nillable="true" type="xsd:string"/>
+     <element name="descrCausale" nillable="true" type="xsd:string"/>
+     <element name="descrNota" nillable="true" type="xsd:string"/>
+     <element name="descrPartitaSpeciale" nillable="true" type="xsd:string"/>
+     <element name="descrQualita" nillable="true" type="xsd:string"/>
+     <element name="edificialita" nillable="true" type="xsd:string"/>
+     <element name="ettari" nillable="true" type="xsd:string"/>
+     <element name="fabbricatiPresenti" type="xsd:boolean"/>
+     <element name="foglio" nillable="true" type="xsd:string"/>
+     <element name="infoSupplementariCausale" nillable="true" type="xsd:string"/>
+     <element name="mappale" nillable="true" type="xsd:string"/>
+     <element name="numeroDeduzioni" type="xsd:int"/>
+     <element name="numeroNota" nillable="true" type="xsd:string"/>
+     <element name="numeroPorzioni" type="xsd:int"/>
+     <element name="numeroRiserve" type="xsd:int"/>
+     <element name="partita" nillable="true" type="xsd:string"/>
+     <element name="progNota" nillable="true" type="xsd:string"/>
+     <element name="qualita" nillable="true" type="xsd:string"/>
+     <element name="redditoAgrario" type="xsd:double"/>
+     <element name="redditoDominicale" type="xsd:double"/>
+     <element name="sezione" nillable="true" type="xsd:string"/>
+     <element name="subalterno" nillable="true" type="xsd:string"/>
+     <element name="tipoNota" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="determinaRedditoDominicalePerIdentificativoCatastaleTerreno">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentificativoCatastaleTerreno"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoResponse">
+    <complexType>
+     <sequence>
+      <element name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoReturn" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaDettaglioDatiRiserveTerreno">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentificativoCatastaleTerreno"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaDettaglioDatiRiserveTerrenoResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaDettaglioDatiRiserveTerrenoReturn" type="impl:DettaglioDatiRiservaTerreno"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="DettaglioDatiRiservaTerreno">
+    <sequence>
+     <element name="codice" nillable="true" type="xsd:string"/>
+     <element name="dataAggiornamento" nillable="true" type="xsd:string"/>
+     <element name="descrizione" nillable="true" type="xsd:string"/>
+     <element name="partitaIscrizione" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="UserException">
+    <complexContent>
+     <extension base="impl:CSIException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="AutorizzMancanteEnteException">
+    <complexContent>
+     <extension base="impl:UserException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault3" type="impl:AutorizzMancanteEnteException"/>
+   <complexType name="OutputException">
+    <complexContent>
+     <extension base="impl:UserException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault4" type="impl:OutputException"/>
+   <complexType name="ParInputObblMancantiException">
+    <complexContent>
+     <extension base="impl:UserException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault5" type="impl:ParInputObblMancantiException"/>
+   <complexType name="ParInputValNonCorrettoException">
+    <complexContent>
+     <extension base="impl:UserException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault6" type="impl:ParInputValNonCorrettoException"/>
+   <complexType name="PermissionException">
+    <complexContent>
+     <extension base="impl:UserException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault7" type="impl:PermissionException"/>
+   <element name="cercaDettaglioDatiDeduzioniTerreno">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentificativoCatastaleTerreno"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaDettaglioDatiDeduzioniTerrenoResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaDettaglioDatiDeduzioniTerrenoReturn" type="impl:DettaglioDatiDeduzione"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="DettaglioDatiDeduzione">
+    <sequence>
+     <element name="dataAggiornamento" nillable="true" type="xsd:string"/>
+     <element name="importo" type="xsd:double"/>
+     <element name="simbolo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="cercaDettaglioDatiPorzioni">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentificativoCatastaleTerreno"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaDettaglioDatiPorzioniResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaDettaglioDatiPorzioniReturn" type="impl:DettaglioDatiPorzione"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="DettaglioDatiPorzione">
+    <sequence>
+     <element name="are" type="xsd:int"/>
+     <element name="centiare" type="xsd:int"/>
+     <element name="classe" nillable="true" type="xsd:string"/>
+     <element name="dataAggiornamento" nillable="true" type="xsd:string"/>
+     <element name="descQualita" nillable="true" type="xsd:string"/>
+     <element name="ettari" type="xsd:int"/>
+     <element name="idPorzione" nillable="true" type="xsd:string"/>
+     <element name="numeroDeduzioni" type="xsd:int"/>
+     <element name="qualita" type="xsd:int"/>
+     <element name="redditoAgrario" type="xsd:double"/>
+     <element name="redditoDominicale" type="xsd:double"/>
+    </sequence>
+   </complexType>
+   <element name="cercaDettaglioDatiDeduzioniPorzione">
+    <complexType>
+     <sequence>
+      <element minOccurs="0" name="in0" type="impl:IdentificativoCatastaleTerreno"/>
+      <element minOccurs="0" name="in1" type="xsd:string"/>
+      <element minOccurs="0" name="in2" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cercaDettaglioDatiDeduzioniPorzioneResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="cercaDettaglioDatiDeduzioniPorzioneReturn" type="impl:DettaglioDatiDeduzione"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoRequest">
+
+      <wsdl:part element="impl:determinaRedditoDominicalePerIdentificativoCatastaleTerreno" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoResponse">
+
+      <wsdl:part element="impl:determinaRedditoDominicalePerIdentificativoCatastaleTerrenoResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="AutorizzMancanteEnteException">
+
+      <wsdl:part element="impl:fault3" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConBelfioreESezioneResponse">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConBelfioreESezioneResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSezioniCensuarieDiUnComuneByIstatResponse">
+
+      <wsdl:part element="impl:cercaElencoSezioniCensuarieDiUnComuneByIstatResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ParInputObblMancantiException">
+
+      <wsdl:part element="impl:fault5" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConIstatESezioneRequest">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConIstatESezione" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiRiserveTerrenoResponse">
+
+      <wsdl:part element="impl:cercaDettaglioDatiRiserveTerrenoResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConIstatRequest">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConIstat" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ParInputValNonCorrettoException">
+
+      <wsdl:part element="impl:fault6" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CSIException">
+
+      <wsdl:part element="impl:fault" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaResponse">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConBelfioreESezioneRequest">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConBelfioreESezione" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreRequest">
+
+      <wsdl:part element="impl:cercaElencoSezioniCensuarieDiUnComuneByBelfiore" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaResponse">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConBelfioreRequest">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConBelfiore" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiDeduzioniTerrenoRequest">
+
+      <wsdl:part element="impl:cercaDettaglioDatiDeduzioniTerreno" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="OutputException">
+
+      <wsdl:part element="impl:fault4" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="SystemException">
+
+      <wsdl:part element="impl:fault1" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConIstatResponse">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConIstatResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiPorzioniRequest">
+
+      <wsdl:part element="impl:cercaDettaglioDatiPorzioni" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreResponse">
+
+      <wsdl:part element="impl:cercaElencoSezioniCensuarieDiUnComuneByBelfioreResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiTerrenoResponse">
+
+      <wsdl:part element="impl:cercaDettaglioDatiTerrenoResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiDeduzioniPorzioneRequest">
+
+      <wsdl:part element="impl:cercaDettaglioDatiDeduzioniPorzione" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiDeduzioniTerrenoResponse">
+
+      <wsdl:part element="impl:cercaDettaglioDatiDeduzioniTerrenoResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConIstatESezioneResponse">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConIstatESezioneResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaRequest">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridica" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiRiserveTerrenoRequest">
+
+      <wsdl:part element="impl:cercaDettaglioDatiRiserveTerreno" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniConBelfioreResponse">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniConBelfioreResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiDeduzioniPorzioneResponse">
+
+      <wsdl:part element="impl:cercaDettaglioDatiDeduzioniPorzioneResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="UnrecoverableException">
+
+      <wsdl:part element="impl:fault2" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="PermissionException">
+
+      <wsdl:part element="impl:fault7" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiPorzioniResponse">
+
+      <wsdl:part element="impl:cercaDettaglioDatiPorzioniResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaRequest">
+
+      <wsdl:part element="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaFisica" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaDettaglioDatiTerrenoRequest">
+
+      <wsdl:part element="impl:cercaDettaglioDatiTerreno" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="cercaElencoSezioniCensuarieDiUnComuneByIstatRequest">
+
+      <wsdl:part element="impl:cercaElencoSezioniCensuarieDiUnComuneByIstat" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="sigalfsrvTerreni">
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConBelfioreESezione">
+
+         <wsdl:input message="impl:cercaElencoSubalterniTerreniConBelfioreESezioneRequest" name="cercaElencoSubalterniTerreniConBelfioreESezioneRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSubalterniTerreniConBelfioreESezioneResponse" name="cercaElencoSubalterniTerreniConBelfioreESezioneResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConIstat">
+
+         <wsdl:input message="impl:cercaElencoSubalterniTerreniConIstatRequest" name="cercaElencoSubalterniTerreniConIstatRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSubalterniTerreniConIstatResponse" name="cercaElencoSubalterniTerreniConIstatResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConIstatESezione">
+
+         <wsdl:input message="impl:cercaElencoSubalterniTerreniConIstatESezioneRequest" name="cercaElencoSubalterniTerreniConIstatESezioneRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSubalterniTerreniConIstatESezioneResponse" name="cercaElencoSubalterniTerreniConIstatESezioneResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConBelfiore">
+
+         <wsdl:input message="impl:cercaElencoSubalterniTerreniConBelfioreRequest" name="cercaElencoSubalterniTerreniConBelfioreRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSubalterniTerreniConBelfioreResponse" name="cercaElencoSubalterniTerreniConBelfioreResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSezioniCensuarieDiUnComuneByIstat">
+
+         <wsdl:input message="impl:cercaElencoSezioniCensuarieDiUnComuneByIstatRequest" name="cercaElencoSezioniCensuarieDiUnComuneByIstatRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSezioniCensuarieDiUnComuneByIstatResponse" name="cercaElencoSezioniCensuarieDiUnComuneByIstatResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSezioniCensuarieDiUnComuneByBelfiore">
+
+         <wsdl:input message="impl:cercaElencoSezioniCensuarieDiUnComuneByBelfioreRequest" name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSezioniCensuarieDiUnComuneByBelfioreResponse" name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisica">
+
+         <wsdl:input message="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaRequest" name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaResponse" name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridica">
+
+         <wsdl:input message="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaRequest" name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaRequest"/>
+
+         <wsdl:output message="impl:cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaResponse" name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiTerreno">
+
+         <wsdl:input message="impl:cercaDettaglioDatiTerrenoRequest" name="cercaDettaglioDatiTerrenoRequest"/>
+
+         <wsdl:output message="impl:cercaDettaglioDatiTerrenoResponse" name="cercaDettaglioDatiTerrenoResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="determinaRedditoDominicalePerIdentificativoCatastaleTerreno">
+
+         <wsdl:input message="impl:determinaRedditoDominicalePerIdentificativoCatastaleTerrenoRequest" name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoRequest"/>
+
+         <wsdl:output message="impl:determinaRedditoDominicalePerIdentificativoCatastaleTerrenoResponse" name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiRiserveTerreno">
+
+         <wsdl:input message="impl:cercaDettaglioDatiRiserveTerrenoRequest" name="cercaDettaglioDatiRiserveTerrenoRequest"/>
+
+         <wsdl:output message="impl:cercaDettaglioDatiRiserveTerrenoResponse" name="cercaDettaglioDatiRiserveTerrenoResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:AutorizzMancanteEnteException" name="AutorizzMancanteEnteException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+         <wsdl:fault message="impl:ParInputValNonCorrettoException" name="ParInputValNonCorrettoException"/>
+
+         <wsdl:fault message="impl:OutputException" name="OutputException"/>
+
+         <wsdl:fault message="impl:ParInputObblMancantiException" name="ParInputObblMancantiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiDeduzioniTerreno">
+
+         <wsdl:input message="impl:cercaDettaglioDatiDeduzioniTerrenoRequest" name="cercaDettaglioDatiDeduzioniTerrenoRequest"/>
+
+         <wsdl:output message="impl:cercaDettaglioDatiDeduzioniTerrenoResponse" name="cercaDettaglioDatiDeduzioniTerrenoResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:AutorizzMancanteEnteException" name="AutorizzMancanteEnteException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+         <wsdl:fault message="impl:ParInputValNonCorrettoException" name="ParInputValNonCorrettoException"/>
+
+         <wsdl:fault message="impl:OutputException" name="OutputException"/>
+
+         <wsdl:fault message="impl:ParInputObblMancantiException" name="ParInputObblMancantiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiPorzioni">
+
+         <wsdl:input message="impl:cercaDettaglioDatiPorzioniRequest" name="cercaDettaglioDatiPorzioniRequest"/>
+
+         <wsdl:output message="impl:cercaDettaglioDatiPorzioniResponse" name="cercaDettaglioDatiPorzioniResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:AutorizzMancanteEnteException" name="AutorizzMancanteEnteException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+         <wsdl:fault message="impl:ParInputValNonCorrettoException" name="ParInputValNonCorrettoException"/>
+
+         <wsdl:fault message="impl:OutputException" name="OutputException"/>
+
+         <wsdl:fault message="impl:ParInputObblMancantiException" name="ParInputObblMancantiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiDeduzioniPorzione">
+
+         <wsdl:input message="impl:cercaDettaglioDatiDeduzioniPorzioneRequest" name="cercaDettaglioDatiDeduzioniPorzioneRequest"/>
+
+         <wsdl:output message="impl:cercaDettaglioDatiDeduzioniPorzioneResponse" name="cercaDettaglioDatiDeduzioniPorzioneResponse"/>
+
+         <wsdl:fault message="impl:UnrecoverableException" name="UnrecoverableException"/>
+
+         <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+         <wsdl:fault message="impl:CSIException" name="CSIException"/>
+
+         <wsdl:fault message="impl:AutorizzMancanteEnteException" name="AutorizzMancanteEnteException"/>
+
+         <wsdl:fault message="impl:SystemException" name="SystemException"/>
+
+         <wsdl:fault message="impl:ParInputValNonCorrettoException" name="ParInputValNonCorrettoException"/>
+
+         <wsdl:fault message="impl:OutputException" name="OutputException"/>
+
+         <wsdl:fault message="impl:ParInputObblMancantiException" name="ParInputObblMancantiException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="sigalfsrvTerreniSoapBinding" type="impl:sigalfsrvTerreni">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConBelfioreESezione">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSubalterniTerreniConBelfioreESezioneRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSubalterniTerreniConBelfioreESezioneResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConIstat">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSubalterniTerreniConIstatRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSubalterniTerreniConIstatResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConIstatESezione">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSubalterniTerreniConIstatESezioneRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSubalterniTerreniConIstatESezioneResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniConBelfiore">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSubalterniTerreniConBelfioreRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSubalterniTerreniConBelfioreResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSezioniCensuarieDiUnComuneByIstat">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSezioniCensuarieDiUnComuneByIstatRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSezioniCensuarieDiUnComuneByIstatResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSezioniCensuarieDiUnComuneByBelfiore">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSezioniCensuarieDiUnComuneByBelfioreResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisica">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSubalterniTerreniPerIdentitaPersonaFisicaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridica">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaElencoSubalterniTerreniPerIdentitaPersonaGiuridicaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiTerreno">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaDettaglioDatiTerrenoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaDettaglioDatiTerrenoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="determinaRedditoDominicalePerIdentificativoCatastaleTerreno">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="determinaRedditoDominicalePerIdentificativoCatastaleTerrenoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiRiserveTerreno">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaDettaglioDatiRiserveTerrenoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaDettaglioDatiRiserveTerrenoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="PermissionException">
+
+            <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="AutorizzMancanteEnteException">
+
+            <wsdlsoap:fault name="AutorizzMancanteEnteException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputValNonCorrettoException">
+
+            <wsdlsoap:fault name="ParInputValNonCorrettoException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="OutputException">
+
+            <wsdlsoap:fault name="OutputException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputObblMancantiException">
+
+            <wsdlsoap:fault name="ParInputObblMancantiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiDeduzioniTerreno">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaDettaglioDatiDeduzioniTerrenoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaDettaglioDatiDeduzioniTerrenoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="PermissionException">
+
+            <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="AutorizzMancanteEnteException">
+
+            <wsdlsoap:fault name="AutorizzMancanteEnteException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputValNonCorrettoException">
+
+            <wsdlsoap:fault name="ParInputValNonCorrettoException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="OutputException">
+
+            <wsdlsoap:fault name="OutputException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputObblMancantiException">
+
+            <wsdlsoap:fault name="ParInputObblMancantiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiPorzioni">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaDettaglioDatiPorzioniRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaDettaglioDatiPorzioniResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="PermissionException">
+
+            <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="AutorizzMancanteEnteException">
+
+            <wsdlsoap:fault name="AutorizzMancanteEnteException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputValNonCorrettoException">
+
+            <wsdlsoap:fault name="ParInputValNonCorrettoException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="OutputException">
+
+            <wsdlsoap:fault name="OutputException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputObblMancantiException">
+
+            <wsdlsoap:fault name="ParInputObblMancantiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cercaDettaglioDatiDeduzioniPorzione">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cercaDettaglioDatiDeduzioniPorzioneRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cercaDettaglioDatiDeduzioniPorzioneResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnrecoverableException">
+
+            <wsdlsoap:fault name="UnrecoverableException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="PermissionException">
+
+            <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="CSIException">
+
+            <wsdlsoap:fault name="CSIException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="AutorizzMancanteEnteException">
+
+            <wsdlsoap:fault name="AutorizzMancanteEnteException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SystemException">
+
+            <wsdlsoap:fault name="SystemException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputValNonCorrettoException">
+
+            <wsdlsoap:fault name="ParInputValNonCorrettoException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="OutputException">
+
+            <wsdlsoap:fault name="OutputException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ParInputObblMancantiException">
+
+            <wsdlsoap:fault name="ParInputObblMancantiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="sigalfsrvTerreniService">
+
+      <wsdl:port binding="impl:sigalfsrvTerreniSoapBinding" name="sigalfsrvTerreni">
+
+         <wsdlsoap:address location="http://tst-applogic.reteunitaria.piemonte.it/sigalfsrvApplTerreniWsfad/services/sigalfsrvTerreni"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

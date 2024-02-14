@@ -1,0 +1,81 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-md-12">
+  <!-- <p-table [columns]="cols" [value]="mocks" [tableStyleClass]="'table-hover'">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-mock let-index="rowIndex">
+      <tr [class.active-color]="index === selectedRow">
+        <td *ngFor="let col of cols" (click)="getFieldId(mock['id'], index)">
+          {{ mock[col.field] }}
+        </td>
+      </tr>
+      <p-button
+              label="Conferma"
+              (onClick)="sendPersonaliForm()"
+              [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+              [disabled]="!isConfirmed || !personaliForm.valid"
+            ></p-button>
+    </ng-template>
+  </p-table> -->
+
+  <app-pfa-table
+    [headers]="cols"
+    [values]="pfas"
+    (rowIdEmiter)="getRowId($event)"
+    [selectableField]="'idGeoPlPfa'"
+    [idComune]="'idComune'"
+    [idPopolamento]="'idPopolamento'"
+    [totalItems]="totalItems"
+    (updateTableChanges)="getUpdatedTable($event)"
+  ></app-pfa-table>
+
+  <!-- <div class="row my-4">
+    <div class="col-md-3">
+      <p-button
+        label="Visualizza dettaglio"
+        [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+        (onClick)="visualizzaDettaglio()"
+      ></p-button>
+    </div>
+    <div class="col-md-3">
+      <p-button
+        label="Documenti di piano"
+        [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+      ></p-button>
+    </div>
+    <div class="col-md-3">
+      <p-button
+        label="Registro eventi e interventi"
+        [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+      ></p-button>
+    </div>
+  </div> -->
+
+  <div class="row justify-content-around align-items-center my-4">
+    <p-button
+      label="esporta in excel"
+      [styleClass]="'mb-3 f-18 font-weight-bold transparent-button'"
+      (onClick)="downloadExcel()"
+    ></p-button>
+
+    <p-button
+      label="Visualizza su mappa"
+      (onClick)="openMappa()"
+      [styleClass]="'mb-3 btn-geco'"
+    ></p-button>
+    <!-- <p-button
+      label="Dettaglio"
+      (onClick)="visualizzaDettaglio()"
+      [styleClass]="'mb-3 f-18 font-weight-bold form-button informatione'"
+    ></p-button> -->
+  </div>
+</div>

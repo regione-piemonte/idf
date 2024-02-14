@@ -1,0 +1,28 @@
+<!--
+  SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+  SPDX-License-Identifier: EUPL-1.2
+-->
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+  <id>1.2.0</id>
+  <formats>
+    <format>tar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <moduleSets>
+  	<moduleSet>
+  		<includes>
+  			<include>it.csi.idf:idfgeoapi-ear</include>  			  		
+  		</includes>  		
+  	</moduleSet>
+  </moduleSets>
+  <files>    
+    <file>
+      <source>../idfgeoapi-ear/target/idfgeoapi.ear</source>            
+    </file>
+    <file>      
+      <source>src/idfgeoapi-ds.xml</source>       
+    </file>  
+  </files>
+</assembly>

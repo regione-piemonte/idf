@@ -1,0 +1,515 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!-- <app-reusable-table
+  [data]="campioneData"
+  [headers]="campioneHeaders"
+  [initiallySortedColumn]="initiallySortedColumn"
+  (rowIdEmitter)="emitEditModal()"
+  [selectableId]="onClickId"
+></app-reusable-table> -->
+<div #root class="row mt-3" *ngIf="campioneForm" [formGroup]="campioneForm">
+  <div class="col-md-12">
+    <div class="row text-center my-1 font-weight-bold">
+      <div class="col-md-3 pb-3 header-color">
+        <span> Alberi dominanti e campione </span>
+      </div>
+      <div class="col-md-3 pb-3 header-color">
+        <span> Dominante* </span>
+      </div>
+      <div class="col-md-2 pb-3 header-color">
+        <span> Campione principale </span>
+      </div>
+      <div class="col-md-2 pb-3 header-color">
+        <span> Campione S1 </span>
+      </div>
+      <div class="col-md-2 pb-3 header-color">
+        <span> Campione S2 </span>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col-md-3 text-right py-1 header-color font-weight-bold">
+        Specie
+      </div>
+      <ng-container *ngFor="let tipo of tipoCampione; let i = index">
+        <div
+          *ngIf="campioneForm.get(tipo.codTipoCampione)"
+          [ngClass]="i === 0 ? 'col-md-3' : 'col-md-2'"
+        >
+          <ng-container
+            *ngFor="
+              let tipoCampione of campioneForm.get(tipo.codTipoCampione)[
+                'controls'
+              ];
+              let i = index
+            "
+          >
+            <p-overlayPanel [appendTo]="root" #errorSpecie>
+              <span
+                *ngIf="
+                  tipoCampione.get('idSpecie').touched &&
+                  tipoCampione.get('idSpecie').errors?.required
+                "
+              >
+                <i
+                  class="pi pi-exclamation-triangle"
+                  style="
+                    color: red;
+                    left: 37%;
+                    position: relative;
+                    font-size: 35px;
+                    margin: 5px;
+                  "
+                ></i
+                ><br />
+                Errore: Selezionare una voce dall'elenco
+              </span></p-overlayPanel
+            >
+            <ng-container [formGroup]="tipoCampione">
+              <ng-container *ngIf="specieList$ | async as specieList">
+                <p-dropdown
+                  (mouseleave)="errorSpecie.hide()"
+                  (mouseenter)="
+                    showError(tipoCampione, errorSpecie, 'idSpecie', $event)
+                  "
+                  [options]="specieList"
+                  [placeholder]="'Seleziona specie'"
+                  [style]="{ width: '100%' }"
+                  [showClear]="true"
+                  [autoWidth]="false"
+                  [filter]="true"
+                  formControlName="idSpecie"
+                  pTooltip="{{ tooltipProperty.specieList }}"
+                  tooltipPosition="top"
+                >
+                  <ng-template let-type pTemplate="item">
+                    <div class="ui-helper-clearfix specie-dropdown">
+                      <div style="font-size: 14px">
+                        {{ type.label }}
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+
+                <input
+                  type="hidden"
+                  class="form-control"
+                  formControlName="codTipoCampione"
+                  name="codTipoCampione"
+                  [value]="tipo.codTipoCampione"
+                  pTooltip="{{ tooltipProperty.codTipoCampione }}"
+                  tooltipPosition="top"
+                />
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="row mb-1">
+      <div class="col-md-3 text-right py-1 header-color font-weight-bold">
+        Qualità (Seme/Pollone)
+      </div>
+      <ng-container *ngFor="let tipo of tipoCampione; let i = index">
+        <div
+          *ngIf="campioneForm.get(tipo.codTipoCampione)"
+          [ngClass]="i === 0 ? 'col-md-3' : 'col-md-2'"
+        >
+          <ng-container
+            *ngFor="
+              let tipoCampione of campioneForm.get(tipo.codTipoCampione)[
+                'controls'
+              ];
+              let i = index
+            "
+          >
+            <p-overlayPanel [appendTo]="root" #errorSpecie>
+              <span
+                *ngIf="
+                  tipoCampione.get('qualita').touched &&
+                  tipoCampione.get('qualita').errors?.required
+                "
+              >
+                <i
+                  class="pi pi-exclamation-triangle"
+                  style="
+                    color: red;
+                    left: 37%;
+                    position: relative;
+                    font-size: 35px;
+                    margin: 5px;
+                  "
+                ></i
+                ><br />
+                Errore: Selezionare una voce dall'elenco
+              </span></p-overlayPanel
+            >
+            <ng-container [formGroup]="tipoCampione">
+              <p-dropdown
+                (mouseleave)="errorSpecie.hide()"
+                (mouseenter)="
+                  showError(tipoCampione, errorSpecie, 'qualita', $event)
+                "
+                [options]="qualitaDropdown"
+                [placeholder]="'Seleziona qualita'"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                formControlName="qualita"
+                pTooltip="{{ tooltipProperty.qualita }}"
+                tooltipPosition="top"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="row mb-1">
+      <div class="col-md-3 text-right py-1 header-color font-weight-bold">
+        Diametro (cm)
+      </div>
+      <ng-container *ngFor="let tipo of tipoCampione; let i = index">
+        <div
+          *ngIf="campioneForm.get(tipo.codTipoCampione)"
+          [ngClass]="i === 0 ? 'col-md-3' : 'col-md-2'"
+        >
+          <ng-container
+            *ngFor="
+              let tipoCampione of campioneForm.get(tipo.codTipoCampione)[
+                'controls'
+              ];
+              let i = index
+            "
+          >
+            <p-overlayPanel [appendTo]="root" #errorDiametro>
+              <span
+                *ngIf="
+                  tipoCampione.get('diametro').touched &&
+                  tipoCampione.get('diametro').errors?.required
+                "
+              >
+                <i
+                  class="pi pi-exclamation-triangle"
+                  style="
+                    color: red;
+                    left: 37%;
+                    position: relative;
+                    font-size: 35px;
+                    margin: 5px;
+                  "
+                ></i
+                ><br />Errore! Campo diametro obbligatorio</span
+              >
+              <span
+                *ngIf="
+                  tipoCampione.get('diametro').touched &&
+                  tipoCampione.get('diametro').errors?.pattern
+                "
+              >
+                <i
+                  class="pi pi-exclamation-triangle"
+                  style="
+                    color: red;
+                    left: 37%;
+                    position: relative;
+                    font-size: 35px;
+                    margin: 5px;
+                  "
+                ></i
+                ><br />Errore! Campo diametro non valido</span
+              >
+              <span
+                *ngIf="
+                  tipoCampione.get('diametro').touched &&
+                  tipoCampione.get('diametro').errors?.maxlength
+                "
+                ><i
+                  class="pi pi-exclamation-triangle"
+                  style="
+                    color: red;
+                    left: 37%;
+                    position: relative;
+                    font-size: 35px;
+                    margin: 5px;
+                  "
+                ></i
+                ><br />Attenzione! Stringa digitata è troppo lunga</span
+              >
+            </p-overlayPanel>
+
+            <ng-container [formGroup]="tipoCampione">
+              <input
+                (mouseleave)="errorDiametro.hide()"
+                (mouseenter)="
+                  showError(tipoCampione, errorDiametro, 'diametro', $event)
+                "
+                type="text"
+                class="form-control"
+                formControlName="diametro"
+                name="diametro"
+                OnlyNumber="true"
+                pTooltip="{{ tooltipProperty.diametro }}"
+                tooltipPosition="top"
+              />
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <!--div class="row mb-1">
+            <div class="col-md-3 text-right py-1 header-color font-weight-bold">
+                Altezza (m)
+            </div>
+            <ng-container *ngFor="let tipo of tipoCampione; let i = index;">
+                <div [ngClass]="i === 0 ? 'col-md-3' : 'col-md-2'">
+                    <ng-container *ngFor="let tipoCampione of campioneForm.get(tipo.codTipoCampione)['controls']; let i = index">
+                        <ng-container [formGroup]="tipoCampione">
+                            <p-overlayPanel [appendTo]="root" #errorAltezza>
+                                <span *ngIf="
+                                    tipoCampione.get('altezza').touched &&
+                                    tipoCampione.get('altezza').errors?.required
+                                    ">
+
+                                <i class="pi pi-exclamation-triangle" style="color: red; left: 37%; position: relative; font-size: 35px; margin: 5px; "></i><br>Errore! Campo altezza obbligatorio</span>
+                                <span *ngIf="
+                                    tipoCampione.get('altezza').touched &&
+                                    tipoCampione.get('altezza').errors?.pattern
+                                    ">
+                                    <i class="pi pi-exclamation-triangle" style="color: red; left: 37%; position: relative; font-size: 35px; margin: 5px; "></i><br>Errore! Campo altezza non valido</span>
+                                <span *ngIf="
+                                    tipoCampione.get('altezza').touched &&
+                                    tipoCampione.get('altezza').errors?.maxlength
+                                    "><i class="pi pi-exclamation-triangle" style="color: red; left: 37%; position: relative; font-size: 35px; margin: 5px; "></i><br>Attenzione! Stringa digitata è troppo lunga</span>
+
+                            </p-overlayPanel>
+                            <input (mouseleave)="errorAltezza.hide()" (mouseenter)="showError(tipoCampione,errorAltezza,'altezza',$event)" type="text" pTooltip={{tooltipProperty.tipoCampione}} tooltipPosition="top" class="form-control" formControlName="altezza" name="altezza" OnlyNumber="true"
+                            />
+
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </!--div-->
+    <div class="row mb-1">
+      <div class="col-md-3 text-right py-1 header-color font-weight-bold">
+        Incremento (mm/10 anni)
+      </div>
+      <ng-container *ngFor="let tipo of tipoCampione; let i = index">
+        <div
+          *ngIf="campioneForm.get(tipo.codTipoCampione)"
+          [ngClass]="i === 0 ? 'col-md-3' : 'col-md-2'"
+        >
+          <ng-container
+            *ngFor="
+              let tipoCampione of campioneForm.get(tipo.codTipoCampione)[
+                'controls'
+              ];
+              let i = index
+            "
+          >
+            <ng-container [formGroup]="tipoCampione">
+              <p-overlayPanel [appendTo]="root" #errorIncremento>
+                <span
+                  *ngIf="
+                    tipoCampione.get('incremento').touched &&
+                    tipoCampione.get('incremento').errors?.required
+                  "
+                >
+                  <i
+                    class="pi pi-exclamation-triangle"
+                    style="
+                      color: red;
+                      left: 37%;
+                      position: relative;
+                      font-size: 35px;
+                      margin: 5px;
+                    "
+                  ></i
+                  ><br />Errore! Campo incremento obbligatorio</span
+                >
+                <span
+                  *ngIf="
+                    tipoCampione.get('incremento').touched &&
+                    tipoCampione.get('incremento').errors?.pattern
+                  "
+                >
+                  <i
+                    class="pi pi-exclamation-triangle"
+                    style="
+                      color: red;
+                      left: 37%;
+                      position: relative;
+                      font-size: 35px;
+                      margin: 5px;
+                    "
+                  ></i
+                  ><br />Errore! Campo incremento non valido</span
+                >
+                <span
+                  *ngIf="
+                    tipoCampione.get('incremento').touched &&
+                    tipoCampione.get('incremento').errors?.maxlength
+                  "
+                  ><i
+                    class="pi pi-exclamation-triangle"
+                    style="
+                      color: red;
+                      left: 37%;
+                      position: relative;
+                      font-size: 35px;
+                      margin: 5px;
+                    "
+                  ></i
+                  ><br />Attenzione! Stringa digitata è troppo lunga</span
+                >
+              </p-overlayPanel>
+
+              <input
+                (mouseleave)="errorIncremento.hide()"
+                (mouseenter)="
+                  showError(tipoCampione, errorIncremento, 'incremento', $event)
+                "
+                type="text"
+                class="form-control"
+                formControlName="incremento"
+                pTooltip="{{ tooltipProperty.incremento }}"
+                tooltipPosition="top"
+                name="incremento"
+                OnlyNumber="true"
+              />
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="row mb-1">
+      <div class="col-md-3 text-right py-1 header-color font-weight-bold">
+        Età (anni)
+      </div>
+      <ng-container *ngFor="let tipo of tipoCampione; let i = index">
+        <div
+          *ngIf="campioneForm.get(tipo.codTipoCampione)"
+          [ngClass]="i === 0 ? 'col-md-3' : 'col-md-2'"
+        >
+          <ng-container
+            *ngFor="
+              let tipoCampione of campioneForm.get(tipo.codTipoCampione)[
+                'controls'
+              ];
+              let i = index
+            "
+          >
+            <ng-container [formGroup]="tipoCampione">
+              <p-overlayPanel [appendTo]="root" #errorEta>
+                <span
+                  *ngIf="
+                    tipoCampione.get('eta').touched &&
+                    tipoCampione.get('eta').errors?.required
+                  "
+                >
+                  <i
+                    class="pi pi-exclamation-triangle"
+                    style="
+                      color: red;
+                      left: 37%;
+                      position: relative;
+                      font-size: 35px;
+                      margin: 5px;
+                    "
+                  ></i
+                  ><br />Errore! Campo eta obbligatorio</span
+                >
+                <span
+                  *ngIf="
+                    tipoCampione.get('eta').touched &&
+                    tipoCampione.get('eta').errors?.pattern
+                  "
+                >
+                  <i
+                    class="pi pi-exclamation-triangle"
+                    style="
+                      color: red;
+                      left: 37%;
+                      position: relative;
+                      font-size: 35px;
+                      margin: 5px;
+                    "
+                  ></i
+                  ><br />Errore! Campo eta non valido</span
+                >
+                <span
+                  *ngIf="
+                    tipoCampione.get('eta').touched &&
+                    tipoCampione.get('eta').errors?.maxlength
+                  "
+                  ><i
+                    class="pi pi-exclamation-triangle"
+                    style="
+                      color: red;
+                      left: 37%;
+                      position: relative;
+                      font-size: 35px;
+                      margin: 5px;
+                    "
+                  ></i
+                  ><br />Attenzione! Stringa digitata è troppo lunga</span
+                >
+              </p-overlayPanel>
+              <input
+                (mouseleave)="errorEta.hide()"
+                (mouseenter)="showError(tipoCampione, errorEta, 'eta', $event)"
+                type="text"
+                class="form-control"
+                pTooltip="{{ tooltipProperty.eta }}"
+                tooltipPosition="top"
+                formControlName="eta"
+                name="eta"
+                OnlyNumber="true"
+              />
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <p-button
+      label="Pulisci"
+      (onClick)="buildForm()"
+      [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+    ></p-button>
+  </div>
+</div>
+<hr class="black-hr" />
+<div class="row my-2">
+  <div class="col-md-12 text-right">
+    <p-button
+      class="full-width-media"
+      label="Torna ai risultati ricerca"
+      (onClick)="navigateToSearch()"
+      [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+
+    <p-button
+      label="SALVA e prosegui"
+      (onClick)="sendThirdForm()"
+      [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!--app-chart 
+    [title]="'Diametri'"
+    id="'Diametri'" 
+    type="bar" 
+    [data]="diametriData" 
+></!--app-chart-->
+
+<app-table
+  *ngIf="infoRelascopia"
+  [data]="infoRelascopia"
+  [title]="'Dati per specie'"
+>
+</app-table>
+<div class="scrollbar-table scrollbar-primary">
+  <app-google-chart
+    [title]="'Diametri'"
+    [id]="'Diametri'"
+    [type]="'ColumnChart'"
+    [data]="diametriData2"
+    [columnNames]="['', 'numero alberi']"
+    [width]="1300"
+    [options]="options"
+    [height]="500"
+  >
+    ></app-google-chart
+  >
+</div>

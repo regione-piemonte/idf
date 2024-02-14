@@ -1,0 +1,92 @@
+/*!
+ * SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+ * 
+ * SPDX-License-Identifier: EUPL-1.2
+*/
+.verticalTableLeft {
+    width: 400px;
+    float: left;
+    display: grid;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+.verticalTableRight{
+    width: 70%;
+    float: right;
+}
+
+.vertical_table {
+    /* display: grid;
+    grid-template-columns: 0.4fr 2fr 0.6fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ". . ."; */
+    display: flex;
+    flex-direction: row;
+}
+
+.vertical_header {
+    width: 28%;
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+
+
+}
+
+.vertical_header div div {padding: 8px 0 0 0; border-bottom:1px solid #ccc;}
+
+.vertical_body{
+    width: 30%;
+    max-width: 60%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 4;
+    overflow: auto;
+}
+.totale-custom{
+    width: 160px!important;
+    margin-top: 23px!important;
+}
+.summary_column {
+    /*width: 10%;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.vertical_footer {
+    display: flex;
+    align-items: flex-end;
+}
+.footer_content{
+    margin-bottom: 73px;
+}
+.vertical_table_horizontal_header {
+    background-color: #0153a9;
+    border-radius: 15px;
+    color: white;
+    padding: 6px 8px;
+    text-align: center;
+}
+.total{
+    background-color: yellow;
+}
+.hidden{
+    display: none;
+}
+
+.label-singl-row {
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: visible;
+    /* width: 300px; */
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.number-input {
+    text-align: right;
+    margin-right: 5px;
+    width: 135px;
+}
+

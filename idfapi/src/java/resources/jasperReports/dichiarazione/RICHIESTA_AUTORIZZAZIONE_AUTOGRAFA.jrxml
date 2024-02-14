@@ -1,0 +1,1992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2022-01-19T11:55:29 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="20" uuid="c954e8af-9e9f-49b3-8b06-cb6a195837d1">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="PARTICELLE_SUBREPORT" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="ALLEGATI_SUBREPORT" class="net.sf.jasperreports.engine.JasperReport"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="soggettoDestinatario" class="java.lang.String"/>
+	<field name="richCognome" class="java.lang.String"/>
+	<field name="richNome" class="java.lang.String"/>
+	<field name="richRagSociale" class="java.lang.String"/>
+	<field name="richPartitaIva" class="java.lang.String"/>
+	<field name="richCodFiscale" class="java.lang.String"/>
+	<field name="richIndirizzo" class="java.lang.String"/>
+	<field name="richCivico" class="java.lang.String"/>
+	<field name="richProv" class="java.lang.String"/>
+	<field name="richCap" class="java.lang.String"/>
+	<field name="richComune" class="java.lang.String"/>
+	<field name="richTel" class="java.lang.String"/>
+	<field name="richEmailPec" class="java.lang.String"/>
+	<field name="sottoscritto" class="java.lang.String"/>
+	<field name="nikeImg" class="java.io.InputStream"/>
+	<field name="pointImg" class="java.io.InputStream"/>
+	<field name="testCheck" class="java.lang.Boolean"/>
+	<field name="sottoscrittoQualita" class="java.lang.String"/>
+	<field name="sottoscrittoNome" class="java.lang.String"/>
+	<field name="sottoscrittoIndirizzo" class="java.lang.String"/>
+	<field name="sottoscrittoTelefono" class="java.lang.String"/>
+	<field name="totSupIntervento" class="java.lang.String"/>
+	<field name="totSupVincolo" class="java.lang.String"/>
+	<field name="totSupBoscata" class="java.lang.String"/>
+	<field name="totSupBoscataVincolo" class="java.lang.String"/>
+	<field name="totMovTerra" class="java.lang.String"/>
+	<field name="totMovVincolo" class="java.lang.String"/>
+	<field name="isBoscoCeduo" class="java.lang.Boolean"/>
+	<field name="isBoscoFustaia" class="java.lang.Boolean"/>
+	<field name="isBoscoMisto" class="java.lang.Boolean"/>
+	<field name="isBoscoAltro" class="java.lang.Boolean"/>
+	<field name="isBoscoRobinieti" class="java.lang.Boolean"/>
+	<field name="isBoscoCastagneti" class="java.lang.Boolean"/>
+	<field name="tempoPrevisto" class="java.lang.Integer"/>
+	<field name="isFlagCauzione1" class="java.lang.Boolean"/>
+	<field name="isFlagCauzione2" class="java.lang.Boolean"/>
+	<field name="isFlagCauzione3" class="java.lang.Boolean"/>
+	<field name="isFlagCauzione4" class="java.lang.Boolean"/>
+	<field name="isFlagCauzione5" class="java.lang.Boolean"/>
+	<field name="isFlagLavori" class="java.lang.Boolean"/>
+	<field name="isFlagDepositoCauzione" class="java.lang.Boolean"/>
+	<field name="isCompensazMonetaria" class="java.lang.Boolean"/>
+	<field name="cmSupBosc" class="java.lang.String"/>
+	<field name="cmTotSup" class="java.lang.String"/>
+	<field name="cmSupNoBosc" class="java.lang.String"/>
+	<field name="cmNoBoscEuro" class="java.lang.String"/>
+	<field name="cmBoscEuro" class="java.lang.String"/>
+	<field name="cmTotEuro" class="java.lang.String"/>
+	<field name="isFlagEsenzione1" class="java.lang.Boolean"/>
+	<field name="isFlagArt9A" class="java.lang.Boolean"/>
+	<field name="isFlagArt9B" class="java.lang.Boolean"/>
+	<field name="isFlagArt9C" class="java.lang.Boolean"/>
+	<field name="isFlagEsenzione2" class="java.lang.Boolean"/>
+	<field name="isFlagArt7A" class="java.lang.Boolean"/>
+	<field name="isFlagArt7B" class="java.lang.Boolean"/>
+	<field name="isFlagArt7C" class="java.lang.Boolean"/>
+	<field name="isFlagArt7D" class="java.lang.Boolean"/>
+	<field name="isFlagArt7DBis" class="java.lang.Boolean"/>
+	<field name="isDichProprietario" class="java.lang.Boolean"/>
+	<field name="isDichNonProprietario" class="java.lang.Boolean"/>
+	<field name="isDichDissenso" class="java.lang.Boolean"/>
+	<field name="isFlagImportoInf" class="java.lang.Boolean"/>
+	<field name="isFlagImportoSup" class="java.lang.Boolean"/>
+	<field name="isFlagConfServizi" class="java.lang.Boolean"/>
+	<field name="isFlagSuap" class="java.lang.Boolean"/>
+	<field name="isFlagCopiaConforme" class="java.lang.Boolean"/>
+	<field name="isAllegato101" class="java.lang.Boolean"/>
+	<field name="isAllegato102" class="java.lang.Boolean"/>
+	<field name="isAllegato103" class="java.lang.Boolean"/>
+	<field name="isAllegato104" class="java.lang.Boolean"/>
+	<field name="isAllegato105" class="java.lang.Boolean"/>
+	<field name="isAllegato106" class="java.lang.Boolean"/>
+	<field name="isAllegato107" class="java.lang.Boolean"/>
+	<field name="isAllegato108" class="java.lang.Boolean"/>
+	<field name="isAllegato120" class="java.lang.Boolean"/>
+	<field name="isAllegato121" class="java.lang.Boolean"/>
+	<field name="isAllegato24" class="java.lang.Boolean"/>
+	<field name="isFlagSpeseIstruttoria" class="java.lang.Boolean"/>
+	<field name="isFlagEsenzioneBolloNo" class="java.lang.Boolean"/>
+	<field name="nMarcaBollo" class="java.lang.String"/>
+	<field name="importoMarcaBollo" class="java.lang.String"/>
+	<field name="isFlagAreeDissesto" class="java.lang.Boolean"/>
+	<field name="isFlagAreeEsondazione" class="java.lang.Boolean"/>
+	<field name="elencoDatiParticelle" class="java.util.List"/>
+	<field name="elencoAllegati" class="java.util.List"/>
+	<field name="isRegionale" class="java.lang.Boolean"/>
+	<field name="nrIstanza" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="134">
+			<printWhenExpression><![CDATA[$F{isFlagEsenzioneBolloNo}]]></printWhenExpression>
+			<frame>
+				<reportElement x="-1" y="31" width="560" height="76" uuid="a0566f59-cc4d-4ff8-86bd-c9a4c1c4a252">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<rectangle>
+					<reportElement x="0" y="2" width="555" height="62" uuid="3576f184-c5aa-47f1-b361-ad65be18de39">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+				</rectangle>
+				<line>
+					<reportElement x="127" y="2" width="1" height="61" uuid="d473c1b1-6ccb-4538-a4b6-510a8b66e84b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+				</line>
+				<staticText>
+					<reportElement x="6" y="18" width="118" height="15" uuid="af0ea8f1-b6bf-4073-92ca-20e62bd94883">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[MARCA DA BOLLO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="34" width="47" height="15" uuid="d31a629a-e72a-4e0c-8a62-37657716b054">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Euro]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="54" y="34" width="66" height="15" uuid="9ac4173d-a337-465e-8a6f-b95eceb1574a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{importoMarcaBollo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="131" y="6" width="422" height="11" uuid="40cb665a-e67a-44f7-bcb7-11d6db64d564">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nr. Identificativo della marca da bollo:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="131" y="39" width="424" height="11" uuid="eff328e6-8933-43d6-97f5-a44f215e7a8b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[annullata per la presentazione della presente domanda e non sarà utilizzata per qualsiasi altro adempimento che ne ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="131" y="50" width="422" height="11" uuid="f5f6c93a-e4b8-4e33-a89f-40cb0441d579">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[richiede l'apposizione (ar. 3 D.M. 10/11/11)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="131" y="17" width="144" height="11" uuid="e36c416e-deb1-4e8a-a5b2-3cd22f05603f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nMarcaBollo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="131" y="28" width="424" height="11" uuid="227b67cc-3e86-43b2-9c70-220f51a53771">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Consapevole delle sanzioni panali previste dall'art. 76 del D.P.R. 445/2000, si dichiara che la marca da bollo è stata]]></text>
+				</staticText>
+			</frame>
+		</band>
+		<band height="622" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="418" width="534" height="35" uuid="c13ff0ef-9d30-44c8-9f95-807493335d31">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Recapito diverso da quello del richiedente ( ___________ delegato) al fine di contatti inerenti all’istruttoria della pratica ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="205" width="60" height="31" uuid="ae8fdd83-3b17-438d-9c3d-5507f9dd579b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OGGETTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="205" width="481" height="64" uuid="a76e0ac0-1133-41b6-a3a2-e49816aeb8ae">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[l.r. 45/89 - Richiesta di autorizzazione per interventi di modifica e/o trasformazione del suolo in zone sottoposte a vincolo idrogeologico, determinato ai sensi del R.D.L. n. 3267/1923]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="52" width="211" height="21" uuid="5b3f189f-79df-4605-a80d-9c70861d15f2">
+					<printWhenExpression><![CDATA[$F{isRegionale}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALLA REGIONE PIEMONTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="72" width="211" height="15" uuid="2fa30a2a-070f-4c58-8814-ef9f8cbd09bd">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{isRegionale}]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[SETTORE TECNICO]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="617" width="549" height="1" uuid="df79e94c-3e46-4c47-9853-7b405293e780"/>
+			</break>
+			<textField>
+				<reportElement x="195" y="418" width="62" height="15" uuid="7c529aba-40db-4bc0-bd42-2dfb9b89e856">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sottoscrittoQualita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="56" y="454" width="435" height="15" uuid="8c4c6fa7-ae20-4307-8859-52b38f3b3875">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sottoscrittoNome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="45" y="475" width="435" height="15" uuid="256664fd-e383-48fb-9427-6809118d9627">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sottoscrittoIndirizzo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="495" width="435" height="15" uuid="c6f4f24a-694b-4423-9170-64b47a9f5dcd">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sottoscrittoTelefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="339" y="90" width="209" height="80" uuid="039a3a51-c52e-4afd-865f-ff3a9f7f99cd"/>
+				<textFieldExpression><![CDATA[$F{soggettoDestinatario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="455" width="500" height="15" uuid="d8ebfeb7-3041-476a-a83a-8ded76fd85bf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Nominativo _____________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="476" width="500" height="15" uuid="b25fcd6f-25e9-4646-8c35-2fdc34acf67f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Indirizzo _______________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="496" width="500" height="15" uuid="efbfa052-2398-4226-93fa-74133f7a0728">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Telefono _______________________________________________________________________________]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="291" width="555" height="15" uuid="2b74c6a4-b7ba-4c3c-b41f-e83a8fedc58b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="306" width="555" height="15" uuid="50e08207-8df7-4849-bb98-727d739609b7">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="321" width="555" height="15" uuid="2ffa8911-f371-41ab-bba6-c8aa6aa2b0ab">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="336" width="555" height="15" uuid="897b6b33-df09-45e9-aaba-95808a732cfa">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="351" width="555" height="15" uuid="2bd56d4c-84eb-4a18-bf7b-2b8a3c591ca8">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="-1" y="274" width="191" height="15" uuid="5337d594-e92f-44b4-9a68-3df3fbc73f4c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DATI DEL RICHIEDENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="351" width="80" height="15" uuid="b867907c-dcb6-4acf-9694-e263ddc58ba3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[COMUNE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="336" width="96" height="15" uuid="0e883fe1-5669-42c1-9e98-4f4508c31b99">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[INDIRIZZO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="321" width="95" height="15" uuid="cc3ae579-7cd8-422c-9cf2-513516776aa2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[CODICE FISCALE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="306" width="100" height="15" uuid="56f8cf94-325f-40b8-a688-a430b1dcdea8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[RAGIONE SOCIALE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="291" width="95" height="15" uuid="522c2d27-a7f5-484c-b07d-17fdb0ad18d0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[COGNOME]]></text>
+			</staticText>
+			<line>
+				<reportElement x="312" y="291" width="1" height="15" uuid="7c463285-7ddf-4936-becd-025492b0ace0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="356" y="291" width="1" height="15" uuid="ea24a80c-c892-4f26-a7cc-bb42b054f503">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="315" y="291" width="40" height="15" uuid="dec7daf9-5446-4cac-a7ef-110960dcdc65">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<line>
+				<reportElement x="312" y="321" width="1" height="15" uuid="c53384a9-0a75-4977-9adf-fc8e79d63e1a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="356" y="321" width="1" height="15" uuid="f22a7716-a18e-4e7e-ad56-f712e85d1d14">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="315" y="321" width="40" height="15" uuid="9bd94cbe-62b2-4b2f-b79f-70b89490ddac">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[P.IVA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="332" y="351" width="1" height="15" uuid="9b4ec56e-5669-4884-9579-d9fb8793b012">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="335" y="351" width="35" height="15" uuid="ce71d340-d419-406c-946b-170088bcbe75">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[PROV]]></text>
+			</staticText>
+			<line>
+				<reportElement x="461" y="336" width="1" height="15" uuid="e733b0fe-a4da-43cc-8ab6-2185216c6162">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="517" y="336" width="1" height="15" uuid="955dbc3a-4727-4ee7-96cf-ce67980c3350">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="466" y="336" width="50" height="15" uuid="71c397d0-80cc-420d-b28f-b8896afad1b5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[N. CIVICO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="517" y="351" width="1" height="15" uuid="479a8ba7-e022-4597-8ed4-349d07228fe0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="478" y="351" width="1" height="15" uuid="6c0d05c7-9f30-4b2f-a287-adfa3b1eaab2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="481" y="351" width="35" height="15" uuid="1e1b77e9-ea59-4728-85ae-70ea42bc9db0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[CAP]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="366" width="555" height="15" uuid="98a99099-54a4-4edb-a555-0755e8faf975">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<line>
+				<reportElement x="100" y="291" width="1" height="90" uuid="204eab4e-1805-43f2-8a08-c06331ab4dee">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="3" y="366" width="80" height="15" uuid="544565d3-c7f2-4244-a674-53b0b3347efd">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[e-mail / PEC]]></text>
+			</staticText>
+			<line>
+				<reportElement x="369" y="351" width="1" height="30" uuid="73f9619e-be5d-40dc-93db-78a2fa30df19">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="413" y="366" width="1" height="15" uuid="9c7bda5b-0a1c-4e8c-a642-50b1d19344f2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="380" y="366" width="26" height="15" uuid="c577ec07-83ba-4aa2-a1ad-e5b11c3ed2e1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[tel.]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="103" y="291" width="207" height="15" uuid="48068c84-58bf-4819-be09-059727650989">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{richCognome} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{richCognome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="366" width="139" height="15" uuid="72c313aa-9a33-4b03-972a-8321b0f1299c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richTel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="291" width="195" height="15" uuid="4f729316-44f5-43b1-8de1-65ca751f2081">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{richNome} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richNome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="306" width="450" height="15" uuid="d34313db-9427-4720-bfb0-92d374132c25">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{richRagSociale} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richRagSociale}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="321" width="209" height="15" uuid="11e8a2d3-05eb-41b6-b2fb-23e7d86287a9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richCodFiscale}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="321" width="196" height="15" uuid="e9ffc34c-c785-4f16-bceb-6c68119ccb9f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{richPartitaIva} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richPartitaIva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="336" width="357" height="15" uuid="d42deae9-1bd4-4207-829c-0d84d36dcbf7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richIndirizzo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="521" y="336" width="36" height="15" uuid="adcc2526-75d7-46ca-b4e5-50307af66ae7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richCivico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="521" y="351" width="36" height="15" uuid="4a18c8b3-2f0f-467f-9b43-9b3ec4fa7a95">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richCap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="351" width="227" height="15" uuid="bdf7e58b-327e-4318-b942-09fc4a06ddad">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richComune}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="366" width="267" height="15" uuid="14495a87-d382-4808-9374-a894b93cb62a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richEmailPec}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="351" width="104" height="15" uuid="4e82ccac-3943-44ab-b84d-ed8738c44027">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{richProv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="426" y="222" width="96" height="13" uuid="105a696c-d50c-4f47-90dc-e19cc195028a"/>
+				<textFieldExpression><![CDATA["(nr." + $F{nrIstanza} + ")"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="192">
+			<staticText>
+				<reportElement x="0" y="4" width="551" height="66" uuid="57018882-2440-406d-b9ee-4c8b5322d73f"/>
+				<textElement>
+					<font size="11"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Con la presente istanza chiede l’autorizzazione per la trasformazione o modificazione d’uso del suolo in 
+terreni soggetti a vincolo idrogeologico, come di seguito precisato. ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="94" width="551" height="1" uuid="8f17f7c5-f1cf-49d6-880f-781a42b21cb2"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="73" width="180" height="20" uuid="cace9f04-ae50-48d5-a746-54329624a882"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.DESCRIZIONE INTERVENTO]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="132" width="553" height="60" uuid="2d17c0ef-16aa-4baf-9322-077dbc69f936">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="6" width="181" height="16" uuid="fcd6bfba-0f4e-42fc-9dc7-4423d22b149b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Superfici e volumetrie interessate]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="25" width="548" height="20" uuid="58fffd08-03a9-4dd8-b00b-6abe8881b5d1">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+				</rectangle>
+				<line>
+					<reportElement x="425" y="26" width="1" height="19" uuid="dba51f97-8809-478f-b696-e2e986910a64">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="369" y="26" width="1" height="19" uuid="896004f9-a3a7-4882-b104-2e99698084aa">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="470" y="26" width="1" height="19" uuid="13cb650d-50ca-43c1-82d8-a41b2a9ad6d1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+				</line>
+				<staticText>
+					<reportElement x="2" y="28" width="364" height="14" uuid="81d7de7c-1474-4554-b09b-99c0572b7f53">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Comune]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="372" y="28" width="52" height="14" uuid="ee9ae3d7-8987-4df6-8b47-b59016497190">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[Sezione]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="428" y="28" width="34" height="14" uuid="9916c04a-6102-4af9-998e-5832eb207536">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[Foglio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="473" y="28" width="52" height="14" uuid="c8a409cb-b624-4b8c-a398-65091c545fe6">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[Particella]]></text>
+				</staticText>
+				<subreport>
+					<reportElement x="0" y="45" width="548" height="8" uuid="924326de-8b63-4621-892e-691587abe52b">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{elencoDatiParticelle})]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{PARTICELLE_SUBREPORT}]]></subreportExpression>
+				</subreport>
+			</frame>
+			<staticText>
+				<reportElement x="-1" y="105" width="540" height="15" uuid="9975c977-0198-40d7-a263-961608ffe303"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ubicazione dell’area oggetto di intervento]]></text>
+			</staticText>
+		</band>
+		<band height="459">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<rectangle>
+				<reportElement x="0" y="0" width="551" height="93" uuid="cce4cc77-430c-4c02-870e-10aafd30d024">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<line>
+				<reportElement x="-1" y="46" width="552" height="1" uuid="ab319a13-8620-4f91-b770-e0b4c6062d78"/>
+			</line>
+			<staticText>
+				<reportElement x="281" y="51" width="180" height="15" uuid="4993ed6e-6512-47f0-a6f8-451e71f09eb7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[di cui in vincolo idrogeologico 	mc:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="52" width="180" height="41" uuid="267e8ae7-7a66-4b86-93bc-8c49510f168b"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Tot. movimenti di terra		mc:
+(scavi più riporti in rilevato 
+nell’area d’intervento)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="195" height="15" uuid="8bb44c78-abb2-4240-bc7b-24b2dc563e22">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Tot. superficie d’intervento 	ettari:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="0" width="196" height="15" uuid="b8ce0737-d239-489a-b2a4-02728d212e5e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[di cui in vincolo idrogeologico	ettari:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="132" width="181" height="15" uuid="049f94fe-5239-421c-824e-24eca0c4dc76">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Copertura vegetale interessata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="147" width="208" height="15" uuid="d110d00c-7dee-45aa-9d72-ed55610e042b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ceduo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="147" width="208" height="15" uuid="e45b0d51-8a38-4c6b-bfef-3d3a80de6dd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Altro (prati, pascoli, coltivi, arbusti)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="208" width="246" height="15" uuid="4b9016f8-c13c-46d7-873a-1bf0d2d6dc2d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tempo previsto per l’esecuzione dell’intervento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="208" width="141" height="17" uuid="5e6b203e-1951-4a82-9880-815b9c7a01bb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[ (mesi) ___________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="251" width="76" height="21" uuid="bf538ea2-c608-4787-8bb0-d51e156d954f"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. CAUZIONE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="251" width="205" height="21" uuid="0f32a00b-d97e-421d-82a7-a4bcf41dd0b8"/>
+				<text><![CDATA[- Solo per soggetti privati]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="281" width="11" height="11" uuid="41a079ce-86af-479d-9f64-cb92f2bddc44"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="14" y="279" width="532" height="43" uuid="7153acf7-4906-4c54-8b3f-273fe85a6b06"/>
+				<text><![CDATA[Si impegna a versare prima dell’inizio dei lavori il deposito cauzionale ai sensi dell’art. 8, punto 1, della l.r. 45/1989 a favore della Regione Piemonte importo pari a € 2.000 per ogni ettaro di terreno trasformato e comunque non inferiore a € 1.000 ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="147" width="11" height="11" uuid="c2d102db-3611-4e6a-9128-c31b26bfd40b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="161" width="11" height="11" uuid="738eaad3-16b6-453e-a66f-3f123388bdff"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="175" width="11" height="11" uuid="f45a4a44-538a-4a98-a2ef-2522a05476dd"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="286" y="147" width="11" height="11" uuid="8c9b3809-728a-47b5-83d7-5bc24c376aba">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="286" y="161" width="11" height="11" uuid="4ed41874-bcf3-4f9e-8a3e-2cda5e3b76a9">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="188" y="0" width="65" height="15" uuid="0ee55ef2-432a-4833-91b4-e8f15fe140e1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{totSupIntervento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="0" width="76" height="15" uuid="011e76de-4c76-496b-aaca-739c9b717d89">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{totSupVincolo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="15" width="76" height="15" uuid="a3eb6f09-5a79-4430-ba77-ade384812dfd">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{totSupBoscata}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="30" width="76" height="15" uuid="e8cbc34c-3ac4-416d-8c81-1faf161b6a6a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{totSupBoscataVincolo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="183" y="52" width="86" height="15" uuid="0304ec84-7e73-4d24-aa59-c8aadfa5ad04">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{totMovTerra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="51" width="86" height="15" uuid="5f0d0f68-2429-4053-85ba-29d3dc83b39e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{totMovVincolo}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize" isUsingCache="true">
+				<reportElement x="2" y="281" width="10" height="11" uuid="467835f4-f4c2-468e-8508-2a946fca3ede">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagCauzione1}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<image isUsingCache="true">
+				<reportElement x="2" y="147" width="10" height="11" uuid="84bbdd47-9e78-44e5-aa0a-1c4cb4499076">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isBoscoCeduo}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<image isUsingCache="true">
+				<reportElement x="2" y="161" width="10" height="11" uuid="068d38ba-ceb9-44c9-bb42-3f4f013ffa08">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isBoscoFustaia}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<image isUsingCache="true">
+				<reportElement x="2" y="175" width="10" height="11" uuid="2abb78f8-1060-4251-acb5-4d832430a429">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isBoscoMisto}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<image isUsingCache="true">
+				<reportElement x="288" y="148" width="10" height="11" uuid="0da90c68-f932-4654-89c1-6eb322c4760f">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isBoscoAltro}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<image isUsingCache="true">
+				<reportElement x="288" y="161" width="10" height="11" uuid="6208d9e4-757d-4056-8594-64b0f96e2ff7">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isBoscoRobinieti}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="286" y="175" width="11" height="11" uuid="ebefd180-a8bc-4c80-b1eb-55ff5d8db52a"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="288" y="175" width="10" height="11" uuid="591f41b1-6ac0-4efe-a4f0-5d93e070fd47">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isBoscoCastagneti}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement x="-1" y="327" width="549" height="95" uuid="b85b666a-3182-408a-90f0-8cffd950e4e4"/>
+				<staticText>
+					<reportElement x="0" y="24" width="81" height="21" uuid="76fad51f-5bbb-4c38-8542-882acfab820c"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[oppure]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="1" y="45" width="11" height="11" uuid="6de730ae-a9ae-4a6c-8437-9291fe4eec03"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="16" y="45" width="532" height="30" uuid="5a635e00-5be6-4692-a0fa-2d90449afc3f"/>
+					<text><![CDATA[Dichiara che la modificazione e/o trasformazione ricade in uno dei seguenti casi, esenti dall’obbligo di cauzione ai sensi dell’art. 8, comma 2, della l.r. 45/1989, in quanto:]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="11" y="75" width="11" height="11" uuid="496a66d7-060f-4e5c-a644-dc20d25a1c0f"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="27" y="74" width="519" height="31" uuid="43a04437-70db-4e3a-b9c1-193d53f88c14"/>
+					<text><![CDATA[le opere sono realizzate col concorso finanziario regionale, statale o Comunitario 
+oppure]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="10" y="101" width="11" height="11" uuid="01b23581-6c48-4c81-8b75-3708ceee9907"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="26" y="100" width="520" height="17" uuid="1158e28d-4d0c-41d9-9f4f-7875e6d9feba"/>
+					<text><![CDATA[l’opera è finalizzata all’esclusiva valorizzazione agro-silvo-pastorale del territorio ]]></text>
+				</staticText>
+				<image isUsingCache="true">
+					<reportElement x="3" y="45" width="10" height="11" uuid="ca512a1e-818f-4527-98d3-9e6cedafd7b6">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagCauzione2}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="13" y="75" width="10" height="11" uuid="8d3b37ba-b05f-4a52-aeed-8cf7f407ba03">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagCauzione3}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="12" y="101" width="10" height="11" uuid="6ec67835-eccc-4dbe-8c62-3ab828046718">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagCauzione4}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+			</frame>
+			<textField>
+				<reportElement x="263" y="208" width="120" height="15" uuid="bdd946d1-2127-4d58-b9be-898eddd8724f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{tempoPrevisto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="15" width="196" height="15" uuid="32e0269a-b63a-46b9-b3ce-d4beaf7dea73">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[di cui totale boscata		ettari:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="30" width="214" height="15" uuid="5007c710-e80c-4b06-8513-0a31edb58e8b">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[di cui boscata in vincolo		ettari:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="161" width="208" height="15" uuid="605a015b-6b82-4b69-98cc-270d3d7c03f9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Fustaia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="175" width="208" height="15" uuid="ce61df51-c200-4f0b-9818-271c8bd8721e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Governo misto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="161" width="208" height="15" uuid="c11cee67-7e3a-483d-8c73-58a96a0775fe">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Robinieti]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="175" width="208" height="15" uuid="2ea20d47-445e-42c0-931b-bc6b11a734a0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Castagneti]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="110" width="11" height="11" uuid="054fd3f5-dc1f-434c-a7a3-e6938fd968ca"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="2" y="110" width="10" height="11" uuid="ace077b3-711a-4cf4-a41c-eeaf383777d6">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagAreeDissesto}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="282" y="110" width="11" height="11" uuid="e996f144-d69c-4f8d-89a2-030e85c0563c"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="284" y="110" width="10" height="11" uuid="6cad23bf-0b63-4559-8e90-0b89c9d8454a">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagAreeEsondazione}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="16" y="110" width="249" height="15" uuid="4dfa6003-8066-462a-9d47-b4a2e50790ab">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Presenza aree di dissesto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="110" width="249" height="15" uuid="e74183de-961c-4fb2-8c42-bce526f99b7a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Presenza aree di esondazione
+]]></text>
+			</staticText>
+		</band>
+		<band height="615">
+			<staticText>
+				<reportElement x="0" y="87" width="490" height="21" uuid="4ed1fcd8-69d4-4b42-8b4f-8d4504ca4469"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3. RIMBOSCHIMENTO E COMPENSAZIONE FORESTALE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="174" width="81" height="15" uuid="a5038ca3-47d1-4693-a393-dfd2e7a70c64">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[oppure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="317" width="81" height="21" uuid="6d2e240d-7bfe-4c1a-bf32-8be5a4625210"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[oppure]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="-1" y="445" width="560" height="160" uuid="a73fd5ad-1c44-4df1-b687-02a919917f8e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="16" y="1" width="532" height="30" uuid="62bad262-6790-4518-a2e6-3736210eeef5"/>
+					<text><![CDATA[Dichiara che la trasformazione della superficie boscata ricade in uno dei seguenti casi, esenti dall’obbligo di compensazione ai sensi dell’art. 19, comma 7, della l.r. 4/2009, in quanto:]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="1" y="1" width="11" height="11" uuid="7cbe5a6e-6ee5-4c05-8b97-0cb73f7a4a46"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="16" y="140" width="11" height="11" uuid="f008b280-a484-49a9-a2be-7ac20c5195fd"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="16" y="113" width="11" height="11" uuid="37b6327f-9a95-49c5-9ad4-9db8b2fa9df7"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="32" y="112" width="519" height="29" uuid="7181d431-22e2-4ccc-a570-72e0d12e0ff7"/>
+					<text><![CDATA[riguarda la realizzazione o l’adeguamento di opere di difesa dagli incendi, di opere pubbliche di difesa del suolo, se previsti dagli strumenti di gestione o pianificazione di dettaglio vigenti;]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="16" y="74" width="11" height="11" uuid="fa34136b-e8e2-4ad4-95d8-f7df4d9b782a"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="32" y="73" width="519" height="40" uuid="93ed5a1a-b13c-4c3f-a3a5-60e5e6520574"/>
+					<text><![CDATA[è volta al recupero a fini produttivi per l'esercizio dell'attività agro-pastorale svolte da coltivatori diretti e da imprenditori agricoli singoli o associati, di boschi di neoformazione insediatisi su ex coltivi, prati e pascoli abbandonati da non oltre trent'anni;]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="32" y="51" width="519" height="29" uuid="a8387fc2-83fa-4ba7-97e6-7072f77d3d46"/>
+					<text><![CDATA[è finalizzata alla conservazione del paesaggio o al ripristino degli habitat di interesse comunitario, se 
+previste dagli strumenti di gestione o pianificazione di dettaglio vigenti; ]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="16" y="52" width="11" height="11" uuid="265856a7-380a-4e6f-942c-14628ad199dd"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="16" y="37" width="11" height="11" uuid="fa5b53eb-c459-41d8-bd22-008481c0d620"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="32" y="36" width="519" height="20" uuid="420dd53a-8009-4b25-93c6-ee77ef710aa9"/>
+					<text><![CDATA[interessa superfici inferiori ai cinquecento metri quadrati; ]]></text>
+				</staticText>
+				<image isUsingCache="true">
+					<reportElement x="3" y="1" width="10" height="11" uuid="14ac3790-e690-4d8a-942f-4c39172a4840">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagEsenzione2}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="37" width="10" height="11" uuid="8ea34b5f-4e11-4993-b469-c4e2e76e2085">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt7A}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="52" width="10" height="11" uuid="37c765de-553c-4a46-aee6-fa213404295e">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt7B}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="74" width="10" height="11" uuid="6e20236a-eb64-4889-a4ac-5b78acf88d9c">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt7C}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="113" width="10" height="11" uuid="80a4583e-161a-404a-9918-e335c355c588">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt7D}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="140" width="10" height="11" uuid="b9b32056-1e09-43a5-ab30-315a373d4330">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt7DBis}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="32" y="139" width="519" height="20" uuid="5e928367-7a3c-4b1c-bec8-2688a38b5696"/>
+					<text><![CDATA[riguarda la realizzazione di viabilità forestale in aree non servite. ]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="-1" y="337" width="560" height="106" uuid="76466ecf-99af-4eb1-bd66-f4200e8211e0">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="16" y="5" width="532" height="30" uuid="6405a0bd-e145-4def-8006-e4f66bbc05e8"/>
+					<text><![CDATA[Dichiara che la modificazione e/o trasformazione ricade in uno dei seguenti casi, esenti dall’obbligo di rimboschimento e dal versamento del corrispettivo ai sensi dell’art. 9, comma 4, della l.r. 45/1989, in quanto:]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="1" y="5" width="11" height="11" uuid="476cf92b-8ea2-4a42-b2f1-e35c924de179"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="32" y="35" width="519" height="20" uuid="1bd04346-eff3-4bac-b0a5-128b07ab904e"/>
+					<text><![CDATA[è finalizzata all’esclusiva valorizzazione agro-silvo-pastorale del territorio;]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="16" y="36" width="11" height="11" uuid="3e3da319-010f-47f2-bdf5-3c71c6babf39"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="16" y="51" width="11" height="11" uuid="85da1ea8-4758-4bab-96c3-4abce17333cf"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="32" y="50" width="519" height="20" uuid="09a19d38-28b7-4a5f-ad8a-edf18ca90a20"/>
+					<text><![CDATA[è conseguente alla realizzazione di opere o lavori pubblici o di impianti d’interesse pubblico;]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="16" y="66" width="11" height="11" uuid="e611acc0-2186-44b2-be10-a184d3d4729d"/>
+				</rectangle>
+				<image isUsingCache="true">
+					<reportElement x="2" y="5" width="10" height="11" uuid="2215ac2a-c166-49a5-967f-3680518a0071">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagEsenzione1}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="36" width="10" height="11" uuid="388667ef-a47c-4585-8b7d-d7e4080fd783">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt9A}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="51" width="10" height="11" uuid="a25659eb-e7a0-4f03-b8b6-021b1b79829d">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt9B}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="18" y="66" width="10" height="11" uuid="9ff53c14-8a8f-420d-97d7-5ae0a7517a5c">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagArt9C}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="37" y="65" width="519" height="40" uuid="09b2d68b-57f6-4016-a029-f9a6d5cc50fe"/>
+					<text><![CDATA[riguarda interventi costituenti mera ristrutturazione o manutenzione di opere esistenti o costruzione di nuova abitazione a carattere uni-bifamiliare, escluse quelle di lusso, a condizione che il titolare sia residente nel Comune sede di intervento;]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="-1" y="0" width="560" height="80" uuid="dd863f37-6690-4a14-942a-a09eed272f81"/>
+				<staticText>
+					<reportElement x="-1" y="6" width="81" height="21" uuid="2999b342-305f-497e-a611-3b25f77bd153"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[oppure]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="28" width="11" height="11" uuid="8b9946a4-bbdf-4c6b-b0c6-584d82897190"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="14" y="26" width="532" height="43" uuid="d0f47d2a-29cf-433e-94c1-f396ded65c25"/>
+					<text><![CDATA[Chiede l’esonero dal deposito cauzionale ai sensi dell’art. 8, comma 3, della l.r. 45/1989, in quanto si tratta di interventi di modesta rilevanza, comportanti trasformazioni o modificazioni di uso del suolo su superfici non superiori a 250 mq e richiedenti un volume complessivo di scavo non maggiore di 100 mc]]></text>
+				</staticText>
+				<image isUsingCache="true">
+					<reportElement x="2" y="28" width="10" height="11" uuid="547c77b3-4132-4462-abea-31d38cf61911">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagCauzione5}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement x="-2" y="106" width="558" height="68" uuid="386a9764-6e97-445e-ae46-badae7faa277"/>
+				<staticText>
+					<reportElement x="14" y="4" width="532" height="30" uuid="bc83cff6-5dea-4937-8e2f-910680f12a99"/>
+					<text><![CDATA[Si impegna ad eseguire i lavori di rimboschimento di cui all’art. 9, comma 2, della l.r. 45/1989 e art. 19, comma 6, della l.r. 4/2009]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="6" width="11" height="11" uuid="20344e05-5a68-443f-8740-6873e980ea0d"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="14" y="34" width="532" height="30" uuid="8ce60351-1896-4cf9-8c93-aebc5f3018f4"/>
+					<text><![CDATA[Si impegna a versare prima dell’inizio dei lavori il deposito cauzionale previsto dall'art. 19, comma 8, dell l.r. 4/2009 a favore della Regione Piemonte]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="36" width="11" height="11" uuid="8db7b15d-0620-4cbc-89bb-ece863de04c6"/>
+				</rectangle>
+				<image isUsingCache="true">
+					<reportElement x="2" y="6" width="10" height="11" uuid="09861d0b-ba38-4226-850f-60d696fb9e13">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagLavori}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<image isUsingCache="true">
+					<reportElement x="2" y="36" width="10" height="11" uuid="683819ee-a0f7-4e46-8104-589180cc7841">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isFlagDepositoCauzione}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement x="-1" y="189" width="560" height="40" uuid="a876d865-24fe-4e84-8e1b-6f6cbdb1f5c5">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<rectangle>
+					<reportElement x="0" y="7" width="11" height="11" uuid="bee52344-68b9-4208-8442-48103d37c7bd"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="14" y="5" width="532" height="30" uuid="ea0cee09-f5c9-4488-b32d-4a8ef59fdfbb"/>
+					<text><![CDATA[Si impegna a versare il corrispettivo del costo di rimboschimento e della compensazione monetaria ai sensi dell’art. 9, comma 3, della l.r. 45/1989 e dell’art. 19, comma 4 bis, della l.r. 4/2009, determinato come segue:]]></text>
+				</staticText>
+				<image isUsingCache="true">
+					<reportElement x="2" y="7" width="10" height="11" uuid="77e78a55-dabc-41bf-89f4-febdb8537dcb">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isCompensazMonetaria}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement x="-1" y="232" width="560" height="80" uuid="9c6a02a4-97ab-4d92-98af-887ac2558a91">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="10" y="20" width="320" height="15" uuid="e07936f9-751e-4990-bbef-f8c1cb60cc06">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[- Superficie non boscata (art. 9, comma 1, l.r. 45/1989) ettari:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="286" y="20" width="54" height="15" uuid="20eb6686-6bfa-4774-8de8-37ed1b435b57">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{cmSupNoBosc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="410" y="59" width="35" height="15" uuid="ba80fa2d-5980-42cc-b3b1-36036a8527ce">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[euro]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="436" y="20" width="106" height="15" uuid="16a24c50-b3ad-4b53-90f0-b24f81aed646">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{cmNoBoscEuro}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="11" y="5" width="242" height="15" uuid="9898885b-b109-46f0-96b1-495929ce915b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[Totale superficie modificata o trasformata ettari:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="229" y="5" width="59" height="14" uuid="cff22d77-f4ce-4fc5-8a22-eaf44d48acbb"/>
+					<textFieldExpression><![CDATA[$F{cmTotSup}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="292" y="4" width="136" height="14" uuid="3f8cba06-905f-41ae-b148-af010c7650c7"/>
+					<text><![CDATA[di cui boscata ettari:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="384" y="4" width="59" height="15" uuid="ae9fa3ff-4b08-4d0f-bd52-51c5d7b578fd"/>
+					<textFieldExpression><![CDATA[$F{cmSupBosc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="10" y="36" width="442" height="15" uuid="ad36f37d-b21a-4986-9a9b-800e8592a42c">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[- Superficie boscata importo compensazione monetaria (art. 19, comma 4bis, l.r. 4/2009)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="436" y="36" width="90" height="14" uuid="1fd7a84c-8389-47ba-91a5-c394e7916914"/>
+					<textFieldExpression><![CDATA[$F{cmBoscEuro}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="59" width="354" height="15" uuid="2a076762-4a3a-4150-94e0-418dd3b7d303">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[Ammontare complessivo del corrispettivo da versare:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="436" y="59" width="99" height="15" uuid="a9a6cfc1-cce7-42ec-91e5-96fc61ffb51d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{cmTotEuro}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="348" y="20" width="65" height="15" uuid="e8376f02-0e0a-474d-960d-8d94fca95d87">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[x € 0,2169 =]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="410" y="20" width="35" height="15" uuid="62b65a08-e3d1-4c1a-9b0d-b41eea9c5bba">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[euro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="410" y="36" width="35" height="15" uuid="b8e9e4b0-5b69-47ca-80fc-092a2a091721">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[euro]]></text>
+				</staticText>
+			</frame>
+		</band>
+		<band height="265">
+			<frame>
+				<reportElement x="-1" y="289" width="560" height="-3223" uuid="15a648f3-166c-4abb-86a7-d7c247d3c6c3"/>
+			</frame>
+			<frame>
+				<reportElement x="-1" y="76" width="560" height="75" uuid="43388622-eb8f-4c1f-8a31-3b282ad7fb02">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="16" y="2" width="519" height="15" uuid="d8a79416-1e82-4281-aa62-d2432eb92440">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[di essere proprietario/comproprietario legittimo, avente diritto sulle superfici oggetto dell'intervento]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="3" width="11" height="11" uuid="b9668957-6f4b-4afa-8552-b6305575f35a"/>
+				</rectangle>
+				<image isUsingCache="true">
+					<reportElement x="2" y="3" width="10" height="11" uuid="6908e75d-b16f-484b-9546-6a9a0ee33367">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isDichProprietario}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="16" y="19" width="519" height="27" uuid="f69ba244-ee7f-4866-8d00-e4da274f69cd">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[di NON essere proprietario/comproprietario legittimo, ma di avere la disponibilità delle superfici oggetto dell'intervento e di aver acquisito l'assenso della proprietà all'intervento stesso]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="20" width="11" height="11" uuid="c2ee7604-9f62-4d37-9286-c9723b00ba4a"/>
+				</rectangle>
+				<image isUsingCache="true">
+					<reportElement x="2" y="20" width="10" height="11" uuid="27bac8db-90bd-4e0c-9e40-d5eaadc1d2dc">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isDichNonProprietario}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="16" y="49" width="538" height="27" uuid="817b45da-01c6-4112-9140-559c1d5c212f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[di non aver ricevuto atti di dissenso da parte di eventuali soggetti risultanti in comproprietà/eredità ai fini della presente richiesta]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="50" width="11" height="11" uuid="9e9c5755-4b04-4501-9436-2949ba0ecc32"/>
+				</rectangle>
+				<image isUsingCache="true">
+					<reportElement x="2" y="50" width="10" height="11" uuid="6ad83aad-38b4-4345-930f-dbae320b837c">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isDichDissenso}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="163" width="160" height="21" uuid="f1134088-df3b-4455-9c8d-b08acbd01bf8"/>
+				<text><![CDATA[Dichiara che l’importo dei lavori è:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="180" y="164" width="11" height="11" uuid="78fd0c15-abb9-48cb-9bee-86ab952cab79"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="182" y="164" width="10" height="11" uuid="38e94aef-aec8-4795-91e8-9434bb172521">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagImportoInf}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="196" y="163" width="134" height="15" uuid="7c535b70-b9b2-4ebc-a0c1-1a9eea6d22d8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[inferiore a € 1.000.000]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="355" y="164" width="11" height="11" uuid="ce380408-1a6a-4742-afe7-a6135903f0c0"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="357" y="163" width="10" height="11" uuid="d9c55538-862a-4976-8259-820358f371ff">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagImportoSup}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="371" y="163" width="140" height="15" uuid="b9974be8-7be3-4a0b-8123-63a8f5961733">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[superiore a € 1.000.000]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="8" width="560" height="65" uuid="a9f83186-fb5b-4272-bc77-56de73c83747">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="3" width="451" height="15" uuid="fb0afdcd-b73a-4d98-9b65-ea43008691a4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[4. ALTRE COMUNICAZIONI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="33" width="540" height="30" uuid="fe5119f9-b4f5-43e0-b710-7b01a00b0919"/>
+					<text><![CDATA[Dichiara che la trasformazione della superficie boscata ricade in uno dei seguenti casi, esenti dall'obbligo di compensazione ai sensi dell'art. 19, comma 7, della L.R. 4/2009, in quanto:]]></text>
+				</staticText>
+			</frame>
+			<rectangle>
+				<reportElement x="0" y="219" width="11" height="11" uuid="8e3fd399-162d-40ed-b544-c9b99abcdfcf"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="2" y="219" width="10" height="11" uuid="80a2dba3-3090-4197-a55e-c99e21869080">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagSuap}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="0" y="234" width="11" height="11" uuid="3f2b40a5-1f90-40f0-955b-e3c1aa17971c"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement key="" x="2" y="234" width="10" height="11" uuid="490569f8-8c02-4eae-928c-3354c4b3a436">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagConfServizi}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="0" y="204" width="11" height="11" uuid="c73dc2a4-c95f-4455-9e00-9b2acccca35c"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="2" y="204" width="10" height="11" uuid="c716f6c0-e220-4f13-b135-e6c31681e2b0">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagCopiaConforme}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="0" y="189" width="11" height="11" uuid="cd0ea2e4-1410-4dfe-abc6-ed52182042c8"/>
+			</rectangle>
+			<image isUsingCache="true">
+				<reportElement x="2" y="189" width="10" height="11" uuid="6201ae5e-3d4b-41c0-b6a6-72298b93e7e0">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{isFlagSpeseIstruttoria}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="16" y="188" width="519" height="15" uuid="a7c2d97c-7724-4920-98b9-7929854e3607">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Dichiara di aver provveduto al versamento per rimborso spese di istruttoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="203" width="519" height="15" uuid="f24ca21c-fb4f-4bf4-aa37-4fe6fe2c9db2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Richiede copia conforme all’originale del provvedimento finale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="218" width="519" height="15" uuid="1d582537-891e-4740-ba07-467318d39395">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Dichiara che la richiesta di autorizzazione è presentata per il tramite di un SUAP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="233" width="519" height="26" uuid="dee6ca46-4af9-4df4-9c30-5de12b30b8dd">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Comunica che l’intervento è/sarà valutato in sede di Conferenza di Servizi e dà atto che i tempi del 
+procedimento sono definiti dalla normativa specifica. ]]></text>
+			</staticText>
+		</band>
+		<band height="72">
+			<frame>
+				<reportElement x="0" y="10" width="549" height="51" uuid="7cff2e46-a852-4001-9b0d-af4548d299cd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="124" y="6" width="158" height="21" uuid="eced4406-5726-4925-8290-bafc8a4309ba"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Documentazione allegata]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="254" y="6" width="191" height="21" uuid="e278e577-63cf-4eab-96e7-783582d6d9e6"/>
+					<text><![CDATA[(rif. D.D. n. 368 del 7.2.2018)]]></text>
+				</staticText>
+				<subreport>
+					<reportElement x="0" y="35" width="549" height="9" uuid="5f4b9345-b261-480d-a296-e1af9bfd5877">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{elencoAllegati})]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{ALLEGATI_SUBREPORT}]]></subreportExpression>
+				</subreport>
+			</frame>
+		</band>
+		<band height="745">
+			<staticText>
+				<reportElement x="0" y="297" width="550" height="210" uuid="7bb67f7d-b85d-4717-9ced-c59b5ea37fef"/>
+				<text><![CDATA[Nel caso di opere che interessano aree di competenza di più Settori, l’istanza va presentata al Settore ove risulta prevalente l’opera in termini di superficie coinvolta. 
+Nel caso di conferenze di servizio, l’istanza va compilata in carta semplice e consegnata al Responsabile del Procedimento e inviata in copia all’ufficio competente. 
+Gli Uffici istruttori hanno facoltà di richiedere ulteriore documentazione tecnica e l’installazione e gestione di strumentazione di rilevamento, controllo e monitoraggio delle variabili che possono alterare le condizioni di stabilità sia dei versanti che del manto nevoso, nel caso ciò sia finalizzato alla valutazione della compatibilità dell’opera. 
+La documentazione tecnica dev’essere timbrata e sottoscritta da tecnici specializzati del settore, iscritti ai rispettivi Albi professionali; a tal fine si richiama quanto definito dalla Circolare PGR 11/PRE del 18.05.1990 (Circolare esplicativa sui adempimenti in ordine all’applicazione del D.M. 11 marzo 1988) e dall’Allegato A del Regolamento 8/R/2011 (cd. Regolamento forestale). 
+Per la documentazione riguardante l’applicazione del DM 17 gennaio 2018 (Norme tecniche per le costruzioni), i tecnici di cui sopra dichiarano, sotto la propria responsabilità, che tale documentazione è stata predisposta sulla base del citato decreto. 
+I dati contenuti nel modello di domanda insieme alla completezza della documentazione richiesta e al 
+versamento delle spese di istruttoria sono condizione essenziale per la ricevibilità dell’istanza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="517" width="550" height="20" uuid="a0182b6c-dc39-4651-b3da-f8bef85fd3be"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diritti di istruttoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="537" width="550" height="40" uuid="fdcfc8da-2903-4dbf-a126-9f76708aea12"/>
+				<text><![CDATA[Ai sensi della legge regionale 4 maggio 2012, n. 5 (legge finanziaria per l’anno 2012), il procedimento è soggetto al pagamento dei diritti di istruttoria. 
+Il versamento può avvenire con le seguenti modalità:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="578" width="51" height="13" uuid="2c74acc5-d505-48f0-b17e-53501aebd6ab"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="577" width="505" height="20" uuid="5c1becba-a42c-4eac-915f-a0d6689fd749"/>
+				<text><![CDATA[direttamente presso la Tesoreria della Regione Piemonte, Via Garibaldi 2, Torino; ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="593" width="51" height="13" uuid="7e94d780-30d6-4a7f-a584-b90da0a09474"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="592" width="505" height="45" uuid="b95fc375-0f8e-46ac-8de2-53344a5115cd"/>
+				<text><![CDATA[tramite versamento sul c/c postale n. 10364107 intestato a “Tesoreria della Regione Piemonte” - Codice IBAN IT 78 F 0760101 000000010364107, indicando nella causale del versamento: l.r. 45/1989 pagamento diritti di istruttoria;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="633" width="51" height="13" uuid="2a660074-eff9-4a76-ab94-eba347621614"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="632" width="505" height="45" uuid="9085a599-e142-46fd-b2fe-df62c9c4a6ec"/>
+				<text><![CDATA[tramite bonifico bancario sul c/c bancario n. 40777516 di UNICREDIT BANCA intestato a “Tesoreria della Regione Piemonte Entrate non sanitarie” – Codice IBAN IT91S0200801033000040777516, indicando nella causale del versamento: l.r. 45/1989 pagamento diritti di istruttoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="91" width="83" height="21" uuid="34ecbc4e-8b47-4040-95f2-857346f45237"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ATTENZIONE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="115" width="553" height="44" uuid="a32ed2c9-2579-42ff-8e6b-8c00f447e7db"/>
+				<text><![CDATA[L’istanza deve essere in regola con la disciplina sull’imposta di bollo e corredata dalla documentazione progettuale in modalità informatica (formati portabili statici non modificabili). 
+La domanda deve essere indirizzata, in relazione al territorio di riferimento, a:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="158" width="51" height="13" uuid="568ca4ff-0796-439e-ac6b-382b7dd7c340"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="157" width="505" height="34" uuid="8b815274-bf91-4ddd-b8c6-f28acf3e3be8"/>
+				<text><![CDATA[Regione Piemonte, Settore Tecnico Regionale – Area Metropolitana di Torino C.so Bolzano, 44 - 
+10125 Torino - per l’area Metropolitana.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="186" width="51" height="13" uuid="d5c67388-a580-46f4-bd6b-2b73d666e47e"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="185" width="505" height="34" uuid="c727a7af-9f8d-4053-943c-ef00b7761f9a"/>
+				<text><![CDATA[Regione Piemonte, Settore Tecnico Regionale – Alessandria e Asti – Piazza Turati 4 10121 – 
+Alessandria - per le province di Alessandria, Asti ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="213" width="51" height="13" uuid="8f949c79-a05e-43c3-89a1-4d7d760739fe"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="212" width="505" height="34" uuid="65ed08c0-72ad-41b3-b360-7f3b93cb7193"/>
+				<text><![CDATA[Regione Piemonte, Settore Tecnico Regionale – Biella e Vercelli - Via F.lli Ponti, 24 - 13100 Vercelli - 
+per le province di Biella e Vercelli;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="239" width="51" height="13" uuid="e2c40f33-e563-47a4-841d-195020b8d507"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="238" width="505" height="34" uuid="e8de63b8-d762-453a-8e8a-bdd306f650dc"/>
+				<text><![CDATA[Regione Piemonte, Settore Tecnico Regionale – Cuneo - C.so Kennedy, 7/bis - 12100 Cuneo - per la 
+provincia di Cuneo;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="265" width="51" height="13" uuid="ddb67155-e8f6-4cf7-8f13-2af0ea4389ea"/>
+				<text><![CDATA[	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="264" width="505" height="34" uuid="ef1872eb-e41a-4437-a8db-f85ac6ec8906"/>
+				<text><![CDATA[Regione Piemonte, Settore Tecnico Regionale – Novara e Verbania - Via Mora e Gibin, 4 - 28100 
+Novara - per le province di Novara e Verbania]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="689" width="535" height="1" uuid="70415f2e-6a26-442f-8fe3-a38d56223513"/>
+			</break>
+			<line>
+				<reportElement x="0" y="2" width="550" height="1" uuid="b84d84bb-d3c0-4821-819e-4efda56c60dc"/>
+			</line>
+			<line>
+				<reportElement x="0" y="73" width="550" height="1" uuid="6a3dc1ea-e89f-4ff5-b291-0c8a80d01a92"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="34" width="170" height="15" uuid="ce620d79-9353-40b4-b17d-15baa70168ed">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[.......................................................]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="5" y="30" width="100" height="16" uuid="902c1b72-11b9-4b14-871a-29f47139ea8c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="321" y="34" width="212" height="15" uuid="ac9ed63b-47bb-4551-99f8-8e1fef39c0eb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[....................................................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="13" width="206" height="15" uuid="5b2c4ff6-836b-4c24-9792-fd855eef50ac">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Il dichiarante (firma per esteso e leggibile)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="13" width="80" height="15" uuid="5bedd121-27d6-4c85-9b57-4b21afa8d301">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+		</band>
+		<band height="698">
+			<staticText>
+				<reportElement x="0" y="24" width="550" height="30" uuid="ea546d21-a861-4c70-8ecc-a9660b3a3f6e"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informativa sul trattamento dei dati personali
+ai sensi dell’art. 13 GDPR 2016/679]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="64" width="550" height="80" uuid="01cfe704-2455-4c67-be96-c028f5ed1772"/>
+				<text><![CDATA[Gentile Utente, 
+
+La informiamo che i dati personali da Lei forniti al Settore tecnico regionale territorialmente competente in materia di foreste saranno trattati secondo quanto previsto dal “Regolamento UE 2016/679” relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali, nonché alla libera circolazione di tali dati e che abroga la direttiva 95/46/CE (regolamento Generale sulla Protezione dei dati, di seguito GDPR)”.]]></text>
+			</staticText>
+			<image isUsingCache="true">
+				<reportElement x="6" y="156" width="10" height="10" uuid="4a2158d4-a0c5-4b33-9f79-c49d1f2bdc31"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="19" y="154" width="526" height="98" uuid="c3fa6725-00eb-4c04-a676-807391043484"/>
+				<text><![CDATA[i dati personali a Lei riferiti verranno raccolti e comunque trattati nel rispetto dei principi di correttezza, liceità e tutela della riservatezza, con modalità informatiche ed esclusivamente per finalità di trattamento dei dati personali dichiarati nella domanda e comunicati al Settore tecnico regionale territorialmente competente in materia di foreste. Il trattamento è finalizzato all’espletamento delle funzioni istituzionali di cui alla l.r. n. 45/1989. I dati acquisiti a seguito della presente informativa relativa alla richiesta di autorizzazione per interventi di modifica e/o trasformazione del suolo in zone sottoposte a vincolo idrogeologico saranno utilizzati esclusivamente per le finalità relative al/i procedimento/i amministrativo/i per il/i quale/i vengono comunicati;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="246" width="526" height="46" uuid="5d68904d-7046-42ba-9f4c-cd495f3228b0"/>
+				<text><![CDATA[l’acquisizione dei Suoi dati ed il relativo trattamento sono obbligatori in relazione alle finalità sopradescritte; ne consegue che l’eventuale rifiuto a fornirli potrà determinare l’impossibilità del Titolare al trattamento ad erogare il servizio richiesto;]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="248" width="10" height="10" uuid="72014208-f80b-44db-aaa9-e11ca9245909"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="19" y="285" width="301" height="18" uuid="7f609646-ab8a-4aaa-b7a4-5cdeb82e8294"/>
+				<textElement markup="none"/>
+				<text><![CDATA[I dati di contatto del Responsabile della protezione dati (DPO) sono]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="287" width="10" height="10" uuid="6dede390-0ee5-4efe-b3e8-00221b908005"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="300" width="10" height="10" uuid="21565d1b-9c8b-41c7-b763-2596fa0f8804"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="19" y="298" width="526" height="34" uuid="8f8acf36-8e86-47dc-8d91-8433f678f76d"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Il Titolare del trattamento dei dati personali è la Giunta regionale, il Delegato al trattamento dei dati è il Dirigente Responsabile del Settore tecnico regionale territorialmente competente in materia di foreste; ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="285" width="190" height="18" forecolor="#1D0AF5" uuid="4d1af445-a0d9-4054-a2c8-792ce3ce535c"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[dpo@regione.piemonte.it; ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="325" width="10" height="10" uuid="3f68612f-14c8-43c0-965b-b67a55b9eae1"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="19" y="323" width="526" height="39" uuid="dc0cb61a-68df-43c2-98d3-28623c35d6e9"/>
+				<textElement markup="none"/>
+				<text><![CDATA[i Suoi dati saranno trattati esclusivamente da soggetti incaricati dal Titolare, autorizzati ed istruiti in tal senso, adottando tutte quelle misure tecniche ed organizzative adeguate per tutelare i diritti, le libertà e i legittimi interessi che Le sono riconosciuti per legge in qualità di Interessato; ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="364" width="10" height="10" uuid="f954cae5-72c1-4b76-ba76-71730b59f38c"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="19" y="362" width="526" height="30" uuid="d9859578-6ad4-441e-a3ca-58f2dcda68b6"/>
+				<textElement markup="none"/>
+				<text><![CDATA[i Suoi dati, resi anonimi, potranno essere utilizzati anche per finalità statistiche (d.lgs. 281/1999 e 
+s.m.i.); ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="407" width="10" height="10" uuid="16179b73-f28b-42fa-9689-409d6aadaf86"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="19" y="405" width="526" height="38" uuid="88ddf2f6-52d8-466f-b544-d50af74fb0dc"/>
+				<textElement markup="none"/>
+				<text><![CDATA[i Suoi dati personali non saranno in alcun modo oggetto di trasferimento in un Paese terzo extra europeo, né di comunicazione a terzi fuori dai casi previsti dalla normativa in vigore, né di processi decisionali automatizzati compresa la profilazione.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="391" width="10" height="10" uuid="1d6bd19d-0bcc-4df8-91fc-0f4ff822ab5c"/>
+				<imageExpression><![CDATA["resources/jasperReports/dichiarazione/point.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="19" y="389" width="526" height="23" uuid="051a70ce-60e5-49a7-aded-77a52d113303"/>
+				<textElement markup="none"/>
+				<text><![CDATA[i Suoi dati personali sono conservati, per il periodo di anni 10; ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="451" width="545" height="81" uuid="83fa845b-1c24-4f22-90a5-7931b7e23a79"/>
+				<text><![CDATA[Potrà esercitare i diritti previsti dagli artt. da 15 a 22 del regolamento UE 679/2016, quali: la conferma dell’esistenza o meno dei suoi dati personali e la loro messa adisposizione in forma intellegibile; avere la conoscenza delle finalità su cui si basa il trattamento; ottenere la cancellazione, la trasformazione in forma anonima, la limitazione o il blocco dei dati trattati in violazione di legge, nonché l’aggiornamento, la rettifica o, se vi è interesse, l’integrazione dei dati; opporsi, per motivi legittimi, al trattamento stesso, rivolgendosi al Titolare o al Responsabile della protezione dati (DPO), tramite i contatti di cui sopra o il diritto di proporre reclamo all’Autorità di controllo competente.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="37">
+			<textField>
+				<reportElement x="285" y="4" width="214" height="19" uuid="559bb1d9-31d8-46d7-998b-8c15bfd420fb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="500" y="4" width="54" height="30" uuid="14e0ce1d-abcb-4399-ba88-3b33cbc5bdc7">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" di " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

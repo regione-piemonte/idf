@@ -1,0 +1,532 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div *ngIf="descrizioneInterventoForm" class="grey1">
+  <form [formGroup]="descrizioneInterventoForm" class="grey-form">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-12">
+        <label
+          for="descrizioneIntervento"
+          class="row-lg-12 col-form-label font-weight-bold"
+        >
+          Descrizione intervento <span class="text-danger">*</span>
+        </label>
+        <br />
+        <textarea
+          class="w-100"
+          formControlName="descrizioneIntervento"
+          id="descrizioneIntervento"
+          [name]="'descrizione intervento'"
+          [rows]="5"
+        ></textarea>
+
+        <div
+          *ngIf="
+            descrizioneInterventoForm.controls['descrizioneIntervento']
+              .invalid &&
+            (descrizioneInterventoForm.controls['descrizioneIntervento']
+              .dirty ||
+              descrizioneInterventoForm.controls['descrizioneIntervento']
+                .touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              descrizioneInterventoForm.controls['descrizioneIntervento'].errors
+                .required
+            "
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+          <div
+            *ngIf="
+              descrizioneInterventoForm.controls['descrizioneIntervento'].errors
+                .maxlength
+            "
+          >
+            Attenzione! Il valore del campo deve essere di lunghezza max 11
+            caratteri
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-12">
+        <label
+          for="tipoIntervento"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Tipo intervento <span class="text-danger">*</span>
+        </label>
+        <p-autoComplete
+          formControlName="tipoIntervento"
+          [forceSelection]="'true'"
+          [required]="'true'"
+          [suggestions]="tipiIntervento"
+          (completeMethod)="filterTipoIntervento($event)"
+          inputId="tipoIntervento"
+          autoHighlight="true"
+          [minLength]="3"
+          [dropdown]="true"
+          [forceSelection]="true"
+          emptyMessage="{{ emptyMessageAC }}"
+          field="descrTipoIntervento"
+          [styleClass]="'autoComplete d-flex'"
+          [inputStyleClass]="'autoComplete-input'"
+          placeholder="Seleziona tipo intervento"
+        >
+          <option [ngValue]="provaTipo">Choose your profile</option>
+        </p-autoComplete>
+
+        <div
+          *ngIf="
+            descrizioneInterventoForm.controls['tipoIntervento'].invalid &&
+            (descrizioneInterventoForm.controls['tipoIntervento'].dirty ||
+              descrizioneInterventoForm.controls['tipoIntervento'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              descrizioneInterventoForm.controls['tipoIntervento'].errors
+                .required
+            "
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        descrizioneInterventoForm.controls['tipoIntervento'].value
+          .idTipoIntervento &&
+        descrizioneInterventoForm.controls['tipoIntervento'].value
+          .idTipoIntervento == 1014
+      "
+    >
+      <div class="col-lg-7 col-md-6 col-12">
+        <label
+          for="altroTipoIntervento"
+          class="row-lg-6 col-form-label font-weight-bold"
+          >Descrizione tipo "Altro"</label
+        >
+        <div class="row-lg-7">
+          <input
+            type="text"
+            formControlName="altroTipoIntervento"
+            maxlength="100"
+            id="altroTipoIntervento"
+            [name]="'Descrizione intervento'"
+            style="width: 100%"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+      <div class="col-lg-4 col-md-4 col-12">
+        <label class="row-lg-4 col-form-label font-weight-bold" for="supint"
+          >Totale superficie intervento (ha)</label
+        >
+        <div class="row-lg-4">
+          <input
+            type="number"
+            disabled
+            [value]="totaleSuperficieTrasf"
+            id="supint"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-12">
+        <label class="row-lg-4 col-form-label font-weight-bold" for="bosha"
+          >boscata (ha)</label
+        >
+        <div class="row-lg-4">
+          <input
+            type="number"
+            disabled
+            [value]="totaleSuperficieBoscata"
+            id="bosha"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-12">
+        <label class="row-lg-4 col-form-label font-weight-bold" for="nonbosha"
+          >non boscata (ha)</label
+        >
+        <div class="row-lg-4">
+          <input
+            type="number"
+            disabled
+            [value]="totaleSuperficieNonBoscata"
+            id="nonbosha"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-12">
+        <label
+          class="row-lg-4 col-form-label font-weight-bold"
+          for="dicuivincolo"
+          >di cui in vincolo idrogeologico (ha)</label
+        >
+        <div class="row-lg-4">
+          <input
+            type="number"
+            disabled
+            [value]="totaleSuperficieInVincolo"
+            id="dicuivincolo"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-12">
+        <label
+          class="row-lg-4 col-form-label font-weight-bold"
+          for="boscatavincolo"
+          >boscata in vincolo (ha)</label
+        >
+        <div class="row-lg-4">
+          <input
+            type="number"
+            disabled
+            [value]="totaleSuperficieBoscataInVincolo"
+            id="boscatavincolo"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-12">
+        <label
+          class="row-lg-4 col-form-label font-weight-bold"
+          for="nonboscatavincolo"
+          >non boscata in vincolo (ha)</label
+        >
+        <div class="row-lg-4">
+          <input
+            type="number"
+            disabled
+            [value]="totaleSuperficieNonBoscataInVincolo"
+            id="nonboscatavincolo"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+      <div class="col-lg-6 col-md-6 col-12">
+        <label
+          for="totaleTotMovimentiTerra"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Totale movimenti di terra (m<sup>3</sup>)
+          <span class="text-danger">*</span>
+        </label>
+        <div class="row-lg-6">
+          <input
+            type="text"
+            formControlName="totaleTotMovimentiTerra"
+            id="totaleTotMovimentiTerra"
+            maxlength="9"
+          />
+
+          <div
+            *ngIf="
+              descrizioneInterventoForm.controls['totaleTotMovimentiTerra']
+                .invalid &&
+              (descrizioneInterventoForm.controls['totaleTotMovimentiTerra']
+                .dirty ||
+                descrizioneInterventoForm.controls['totaleTotMovimentiTerra']
+                  .touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                descrizioneInterventoForm.controls['totaleTotMovimentiTerra']
+                  .errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="
+                descrizioneInterventoForm.controls['totaleTotMovimentiTerra']
+                  .errors.pattern
+              "
+            >
+              Attenzione! Il campo ammette solo valori numerici
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-12">
+        <label
+          for="totaleTotMovimentiTerraVincolo"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          di cui in vincolo idrogelologico (m<sup>3</sup>)
+          <span class="text-danger">*</span>
+        </label>
+        <div class="row-lg-6">
+          <input
+            type="text"
+            formControlName="totaleTotMovimentiTerraVincolo"
+            id="totaleTotMovimentiTerraVincolo"
+            maxlength="9"
+          />
+
+          <div
+            *ngIf="
+              descrizioneInterventoForm.controls[
+                'totaleTotMovimentiTerraVincolo'
+              ].invalid &&
+              (descrizioneInterventoForm.controls[
+                'totaleTotMovimentiTerraVincolo'
+              ].dirty ||
+                descrizioneInterventoForm.controls[
+                  'totaleTotMovimentiTerraVincolo'
+                ].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                descrizioneInterventoForm.controls[
+                  'totaleTotMovimentiTerraVincolo'
+                ].errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="
+                descrizioneInterventoForm.controls[
+                  'totaleTotMovimentiTerraVincolo'
+                ].errors.pattern
+              "
+            >
+              Attenzione! Il campo ammette solo valori numerici
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-12">
+        <label
+          for="tempoPrevisto"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Durata intervento (mesi) <span class="text-danger">*</span>
+        </label>
+        <div class="row-lg-6">
+          <input
+            type="text"
+            formControlName="tempoPrevisto"
+            id="tempoPrevisto"
+            maxlength="4"
+          />
+          <div
+            *ngIf="
+              descrizioneInterventoForm.controls['tempoPrevisto'].invalid &&
+              (descrizioneInterventoForm.controls['tempoPrevisto'].dirty ||
+                descrizioneInterventoForm.controls['tempoPrevisto'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                descrizioneInterventoForm.controls['tempoPrevisto'].errors
+                  .required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="
+                descrizioneInterventoForm.controls['tempoPrevisto'].errors
+                  .pattern
+              "
+            >
+              Attenzione! Il campo ammette solo valori numerici
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row py-4">
+      <div class="col-lg-6 col-md-6 col-12">
+        <input
+          type="checkbox"
+          name="presenzaAreeDissesto"
+          id="presenzaAreeDissesto"
+          [checked]="
+            descrizioneInterventoForm.get('presenzaAreeDissesto').value
+          "
+          (change)="onSelectCheckbox('presenzaAreeDissesto', $event)"
+          [disabled]="false"
+        />
+        <label
+          for="presenzaAreeDissesto"
+          class="col-lg-6 col-form-label font-weight-bold"
+          >Presenza aree di dissesto</label
+        >
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-12">
+        <input
+          type="checkbox"
+          name="presenzaAreeEsondazione"
+          id="presenzaAreeEsondazione"
+          [checked]="
+            descrizioneInterventoForm.get('presenzaAreeEsondazione').value
+          "
+          (change)="onSelectCheckbox('presenzaAreeEsondazione', $event)"
+          [disabled]="false"
+        />
+        <label
+          for="presenzaAreeEsondazione"
+          class="col-lg-6 col-form-label font-weight-bold"
+          >Presenza aree di esondazione</label
+        >
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Check/radio. -->
+<ng-container *ngIf="this.checkboxRadioForm.get('headings').value[0].id">
+  <!-- Itera tra le sezioni ("headings"). -->
+  <div
+    class="section py-4"
+    *ngFor="
+      let header of checkboxRadioForm.get('headings')['controls'];
+      let i = index
+    "
+  >
+    <h4>
+      {{ header.controls.name.value | slice : 4 }}
+      {{
+        header.controls.type.value === "checkbox"
+          ? "(barrare le caselle interessate)"
+          : "(prevalente)"
+      }}
+      <span class="text-danger">*</span>
+    </h4>
+
+    <!-- Itera tra i controlli di ciascuna sezione checkbox/radio ("subheadings"). -->
+    <div *ngIf="header.controls.type.value != 'text'">
+      <ng-container
+        *ngFor="
+          let subHeader of header.controls.subheadings.controls;
+          let subI = index
+        "
+      >
+        <div
+          [className]="
+            header.controls.type.value === 'checkbox'
+              ? 'custom-control custom-checkbox'
+              : 'custom-control custom-radio'
+          "
+        >
+          <input
+            [type]="header.controls.type.value"
+            class="custom-control-input"
+            [name]="
+              header.controls.type.value === 'checkbox'
+                ? 'tipoAccreditamento3' + subHeader.controls.id.value
+                : 'tipoAccreditamento3' + header.controls.id.value
+            "
+            [id]="'customControlValidation3' + subHeader.controls.id.value"
+            [value]="subHeader.controls.id.value"
+            [checked]="subHeader.controls.checked.value"
+            (change)="onSelectHeadings(i, subI, $event)"
+            [disabled]="
+              (header.controls.id.value === 2 && disableCategoriaForestale) ||
+              (header.controls.id.value === 4 &&
+              subHeader.controls.id.value === 9
+                ? true
+                : false)
+                ? true
+                : false
+            "
+          />
+          <label
+            [className]="
+              header.controls.type.value === 'checkbox'
+                ? 'custom-control-label checkbox'
+                : 'custom-control-label'
+            "
+            [for]="'customControlValidation3' + subHeader.controls.id.value"
+          >
+            {{ subHeader.controls.name.value }}</label
+          >
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<hr class="black-hr" />
+
+<!-- Pulsanti di salvataggio. -->
+<div
+  class="d-flex justify-content-between buttons"
+  *ngIf="!boMode && !isIstanzaInviata"
+>
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva"
+    (onClick)="save()"
+    [disabled]="checkValidation()"
+  ></p-button>
+
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva e prosegui"
+    (onClick)="continue()"
+    [disabled]="checkValidation()"
+  ></p-button>
+</div>
+
+<p-dialog
+  header=""
+  [(visible)]="showPopUp"
+  [contentStyle]="{ 'max-width': '700px' }"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+>
+  <p-header> Attenzione </p-header>
+  <h5 class="green">{{ msgPopUp }}</h5>
+  <h5 class="green">Vuoi proseguire?</h5>
+  <p-footer>
+    <p-button
+      (click)="prosegui()"
+      label="SI"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+    <p-button
+      (click)="closePopUp()"
+      label="NO"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>

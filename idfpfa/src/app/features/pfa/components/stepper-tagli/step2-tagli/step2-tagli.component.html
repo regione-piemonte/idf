@@ -1,0 +1,311 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div *ngIf="tipoAccreditamento">
+  <div class="grey1 grey-form">
+    <p class="h6 font-weight-bold">Richiedente</p>
+    <hr class="black-hr" />
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="idTipoRichiedente"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Il Richiedente dichiara di essere <span class="text-danger">*</span>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <p-dropdown
+          [(ngModel)]="tipoRichiedenteSelected"
+          id="idTipoRichiedente"
+          [options]="tipiRichiedente"
+          placeholder="Seleziona tipo richiedente"
+          optionLabel="descrTipoRichiedente"
+          (onChange)="changeTipoRichiedente($event.value, true)"
+          [style]="{ width: '100%' }"
+          [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+          [required]="'true'"
+          [disabled]="disabledOptions"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="gestoriOptions?.length">
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label for="gestore" class="row-lg-4 col-form-label font-weight-bold">
+          Gestore <span class="text-danger">*</span>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <p-dropdown
+          id="gestore"
+          [(ngModel)]="tipoGestoreSelected"
+          [options]="gestoriOptions"
+          placeholder="Seleziona il gestore"
+          optionLabel="denominazione"
+          [style]="{ width: '100%' }"
+          [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+          (onChange)="changeGestore($event.value)"
+          [required]="'true'"
+          [disabled]="disabledOptionsGestore"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <ng-container *ngIf="isRichiedenteSelected">
+      <div
+        class="row"
+        *ngIf="tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE"
+      >
+        <ng-container *ngIf="!gestoriOptions?.length">
+          <div class="col-12 mb-3 custom-control custom-radio">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="customControlValidation11"
+              name="radio-stacked"
+              (change)="option($event.target.value)"
+              [value]="'RF'"
+              [checked]="personaDatiOption === 'RF'"
+            />
+            <label class="custom-control-label" for="customControlValidation11">
+              Il richiedente sono io (persona fisica che inserisce la
+              domanda)</label
+            >
+          </div>
+          <div class="col-12 mb-3 custom-control custom-radio">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="customControlValidation12"
+              name="radio-stacked"
+              (change)="option($event.target.value)"
+              [value]="'RG'"
+              [checked]="personaDatiOption === 'RG'"
+            />
+            <label class="custom-control-label" for="customControlValidation12">
+              Il richiedente è l’Azienda/Ente di cui sono Titolare/Legale
+              rappresentante/Presidente</label
+            >
+          </div>
+        </ng-container>
+      </div>
+
+      <div
+        class="row"
+        *ngIf="tipoAccreditamento === TipoAccreditamentoEnum.PROFESSIONISTA"
+      >
+        <ng-container *ngIf="!gestoriOptions?.length">
+          <div class="col-12 mb-3 custom-control custom-radio">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="customControlValidation11"
+              name="radio-stacked"
+              (change)="option($event.target.value)"
+              [value]="'PF'"
+              [checked]="personaDatiOption === 'PF'"
+            />
+            <label class="custom-control-label" for="customControlValidation11">
+              Persona fisica</label
+            >
+          </div>
+          <div class="col-12 mb-3 custom-control custom-radio">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="customControlValidation12"
+              name="radio-stacked"
+              (change)="option($event.target.value)"
+              [value]="'PG'"
+              [checked]="personaDatiOption === 'PG'"
+            />
+            <label class="custom-control-label" for="customControlValidation12">
+              Persona Giuridica</label
+            >
+          </div>
+        </ng-container>
+      </div>
+
+      <div *ngIf="tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO">
+        <ng-container *ngIf="!gestoriOptions?.length">
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="customControlValidation11"
+              name="radio-stacked"
+              (change)="option($event.target.value)"
+              [value]="'SF'"
+              [checked]="personaDatiOption === 'SF'"
+            />
+            <label class="custom-control-label" for="customControlValidation11">
+              Persona fisica</label
+            >
+          </div>
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="customControlValidation12"
+              name="radio-stacked"
+              (change)="option($event.target.value)"
+              [value]="'SG'"
+              [checked]="personaDatiOption === 'SG'"
+            />
+            <label class="custom-control-label" for="customControlValidation12">
+              Persona Giuridica</label
+            >
+          </div>
+        </ng-container>
+      </div>
+
+      <div
+        class="col mb-3"
+        *ngIf="
+          personaDatiOption === 'RG' ||
+          personaDatiOption === 'PG' ||
+          personaDatiOption === 'SG'
+        "
+      >
+        <app-pg-form-tagli
+          (changePGEmitter)="changeTipoPG($event)"
+          (chooseCompanyEmitter)="chooseCompany($event)"
+          [loadFromAnagrafica]="loadFromAnagrafica"
+          [isEntePubblico]="isPGEntePubblico"
+          [tipoAccreditamento]="tipoAccreditamento"
+          [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+          [codiceFiscaleSONOIO]="codiceFiscaleSONOIO"
+          [personaDatiOption]="personaDatiOption"
+          [personalOrCompanyForm]="companyForm"
+          (codiceFiscaleEmitter)="getCodiceFiscale()"
+          (resetFormEmitter)="restartForm(personaDatiOption)"
+        >
+        </app-pg-form-tagli>
+      </div>
+
+      <div
+        class="col mb-3"
+        *ngIf="
+          personaDatiOption === 'RF' ||
+          personaDatiOption === 'PF' ||
+          personaDatiOption === 'SF'
+        "
+      >
+        <app-pf-form-tagli
+          [tipoAccreditamento]="tipoAccreditamento"
+          [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+          [codiceFiscaleSONOIO]="codiceFiscaleSONOIO"
+          (codiceFiscaleEmitter)="getCodiceFiscale()"
+          [personaDatiOption]="personaDatiOption"
+          [personalOrCompanyForm]="personaForm"
+          (resetFormEmitter)="restartForm(personaDatiOption)"
+        >
+        </app-pf-form-tagli>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="grey-form">
+    <p class="h6 font-weight-bold">
+      Utilizzatore <span class="text-danger">*</span>
+    </p>
+    <hr class="black-hr" />
+
+    <div class="row" *ngFor="let ut of utilizzatoriOptions; let i = index">
+      <div class="col-lg-12 col-md-12 col-12 mb-3">
+        <div class="custom-control custom-radio utilizzatore">
+          <input
+            type="radio"
+            name="tipoUtilizzatore"
+            class="custom-control-input"
+            id="tipoUtilizzatoreValidation{{ i }}"
+            (change)="changeUtilizzatore($event.target.value)"
+            [checked]="tipoUtilizzatoreSelected === ut.id"
+            [value]="ut.id"
+          />
+          <label
+            class="custom-control-label"
+            for="tipoUtilizzatoreValidation{{ i }}"
+            >{{ ut.descr }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="tipoUtilizzatoreSelected === 3">
+      <app-pf-form-tagli
+        [isUtilizzatore]="true"
+        [tipoAccreditamento]="tipoAccreditamento"
+        [codiceFiscaleSelectItem]="codiceFiscaleUtlizzatoreSelectItem"
+        (codiceFiscaleEmitter)="getCodiceFiscale()"
+        [personaDatiOption]="
+          tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+            ? 'SF'
+            : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE
+            ? 'RF'
+            : 'PF'
+        "
+        [personalOrCompanyForm]="utilizzatorePersonaForm"
+        (resetFormEmitter)="restartForm(personaDatiOption)"
+      >
+      </app-pf-form-tagli>
+    </div>
+
+    <div *ngIf="tipoUtilizzatoreSelected === 4">
+      <app-pg-form-tagli
+        [isUtilizzatore]="true"
+        [isTAIF]="utilizzatoreCompanyForm.get('taif').value ? true : false"
+        (changePGEmitter)="changeTipoPGUtil($event)"
+        (chooseCompanyEmitter)="chooseCompany($event)"
+        [loadFromAnagrafica]="loadFromAnagrafica"
+        [isEntePubblico]="isUtilizzatoreEntePubblico"
+        [tipoAccreditamento]="tipoAccreditamento"
+        [codiceFiscaleSelectItem]="codiceFiscaleUtlizzatoreSelectItem"
+        [codiceFiscaleSONOIO]="codiceFiscaleSONOIO"
+        [personaDatiOption]="
+          tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+            ? 'SG'
+            : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE
+            ? 'RG'
+            : 'PG'
+        "
+        [personalOrCompanyForm]="utilizzatoreCompanyForm"
+        (codiceFiscaleEmitter)="getCodiceFiscale()"
+        (resetFormEmitter)="restartForm(personaDatiOption)"
+      >
+      </app-pg-form-tagli>
+    </div>
+  </div>
+
+  <hr class="black-hr" />
+  <div
+    class="d-flex justify-content-between buttons"
+    *ngIf="
+      (personaDatiOption || tipoRichiedenteSelected.idTipoRichiedente === 5) &&
+      !boMode &&
+      !isIstanzaInviata
+    "
+  >
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva"
+      [disabled]="isButtonDisabled()"
+      (onClick)="save()"
+    ></p-button>
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva e prosegui"
+      [disabled]="isButtonDisabled()"
+      (onClick)="continue()"
+    ></p-button>
+  </div>
+</div>

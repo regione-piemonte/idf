@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="commws" xmlns:ivy="antlib:fr.jayasoft.ivy.ant" default="distribution">
+	<description>Build file per componente COMMWS</description>
+
+	<property environment="env" />
+
+	<target name="resolve-dependencies" description="carica le librerie dal repository remoto">
+		<ivy:configure file="buildfiles/ivyconf.xml" />
+		<ivy:resolve file="buildfiles/ivy.xml" />
+	</target>
+
+	<target name="load-dependencies" depends="resolve-dependencies, clean-lib" description="Risolve le dipendenze esterne.">
+		<ivy:retrieve pattern="lib/[artifact].[type]" />
+	</target>
+
+	<target name="load-properties">
+		<echo message="Loading build properties..." />
+		<property file="buildfiles/build.properties" />
+		<tstamp />
+		<!-- Se non è stato indicato il target si imposta di default dev -->
+		<condition property="target" value="dev">
+			<not>
+				<isset property="target" />
+			</not>
+		</condition>
+		<loadproperties srcFile="buildfiles/${target}.properties" />
+	</target>
+
+	<target name="init" depends="load-properties">
+		<path id="ref.classpath">
+			<fileset dir="${dir.lib}" includes="*.jar" />
+		</path>
+		<mkdir dir="${dir.build}" />
+	</target>
+
+	<target name="distribution-jenkins" unless="env.XDOCLET_VERSION">
+		<echo message="Eseguo target 'distribution-jenkins'" />
+		<antcall target="clean-all" />
+		<antcall target="package-all" />
+	</target>
+
+	<target name="distribution-rm" if="env.XDOCLET_VERSION" depends="init">
+		<echo message="Eseguo target 'distribution-rm'" />
+		<delete dir="${dir.dist.target}" />
+		<mkdir dir="${dir.dist.target}" />
+		<tar tarfile="${dir.dist.target}/${app.componente}-${app.version}.tar" basedir="buildfiles" includes="*.ear,*.xml">
+			<tarfileset dir="buildfiles">
+				<include name="readme.txt" />
+				<!-- inserire qui eventuali statement per includere oggetti extra nel tar -->
+			</tarfileset>
+		</tar>
+	</target>
+
+	<target name="distribution">
+		<echo message="env.XDOCLET_VERSION = ${env.XDOCLET_VERSION}" />
+		<antcall target="distribution-rm" />
+		<antcall target="distribution-jenkins" />
+	</target>
+
+
+
+	<target name="java-environment" depends="init">
+		<delete dir="${dir.classes}" />
+		<mkdir dir="${dir.classes}" />
+		<delete dir="${dir.temp.src}" />
+		<mkdir dir="${dir.temp.src}" />
+		<copy todir="${dir.temp.src}">
+			<fileset dir="${dir.src.java}" includes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="compile-all" depends="init, load-dependencies, java-environment" description="Compila i sorgenti nella build directory">
+		<mkdir dir="${dir.classes}" />
+		<javac srcdir="${dir.temp.src}" classpathref="ref.classpath" destdir="${dir.classes}" optimize="on" deprecation="on" fork="true" encoding="iso8859-15" memoryInitialSize="128m" memoryMaximumSize="512m">
+		</javac>
+		<copy todir="${dir.classes}">
+			<fileset dir="${dir.conf.web}" includes="*.xml,*.properties" />
+		</copy>
+
+	</target>
+
+	<target name="web-environment">
+		<echo>Copying web configuration files from ${dir.conf.webinf} to temporary directory ${dir.temp.webinf}</echo>
+		<mkdir dir="${dir.temp.webinf}" />
+		<copy todir="${dir.temp.webinf}">
+			<fileset dir="${dir.conf.webinf}" includes="*.xml,*.tld,**/*.properties" />
+		</copy>
+		<replaceregexp match="(&lt;param-name&gt;remincl.resource.provider.portal&lt;/param-name&gt;[^&lt;]*&lt;param-value&gt;)[^&lt;]*(&lt;/param-value&gt;)" replace="\1${remincl.resource.provider.portal}\2" flags="s" byline="false" file="${file.temp.webxml}" />
+	</target>
+
+	<target name="package-war" depends="init, compile-all, web-environment">
+		<mkdir dir="${dir.archive.target}" />
+		<!--Copio i file di properties (essenzialmente solo config.properties) -->
+		<copy todir="${dir.classes}">
+			<fileset dir="${dir.conf.application}" includes="*.properties" />
+		</copy>
+		<!-- e rimpiazzo i valori -->
+		<replaceregexp match="(\\b)*URL_COSMO_PRATICA(.)+" replace="URL_COSMO_PRATICA=${URL_COSMO_PRATICA}" flags="m" byline="true">
+			<fileset dir="${dir.classes}" includes="config.properties" />
+		</replaceregexp>
+		<replaceregexp match="(\\b)*URL_COSMO_UPLOAD(.)+" replace="URL_COSMO_UPLOAD=${URL_COSMO_UPLOAD}" flags="m" byline="true">
+			<fileset dir="${dir.classes}" includes="config.properties" />
+		</replaceregexp>
+		<replaceregexp match="(\\b)*URL_COSMO_DOCUMENTI(.)+" replace="URL_COSMO_DOCUMENTI=${URL_COSMO_DOCUMENTI}" flags="m" byline="true">
+			<fileset dir="${dir.classes}" includes="config.properties" />
+		</replaceregexp>
+		<replaceregexp match="(\\b)*URL_COSMO_PROCESSO(.)+" replace="URL_COSMO_PROCESSO=${URL_COSMO_PROCESSO}" flags="m" byline="true">
+			<fileset dir="${dir.classes}" includes="config.properties" />
+		</replaceregexp>
+		<replaceregexp match="(\\b)*index.ws.url(.)+" replace="index.ws.url=${index.ws.url}" flags="m" byline="true">
+			<fileset dir="${dir.classes}" includes="config.properties" />
+		</replaceregexp>
+		<replaceregexp match="(\\b)*URL_TOKEN(.)+" replace="URL_TOKEN=${URL_TOKEN}" flags="m" byline="true">
+			<fileset dir="${dir.classes}" includes="config.properties" />
+		</replaceregexp>
+		
+		<echo>Creating web archive</echo>
+		<war basedir="${dir.src.web}" warfile="${war.archive}" excludes="**/*.class" webxml="${file.temp.webxml}">
+			<webinf dir="${dir.temp.webinf}" excludes="/jsp/**,/include/**" />
+			<classes dir="${dir.classes}" includes="**/**" />
+
+			<!--lib dir="${dir.lib}" includes="${war.lib.includes}" excludes="${war.lib.excludes}" /-->
+			<lib dir="${dir.lib}" includes="*" excludes="${war.lib.excludes}" />
+
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Built-Date" value="${DSTAMP}" />
+				<attribute name="Target" value="${target}" />
+				<attribute name="ComponentName" value="${app.componente}" />
+				<attribute name="ComponentVersion" value="${app.version}" />
+				<!-- IMPORTANTE -->
+				<attribute name="Dependencies" value="com.oracle" />
+			</manifest>
+		</war>
+	</target>
+
+	<target name="environment-recreate" description="Ricrea l&apos;environment di configurazione per il target corrente (per applicare le sostituzionidelle variabili).">
+		<mkdir dir="build/temp/conf" />
+		<copy todir="build/temp/conf" overwrite="true">
+			<fileset dir="${dir.conf}" />
+		</copy>
+	</target>
+
+	<target name="ear-environment" depends="environment-recreate">
+		<echo>Copying ear configuration files from ${dir.conf}/ear to temporary directory ${dir.temp}/ear</echo>
+		<mkdir dir="${dir.temp}/ear" />
+		<copy todir="${dir.temp}/ear">
+			<fileset dir="${dir.conf}/ear" includes="application.xml" />
+		</copy>
+		<copy todir="${dir.build}/archive/${target}">
+			<fileset file="${dir.build}/temp/conf/*.xml" />
+		</copy>
+		<!-- L'ordine è importante... prima rimpiazzare commwsjr e poi commws -->
+		<!--replaceregexp match="(&lt;context-root&gt;)[^&lt;]*idfbo[^&lt;]*(&lt;/context-root&gt;)" replace="\1${context.rootjr}\2" flags="s" byline="false" file="${file.temp.applicationxml}" /-->
+	</target>
+
+	<target name="package-ear" depends="package-war, ear-environment" description="Costruisce l'ear per un ambiente">
+		<ear appxml="${file.temp.applicationxml}" earfile="${ear.archive}">
+			<fileset dir="${dir.archive.target}" includes="${war.name}" />
+			<!--zipfileset dir="${dir.lib}" excludes="${ear.lib.excludes}" prefix="lib" /-->
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Built-Date" value="${DSTAMP}" />
+				<attribute name="Target" value="${target}" />
+				<attribute name="ComponentName" value="${app.componente}" />
+				<attribute name="ComponentVersion" value="${app.version}" />
+			</manifest>
+		</ear>
+	</target>
+
+	<target name="package-all" depends="package-ear" description="Ccrea tutti gli archivi per un ambiente">
+		<delete dir="${dir.dist.target}" />
+		<mkdir dir="${dir.dist.target}" />
+		<tar destfile="${dir.dist.target}/${app.componente}-${app.version}.tar">
+			<tarfileset dir="${dir.archive.target}" includes="${ear.name}, *.xml" />
+		</tar>
+	</target>
+
+	<target name="clean-cache" depends="load-properties" description="Cancella la directory build/cache creata da Ivy con il download delle dipendenze">
+		<echo>Deleting dir ${dir.cache}</echo>
+		<delete dir="${dir.cache}" />
+	</target>
+
+	<target name="clean-temp" depends="load-properties" description="Cancella la directory build/temp creata da Ant">
+		<echo>Deleting dir ${dir.temp}</echo>
+		<delete dir="${dir.temp}" />
+	</target>
+
+	<target name="clean-classes" depends="load-properties" description="Cancella la directory build/classes creata da Ant contenente i file .class ottenuti dalla compilazione del sorgente Java">
+		<delete dir="${dir.classes}" />
+	</target>
+
+	<target name="clean-archive" depends="load-properties" description="Cancella la directory build/dist creata da Ant contenente tutti gli archivi generati dai target">
+		<delete dir="${dir.archive}" />
+	</target>
+
+	<target name="clean-dist" depends="load-properties">
+		<delete dir="${dir.dist.target}" />
+	</target>
+
+	<target name="clean-lib" depends="load-properties">
+		<delete dir="${dir.lib}" />
+	</target>
+
+	<target name="clean-all" depends="clean-temp, clean-cache, clean-lib, clean-classes, clean-archive, clean-dist" description="Cancella tutte le directory create da Ant ad eccezione della cache di Ivy" />
+
+	<target name="packageVersion">
+		<antversion property="antversion" />
+		<propertyfile file="${dir.classes}/version.properties">
+			<entry key="Ant-Version" type="string" value="${ant.version}" />
+			<entry key="Created-By" type="string" value="${java.version}" />
+			<entry key="Built-By" type="string" value="${user.name}" />
+			<entry key="Built-Date" type="date" value="${DSTAMP}" />
+			<entry key="Target" type="string" value="${target}" />
+			<entry key="ComponentName" type="string" value="${app.componente}" />
+			<entry key="ComponentVersion" type="string" value="${app.version}" />
+		</propertyfile>
+	</target>
+	<target name="build-lib" depends="init, load-dependencies">
+		<mkdir dir="${dir.classes}" />
+		<javac srcdir="${dir.temp.src}" classpathref="ref.classpath" destdir="${dir.classes}" optimize="on" deprecation="on" fork="true" encoding="iso8859-15" memoryInitialSize="128m" memoryMaximumSize="512m" includes="${client.includes}">
+		</javac>
+		<jar destfile="${client.name}">
+			<fileset dir="${dir.classes}" includes="${client.includes}" />
+		</jar>
+	</target>
+</project>

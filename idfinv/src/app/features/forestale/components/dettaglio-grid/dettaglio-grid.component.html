@@ -1,0 +1,13 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row">
+  <div
+    class="col-lg-4 col-md-6 field-text-size content-field mb-1 header-color gray-field"
+    *ngFor="let data of dataStazionaliFields"
+  >
+    <app-dati-stazionali-field [item]="data"> </app-dati-stazionali-field>
+  </div>
+</div>

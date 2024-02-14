@@ -1,0 +1,85 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="vertical_table">
+  <div class="vertical_header">
+    <ng-container *ngFor="let headerField of header; let x = index">
+      <div *ngIf="headerField.visible">
+        <div>
+          <label class="label-singl-row header stil-filda d-flex" type="text">{{
+            headerField.header
+          }}</label>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="vertical_body">
+    <form [formGroup]="columnsForm">
+      <div
+        class="d-flex column widthshotingMirror col-md-7"
+        formArrayName="columnForm"
+      >
+        <div
+          *ngFor="
+            let columnForm of columnsForm.get('columnForm')['controls'];
+            let i = index
+          "
+          class="d-flex column"
+        >
+          <div>
+            <form [formGroup]="columnForm">
+              <ng-container *ngFor="let headerField of header; let x = index">
+                <div *ngIf="headerField.visible">
+                  <input
+                    formControlName="{{ headerField.field }}"
+                    class="header column_mirror d-flex justify-content-center align-items-center"
+                    [ngClass]="{ 'number-input': true }"
+                    type="text"
+                  />
+                </div>
+              </ng-container>
+            </form>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="summary_column" *ngIf="showTotal">
+    <div class="column widthshotingMirror col-md-2">
+      <div class="column">
+        <div>
+          <ng-container *ngFor="let headerField of header; let x = index">
+            <div *ngIf="headerField.visible" class="cell-riprese">
+              <div
+                *ngFor="
+                  let fieldForSummaryColumn of headerField.fieldOfSummaryColumns;
+                  let k = index
+                "
+              >
+                <div>
+                  <span *ngIf="summaryColumnData[headerField.field]">
+                    <input
+                      class="header column_mirror totale-custom d-flex justify-content-center align-items-center"
+                      [ngClass]="{ 'number-input': true }"
+                      type="text"
+                      value="Totale (m³) : {{
+                        formatTwoDecimal(
+                          summaryColumnData[headerField.field][
+                            fieldForSummaryColumn
+                          ]
+                        )
+                      }}"
+                      readonly
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

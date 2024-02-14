@@ -1,0 +1,44 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="my-3" *ngIf="grayPanel">
+  <app-tipologia-panel [panelData]="grayPanel"></app-tipologia-panel>
+</div>
+<p-steps
+  *ngIf="grayPanel"
+  [model]="steps"
+  [styleClass]="'insert-steps'"
+  [readonly]="false"
+  [(activeIndex)]="activeIndex"
+  styleClass="insert-steps"
+  [ngClass]="grayPanel.tipoAds === sempliceTipologia ? 'd-none' : ''"
+  (activeIndexChange)="changedIndex()"
+>
+</p-steps>
+<ng-container>
+  <app-inserimento-modifica-step
+    *ngIf="grayPanel && specieList"
+    [id]="id"
+    [grayPanel]="grayPanel"
+    [hidden]="activeIndex !== 0"
+    (emitFirstForm)="sendFirstForm()"
+    [specieList]="specieList"
+  ></app-inserimento-modifica-step>
+</ng-container>
+<ng-container *ngIf="grayPanel && dettaglioFormData">
+  <app-riepliogo-alberi-step
+    [test]="filteredSpecieList"
+    [id]="id"
+    [hidden]="activeIndex !== 1"
+    *ngIf="
+      specieList &&
+      grayPanel.tipoAds === completaTipologia &&
+      filteredSpecieList
+    "
+    [specieList]="specieList"
+    [dettaglioFormInput]="dettaglioFormData"
+    (emitSecondForm)="sendSecondForm()"
+  ></app-riepliogo-alberi-step>
+</ng-container>

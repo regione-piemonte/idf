@@ -1,0 +1,901 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row" *ngIf="personalOrCompanyForm">
+  <div class="col-md-12 my-4" [formGroup]="personalOrCompanyForm">
+    <div class="grey-form">
+      <ng-container
+        *ngIf="tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE"
+      >
+        <div class="row" *ngIf="!isTecnicoForestale">
+          <div class="col-lg-6 col-md-6 col-12 mb-3">
+            <label for="codiceFiscale" class="font-weight-bold"
+              >Codice fiscale <span class="text-danger">*</span></label
+            >
+            <p-dropdown
+              *ngIf="codiceFiscaleSONOIO?.length > 0"
+              [disabled]="true"
+              [options]="codiceFiscaleSONOIO"
+              [placeholder]="'Campo di input con codice fiscale'"
+              formControlName="codiceFiscale"
+              autoHighlight="true"
+              inputId="codiceFiscale"
+              [styleClass]="
+                'autoComplete form-control d-flex justify-content-end'
+              "
+              (onChange)="fillFormFields($event)"
+            >
+            </p-dropdown>
+
+            <input
+              *ngIf="isUtilizzatore"
+              type="text"
+              class="form-control"
+              formControlName="codiceFiscale"
+            />
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+                (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                  personalOrCompanyForm.controls['codiceFiscale'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['codiceFiscale'].errors
+                    .required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="isTecnicoForestale">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-4 mb-3">
+              <label for="codiceFiscale" class="font-weight-bold"
+                >Codice fiscale<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="codiceFiscale"
+              />
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+                  (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                    personalOrCompanyForm.controls['codiceFiscale'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['codiceFiscale'].errors
+                      .required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-4 mb-3">
+              <label for="partitaIva" class="font-weight-bold"
+                >Partita IVA <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="partitaIva"
+                id="partitaIva"
+              />
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['partitaIva'].invalid &&
+                  (personalOrCompanyForm.controls['partitaIva'].dirty ||
+                    personalOrCompanyForm.controls['partitaIva'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors.pattern
+                  "
+                >
+                  Attenzione! Il campo deve essere numerico
+                </div>
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors
+                      .maxlength
+                  "
+                >
+                  Attenzione! La stringa digitata è troppo lunga
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-4 mt-4 align-items-end">
+              <p-button
+                [styleClass]="'f-16 font-weight-bold form-outline-button'"
+                label="Me stesso"
+                (onClick)="myself()"
+              >
+              </p-button>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-container
+        *ngIf="tipoAccreditamento === TipoAccreditamentoEnum.PROFESSIONISTA"
+      >
+        <div class="row">
+          <ng-container *ngIf="isUtilizzatore">
+            <div class="col-lg-6 col-md-6 col-12 mb-3">
+              <label for="codiceFiscale" class="font-weight-bold"
+                >Codice fiscale <span class="text-danger">*</span></label
+              >
+              <p-dropdown
+                *ngIf="codiceFiscaleSONOIO?.length > 0"
+                [disabled]="true"
+                [options]="codiceFiscaleSONOIO"
+                [placeholder]="'Campo di input con codice fiscale'"
+                formControlName="codiceFiscale"
+                autoHighlight="true"
+                inputId="codiceFiscale"
+                [styleClass]="
+                  'autoComplete form-control d-flex justify-content-end'
+                "
+                (onChange)="fillFormFields($event)"
+              >
+              </p-dropdown>
+
+              <input
+                *ngIf="isUtilizzatore"
+                type="text"
+                class="form-control"
+                formControlName="codiceFiscale"
+              />
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+                  (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                    personalOrCompanyForm.controls['codiceFiscale'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['codiceFiscale'].errors
+                      .required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="!isUtilizzatore && !isTecnicoForestale">
+            <label for="codiceFiscale" class="font-weight-bold"
+              >Codice fiscale soggetti deleganti
+              <span class="text-danger">*</span></label
+            >
+            <p-dropdown
+              *ngIf="
+                codiceFiscaleSelectItem?.length > 0 ||
+                codiceFiscaleSONOIO?.length > 0
+              "
+              [options]="
+                personaOption === 'RF'
+                  ? codiceFiscaleSONOIO
+                  : codiceFiscaleSelectItem
+              "
+              [placeholder]="'Seleziona codice fiscale delegante'"
+              formControlName="codiceFiscale"
+              autoHighlight="true"
+              inputId="codiceFiscale"
+              [styleClass]="
+                'autoComplete form-control d-flex justify-content-end'
+              "
+              (onChange)="fillFormFields($event)"
+            >
+            </p-dropdown>
+            <div class="alert alert-warning">
+              Attenzione: con la selezione di questo campo si dichiara di aver
+              acquisito la delega ad operare da parte del richiedente.
+            </div>
+
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+                (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                  personalOrCompanyForm.controls['codiceFiscale'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['codiceFiscale'].errors
+                    .required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="isTecnicoForestale">
+            <div class="col-lg-4 col-md-4 col-4 mb-3">
+              <label for="codiceFiscale" class="font-weight-bold"
+                >Codice fiscale<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="codiceFiscale"
+              />
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+                  (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                    personalOrCompanyForm.controls['codiceFiscale'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['codiceFiscale'].errors
+                      .required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-4 mb-3">
+              <label for="partitaIva" class="font-weight-bold"
+                >Partita IVA <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="partitaIva"
+                id="partitaIva"
+              />
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['partitaIva'].invalid &&
+                  (personalOrCompanyForm.controls['partitaIva'].dirty ||
+                    personalOrCompanyForm.controls['partitaIva'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors.pattern
+                  "
+                >
+                  Attenzione! Il campo deve essere numerico
+                </div>
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors
+                      .maxlength
+                  "
+                >
+                  Attenzione! La stringa digitata è troppo lunga
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-4 mt-4 align-items-end">
+              <p-button
+                [styleClass]="'f-16 font-weight-bold form-outline-button'"
+                label="Me stesso"
+                (onClick)="myself()"
+              >
+              </p-button>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO"
+      >
+        <div class="mb-3">
+          <label for="searchProfessionista" class="font-weight-bold"
+            >Cerca in anagrafica</label
+          >
+          <form [formGroup]="autoComplete">
+            <p-autoComplete
+              formControlName="autoProf"
+              inputId="searchProfessionista"
+              type="search"
+              placeholder="Nome, Cognome o Codice Fiscale"
+              [suggestions]="personaFisicaList"
+              (completeMethod)="searchSoggetti($event)"
+              (onSelect)="fillFormOnSelect($event)"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [minLength]="3"
+              [dropdown]="true"
+              field="codiceFiscale"
+              emptyMessage="{{ emptyMessageAC }}"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+              <ng-template let-item pTemplate="item">
+                {{ item.codiceFiscale }} - {{ item.nome }} {{ item.cognome }}
+              </ng-template>
+            </p-autoComplete>
+          </form>
+        </div>
+
+        <div class="mb-3">
+          <label for="codiceFiscale" class="font-weight-bold"
+            >Codice fiscale<span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="codiceFiscale"
+          />
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+              (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                personalOrCompanyForm.controls['codiceFiscale'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['codiceFiscale'].errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3" *ngIf="isTecnicoForestale">
+          <label for="partitaIva" class="font-weight-bold"
+            >Partita IVA <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="partitaIva"
+            id="partitaIva"
+          />
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['partitaIva'].invalid &&
+              (personalOrCompanyForm.controls['partitaIva'].dirty ||
+                personalOrCompanyForm.controls['partitaIva'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['partitaIva'].errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['partitaIva'].errors.pattern
+              "
+            >
+              Attenzione! Il campo deve essere numerico
+            </div>
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['partitaIva'].errors.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="tipoAccreditamento === TipoAccreditamentoEnum.GESTORE"
+      >
+        <div class="row" *ngIf="!isTecnicoForestale">
+          <div class="col-lg-6 col-md-6 col-12 mb-3">
+            <label for="codiceFiscale" class="font-weight-bold"
+              >Codice fiscale <span class="text-danger">*</span></label
+            >
+            <p-dropdown
+              *ngIf="codiceFiscaleSONOIO?.length > 0"
+              [disabled]="true"
+              [options]="codiceFiscaleSONOIO"
+              [placeholder]="'Campo di input con codice fiscale'"
+              formControlName="codiceFiscale"
+              autoHighlight="true"
+              inputId="codiceFiscale"
+              [styleClass]="
+                'autoComplete form-control d-flex justify-content-end'
+              "
+              (onChange)="fillFormFields($event)"
+            >
+            </p-dropdown>
+
+            <input
+              *ngIf="isUtilizzatore"
+              type="text"
+              class="form-control"
+              formControlName="codiceFiscale"
+            />
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+                (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                  personalOrCompanyForm.controls['codiceFiscale'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['codiceFiscale'].errors
+                    .required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="isTecnicoForestale">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-4 mb-3">
+              <label for="codiceFiscale" class="font-weight-bold"
+                >Codice fiscale<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="codiceFiscale"
+              />
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['codiceFiscale'].invalid &&
+                  (personalOrCompanyForm.controls['codiceFiscale'].dirty ||
+                    personalOrCompanyForm.controls['codiceFiscale'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['codiceFiscale'].errors
+                      .required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-4 mb-3">
+              <label for="partitaIva" class="font-weight-bold"
+                >Partita IVA <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="partitaIva"
+                id="partitaIva"
+              />
+              <div
+                *ngIf="
+                  personalOrCompanyForm.controls['partitaIva'].invalid &&
+                  (personalOrCompanyForm.controls['partitaIva'].dirty ||
+                    personalOrCompanyForm.controls['partitaIva'].touched)
+                "
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors.pattern
+                  "
+                >
+                  Attenzione! Il campo deve essere numerico
+                </div>
+                <div
+                  *ngIf="
+                    personalOrCompanyForm.controls['partitaIva'].errors
+                      .maxlength
+                  "
+                >
+                  Attenzione! La stringa digitata è troppo lunga
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-4 mt-4 align-items-end">
+              <p-button
+                [styleClass]="'f-16 font-weight-bold form-outline-button'"
+                label="Me stesso"
+                (onClick)="myself()"
+              >
+              </p-button>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="cognome" class="font-weight-bold"
+            >Cognome <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="cognome"
+            id="cognome"
+          />
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['cognome'].invalid &&
+              (personalOrCompanyForm.controls['cognome'].dirty ||
+                personalOrCompanyForm.controls['cognome'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="personalOrCompanyForm.controls['cognome'].errors.required"
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="personalOrCompanyForm.controls['cognome'].errors.maxlength"
+            >
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 mb-3">
+          <label for="nome" class="font-weight-bold"
+            >Nome <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="nome"
+            id="nome"
+          />
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['nome'].invalid &&
+              (personalOrCompanyForm.controls['nome'].dirty ||
+                personalOrCompanyForm.controls['nome'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="personalOrCompanyForm.controls['nome'].errors.required">
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="personalOrCompanyForm.controls['nome'].errors.maxlength"
+            >
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-12 mb-3">
+          <div>
+            <label for="comune" class="font-weight-bold"
+              >Comune residenza<span class="text-danger">*</span></label
+            >
+            <div class="row"></div>
+            <p-autoComplete
+              formControlName="comune"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [suggestions]="comune"
+              (completeMethod)="filterComune($event)"
+              inputId="comune"
+              [minLength]="3"
+              [dropdown]="false"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="denominazioneComune"
+              [styleClass]="
+                'br-custom autoComplete d-flex formControlName.invalid?autoComplete-touched:autoComplete-touched'
+              "
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-12 mb-3">
+          <label for="cap" class="font-weight-bold"
+            >Cap <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="cap"
+            id="cap"
+          />
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['cap'].invalid &&
+              (personalOrCompanyForm.controls['cap'].dirty ||
+                personalOrCompanyForm.controls['cap'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="personalOrCompanyForm.controls['cap'].errors.required">
+              Attenzione! Campo obbligatorio
+            </div>
+            <div *ngIf="personalOrCompanyForm.controls['cap'].errors.pattern">
+              <div
+                *ngIf="personalOrCompanyForm.controls['cap'].value.length !== 5"
+              >
+                Attenzione! Il campo deve essere di 5 cifre
+              </div>
+              <div
+                *ngIf="personalOrCompanyForm.controls['cap'].value.length === 5"
+              >
+                Attenzione! Il campo deve essere numerico
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-12 mb-3">
+          <label for="indirizzo" class="font-weight-bold"
+            >Indirizzo <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="indirizzo"
+            id="indirizzo"
+          />
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['indirizzo'].invalid &&
+              (personalOrCompanyForm.controls['indirizzo'].dirty ||
+                personalOrCompanyForm.controls['indirizzo'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['indirizzo'].errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="
+                personalOrCompanyForm.controls['indirizzo'].errors.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-12 mb-3">
+          <label for="civico" class="font-weight-bold"
+            >Civico <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="civico"
+            id="civico"
+          />
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['civico'].invalid &&
+              (personalOrCompanyForm.controls['civico'].dirty ||
+                personalOrCompanyForm.controls['civico'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="personalOrCompanyForm.controls['civico'].errors.required"
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="personalOrCompanyForm.controls['civico'].errors.maxlength"
+            >
+              Attenzione! La stringa digitata è troppo lunga
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="nrTelefonico" class="font-weight-bold"
+          >Recapito telefonico <span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          formControlName="nrTelefonico"
+          id="nrTelefonico"
+        />
+        <div
+          *ngIf="
+            personalOrCompanyForm.controls['nrTelefonico'].invalid &&
+            (personalOrCompanyForm.controls['nrTelefonico'].dirty ||
+              personalOrCompanyForm.controls['nrTelefonico'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['nrTelefonico'].errors.required
+            "
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['nrTelefonico'].errors.pattern
+            "
+          >
+            Attenzione! Il campo deve essere numerico
+          </div>
+          <div
+            *ngIf="
+              personalOrCompanyForm.controls['nrTelefonico'].errors.maxlength
+            "
+          >
+            Attenzione! La stringa digitata è troppo lunga
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="font-weight-bold"
+          >E-mail<span class="text-danger">*</span></label
+        >
+        <input
+          type="email"
+          class="form-control"
+          formControlName="eMail"
+          id="email"
+        />
+        <div
+          *ngIf="
+            personalOrCompanyForm.controls['eMail'].invalid &&
+            (personalOrCompanyForm.controls['eMail'].dirty ||
+              personalOrCompanyForm.controls['eMail'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="personalOrCompanyForm.controls['eMail'].errors.required">
+            Attenzione! Campo obbligatorio
+          </div>
+          <div *ngIf="personalOrCompanyForm.controls['eMail'].errors.pattern">
+            Attenzione! eMail non valido!
+          </div>
+          <div *ngIf="personalOrCompanyForm.controls['eMail'].errors.maxlength">
+            Attenzione! La stringa digitata è troppo lunga
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3" *ngIf="isTecnicoForestale">
+        <label for="pec" class="font-weight-bold"
+          >Pec<span class="text-danger">*</span></label
+        >
+        <input type="pec" class="form-control" formControlName="pec" id="pec" />
+        <div
+          *ngIf="
+            personalOrCompanyForm.controls['pec'].invalid &&
+            (personalOrCompanyForm.controls['pec'].dirty ||
+              personalOrCompanyForm.controls['pec'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="personalOrCompanyForm.controls['pec'].errors.required">
+            Attenzione! Campo obbligatorio
+          </div>
+          <div *ngIf="personalOrCompanyForm.controls['pec'].errors.pattern">
+            Attenzione! eMail non valido!
+          </div>
+          <div *ngIf="personalOrCompanyForm.controls['pec'].errors.maxlength">
+            Attenzione! La stringa digitata è troppo lunga
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="isTecnicoForestale">
+        <div class="col-lg-4 col-md-4 mb-3">
+          <label for="nrIscrizioneOrdine" class="font-weight-bold"
+            >Num. Iscrizione Ordine <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="nrIscrizioneOrdine"
+            id="nrIscrizioneOrdine"
+          />
+        </div>
+        <div class="col-lg-4 col-md-4 mb-3">
+          <div>
+            <label for="provIscrizioneOrdine" class="font-weight-bold"
+              >Prov. Iscrizione Ordine <span class="text-danger">*</span></label
+            >
+
+            <p-autoComplete
+              formControlName="provIscrizioneOrdine"
+              [forceSelection]="'true'"
+              autoHighlight="true"
+              [suggestions]="provincies"
+              (completeMethod)="getProvincia($event)"
+              inputId="provIscrizioneOrdine"
+              [minLength]="2"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="denominazioneProv"
+              [styleClass]="
+                'autoComplete d-flex formControlName.invalid?autoComplete-touched:autoComplete-touched'
+              "
+              [inputStyleClass]="'autoComplete-input'"
+            >
+              <!--               <ng-template let-item pTemplate="item">
+                {{item.denominazioneProv}} - {{item.istatProv}}
+              </ng-template>
+ -->
+            </p-autoComplete>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 mb-3">
+          <label for="nrMartelloForestale" class="font-weight-bold"
+            >Num. Martello Forestale (opzionale)</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="nrMartelloForestale"
+            id="nrMartelloForestale"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

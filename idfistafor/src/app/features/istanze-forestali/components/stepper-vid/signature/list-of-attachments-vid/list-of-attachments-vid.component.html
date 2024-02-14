@@ -1,0 +1,16 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<h4 class="header">ELENCO ALLEGATI CARICATI</h4>
+<app-reusable-no-select-table
+  [data]="allegatiTableData"
+  [headers]="allegatiTableHeaders"
+  [download]="true"
+  [delete]="true"
+  [fieldToDownload]="'id'"
+  [fieldToDelete]="'id'"
+  (deleteRow)="fieldToDelete($event)"
+  (downloadEmitter)="fieldToDownload($event)"
+></app-reusable-no-select-table>

@@ -1,0 +1,46 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!-- <div class="row my-3">
+  <div class="col-md-12 durata">
+    <span class="denominazione"
+      >Denominazione: {{ denominazione?.DENOMINAZIONE }}</span
+    >
+    <span>Durata: {{ denominazione?.durata_pfa_anni }}</span>
+  </div>
+</div> -->
+
+<div class="grey1 my-4" *ngIf="denominazione">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+      <strong
+        >Denominazione: <i>{{ denominazione?.denominazione }} </i></strong
+      >
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+      <strong
+        >Validità:
+        <i
+          >{{ denominazione?.dataInizioValidita | date : "yyyy" }} -
+          {{ denominazione?.dataFineValidita | date : "yyyy" }}</i
+        ></strong
+      >
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <strong
+        >Approvazione:
+        <i>
+          {{
+            denominazione != null
+              ? denominazione.delibera +
+                " - " +
+                formatDate(denominazione.dataApprovazione)
+              : correctDate
+          }}</i
+        ></strong
+      >
+    </div>
+  </div>
+</div>

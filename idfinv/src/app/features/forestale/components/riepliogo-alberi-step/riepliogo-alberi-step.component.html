@@ -1,0 +1,424 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div #root>
+  <div class="row" *ngIf="secondStepForm" [formGroup]="secondStepForm">
+    <div class="col-md-12">
+      <h3 class="light-bottom-border font-weight-bold">
+        Riepilogo cavallettamento
+      </h3>
+    </div>
+    <div class="col-md-12 col-sm-12">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Specie</th>
+              <th scope="col">Tipologia (Pollone/Seme)</th>
+              <th scope="col">Diametro (cm)</th>
+              <th scope="col">Altezza (m)</th>
+              <th scope="col">Incremento (mm)</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              formArrayName="riepliogo"
+              *ngFor="
+                let riep of secondStepForm.get('riepliogo')['controls'];
+                let i = index
+              "
+            >
+              <ng-container [formGroupName]="i">
+                <td>
+                  <ng-container *ngIf="test">
+                    <p-overlayPanel [appendTo]="root" #errorSpecie>
+                      <span
+                        *ngIf="
+                          riep.get('idSpecie').touched &&
+                          riep.get('idSpecie').errors?.required
+                        "
+                      >
+                        <i
+                          class="pi pi-exclamation-triangle"
+                          style="
+                            color: red;
+                            left: 37%;
+                            position: relative;
+                            font-size: 35px;
+                            margin: 5px;
+                          "
+                        ></i
+                        ><br />Errore: Selezionare una voce dall'elenco</span
+                      ></p-overlayPanel
+                    >
+                    <p-dropdown
+                      (mouseleave)="errorSpecie.hide()"
+                      (mouseenter)="
+                        showError(riep, errorSpecie, 'idSpecie', $event)
+                      "
+                      [options]="test"
+                      [placeholder]="'Seleziona specie'"
+                      [style]="{ width: '100%' }"
+                      [showClear]="true"
+                      [autoWidth]="false"
+                      [filter]="true"
+                      formControlName="idSpecie"
+                      appendTo="body"
+                    >
+                      <ng-template let-type pTemplate="item">
+                        <div
+                          class="ui-helper-clearfix"
+                          style="position: relative; height: 25px"
+                        >
+                          <div style="font-size: 14px">
+                            {{ type.label }}
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="tipologiaDropdown">
+                    <p-overlayPanel [appendTo]="root" #errorTipologia>
+                      <span
+                        *ngIf="
+                          riep.get('flgPolloneSeme').touched &&
+                          riep.get('flgPolloneSeme').errors?.required
+                        "
+                      >
+                        <i
+                          class="pi pi-exclamation-triangle"
+                          style="
+                            color: red;
+                            left: 37%;
+                            position: relative;
+                            font-size: 35px;
+                            margin: 5px;
+                          "
+                        ></i
+                        ><br />Errore: Selezionare una voce dall'elenco</span
+                      ></p-overlayPanel
+                    >
+                    <p-dropdown
+                      (mouseleave)="errorTipologia.hide()"
+                      (mouseenter)="
+                        showError(
+                          riep,
+                          errorTipologia,
+                          'flgPolloneSeme',
+                          $event
+                        )
+                      "
+                      [options]="tipologiaDropdown"
+                      [placeholder]="'Seleziona tipologia'"
+                      [style]="{ width: '100%' }"
+                      [showClear]="true"
+                      [autoWidth]="false"
+                      formControlName="flgPolloneSeme"
+                      appendTo="body"
+                    >
+                      <ng-template let-type pTemplate="item">
+                        <div
+                          class="ui-helper-clearfix"
+                          style="position: relative; height: 25px"
+                        >
+                          <div style="font-size: 14px">
+                            {{ type.label }}
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-container>
+                </td>
+                <td>
+                  <p-overlayPanel [appendTo]="root" #errorDiametro>
+                    <span
+                      *ngIf="
+                        riep.get('diametro').touched &&
+                        riep.get('diametro').errors?.required
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo diametro obbligatorio</span
+                    >
+                    <span
+                      *ngIf="
+                        riep.get('diametro').touched &&
+                        riep.get('diametro').errors?.pattern
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo diametro non valido</span
+                    >
+                    <span
+                      *ngIf="
+                        riep.get('diametro').touched &&
+                        riep.get('diametro').errors?.maxlength
+                      "
+                      ><i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Attenzione! Stringa digitata è troppo lunga</span
+                    >
+                  </p-overlayPanel>
+                  <input
+                    (mouseleave)="errorDiametro.hide()"
+                    (mouseenter)="
+                      showError(riep, errorDiametro, 'diametro', $event)
+                    "
+                    type="text"
+                    class="form-control"
+                    formControlName="diametro"
+                  />
+                </td>
+                <td>
+                  <p-overlayPanel [appendTo]="root" #errorAltezza>
+                    <span
+                      *ngIf="
+                        riep.get('altezza').touched &&
+                        riep.get('altezza').errors?.required
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo altezza obbligatorio</span
+                    >
+                    <span
+                      *ngIf="
+                        riep.get('altezza').touched &&
+                        riep.get('altezza').errors?.pattern
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo altezza non valido</span
+                    >
+                    <span
+                      *ngIf="
+                        riep.get('altezza').touched &&
+                        riep.get('altezza').errors?.maxlength
+                      "
+                      ><i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Attenzione! Stringa digitata è troppo lunga</span
+                    >
+                  </p-overlayPanel>
+                  <input
+                    (mouseleave)="errorAltezza.hide()"
+                    (mouseenter)="
+                      showError(riep, errorAltezza, 'altezza', $event)
+                    "
+                    type="text"
+                    class="form-control"
+                    formControlName="altezza"
+                  />
+                </td>
+                <td>
+                  <p-overlayPanel [appendTo]="root" #errorIncremento>
+                    <span
+                      *ngIf="
+                        riep.get('incremento').touched &&
+                        riep.get('incremento').errors?.required
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo incremento obbligatorio</span
+                    >
+                    <span
+                      *ngIf="
+                        riep.get('incremento').touched &&
+                        riep.get('incremento').errors?.pattern
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo incremento non valido</span
+                    >
+                    <span
+                      *ngIf="
+                        riep.get('incremento').touched &&
+                        riep.get('incremento').errors?.maxlength
+                      "
+                      ><i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Attenzione! Stringa digitata è troppo lunga</span
+                    >
+                  </p-overlayPanel>
+                  <input
+                    (mouseleave)="errorIncremento.hide()"
+                    (mouseenter)="
+                      showError(riep, errorIncremento, 'incremento', $event)
+                    "
+                    type="text"
+                    class="form-control"
+                    formControlName="incremento"
+                  />
+                </td>
+                <td>
+                  <button
+                    *ngIf="i !== 0"
+                    type="button"
+                    (click)="deleteFiledValue(i)"
+                  >
+                    <i
+                      style="color: rgb(59, 59, 59)"
+                      class="fa fa-trash"
+                      icon="fa fa-plus"
+                    ></i>
+                  </button>
+                </td>
+              </ng-container>
+            </tr>
+            <tr>
+              <td colspan="6" class="text-center">
+                <p-button
+                  type="button"
+                  [styleClass]="'f-18 font-weight-bold form-button'"
+                  icon="fa fa-plus"
+                  iconpos="right"
+                  (onClick)="addSecondItem()"
+                  label="Aggiungi"
+                >
+                </p-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="secondStepForm">
+    <div class="col-md-12 text-right">
+      <p-button
+        label="Salva in bozza"
+        [disabled]="secondStepForm.invalid"
+        (onClick)="sendSecondForm()"
+        [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+      ></p-button>
+    </div>
+  </div>
+  <div class="row my-2" *ngIf="secondStepForm">
+    <div class="col-md-12 text-right">
+      <p-button
+        label="Torna ai risultati ricerca"
+        (onClick)="navigateToSearch()"
+        [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'"
+      ></p-button>
+      <p-button
+        label="Consolida scheda"
+        (onClick)="showDialog()"
+        [disabled]="secondStepForm.invalid"
+        [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+      ></p-button>
+    </div>
+  </div>
+</div>
+<p-dialog
+  header="ATTENZIONE! "
+  [(visible)]="consolidaDialog"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+>
+  <div class="container p-4">
+    <p class="pb-4">
+      Si vuole procedere al consolidamento delle informazioni inserite?
+      Continuare?
+    </p>
+    <div class="row">
+      <div class="col-md-6">
+        <p-button
+          icon="pi pi-times"
+          (click)="closeDialog()"
+          label="No"
+          styleClass="form-outline-button btn-sm"
+        ></p-button>
+      </div>
+      <div class="col-md-6 text-right">
+        <p-button
+          icon="pi pi-check"
+          (click)="consolidaScheda()"
+          label="Si"
+          styleClass="btn btn-outline-primary"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</p-dialog>

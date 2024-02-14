@@ -1,0 +1,52 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<h3 [innerHTML]="title"></h3>
+<p-table
+  [hidden]="data.length === 0"
+  [columns]="headers"
+  [rows]="rowsPerPageOptions[0]"
+  [value]="tableData ? tableData : []"
+  [lazy]="true"
+  [paginator]="simpleTable ? false : true"
+  [totalRecords]="data.length"
+  [rowsPerPageOptions]="rowsPerPageOptions"
+  (onLazyLoad)="updateData($event)"
+  [customSort]="simpleTable ? false : true"
+  [sortField]="simpleTable ? null : initiallySortedColumn"
+  [sortOrder]="simpleTable ? null : 1"
+  [sortMode]="simpleTable ? 'off' : 'single'"
+  [tableStyleClass]="'no-select-table'"
+  [styleClass]="'mb-3'"
+  [resizableColumns]="true"
+  [responsive]="true"
+  [autoLayout]="true"
+>
+  >
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th
+        *ngFor="let col of columns"
+        [pSortableColumn]="col.field"
+        [ngSwitch]="col.field"
+        [innerHTML]="col.header"
+      >
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-car
+    let-columns="columns"
+    let-index="rowIndex"
+  >
+    <tr>
+      <td *ngFor="let col of columns">
+        {{ car[col.field] }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

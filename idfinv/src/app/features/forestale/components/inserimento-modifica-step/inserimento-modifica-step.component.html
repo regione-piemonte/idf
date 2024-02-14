@@ -1,0 +1,398 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div #root>
+  <div class="row" *ngIf="firstForm" [formGroup]="firstForm">
+    <div class="col-md-12">
+      <h3 class="light-bottom-border font-weight-bold">Dettaglio</h3>
+    </div>
+    <div class="col-md-12">
+      <div class="grey-form">
+        <div class="row">
+          <div class="col mb-3">
+            <div class="form-group">
+              <label for="fattoreNumerazione" class="font-weight-bold"
+                >Fattore di numerazione relascopica
+                <span class="text-danger">*</span></label
+              >
+
+              <input
+                type="text"
+                class="form-control"
+                id="fattoreNumerazione"
+                formControlName="fattoreNumerazione"
+                name="fattoreNumerazione"
+                pTooltip="{{ tooltipProperty.fattoreNumerazione }}"
+                tooltipPosition="top"
+              />
+              <span
+                class="text-danger f-18"
+                *ngIf="
+                  firstForm.get('fattoreNumerazione').touched &&
+                  firstForm.get('fattoreNumerazione').errors?.required
+                "
+              >
+                Errore! Campo fattore di numerazione obbligatorio</span
+              >
+              <span
+                class="text-danger f-18"
+                *ngIf="
+                  firstForm.get('fattoreNumerazione').touched &&
+                  firstForm.get('fattoreNumerazione').errors?.pattern
+                "
+              >
+                Errore! Campo fattore di numerazione non valido.
+              </span>
+              <span
+                class="text-danger f-18"
+                *ngIf="
+                  firstForm.get('fattoreNumerazione').touched &&
+                  firstForm.get('fattoreNumerazione').errors?.maxlength
+                "
+                >Attenzione! Stringa digitata è troppo lunga.
+              </span>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="note" class="font-weight-bold">Note</label>
+              <input
+                type="text"
+                class="form-control"
+                id="note"
+                formControlName="note"
+                name="note"
+                pTooltip="{{ tooltipProperty.note }}"
+                tooltipPosition="top"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <h3 class="light-bottom-border font-weight-bold">Conteggio Angolare</h3>
+    </div>
+    <div class="col-md-12">
+      <div class="my-3">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Specie</th>
+              <th scope="col">N. Alberi contati seme</th>
+              <th scope="col">N. Alberi contati polloni</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              formArrayName="plainAdsrelSpecie"
+              *ngFor="
+                let angolare of firstForm.get('plainAdsrelSpecie')['controls'];
+                let i = index
+              "
+            >
+              <ng-container [formGroupName]="i">
+                <td>
+                  <ng-container *ngIf="specieList"
+                    ><p-overlayPanel [appendTo]="root" #errorSpecie>
+                      <span
+                        *ngIf="
+                          angolare.get('idSpecie').touched &&
+                          angolare.get('idSpecie').errors?.required
+                        "
+                      >
+                        <i
+                          class="pi pi-exclamation-triangle"
+                          style="
+                            color: red;
+                            left: 37%;
+                            position: relative;
+                            font-size: 35px;
+                            margin: 5px;
+                          "
+                        ></i
+                        ><br />Errore: Selezionare una voce dall'elenco</span
+                      ></p-overlayPanel
+                    >
+                    <p-dropdown
+                      (mouseleave)="errorSpecie.hide()"
+                      (mouseenter)="
+                        showError(angolare, errorSpecie, 'idSpecie', $event)
+                      "
+                      [options]="specieList"
+                      [placeholder]="'Seleziona specie'"
+                      [style]="{ width: '100%' }"
+                      [showClear]="true"
+                      [autoWidth]="false"
+                      [filter]="true"
+                      formControlName="idSpecie"
+                      appendTo="body"
+                      pTooltip="{{ tooltipProperty.specie }}"
+                      tooltipPosition="top"
+                    >
+                      <ng-template let-type pTemplate="item">
+                        <div
+                          class="ui-helper-clearfix"
+                          style="position: relative; height: 25px"
+                        >
+                          <div style="font-size: 14px">
+                            {{ type.label }}
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-container>
+                </td>
+                <td>
+                  <p-overlayPanel [appendTo]="root" #errorNrAlberiSeme>
+                    <span
+                      *ngIf="
+                        angolare.get('nrAlberiSeme').touched &&
+                        angolare.get('nrAlberiSeme').errors?.required
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo nrAlberiSeme obbligatorio</span
+                    >
+                    <span
+                      *ngIf="
+                        angolare.get('nrAlberiSeme').touched &&
+                        angolare.get('nrAlberiSeme').errors?.pattern
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo nrAlberiSeme non valido</span
+                    >
+                    <span
+                      *ngIf="
+                        angolare.get('nrAlberiSeme').touched &&
+                        angolare.get('nrAlberiSeme').errors?.maxlength
+                      "
+                      ><i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Attenzione! Stringa digitata è troppo lunga</span
+                    >
+                  </p-overlayPanel>
+                  <input
+                    (mouseleave)="errorNrAlberiSeme.hide()"
+                    (mouseenter)="
+                      showError(
+                        angolare,
+                        errorNrAlberiSeme,
+                        'nrAlberiSeme',
+                        $event
+                      )
+                    "
+                    class="form-control"
+                    type="text"
+                    name="nrAlberiSeme"
+                    formControlName="nrAlberiSeme"
+                    pTooltip="{{ tooltipProperty.nrAlberiSeme }}"
+                    tooltipPosition="top"
+                  />
+                </td>
+                <td>
+                  <p-overlayPanel [appendTo]="root" #errorNrAlberiPollone>
+                    <span
+                      *ngIf="
+                        angolare.get('nrAlberiPollone').touched &&
+                        angolare.get('nrAlberiPollone').errors?.required
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo nrAlberiPollone obbligatorio</span
+                    >
+                    <span
+                      *ngIf="
+                        angolare.get('nrAlberiPollone').touched &&
+                        angolare.get('nrAlberiPollone').errors?.pattern
+                      "
+                    >
+                      <i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Errore! Campo nrAlberiPollone non valido</span
+                    >
+                    <span
+                      *ngIf="
+                        angolare.get('nrAlberiPollone').touched &&
+                        angolare.get('nrAlberiPollone').errors?.maxlength
+                      "
+                      ><i
+                        class="pi pi-exclamation-triangle"
+                        style="
+                          color: red;
+                          left: 37%;
+                          position: relative;
+                          font-size: 35px;
+                          margin: 5px;
+                        "
+                      ></i
+                      ><br />Attenzione! Stringa digitata è troppo lunga</span
+                    >
+                  </p-overlayPanel>
+                  <input
+                    (mouseleave)="errorNrAlberiPollone.hide()"
+                    (mouseenter)="
+                      showError(
+                        angolare,
+                        errorNrAlberiPollone,
+                        'nrAlberiPollone',
+                        $event
+                      )
+                    "
+                    class="form-control"
+                    type="text"
+                    name="nrAlberiPollone"
+                    formControlName="nrAlberiPollone"
+                    pTooltip="{{ tooltipProperty.nrAlberiPollone }}"
+                    tooltipPosition="top"
+                  />
+                </td>
+                <td class="border-left-0">
+                  <button
+                    *ngIf="i !== 0"
+                    type="button"
+                    class="btn-close align-cancel-icon"
+                    (click)="deleteFiledValue(i)"
+                    pTooltip="{{ tooltipProperty.remove }}"
+                    tooltipPosition="top"
+                  >
+                    <em class="fa fa-trash" aria-hidden="true"></em>
+                  </button>
+                </td>
+              </ng-container>
+            </tr>
+            <tr>
+              <td colspan="4" class="text-center">
+                <p-button
+                  type="button"
+                  [styleClass]="'f-18 font-weight-bold form-button'"
+                  icon="fa fa-plus"
+                  iconpos="right"
+                  (onClick)="addItem()"
+                  label="Aggiungi"
+                  pTooltip="{{ tooltipProperty.add }}"
+                  tooltipPosition="top"
+                >
+                </p-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p-button
+        label="Pulisci"
+        (onClick)="resetForm()"
+        [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+      ></p-button>
+    </div>
+  </div>
+  <hr class="black-hr" />
+  <div class="row my-2" *ngIf="firstForm">
+    <div class="col-md-12 text-right">
+      <p-button
+        label="Torna ai risultati ricerca"
+        (onClick)="navigateToSearch()"
+        [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'"
+      ></p-button>
+      <p-button
+        [label]="
+          grayPanel.tipoAds === sempliceTipologia
+            ? 'Salva in bozza'
+            : 'Conferma e prosegui'
+        "
+        (onClick)="
+          sendFirstStep(grayPanel.tipoAds === sempliceTipologia ? true : false)
+        "
+        [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+      ></p-button>
+      <p-button
+        *ngIf="grayPanel.tipoAds === sempliceTipologia"
+        label="Consolida Scheda"
+        (onClick)="showDialog()"
+        [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+        [disabled]="firstForm.invalid"
+      ></p-button>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="ATTENZIONE! "
+  [(visible)]="consolidaDialog"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+>
+  <div class="container p-4">
+    <p class="pb-4">
+      Si vuole procedere al consolidamento delle informazioni inserite?
+      Continuare?
+    </p>
+    <div class="row">
+      <div class="col-md-6">
+        <p-button
+          (click)="closeDialog()"
+          label="No"
+          styleClass="form-outline-button btn-sm"
+        ></p-button>
+      </div>
+      <div class="col-md-6 text-right">
+        <p-button
+          (click)="consolidaScheda()"
+          label="Si"
+          styleClass="btn btn-primary btn-sm"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</p-dialog>

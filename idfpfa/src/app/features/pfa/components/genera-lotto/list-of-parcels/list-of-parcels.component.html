@@ -1,0 +1,32 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div *ngIf="tableData && tableData.length > 0">
+  <div class="row_header font-weight-bold mb-3">
+    <label>Elenco particelle catastali su cui ricade l'intervento</label>
+  </div>
+
+  <app-reusable-front-table
+    [initiallySortedColumn]="sortedColumn"
+    [headers]="tableHeaders"
+    [data]="tableData"
+    (rowIdEmitter)="getRowId($event)"
+    (updateTableChanges)="getUpdatedTable($event)"
+    [delete]="true"
+    [fieldToDelete]="'id'"
+    (deleteRow)="deleteRow($event)"
+  >
+  </app-reusable-front-table>
+
+  <div class="text-center mt-3 mb-3">
+    <p-button
+      [disabled]="disableAcquisisci"
+      (click)="acquisisciParticelle()"
+      [styleClass]="'mt-3 btn-geco'"
+      label="Acquisisci particelle e genera poligono"
+    ></p-button>
+    <!-- (click)="createPolygon()" old call -->
+  </div>
+</div>

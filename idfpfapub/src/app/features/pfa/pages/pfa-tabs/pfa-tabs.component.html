@@ -1,0 +1,85 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-md-12">
+  <ng-container>
+    <app-denominazione
+      [denominazione]="denom"
+      class="my-lg-4"
+    ></app-denominazione
+  ></ng-container>
+  <ngb-tabset [activeId]="activeTabId" (tabChange)="tabCall($event)">
+    <ngb-tab title="PGF" id="pfa">
+      <ng-template ngbTabContent>
+        <app-dettaglio [denominazione]="denom"> </app-dettaglio>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Documenti di piano" id="documenti">
+      <ng-template ngbTabContent>
+        <div class="table-over2 my-3">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th *ngFor="let col of documentiHeader">
+                  {{ col.header }}
+                </th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let data of documenti; let i = index"
+                [class.active-color]="i === selectedRow2"
+                (click)="getFieldId(i)"
+              >
+                <td>{{ data.descrTipoAllegato }}</td>
+                <td>{{ data.nomeAllegato }}</td>
+                <td>{{ data.note }}</td>
+                <td class="text-number">
+                  {{
+                    formatNumber(
+                      data.dimensioneAllegatoKB
+                        | convertKB : data.dimensioneAllegatoKB
+                    )
+                  }}
+                </td>
+                <td
+                  (click)="documentToDownload(data.idDocumentoAllegato)"
+                  class="text-center"
+                >
+                  <i class="fas fa-download"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row justify-content-between">
+          <div class="col-md-6">
+            <p-button
+              label="Indietro"
+              [styleClass]="
+                'mb-3
+            indietro-button'
+              "
+              (onClick)="toPfaGestiti()"
+            ></p-button>
+          </div>
+          <div class="col-md-6 text-right">
+            <p-button
+              label="Torna alla home"
+              [styleClass]="'mb-3 form-button'"
+              (onClick)="toPfaGestiti()"
+            ></p-button>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  <p-confirmDialog
+    header="Attenzione"
+    icon="pi pi-exclamation-triangle"
+    style="text-align: center"
+  ></p-confirmDialog>
+</div>

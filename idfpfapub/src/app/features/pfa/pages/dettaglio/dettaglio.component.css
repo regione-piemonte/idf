@@ -1,0 +1,286 @@
+/*!
+ * SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+ * 
+ * SPDX-License-Identifier: EUPL-1.2
+*/
+.durata {
+  padding: 10px;
+  background: #f6e58d;
+  border-radius: 12px;
+}
+
+/* .dettaglio-data {
+} */
+
+.denominazione {
+  margin-right: 50px;
+}
+
+.dettaglio {
+  margin-top: 10px;
+  padding: 15px;
+  background: #22a6b3;
+  color: #dff9fb;
+  font-size: 1.2rem;
+}
+
+.descript {
+  padding: 5px;
+  background: #5ec3cc;
+  font-size: 0.8rem;
+  min-height: 104px;
+  word-wrap: break-word;
+  font-weight: bold;
+}
+
+.data {
+  padding: 5px;
+  background: #dcdde1;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  min-height: 104px;
+  color: #0e737e;
+  font-weight: bold;
+}
+
+.two-towers {
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.prvi,
+.drugi,
+.treci {
+  font-size: 18px;
+}
+
+/* LETS SEE TOP PART */
+
+.table-orange {
+  background-color: #ed7d31;
+}
+.table-pfa-detagglio {
+  background-color: rgb(248, 248, 248);
+}
+.table-pfa-detagglio th{
+  background-color:#e5f1fc;
+}
+.table-pfa-detagglio td {
+  background-color:#f9f9f9;
+}
+.table-yellow {
+  background-color: #ffd966;
+}
+
+ /*.table-pfa-detagglio-ricadenza {
+ background-color: rgb(240, 240, 240);
+}*/
+.table-pfa-detagglio-ricadenza th.dato{
+  width: 40px;
+}
+
+.table thead th {
+  vertical-align: middle;
+}
+
+.table thead td {
+  vertical-align: middle;
+}
+
+.table tbody th {
+  vertical-align: middle;
+}
+.table tbody td {
+  vertical-align: middle;
+}
+
+.far,
+.anteprima:before,
+.fal,
+.fab {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+.far.fa-pull-right,
+.fa-pull-right.anteprima:before,
+.fal.fa-pull-right,
+.fab.fa-pull-right {
+  margin-left: 0.3em;
+}
+
+.fa-spin {
+  animation: fa-spin 2s infinite linear;
+}
+
+.fa-pulse {
+  animation: fa-spin 1s infinite steps(8);
+}
+
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+.align-center {
+  text-align: center;
+}
+.row-background-brighter {
+  background-color: rgb(248, 248, 248);
+  border: 1px solid white;
+}
+.row-background-darker {
+  background-color: rgb(240, 240, 240);
+  border: 1px solid white;
+}
+
+/* HARD CODING */
+.fa-lg {
+  font-size: 1.33333em;
+  line-height: 0.75em;
+  vertical-align: -0.0667em;
+}
+
+.fa-xs {
+  font-size: 0.75em;
+}
+
+.fa-sm {
+  font-size: 0.875em;
+}
+
+.fa-1x {
+  font-size: 1em;
+}
+
+.fa-2x{
+  font-size: 2em;
+}
+
+.fa-3x,
+.anteprima:before,
+.card-header .btn-link:before,
+.card-header .btn-link.collapsed:before,
+.alert-danger:before,
+.alert-success:before,
+.alert-info:before,
+.alert-warning:before,
+.op:before,
+.calendar:before {
+  font-size: 3em;
+}
+
+.fa-4x {
+  font-size: 4em;
+}
+
+.fa-5x {
+  font-size: 5em;
+}
+
+.fa-6x {
+  font-size: 6em;
+}
+
+.fa-7x {
+  font-size: 7em;
+}
+
+.fa-8x {
+  font-size: 8em;
+}
+
+.fa-9x {
+  font-size: 9em;
+}
+
+.fa-10x {
+  font-size: 10em;
+}
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em;
+}
+
+.fa-ul {
+  list-style-type: none;
+  margin-left: 2.5em;
+  padding-left: 0;
+}
+
+.fa-ul > li {
+  position: relative;
+}
+
+.fa-li {
+  left: -2em;
+  position: absolute;
+  text-align: center;
+  width: 2em;
+  line-height: inherit;
+}
+
+.fa-border {
+  border: solid 0.08em #eee;
+  border-radius: 0.1em;
+  padding: 0.2em 0.25em 0.15em;
+}
+
+.fa-pull-left {
+  float: left;
+}
+
+.fa-pull-right {
+  float: right;
+}
+
+
+.fa,
+.fas,
+.card-header .btn-link:before,
+.card-header .btn-link.collapsed:before,
+.alert-danger:before,
+.alert-success:before,
+.alert-info:before,
+.alert-warning:before,
+.op:before,
+.op.collapsed:before,
+.calendar:before
+{
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+.fa-2x{
+  font-size: 2em;
+  margin-top: 5px;
+}
+
+hr {
+  display: block;
+  border-bottom: 1px solid #000;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  unicode-bidi: isolate;
+  margin-block-start: 1.1em;
+  margin-block-end: 1.1em;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+thead tr {
+  text-align: center;
+}

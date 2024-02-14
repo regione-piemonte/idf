@@ -1,0 +1,36 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="headers">
+  <h3 [innerHTML]="title"></h3>
+  <p-table [columns]="headers" [value]="data">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th
+          id="{{ title }}"
+          [innerHTML]="col"
+          *ngFor="let col of headers"
+          style="width: 100px"
+        ></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <ng-template [ngIf]="col == '-' || isRowBold(rowData[columns[0]])">
+            <strong [innerHTML]="rowData[col]"></strong>
+          </ng-template>
+          <ng-template [ngIf]="col != '-' && !isRowBold(rowData[columns[0]])">
+            <span [innerHTML]="rowData[col]"></span>
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div style="margin-top: 10px; text-align: right">
+    <p-button label="Download Excel" (onClick)="donwloadExcel()"></p-button>
+  </div>
+</ng-container>

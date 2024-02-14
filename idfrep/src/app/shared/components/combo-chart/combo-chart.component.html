@@ -1,0 +1,18 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<h3 class="pb-2">{{ title }}</h3>
+<div [innerHTML]="description" class="alert alert-success"></div>
+<div>
+  <canvas id="{{ id }}"></canvas>
+</div>
+
+<div class="mt-3 text-right">
+  <button (click)="printPage()" class="btn btn-primary">
+    <i class="fa fa-print"></i>
+    Print
+  </button>
+</div>

@@ -1,0 +1,32 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div
+  class="d-flex column justify-content-between background pl-3 pr-3 pt-3 pb-2"
+>
+  <div class="d-flex row widthTableHeader col-md-3">
+    <div *ngFor="let header of tableHeaders">
+      <div
+        class="heightTableHeader stil-filda d-flex justify-content-center align-items-center mb-2"
+      >
+        <span>{{ header.header }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex column widthshotingMirror col-md-9">
+    <div
+      *ngFor="let shotingMirror of shootingMirrors"
+      class="d-flex row col-md-2 mr-1"
+    >
+      <div *ngFor="let header of tableHeaders" class="d-flex column">
+        <div
+          class="header stil-filda d-flex justify-content-center align-items-center"
+        >
+          <span>{{ shotingMirror[header.field] }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

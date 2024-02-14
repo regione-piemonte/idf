@@ -1,0 +1,129 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="denom">
+  <app-denominazione
+    [denominazione]="denom"
+    class="my-lg-4"
+  ></app-denominazione>
+</ng-container>
+
+<app-steps-with-errors
+  [steps-config]="steps"
+  [activeStep]="activeIndex"
+  [lastCompletedStep]="lastCompletedStep"
+  (emitActiveStep)="activeStep($event)"
+>
+</app-steps-with-errors>
+
+<div
+  class="ripresa-intervento"
+  *ngIf="this.idIntervento || this.idInterventoForEdit"
+>
+  <p-button
+    label="Consulta riprese"
+    [styleClass]="'font-weight-bold form-button'"
+    (onClick)="openShootingMirror()"
+    ><i class="fas fa-info-circle"></i
+  ></p-button>
+</div>
+
+<div class="fixed-geeco" *ngIf="this.idIntervento || this.idInterventoForEdit">
+  <p-button
+    label="Consulta mappa"
+    [styleClass]="'btn-geco'"
+    (onClick)="openMappa()"
+  ></p-button>
+</div>
+
+<step1-tagli
+  *ngIf="activeIndex === 0"
+  [editMode]="editModeNu"
+  [boMode]="editMode"
+  [isIstanzaInviata]="isIstanzaInviata"
+  (emitIdIstanze)="setIdIstanze($event)"
+>
+</step1-tagli>
+
+<step2-tagli
+  *ngIf="activeIndex !== 1"
+  [editMode]="editModeNu"
+  [secondFormData]="secondFormData"
+  [boMode]="editMode"
+  [isIstanzaInviata]="isIstanzaInviata"
+  (emitNextStep)="setActiveIndex()"
+>
+</step2-tagli>
+
+<step3-tagli
+  *ngIf="activeIndex !== 2"
+  [editMode]="editModeNu"
+  [thirdFormData]="thirdFormData"
+  [boMode]="editMode"
+  [isIstanzaInviata]="isIstanzaInviata"
+  (emitNextStep)="setActiveIndex()"
+>
+</step3-tagli>
+<!--
+
+<app-genera-lotto [idIntervento]="idIntervento?idIntervento:idInterventoForEdit" [hidden]="activeIndex !== 1"
+  (emitBack)="backToDetailo()" [pfaPlanId]="pfaPlanId" (emitIndex)="nextStep()"
+  (emitIdIntervento)="setIdIntervento($event)" [editMode]="editMode" (emitRicadenze)="saveRicadenze($event)"
+  [idInterventoForEdit]="idInterventoForEdit"></app-genera-lotto>
+
+<app-dati-tecnici [hidden]="activeIndex !== 2" (emitBack)="backToDetailo()" (emitErrors)="updateErrors($event)"
+  [tipoForm]="tipoInterventoForm" [specieForm]="specieForm" [plantsForm]="plantsForm"
+  (emitRemoveRow)="removeRow($event)" (emitAddRow)="addRow()" (emitQ3ToTon)="m3ToTon()"
+  [statoIntervento$]="statoIntervento$" [pfaPlanId]="pfaPlanId" (emitIndex)="firstStepCompleted($event)"
+  [governi$]="governi$" [tipoInterventi$]="tipoInterventi$" [finaliteTaglie$]="finalitaTaglie$"
+  [destLegnami$]="destLegnami$" [eventoCorrelato$]="eventCorrelato$" [esbosco$]="esbosco$"
+  [usoViabilita$]="usoViabilita$" [fasciaAltimetrica$]="fasciaAltimetrica$" [specie$]="specie$" [editMode]="editMode"
+  [lastCompletedStep]="lastCompletedStep" [idInterventoForEdit]="idInterventoForEdit"
+  [conformeDerogaValue]="conformeDerogaValue"></app-dati-tecnici>
+
+<app-utilizzatore [hidden]="activeIndex !== 3" [lastCompletedStep]="lastCompletedStep" (emitIndex)="nextStep()"
+  (emitErrors)="updateErrors($event)" (emitBack)="backToDetailo()" [allTecnicoForestale$]="allTecnicoForestale$"
+  [allComuni$]="allComuni$" [idIntervento]="idIntervento" [editMode]="editMode"
+  [idInterventoForEdit]="idInterventoForEdit"></app-utilizzatore>
+
+<app-allegati [hidden]="activeIndex !== 4" [errorsOnAllegati]="errorsOnAllegati" (emitIndex)="fourthStepCompleted()"
+  (emitErrors)="updateErrors($event)" (emitUpdateErrors)="checkForErrors()" (emitBack)="backToDetailo()"
+  [pfaPlanId]="pfaPlanId" [tipoAllegato]="tipoAllegato" [interventionPlan]="interventionPlan"
+  [idIntervento]="idIntervento" [editMode]="editMode" [idInterventoForEdit]="idInterventoForEdit"></app-allegati>
+
+<app-taglio *ngIf="activeIndex == 5" [hidden]="activeIndex !== 5" (emitBack)="backToDetailo()" [steps]="steps"
+  [idIntervento]="idIntervento" [idInterventoForEdit]="idInterventoForEdit" [ricadenzeObj]="ricadenzeObj"
+  [pfaPlanId]="pfaPlanId"></app-taglio>
+
+-->
+
+<div (keydown.enter)="$event.preventDefault()">
+  <p-dialog
+    header=" Riprese"
+    [(visible)]="shootingMirrorVisible"
+    [contentStyle]="{
+      'max-height': '700px',
+      'min-width': '750px',
+      'max-width': '1200px'
+    }"
+    [transitionOptions]="'0ms'"
+    [modal]="true"
+    [closeOnEscape]="false"
+    (onHide)="onShootingMirrorDialogHide()"
+  >
+    <p-header></p-header>
+    <app-vertical-table
+      *ngIf="shootingMirrorVisible"
+      [data]="shootingMirrorData"
+      [disabled]="true"
+      [header]="tableHeaders"
+      [showTotal]="true"
+      [columnsForm]="shootingMirrorForm"
+      [summaryColumnData]="summaryColumnData"
+    ></app-vertical-table>
+
+    <p-footer> </p-footer>
+  </p-dialog>
+</div>

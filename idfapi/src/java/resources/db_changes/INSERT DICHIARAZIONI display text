@@ -1,0 +1,50 @@
+INSERT INTO idf_cnf_tipo_param_appl(
+	id_tipo_param_appl, descr_tipo_param_appl)
+	VALUES (2, 'DICHIARAZIONI');
+
+--because the first entry is too long, first we need to alter column
+ALTER TABLE idf_cnf_parametro_appl ALTER COLUMN parametro_appl_char TYPE character varying(400);
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (2, 2, null, 'Il richiedente, in qualità di soggetto che intende operare una trasformazione del bosco in altra destinazione d’uso (art. 19 della l.r. 4/2009), consapevole che chiunque rilascia dichiarazioni mendaci è punito ai sensi del codice penale e delle leggi speciali in materia, ai sensi dell''art. 47 del DPR n. 445/2000, DICHIARA:');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (3, 2, null, 'di essere proprietario/comproprietario legittimo, avente diritto sulle superfici oggetto di trasformazione;');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (4, 2, null, 'di non essere proprietario/comproprietario legittimo, ma di avere la disponibilità delle superfici oggetto di trasformazione e di aver acquisito l’assenso della proprietà alla trasformazione del bosco;');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (5, 2, null, 'di non aver ricevuto atti di dissenso da parte di eventuali soggetti risultanti in comproprietà/eredità ai fini della presente dichiarazione;');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (6, 2, null, 'di aver acquisito l’autorizzazione paesaggistica, comprensiva degli eventuali interventi di mitigazione degli impatti sul paesaggio.');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (7, 2, null, 'di aver acquisito l’autorizzazione idrogeologica.');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (8, 2, null, 'di aver acquisito la valutazione di incidenza.');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (9, 2, null, 'di aver acquisito (indicare altri eventuali pareri, autorizzazioni, nullaosta e atti di assenso comunque denominati previsti dalla normativa vigente).');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (10, 2, null, 'di aver versato il deposito cauzionale di Euro {$DEPOSIT$} previsto per la compensazione fisica.');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (11, 2, null, 'di aver versato il corrispettivo in denaro di Euro {$DEPOSIT$} previsto per la compensazione monetaria.');
+
+INSERT INTO idf_cnf_parametro_appl(
+	id_parametro_appl, fk_tipo_param_appl, parametro_appl_num, parametro_appl_char)
+	VALUES (12, 2, null, 'di aver acquisito l’accoglimento del progetto di intervento per la compensazione fisica della superficie trasformata; si allegano i riferimenti delle istanze di taglio presentati. ');

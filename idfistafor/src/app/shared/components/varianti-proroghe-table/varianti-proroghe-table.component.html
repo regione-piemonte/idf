@@ -1,0 +1,70 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<p-table
+  [hidden]="!tableData || tableData.length === 0"
+  [columns]="tableHeaders"
+  [rows]="5"
+  [value]="tableData ? tableData : []"
+  [lazy]="true"
+  [paginator]="tableData ? false : true"
+  [totalRecords]="totalCount ? totalCount : 6"
+  [rowsPerPageOptions]="[5, 10, 15]"
+  (onLazyLoad)="updateData($event)"
+  [customSort]="tableData ? false : true"
+  [sortOrder]="tableData ? null : 1"
+  [sortMode]="tableData ? 'off' : 'single'"
+  [tableStyleClass]="'no-select-table'"
+  [styleClass]="'mb-3'"
+  [resizableColumns]="true"
+  [responsive]="true"
+  [autoLayout]="true"
+>
+  >
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th
+        *ngFor="let col of columns"
+        [pSortableColumn]="col.field"
+        [ngSwitch]="col.field"
+      >
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-car
+    let-columns="columns"
+    let-index="rowIndex"
+  >
+    <tr>
+      <td *ngFor="let col of columns">
+        {{ getValue(car[col.field]) }}
+      </td>
+      <td>
+        <button
+          type="button"
+          (click)="viewRow(car)"
+          title="Visualizza elemento {{ getDescr(car) }}"
+          class="action-button"
+        >
+          <em class="far fa-file-alt" aria-hidden="true"></em>
+        </button>
+        <button
+          type="button"
+          *ngIf="!boModifica && car['statoIstanza'] == 'Bozza'"
+          (click)="editRow(car)"
+          title="Modifica elemento {{ getDescr(car) }}"
+          class="action-button"
+        >
+          <em class="fas fa-pencil-alt" aria-hidden="true"></em>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

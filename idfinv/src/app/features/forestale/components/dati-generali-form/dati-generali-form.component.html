@@ -1,0 +1,754 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row" #container>
+  <div class="col-md-12 my-4" [formGroup]="datiGeneraliForm">
+    <div class="grey-form">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="tipologiaDiRilievo" class="font-weight-bold"
+              >Tipologia di rilievo <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('tipologiaDiRilievo').touched &&
+                datiGeneraliForm.get('tipologiaDiRilievo').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco</span
+            >
+
+            <ng-container
+              *ngIf="
+                allDropdownMens.tipologiaDiRilievo | async as tipologiaDiRilievo
+              "
+            >
+              <p-dropdown
+                [options]="tipologiaDiRilievo"
+                [placeholder]="'Seleziona tipologia'"
+                formControlName="tipologiaDiRilievo"
+                (onChange)="tipoRilievoChange()"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                inputId="tipologiaDiRilievo"
+                [disabled]="basicInfoSubmitted"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="codiceADS" class="font-weight-bold"
+              >N. Ads <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('codiceADS').touched &&
+                datiGeneraliForm.get('codiceADS').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('codiceADS').touched &&
+                datiGeneraliForm.get('codiceADS').errors?.pattern
+              "
+            >
+              Errore: campo non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('codiceADS').touched &&
+                datiGeneraliForm.get('codiceADS').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="codiceADS"
+              formControlName="codiceADS"
+              name="codiceADS"
+              min="1"
+              id="codiceADS"
+              [attr.disabled]="basicInfoSubmitted ? '' : null"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 col-10">
+          <p class="font-weight-bold">Sei gia' in possesso delle coordinate?</p>
+        </div>
+        <div class="col-md-1 col-10">
+          <input
+            [attr.disabled]="basicInfoSubmitted ? '' : null"
+            type="radio"
+            name="withCoordinate"
+            id="si"
+            [value]="true"
+            (change)="withCoordinateChange(true)"
+          />
+          <label class="font-weight-bold" for="si">Si</label>
+        </div>
+        <div class="col-md-1 col-10">
+          <input
+            [attr.disabled]="basicInfoSubmitted ? '' : null"
+            type="radio"
+            id="no"
+            name="withCoordinate"
+            [value]="false"
+            (change)="withCoordinateChange(false)"
+          />
+          <label class="font-weight-bold" for="no">No</label>
+        </div>
+        <div class="col-md-5 col-10 text-right">
+          <p-button
+            [disabled]="hideBtnMappa()"
+            class="full-width-media"
+            label="Disegna su mappa"
+            [styleClass]="'btn-geco'"
+            (onClick)="openMappa()"
+          >
+          </p-button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="utmEST" class="font-weight-bold"
+              >UTM EST
+              <span *ngIf="isNotTipologiaRelascopica()" class="text-danger"
+                >*</span
+              ></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('utmEST').touched &&
+                datiGeneraliForm.get('utmEST').errors?.required
+              "
+            >
+              Errore: campo obbligatorio
+            </span>
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('utmEST').touched &&
+                datiGeneraliForm.get('utmEST').errors?.pattern
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="utmEST"
+              [attr.disabled]="hideUtm()"
+              (paste)="(true)"
+              (keyup)="onKeyUpOnlyNumber($event)"
+              (change)="utmCoordinateChange()"
+              formControlName="utmEST"
+              name="utmEST"
+              pTooltip="{{ tooltipProperty.utmEast }}"
+              tooltipPosition="top"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="utmNORD" class="font-weight-bold"
+              >UTM NORD
+              <span *ngIf="isNotTipologiaRelascopica()" class="text-danger"
+                >*</span
+              ></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('utmNORD').touched &&
+                datiGeneraliForm.get('utmNORD').errors?.required
+              "
+            >
+              Errore: campo obbligatorio
+            </span>
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('utmNORD').touched &&
+                datiGeneraliForm.get('utmNORD').errors?.pattern
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              (keyup)="onKeyUpOnlyNumber($event)"
+              (change)="utmCoordinateChange()"
+              [attr.disabled]="hideUtm()"
+              id="utmNORD"
+              formControlName="utmNORD"
+              name="utmNORD"
+              pTooltip="{{ tooltipProperty.utmNord }}"
+              tooltipPosition="top"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row" style="text-align: right" *ngIf="utmPointNotValid">
+        <div class="text-danger f-18">
+          Attenzione il punto inserito non è valido!
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="provincia" class="font-weight-bold">Provincia</label>
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('provincia').touched &&
+                datiGeneraliForm.get('provincia').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco
+            </span>
+            <ng-container
+              *ngIf="allDropdownMens.provincia | async as provincia"
+            >
+              <p-dropdown
+                [options]="provincia"
+                [placeholder]="'No data'"
+                [disabled]="true"
+                inputId="provincia"
+                formControlName="provincia"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="comune" class="font-weight-bold">Comune</label>
+
+            <ng-container>
+              <p-dropdown
+                [options]="comuneDropdown ? comuneDropdown : []"
+                [placeholder]="'No data'"
+                formControlName="comune"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                inputId="comune"
+                [autoWidth]="false"
+                [disabled]="true"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p-button
+            class="full-width-media"
+            label="Salva e prosegui"
+            (onClick)="saveBasicInfo()"
+            [disabled]="basicInfoSubmitted || !datiGeneraliForm.valid"
+            [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'"
+          ></p-button>
+        </div>
+        <div class="col text-right">
+          <p-button
+            label="visualizza/modifica su mappa"
+            (onClick)="openMappa()"
+            [disabled]="!basicInfoSubmitted"
+            [styleClass]="'btn-geco'"
+          ></p-button>
+        </div>
+      </div>
+      <!--div class="col ">
+                        <div class="row">
+                            <div class="row">
+                                <p-button class="full-width-media" label="Disegna su mappa" [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'" style="margin-left: 10px;"></p-button>
+                            </div>
+                            <div class="row">
+                                <a href="#">
+                                    <img [src]="'assets/img/GEKO.png'" class="w-100" alt="map" pTooltip="Consulta mappa" style="margin-left: 10px;" tooltipPosition="left" />
+                                </a>
+                            </div>
+                            <div class="row">
+                                <p-button class="full-width-media" label="Acquisici informazioni" [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'" style="margin-left: 10px; margin-top: 10px; font-size: small;"></p-button>
+                            </div>
+                        </div>
+                    </!--div-->
+
+      <div>
+        <h3 class="light-bottom-border font-weight-bold">
+          Gestione scheda rilievo: dati generali
+        </h3>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="ambitoDiRilevamento" class="font-weight-bold"
+              >Ambito di rilievo <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('ambitoDiRilevamento').touched &&
+                datiGeneraliForm.get('ambitoDiRilevamento').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco</span
+            >
+            <ng-container
+              *ngIf="allDropdownMens.ambitoDiRilievo | async as ambitoDiRilievo"
+            >
+              <p-dropdown
+                [options]="ambitoDiRilievo"
+                [placeholder]="'Seleziona ambito di rilievo'"
+                formControlName="ambitoDiRilevamento"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                inputId="ambitoDiRilevamento"
+                (onChange)="fillDettaglioAmbito()"
+                [autoWidth]="false"
+                [disabled]="!basicInfoSubmitted"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col mb-3">
+          <label for="dettaglioAmbito" class="font-weight-bold"
+            >Dettaglio ambito</label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              datiGeneraliForm.get('idDettaglioAmbito').touched &&
+              !selectedRilievo &&
+              datiGeneraliForm.get('ambitoDiRilevamento').value == 3
+            "
+          >
+            Errore: selezionare una voce dall'elenco</span
+          >
+          <ng-container>
+            <p-dropdown
+              [options]="dettaglioAmbitoDropdown ? dettaglioAmbitoDropdown : []"
+              [placeholder]="'Seleziona dettaglio ambito'"
+              (onChange)="checkDropdown($event)"
+              [style]="{ width: '100%' }"
+              formControlName="idDettaglioAmbito"
+              [showClear]="true"
+              [autoWidth]="false"
+              inputId="dettaglioAmbito"
+              [disabled]="!basicInfoSubmitted"
+            >
+              <ng-template let-type pTemplate="item">
+                <div
+                  class="ui-helper-clearfix"
+                  style="position: relative; height: 25px"
+                >
+                  <div style="font-size: 14px">
+                    {{ type.label }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+      </div>
+      <div class="raw" [hidden]="enableAmbito">
+        <div class="form-group">
+          <label for="ambitoSpecifico" class="font-weight-bold"
+            >Ambito specifico
+          </label>
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              datiGeneraliForm.get('ambitoSpecifico').touched &&
+              !datiGeneraliForm.get('ambitoSpecifico').value
+            "
+          >
+            Errore: campo obbligatorio</span
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              datiGeneraliForm.get('ambitoSpecifico').touched &&
+              datiGeneraliForm.get('ambitoSpecifico').errors?.pattern
+            "
+          >
+            Indirizzo Ambito specifico non valido!</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="ambitoSpecifico"
+            formControlName="ambitoSpecifico"
+            name="ambitoSpecifico"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="dataRilevamento" class="font-weight-bold"
+            >Data di rilievo
+            <span class="text-danger">*</span>
+          </label>
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              datiGeneraliForm.get('dataRilevamento').touched &&
+              datiGeneraliForm.get('dataRilevamento').errors?.required
+            "
+          >
+            Errore: selezionare una voce dall'elenco
+          </span>
+          <p-calendar
+            [locale]="it"
+            [yearNavigator]="true"
+            [monthNavigator]="true"
+            yearRange="1970:{{ currentYear }}"
+            dateFormat="dd-mm-yy"
+            inputId="dataRilevamento"
+            formControlName="dataRilevamento"
+            [maxDate]="maxDate"
+            showButtonBar="true"
+            [showIcon]="true"
+            [disabled]="!basicInfoSubmitted"
+          >
+          </p-calendar>
+        </div>
+        <div class="col-md-6">
+          <label for="rilevatore" class="font-weight-bold"
+            >Rilevatore <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="rilevatore"
+            formControlName="rilevatore"
+            name="rilevatore"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="proprieta" class="font-weight-bold"
+              >Proprietà <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('proprieta').touched &&
+                datiGeneraliForm.get('proprieta').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco</span
+            >
+            <ng-container
+              *ngIf="allDropdownMens.proprieta | async as proprieta"
+            >
+              <p-dropdown
+                [options]="proprieta"
+                [placeholder]="'Seleziona proprietà'"
+                formControlName="proprieta"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                [disabled]="!basicInfoSubmitted"
+                inputId="proprieta"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="espozione" class="font-weight-bold"
+              >Esposizione <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('espozione').touched &&
+                datiGeneraliForm.get('espozione').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco</span
+            >
+            <ng-container
+              *ngIf="allDropdownMens.esposizione | async as esposizione"
+            >
+              <p-dropdown
+                [options]="esposizione"
+                [placeholder]="'Seleziona esposizione'"
+                formControlName="espozione"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                inputId="espozione"
+                [autoWidth]="false"
+                [disabled]="!basicInfoSubmitted"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="quota" class="font-weight-bold"
+              >Quota ( m s.l.m.) <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('quota').touched &&
+                datiGeneraliForm.get('quota').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('quota').touched &&
+                datiGeneraliForm.get('quota').errors?.pattern
+              "
+            >
+              Errore: campo non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('quota').touched &&
+                datiGeneraliForm.get('quota').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="quota"
+              formControlName="quota"
+              name="quota"
+              OnlyNumber="true"
+              relivator
+              [attr.disabled]="basicInfoSubmitted ? null : ''"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="inclinazione" class="font-weight-bold"
+              >Inclinazione in gradi <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('inclinazione').touched &&
+                datiGeneraliForm.get('inclinazione').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('inclinazione').touched &&
+                datiGeneraliForm.get('inclinazione').errors?.pattern
+              "
+            >
+              Errore: campo non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('inclinazione').touched &&
+                datiGeneraliForm.get('inclinazione').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="inclinazione"
+              formControlName="inclinazione"
+              name="inclinazione"
+              OnlyNumber="true"
+              [attr.disabled]="basicInfoSubmitted ? null : ''"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="particellaForestale" class="font-weight-bold"
+              >Particella forestale</label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                datiGeneraliForm.get('particellaForestale').touched &&
+                datiGeneraliForm.get('particellaForestale').errors?.required
+              "
+            >
+              Errore: campo particella forestale obbligatorio</span
+            >
+
+            <input
+              type="text"
+              class="form-control"
+              id="particellaForestale"
+              formControlName="particellaForestale"
+              name="particellaForestale"
+              OnlyNumber="true"
+              [attr.disabled]="basicInfoSubmitted ? null : ''"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <p-button
+            label="Pulisci"
+            (onClick)="resetForm()"
+            [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+    <hr class="black-hr" />
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <p-button
+          class="full-width-media"
+          label="Torna ai risultati ricerca"
+          (onClick)="navigateToSearch()"
+          [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'"
+        >
+        </p-button>
+        <p-button
+          class="full-width-media"
+          label="SALVA e prosegui"
+          (onClick)="sendGeneraliForm()"
+          [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+          [disabled]="
+            !datiGeneraliForm.valid ||
+            !basicInfoSubmitted ||
+            (datiGeneraliForm.get('ambitoDiRilevamento').value == 3 &&
+              !datiGeneraliForm.get('idDettaglioAmbito').value) ||
+            (!enableAmbito && !datiGeneraliForm.get('ambitoSpecifico').value)
+          "
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="row" [formGroup]="datiGeneraliForm">
+
+  <div class="col-md-12 d-flex justify-content-around">
+    <p-button
+      label="Torna ai risultati ricerca"
+      (onClick)="sendGeneraliForm()"
+      [styleClass]="'sendButton'"
+    ></p-button>
+    <p-button
+      label="PULISCI"
+      (onClick)="resetForm()"
+      [styleClass]="'outlined-button'"
+    ></p-button>
+    <p-button
+      label="SALVA e prosegui"
+      (onClick)="sendGeneraliForm()"
+      [styleClass]="'sendButton'"
+      [disabled]="!datiGeneraliForm.valid"
+    ></p-button>
+  </div>
+</div> -->

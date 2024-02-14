@@ -1,0 +1,62 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<div class="my-3">
+  <ng-container *ngIf="grayPanel$ | async as grayPanel">
+    <app-tipologia-panel [panelData]="grayPanel"></app-tipologia-panel>
+  </ng-container>
+</div>
+<ngb-tabset>
+  <ngb-tab title="Dati stazionali">
+    <ng-template
+      ngbTabContent
+      *ngIf="datiStazionali$ | async as datiStazionali"
+    >
+      <app-dati-stazionali
+        [datiStazionali]="datiStazionali"
+      ></app-dati-stazionali>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Alberi campione e dominante">
+    <ng-template ngbTabContent *ngIf="otherTabsData$ | async as otherTabsData">
+      <app-alberi-campione [campioneData]="otherTabsData"></app-alberi-campione>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Cavallettamento">
+    <ng-template ngbTabContent>
+      <app-alberi-cavallettati
+        [initiallySortedColumn]="sortableColumnAlberi"
+        [alberiData]="alberiTableData"
+        [tableHeaders]="tableHeaders"
+        (emitTableChanges)="alberiTableChanges($event)"
+        [totalElements]="totalElements"
+      >
+      </app-alberi-cavallettati>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+<hr class="black-hr" />
+<div class="row">
+  <div class="col-md-12 mb-2 text-right">
+    <p-button
+      label="Consulta su mappa"
+      (click)="openGeeco()"
+      [styleClass]="'btn-geco'"
+    ></p-button>
+    <p-button
+      label="Scarica in excel"
+      [styleClass]="'f-18 font-weight-bold form-button ml-1'"
+      (onClick)="downloadExcel()"
+    ></p-button>
+  </div>
+  <div class="col-md-12 mb-2">
+    <p-button
+      label="Torna ai risultati ricerca"
+      [styleClass]="'f-18 font-weight-bold form-button ml-1'"
+      (click)="navigateToSearch()"
+    ></p-button>
+  </div>
+</div>

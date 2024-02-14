@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+  SPDX-License-Identifier: EUPL-1.2
+-->
+<datasources>
+	<datasource jta="false" jndi-name="java:/idfbo/jdbc/idfboTxDS" pool-name="java:/idfbo/jdbc/idfboTxDS" enabled="true" use-ccm="false" use-java-context="true">
+ 		<connection-url>@@CONNECTION_URL@@</connection-url>
+    	<driver-class>org.postgresql.Driver</driver-class>
+        <driver>postgresql</driver>
+        <security>
+        	<user-name>@@USER_DB@@</user-name>
+    		<password>@@PASSWORD_DB@@</password>
+        </security>
+        <validation>
+            <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+            <validate-on-match>true</validate-on-match>
+         </validation>
+    </datasource>
+</datasources>

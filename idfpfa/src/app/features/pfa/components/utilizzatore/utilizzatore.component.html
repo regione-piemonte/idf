@@ -1,0 +1,662 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-md-12 my-4">
+  <div class="grey-form">
+    <div [formGroup]="utilizzatoreForm">
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="tipoEffettuera"
+          >Tipo di utilizzatore che effettuerà intervento<span
+            class="text-danger"
+            >*</span
+          ></label
+        >
+        <select
+          class="form-control"
+          id="tipoEffettuera"
+          name="tipoEffettuera"
+          formControlName="tipoEffettuera"
+          (change)="enableButton()"
+        >
+          <option value="{{ tipoDeUtilizzatore.IN_PROPRIO }}">
+            IN PROPRIO
+          </option>
+          <option
+            *ngIf="isPfaEntePubblico"
+            value="{{ tipoDeUtilizzatore.DA_INDIVIDUARE }}"
+          >
+            DA INDIVIDUARE
+          </option>
+          <option value="{{ tipoDeUtilizzatore.RICERCA }}">RICERCA</option>
+        </select>
+      </div>
+      <div
+        class="form-group col-sm-12 col-md-6"
+        *ngIf="
+          utilizzatoreForm.get('tipoEffettuera').value ==
+          tipoDeUtilizzatore.RICERCA
+        "
+      >
+        <label for="tipoUtilizzatore"
+          >Tipologia di utilizzatore<span class="text-danger">*</span></label
+        >
+        <select
+          class="form-control"
+          id="tipoUtilizzatore"
+          name="tipoUtilizzatore"
+          formControlName="tipoUtilizzatore"
+          (change)="selectedTipologiaUtilizzatore()"
+        >
+          <option value="{{ ricercaUtilizzatore.PERSONA_FISICA }}">
+            PERSONA FISICA
+          </option>
+          <option value="{{ ricercaUtilizzatore.PERSONA_GIURIDICA }}">
+            PERSONA GIURIDICA
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        utilizzatoreForm.get('tipoEffettuera').value ==
+        tipoDeUtilizzatore.RICERCA
+      "
+    >
+      <div
+        class="col-md-12"
+        *ngIf="
+          utilizzatoreForm.get('tipoUtilizzatore').value ==
+          ricercaUtilizzatore.PERSONA_FISICA
+        "
+      >
+        <div class="light-bottom-border font-weight-bold">
+          Dettaglio utilizzatore
+        </div>
+        <div class="col-md-12 my-4" [formGroup]="fisicaForm">
+          <div>
+            <div class="row form-group align-items-end justify-content-between">
+              <div class="col-md-5">
+                <label for="codiceFiscale"
+                  >Codice fiscale <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="16"
+                  id="codiceFiscale"
+                  formControlName="codiceFiscale"
+                  name="codiceFiscale"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (fisicaForm.get('codiceFiscale').touched ||
+                      lastCompletedStep > 2) &&
+                    fisicaForm.get('codiceFiscale').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+              <div class="col-md-5">
+                <p-button
+                  label="Cerca in anagrafica in base al codice fiscale"
+                  [styleClass]="' f-18 font-weight-bold form-button'"
+                  (click)="cercaPersonaFisicaByCodiceFiscale()"
+                ></p-button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mb-3">
+                <label for="cognomeRagSociale"
+                  >Cognome <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cognomeRagSociale"
+                  maxlength="50"
+                  formControlName="cognomeRagSociale"
+                  name="cognomeRagSociale"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (fisicaForm.get('cognomeRagSociale').touched ||
+                      lastCompletedStep > 2) &&
+                    fisicaForm.get('cognomeRagSociale').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+              <div class="col">
+                <label for="nome"
+                  >Nome <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nome"
+                  maxlength="50"
+                  formControlName="nome"
+                  name="nome"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (fisicaForm.get('nome').touched || lastCompletedStep > 2) &&
+                    fisicaForm.get('nome').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="comuneResidenza"
+                >Comune residenza<span class="text-danger">*</span>
+              </label>
+              <p-autoComplete
+                formControlName="comuneResidenza"
+                [forceSelection]="'true'"
+                [required]="'true'"
+                autoHighlight="true"
+                [suggestions]="comune"
+                (completeMethod)="filterComune($event)"
+                id="comuneResidenza"
+                [minLength]="3"
+                [dropdown]="true"
+                [forceSelection]="true"
+                emptyMessage="{{ emptyMessageAC }}"
+                field="denominazioneComune"
+                inputId="comuneResidenza"
+                [styleClass]="
+                  'autoComplete d-flex formControlName.invalid?autoComplete-touched:autoComplete-touched'
+                "
+                [inputStyleClass]="'autoComplete-input'"
+              >
+              </p-autoComplete>
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (fisicaForm.get('comuneResidenza').touched ||
+                    lastCompletedStep > 2) &&
+                  fisicaForm.get('comuneResidenza').errors?.required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label for="indirizzoResidenza"
+                  >Indirizzo Residenza <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="50"
+                  id="indirizzoResidenza"
+                  formControlName="indirizzoResidenza"
+                  name="indirizzoResidenza"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (fisicaForm.get('indirizzoResidenza').touched ||
+                      lastCompletedStep > 2) &&
+                    fisicaForm.get('indirizzoResidenza').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+              <div class="col-3 mb-3">
+                <label for="civico"
+                  >Civico <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="civico"
+                  maxlength="20"
+                  formControlName="civico"
+                  name="civico"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (fisicaForm.get('civico').touched ||
+                      lastCompletedStep > 2) &&
+                    fisicaForm.get('civico').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+              <div class="col-3 mb-3">
+                <label for="cap">Cap <span class="text-danger">*</span> </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cap"
+                  maxlength="5"
+                  formControlName="cap"
+                  name="cap"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (fisicaForm.get('cap').touched || lastCompletedStep > 2) &&
+                    fisicaForm.get('cap').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="nrTelefonico"
+                >Recapito telefonico <span class="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="nrTelefonico"
+                maxlength="20"
+                formControlName="nrTelefonico"
+                name="nrTelefonico"
+              />
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (fisicaForm.get('nrTelefonico').touched ||
+                    lastCompletedStep > 2) &&
+                  fisicaForm.get('nrTelefonico').invalid
+                "
+              >
+                <div *ngIf="fisicaForm.get('nrTelefonico').errors?.required">
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div *ngIf="fisicaForm.get('nrTelefonico').errors?.pattern">
+                  Attenzione! Il campo deve essere numerico
+                </div>
+              </div>
+              <input
+                class="form-control w-100"
+                type="hidden"
+                maxlength="20"
+                id="idSoggetto"
+                name="idSoggetto"
+                formControlName="idSoggetto"
+              />
+            </div>
+            <div class="form-group">
+              <label for="eMail"
+                >E-mail <span class="text-danger">*</span>
+              </label>
+              <input
+                type="email"
+                class="form-control"
+                id="eMail"
+                maxlength="50"
+                formControlName="eMail"
+                name="eMail"
+              />
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (fisicaForm.get('eMail').touched || lastCompletedStep > 2) &&
+                  fisicaForm.get('eMail').invalid
+                "
+              >
+                <div *ngIf="fisicaForm.get('eMail').errors?.required">
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div *ngIf="fisicaForm.get('eMail').errors?.pattern">
+                  Attenzione! Indirizzo mail non valido
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-md-12"
+        style="border: 1px solid grey"
+        *ngIf="
+          utilizzatoreForm.get('tipoUtilizzatore').value ==
+          ricercaUtilizzatore.PERSONA_GIURIDICA
+        "
+      >
+        <div
+          style="font-size: 18px"
+          class="light-bottom-border font-weight-bold"
+        >
+          Dettaglio utilizzatore
+        </div>
+        <div class="col-md-12 my-4" [formGroup]="giuridicaForm">
+          <div>
+            <div class="row form-group align-items-end justify-content-between">
+              <div class="col-md-5">
+                <label for="codiceFiscale"
+                  >Codice fiscale/Piva <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="16"
+                  id="codiceFiscale"
+                  formControlName="codiceFiscale"
+                  name="codiceFiscale"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (giuridicaForm.get('codiceFiscale').touched ||
+                      lastCompletedStep > 2) &&
+                    giuridicaForm.get('codiceFiscale').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+              <div class="col-md-5">
+                <p-button
+                  label="Cerca in anagrafica e in AAEP"
+                  [styleClass]="' f-18 font-weight-bold form-button'"
+                  (click)="cercaPersonaGiuridicaByCodiceFiscale()"
+                ></p-button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="iva"
+                >Partita IVA<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="iva"
+                maxlength="16"
+                formControlName="iva"
+                name="iva"
+              />
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (giuridicaForm.get('iva').touched || lastCompletedStep > 2) &&
+                  giuridicaForm.get('iva').errors?.required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="denominazione"
+                >Denominazione<span class="text-danger">*</span>
+              </label>
+              <input
+                type="comuneResidenza"
+                class="form-control"
+                id="denominazione"
+                maxlength="50"
+                formControlName="denominazione"
+                name="denominazione"
+              />
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (giuridicaForm.get('denominazione').touched ||
+                    lastCompletedStep > 2) &&
+                  giuridicaForm.get('denominazione').errors?.required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label for="comune"
+                  >Comune<span class="text-danger">*</span></label
+                >
+                <p-autoComplete
+                  formControlName="comune"
+                  [forceSelection]="'true'"
+                  [required]="'true'"
+                  autoHighlight="true"
+                  inputId="comune"
+                  [suggestions]="comune"
+                  (completeMethod)="filterComune($event)"
+                  [minLength]="3"
+                  [dropdown]="true"
+                  [forceSelection]="true"
+                  emptyMessage="{{ emptyMessageAC }}"
+                  field="denominazioneComune"
+                  [styleClass]="
+                    'autoComplete d-flex formControlName.invalid?autoComplete-touched:autoComplete-touched'
+                  "
+                  [inputStyleClass]="'autoComplete-input'"
+                >
+                </p-autoComplete>
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (giuridicaForm.get('comune').touched ||
+                      lastCompletedStep > 2) &&
+                    giuridicaForm.get('comune').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-3 mb-3">
+                <label for="cap">Cap <span class="text-danger">*</span> </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cap"
+                  maxlength="5"
+                  formControlName="cap"
+                  name="cap"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (giuridicaForm.get('cap').touched ||
+                      lastCompletedStep > 2) &&
+                    giuridicaForm.get('cap').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label for="indirizzo"
+                  >Indirizzo <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="indirizzo"
+                  maxlength="50"
+                  formControlName="indirizzo"
+                  name="indirizzo"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (giuridicaForm.get('indirizzo').touched ||
+                      lastCompletedStep > 2) &&
+                    giuridicaForm.get('indirizzo').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+              <div class="col-3 mb-3">
+                <label for="civico"
+                  >Civico <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="civico"
+                  maxlength="20"
+                  formControlName="civico"
+                  name="civico"
+                />
+                <div
+                  class="text-danger f-18"
+                  *ngIf="
+                    (giuridicaForm.get('civico').touched ||
+                      lastCompletedStep > 2) &&
+                    giuridicaForm.get('civico').errors?.required
+                  "
+                >
+                  Attenzione! Campo obbligatorio
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pec">PEC <span class="text-danger">*</span> </label>
+              <input
+                type="text"
+                class="form-control"
+                id="pec"
+                maxlength="50"
+                formControlName="pec"
+                name="pec"
+              />
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (giuridicaForm.get('pec').touched || lastCompletedStep > 2) &&
+                  giuridicaForm.get('pec').invalid
+                "
+              >
+                <div *ngIf="giuridicaForm.get('pec').errors?.required">
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div *ngIf="giuridicaForm.get('pec').errors?.pattern">
+                  Attenzione! Indirizzo mail non valido
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="eMail"
+                >E-mail di contatto <span class="text-danger">*</span>
+              </label>
+              <input
+                type="email"
+                class="form-control"
+                id="eMail"
+                formControlName="eMail"
+                maxlength="50"
+                name="eMail"
+              />
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (giuridicaForm.get('eMail').touched ||
+                    lastCompletedStep > 2) &&
+                  giuridicaForm.get('eMail').invalid
+                "
+              >
+                <div *ngIf="giuridicaForm.get('eMail').errors?.required">
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div *ngIf="giuridicaForm.get('eMail').errors?.pattern">
+                  Attenzione! Indirizzo mail non valido
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="telefonico"
+                >Recapito telefonico <span class="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="telefonico"
+                maxlength="20"
+                formControlName="telefonico"
+                name="telefonico"
+              />
+              <div
+                class="text-danger f-18"
+                *ngIf="
+                  (giuridicaForm.get('telefonico').touched ||
+                    lastCompletedStep > 2) &&
+                  giuridicaForm.get('telefonico').invalid
+                "
+              >
+                <div *ngIf="giuridicaForm.get('telefonico').errors?.required">
+                  Attenzione! Campo obbligatorio
+                </div>
+                <div *ngIf="giuridicaForm.get('telefonico').errors?.pattern">
+                  Attenzione! Il campo deve essere numerico
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="allTecnicoForestale$"
+      class="form-group col-sm-12 col-md-6"
+      [formGroup]="utilizzatoreForm"
+    >
+      <label for="tecnicoForestale"
+        >Tecnico forestale/progettista
+        <!-- <span class="text-danger">*</span> -->
+      </label>
+      <ng-container *ngIf="allTecnicoForestale$ | async as tecnicoForest">
+        <select
+          class="form-control"
+          id="tecnicoForestale"
+          name="tecnicoForestale"
+          formControlName="tecnicoForestale"
+        >
+          <option
+            *ngFor="let tecnico of tecnicoForest"
+            value="{{ tecnico.idSoggetto }}"
+          >
+            {{ tecnico.nome }} {{ tecnico.cognome }}
+          </option>
+        </select>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<hr class="separate" />
+<div class="row justify-content-between">
+  <p-button
+    *ngIf="allTecnicoForestale$"
+    label="Indietro"
+    [styleClass]="'mb-3 font-weight-bold indietro-button'"
+    (onClick)="goToDettaglio()"
+  ></p-button>
+  <p-button
+    label="{{
+      allTecnicoForestale$
+        ? 'Salva in bozza e prosegui'
+        : 'Conferma cambio utilizzatore'
+    }}"
+    [styleClass]="'mb-3 font-weight-bold form-button'"
+    [disabled]="isSaveDiabled()"
+    (click)="proceed()"
+  ></p-button>
+</div>

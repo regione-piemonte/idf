@@ -1,0 +1,411 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<app-denominazione [denominazione]="denom"></app-denominazione>
+<app-subtitle [subtitle]="'Completa intervento'"></app-subtitle>
+<ng-container *ngIf="!showCambioUtilizzatore">
+  <ngb-tabset>
+    <ngb-tab title="Riepilogo intervento">
+      <ng-template ngbTabContent>
+        <div
+          class="col-md-12 my-4"
+          [formGroup]="completaForm"
+          *ngIf="completaForm"
+          [ngClass]="{ disabledALL: viewMode }"
+        >
+          <div class="grey-form">
+            <div class="row form-group">
+              <div class="col-sm-12 col-md-4">
+                <label for="dataInizio"
+                  >Data inizio <span class="text-danger">*</span></label
+                >
+                <p-calendar
+                  [yearNavigator]="true"
+                  [monthNavigator]="true"
+                  dateFormat="dd-mm-yy"
+                  [locale]="it"
+                  yearRange="{{ currentYear }}:{{ currentYear + 50 }}"
+                  inputId="dataInizio"
+                  formControlName="dataInizio"
+                  [style]="{
+                    width: '100%'
+                  }"
+                  [inputStyle]="{ width: '100%' }"
+                  showButtonBar="true"
+                  [showIcon]="true"
+                ></p-calendar>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <label for="dataFine"
+                  >Data fine <span class="text-danger">*</span></label
+                >
+                <p-calendar
+                  [yearNavigator]="true"
+                  [monthNavigator]="true"
+                  dateFormat="dd-mm-yy"
+                  [locale]="it"
+                  [minDate]="minDate"
+                  yearRange="{{ currentYear }}:{{ currentYear + 50 }}"
+                  inputId="dataFine"
+                  formControlName="dataFine"
+                  [style]="{
+                    width: '100%'
+                  }"
+                  [inputStyle]="{ width: '100%' }"
+                  showButtonBar="true"
+                  [showIcon]="true"
+                ></p-calendar>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-12 col-md-8">
+                <label for="utilizzatore">Utilizzatore</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="utilizzatore"
+                  formControlName="utilizzatore"
+                  name="utilizzatore"
+                />
+              </div>
+              <div class="col-sm-12 col-md-4 mt-4">
+                <p-button
+                  label="Modifica Utilizzatore"
+                  [styleClass]="'modifica transparent-button'"
+                  (onClick)="cambiaUtilizzatore()"
+                >
+                  <i class="fas fa-edit"></i
+                ></p-button>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-5">
+                <p-button
+                  label="Modifica geometria su  mappa "
+                  [styleClass]="'modifica btn-geco'"
+                  (onClick)="openMappa()"
+                >
+                  <i class="fas fa-edit"></i>
+                </p-button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="row form-group col-sm-12 col-md-4">
+                <label for="supRealeTagliata"
+                  >Superficie reale tagliata (ha)</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="supRealeTagliata"
+                  formControlName="supRealeTagliata"
+                  name="supRealeTagliata"
+                />
+                <div
+                  *ngIf="
+                    completaForm.controls['supRealeTagliata'].invalid &&
+                    (completaForm.controls['supRealeTagliata'].dirty ||
+                      completaForm.controls['supRealeTagliata'].touched)
+                  "
+                  class="alert alert-danger"
+                >
+                  <div
+                    *ngIf="
+                      completaForm.controls['supRealeTagliata'].errors.pattern
+                    "
+                  >
+                    Attenzione! Il campo deve essere numerico
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-sm-12 col-md-4">
+                <label for="stimaDelValore"
+                  >Stima del valore dell' intervento (€)​</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="stimaDelValore"
+                  formControlName="stimaDelValore"
+                  name="stimaDelValore"
+                />
+                <div
+                  *ngIf="
+                    completaForm.controls['stimaDelValore'].invalid &&
+                    (completaForm.controls['stimaDelValore'].dirty ||
+                      completaForm.controls['stimaDelValore'].touched)
+                  "
+                  class="alert alert-danger"
+                >
+                  <div
+                    *ngIf="
+                      completaForm.controls['stimaDelValore'].errors.pattern
+                    "
+                  >
+                    Attenzione! Il campo deve essere numerico
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-sm-12 col-md-4">
+                <label for="valoreAggiu"
+                  >Valore aggiudicazione dell’asta (€)​​</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="valoreAggiu"
+                  formControlName="valoreAggiu"
+                  name="valoreAggiu"
+                />
+                <div
+                  *ngIf="
+                    completaForm.controls['valoreAggiu'].invalid &&
+                    (completaForm.controls['valoreAggiu'].dirty ||
+                      completaForm.controls['valoreAggiu'].touched)
+                  "
+                  class="alert alert-danger"
+                >
+                  <div
+                    *ngIf="completaForm.controls['valoreAggiu'].errors.pattern"
+                  >
+                    Attenzione! Il campo deve essere numerico
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <app-vertical-table
+              *ngIf="shootingMirrorForm"
+              [header]="tableHeaders"
+              [showTotal]="false"
+              [columnsForm]="shootingMirrorForm"
+            >
+            </app-vertical-table>
+          </div>
+
+          <ng-container *ngIf="!viewMode">
+            <div class="row my-3 justify-content-between">
+              <div class="col-md-3">
+                <p-button
+                  label="Indietro"
+                  [styleClass]="'font-weight-bold indietro-button'"
+                  (onClick)="goToTabs()"
+                >
+                </p-button>
+              </div>
+              <div class="col-md-6 text-right">
+                <p-button
+                  label="Salva"
+                  [styleClass]="'mr-4 font-weight-bold form-button'"
+                  (onClick)="salvaIntervento()"
+                  [disabled]="completaForm.invalid"
+                >
+                </p-button>
+                <p-button
+                  label="Chiudi intervento"
+                  [styleClass]="'font-weight-bold form-button'"
+                  (onClick)="completaIntervento()"
+                  [disabled]="completaForm.invalid || disabilitaCompleta"
+                ></p-button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Allegati">
+      <ng-template ngbTabContent>
+        <app-allegati
+          (emitBack)="goToTabs()"
+          (checkDrell)="checkDrell($event)"
+          [enableSalvaButton]="enableSalvaButton"
+          [tipoAllegato]="tipoAllegato"
+          [idIntervento]="idIntervento"
+          [pfaPlanId]="pfaPlanId"
+          [viewMode]="viewMode"
+        ></app-allegati>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  <ng-container *ngIf="viewMode">
+    <div class="row my-3 ml-1 justify-content-between">
+      <div class="col-md-3">
+        <p-button
+          label="Torna all'elenco interventi"
+          [styleClass]="'mb-3 font-weight-bold form-button'"
+          (onClick)="goToTabs()"
+        ></p-button>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="showCambioUtilizzatore">
+  <div class="grey-form mb-5">
+    <p class="h6 font-weight-bold">
+      Utilizzatore attuale: {{ currentUtilizzatore }}
+    </p>
+    <hr class="black-hr" />
+    <p class="h6 font-weight-bold">Nuovo utilizzatore</p>
+    <div class="row" *ngFor="let ut of utilizzatoriOptions; let i = index">
+      <div class="col-lg-12 col-md-12 col-12 mb-3">
+        <div class="custom-control custom-radio utilizzatore">
+          <input
+            type="radio"
+            name="tipoUtilizzatore"
+            class="custom-control-input"
+            id="tipoUtilizzatoreValidation{{ i }}"
+            (change)="changeUtilizzatoreOption($event.target.value)"
+            [checked]="tipoUtilizzatoreSelected === ut.id"
+            [value]="ut.id"
+          />
+          <label
+            class="custom-control-label"
+            for="tipoUtilizzatoreValidation{{ i }}"
+            >{{ ut.descr }}</label
+          >
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tipoUtilizzatoreSelected === 3">
+      <app-pf-form-tagli
+        [isUtilizzatore]="true"
+        [tipoAccreditamento]="tipoAccreditamento"
+        [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+        (codiceFiscaleEmitter)="getCodiceFiscale()"
+        [personaDatiOption]="
+          tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+            ? 'SF'
+            : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE
+            ? 'RF'
+            : 'PF'
+        "
+        [personalOrCompanyForm]="utilizzatorePersonaForm"
+        (resetFormEmitter)="restartForm(personaDatiOption)"
+      >
+      </app-pf-form-tagli>
+    </div>
+
+    <div *ngIf="tipoUtilizzatoreSelected === 4">
+      <app-pg-form-tagli
+        [isUtilizzatore]="true"
+        [isTAIF]="utilizzatoreCompanyForm.get('taif').value"
+        (changePGEmitter)="changeTipoPGUtil($event)"
+        (chooseCompanyEmitter)="chooseCompany($event)"
+        [loadFromAnagrafica]="loadFromAnagrafica"
+        [isEntePubblico]="isUtilizzatoreEntePubblico"
+        [tipoAccreditamento]="tipoAccreditamento"
+        [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+        [codiceFiscaleSONOIO]="codiceFiscaleSONOIO"
+        [personaDatiOption]="
+          tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+            ? 'SG'
+            : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE
+            ? 'RG'
+            : 'PG'
+        "
+        [personalOrCompanyForm]="utilizzatoreCompanyForm"
+        (codiceFiscaleEmitter)="getCodiceFiscale()"
+        (resetFormEmitter)="restartForm(personaDatiOption)"
+      >
+      </app-pg-form-tagli>
+    </div>
+
+    <div style="padding-bottom: 10px">
+      <hr class="black-hr" />
+      <div class="d-flex justify-content-between buttons">
+        <p-button
+          (click)="closeCambioUtilizzatore()"
+          label="ANNULLA"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-outline-button'"
+        >
+        </p-button>
+        <p-button
+          *ngIf="true"
+          (click)="salvaUtilizzatore()"
+          label="SALVA UTILIZZATORE"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+          [disabled]="isButtonDisabled()"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- 
+  <div class="grey-form">
+    <p class="h6 font-weight-bold">Utilizzatore attuale: {{currentUtilizzatore}} </p>
+    <hr class="black-hr" />
+    <p class="h6 font-weight-bold">Nuovo utilizzatore</p>
+    <div class="row" *ngFor="let ut of utilizzatoriOptions; let i = index">
+      <div class="col-lg-12 col-md-12 col-12 mb-3">
+        <div class="custom-control custom-radio utilizzatore">
+          <input type="radio" name="tipoUtilizzatore" class="custom-control-input" id="tipoUtilizzatoreValidation{{i}}"
+            (change)="changeUtilizzatoreOption($event.target.value)" [checked]="tipoUtilizzatoreSelected === ut.id"
+            [value]="ut.id" />
+          <label class="custom-control-label" for="tipoUtilizzatoreValidation{{i}}">{{ ut.descr }}</label>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tipoUtilizzatoreSelected === 3">
+      <app-pf-form-tagli [isUtilizzatore]="true" [tipoAccreditamento]="tipoAccreditamento"
+        [codiceFiscaleSelectItem]="codiceFiscaleSelectItem" (codiceFiscaleEmitter)="getCodiceFiscale()"
+        [personaDatiOption]="(tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO) ? 'SF'
+        : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE ? 'RF'
+        : 'PF'" [personalOrCompanyForm]="utilizzatorePersonaForm" (resetFormEmitter)="restartForm(personaDatiOption)">
+      </app-pf-form-tagli>
+    </div>
+
+    <div *ngIf="tipoUtilizzatoreSelected === 4">
+      <app-pg-form-tagli [isUtilizzatore]="true" [isTAIF]="utilizzatoreCompanyForm.get('taif').value"
+        (changePGEmitter)="changeTipoPGUtil($event)" (chooseCompanyEmitter)="chooseCompany($event)"
+        [loadFromAnagrafica]="loadFromAnagrafica" [isEntePubblico]="isUtilizzatoreEntePubblico"
+        [tipoAccreditamento]="tipoAccreditamento" [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+        [codiceFiscaleSONOIO]="codiceFiscaleSONOIO" [personaDatiOption]="(tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO) ? 'SG'
+                                : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE ? 'RG'
+                                : 'PG'" [personalOrCompanyForm]="utilizzatoreCompanyForm"
+        (codiceFiscaleEmitter)="getCodiceFiscale()" (resetFormEmitter)="restartForm(personaDatiOption)">
+      </app-pg-form-tagli>
+    </div>
+
+    <div style="padding-bottom: 10px;">
+      <hr class="black-hr" />
+      <div class="d-flex justify-content-between buttons">
+        <p-button (click)="closeCambioUtilizzatore()" label="ANNULLA"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-outline-button'">
+        </p-button>
+        <p-button *ngIf="true" (click)="salvaUtilizzatore()" label="SALVA UTILIZZATORE"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'">
+        </p-button>
+      </div>
+    </div>
+
+
+
+
+
+    <p-dialog header="" [(visible)]="dialogUtilizzatore" width="1200" height="1050" [transitionOptions]="'0ms'"
+  [modal]="true">
+  <p-header>
+    Modifica utilizzatore
+  </p-header>
+  <div style="padding-left: 10px;">
+    <app-utilizzatore
+      [allComuni$]="allComuni$"
+      [idIntervento]="idIntervento"
+      [editMode]="editMode"
+      [idInterventoForEdit]="idInterventoForEdit"
+      (emitUtilizzatore)="updateUtilizzatore()"
+    ></app-utilizzatore>
+  </div>
+  <p-footer>
+    <p-button (click)="closeDialogUtilizzatore()" label="Chiudi" [styleClass]="'mr-2 f-18 font-weight-bold form-button'"></p-button>
+  </p-footer>
+</p-dialog>
+ -->

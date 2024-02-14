@@ -1,0 +1,43 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="img-home">
+  <div class="cont-img-home">
+    <div class="card-deck">
+      <div class="card">
+        <a routerLink="../search">Ricerca</a>
+      </div>
+      <div class="card">
+        <a routerLink="../dati-generali">Inserisco nuovi rilievi</a>
+      </div>
+      <div class="card">
+        <a routerLink="../modifica-consolida">Modifico i miei rilievi</a>
+      </div>
+    </div>
+
+    <div class="card-deck">
+      <div class="card">
+        <a (click)="clickOpenCartografia()" href="javascript:;">Cartografia</a>
+      </div>
+
+      <div class="card">
+        <div class="card2">
+          <span *ngIf="!rilieviEndometriciOptions">
+            <a href="{{ originUrl }}/idf/idfrep">Elaborazioni dendrometriche</a>
+          </span>
+
+          <!-- <div *ngIf="rilieviEndometriciOptions">
+            <a (click)='clickRilieviEndometriciOptions()' href="#">Elaborazioni dendrometriche</a>
+            <span id="idEleborazioniReportContent">
+                <p class="tb text-left"><a href="http://conoscenzaambientale.sistemapiemonte.it/decsiraweb/map.html" target="_blank">Predisponi i dati da elaborare sul Sistema delle Conoscenze Ambientali</a></p>
+                <p class="er text-left"><a href="{{originUrl}}/idf/idfrep">Scarica i dati per Area Forestale e procedi con le elaborazioni dendrometriche</a></p>
+            </span>
+        </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /img-home -->

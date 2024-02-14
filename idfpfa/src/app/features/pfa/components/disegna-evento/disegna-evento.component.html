@@ -1,0 +1,42 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<p-accordion [styleClass]="'my-4'">
+  <p-accordionTab header="Disegna su mappa" [selected]="true">
+    <div>
+      La geometria può essere disegnata a mano richiamando la funzionalità
+      “Georiferisci” (icona <i class="far fa-edit" aria-hidden="true"></i> in
+      alto a destra all'interno del visualizzatore geografico) oppure caricando
+      un file geografico di tipo "shapefile" richiamando la funzionalità
+      "Acquisizione dati" (icona
+      <i class="fa fa-download" aria-hidden="true"></i>).
+    </div>
+    <br />
+    <div class="text-center">
+      <p-button
+        class="full-width-media"
+        label="Disegna su mappa"
+        [styleClass]="'btn-geco'"
+        (onClick)="openMappa()"
+      >
+      </p-button>
+    </div>
+  </p-accordionTab>
+</p-accordion>
+<br />
+<app-list-of-geometries [tableData]="drawedGeometryInfo">
+</app-list-of-geometries>
+<div class="row my-4 justify-content-lg-between">
+  <p-button
+    label="Indietro"
+    [styleClass]="'mb-3 indietro-button'"
+    (onClick)="backToTabs()"
+  ></p-button>
+  <p-button
+    label="Salva in bozza e prosegui"
+    [styleClass]="'mb-3 form-button'"
+    (onClick)="proceed()"
+  ></p-button>
+</div>

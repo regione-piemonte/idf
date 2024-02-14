@@ -1,0 +1,51 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="headers">
+  <h3 [innerHTML]="title"></h3>
+  <p-table [columns]="headers" [value]="data">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th id="{{ title }}" [innerHTML]="col" *ngFor="let col of headers"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <ng-container *ngFor="let col of columns; let i = index">
+          <ng-container *ngIf="i > 0 || showCell(rowData)">
+            <td *ngIf="i > 0">
+              <ng-template
+                [ngIf]="col == '-' || rowData[columns[0]] == 'Totale'"
+              >
+                <strong [innerHTML]="rowData[col]"></strong>
+              </ng-template>
+              <ng-template
+                [ngIf]="col != '-' && rowData[columns[0]] != 'Totale'"
+              >
+                <span [innerHTML]="rowData[col]"></span>
+              </ng-template>
+            </td>
+            <td *ngIf="i == 0" [attr.rowspan]="getRowspan(rowData[columns[0]])">
+              <ng-template
+                [ngIf]="col == '-' || rowData[columns[0]] == 'Totale'"
+              >
+                <strong [innerHTML]="rowData[col]"></strong>
+              </ng-template>
+              <ng-template
+                [ngIf]="col != '-' && rowData[columns[0]] != 'Totale'"
+              >
+                <span [innerHTML]="rowData[col]"></span>
+              </ng-template>
+            </td>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div style="margin-top: 10px; text-align: right">
+    <p-button label="Download Excel" (onClick)="donwloadExcel()"></p-button>
+  </div>
+</ng-container>

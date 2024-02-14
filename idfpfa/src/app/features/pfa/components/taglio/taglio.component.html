@@ -1,0 +1,64 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!-- <div *ngIf="dataTaglioSave()"></div> -->
+<!-- <p-button
+  label="dataTaglioSave"
+  [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+  (onClick)="dataTaglioSave()"
+></p-button> -->
+
+<app-subtitle
+  [subtitle]="'Riepilogo dati istanza da trasmettere'"
+></app-subtitle>
+<div class="grey-form mb-4">
+  <div class="row my-3 align-items-center" *ngFor="let item of firstPart">
+    <div class="col-md-4 stil-filda">{{ item.name }}</div>
+    <div class="col-md-8 stil-value">
+      <strong>
+        <i>{{ item.value }}</i>
+      </strong>
+    </div>
+  </div>
+</div>
+
+<app-subtitle [subtitle]="'Localizzazione e Ricadenze'"> </app-subtitle>
+<!-- tabela ide ovde -->
+<app-re-table [headers]="taglioHeader" [values]="taglioValue"></app-re-table>
+<div class="grey-form">
+  <div>
+    <div *ngFor="let item of thirdPart">
+      <div class="row my-3 align-items-center">
+        <div class="col-md-4 stil-filda">{{ item.name }}</div>
+        <div class="col-md-8 stil-value">
+          <strong
+            ><i>{{ item.value }}</i></strong
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row my-3 align-items-center" *ngFor="let item of secondPart">
+    <div class="col-md-4 stil-filda">{{ item.name }}</div>
+    <div class="col-md-8 stil-value">
+      <strong
+        ><i>{{ item.value }}</i></strong
+      >
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-between">
+  <p-button
+    label="Indietro"
+    [styleClass]="'mb-3 font-weight-bold indietro-button'"
+    (onClick)="goToDettaglio()"
+  ></p-button>
+  <p-button
+    label="TRASMETTI"
+    [styleClass]="'mb-3 font-weight-bold form-button'"
+    (onClick)="trasmetti()"
+  ></p-button>
+</div>

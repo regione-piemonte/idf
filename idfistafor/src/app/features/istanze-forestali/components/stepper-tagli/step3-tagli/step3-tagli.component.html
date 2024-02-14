@@ -1,0 +1,200 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="!showGeeco">
+  <div class="alert alert-info">
+    Si richiede la georeferenziazione della superficie oggetto dell’intervento.
+    Una volta generato il poligono dell'intervento con una delle modalità
+    indicate, i valori delle superfici totali oggetto dell’intervento verranno
+    automaticamente calcolati. Contemporaneamente verranno calcolate le
+    ricadenze del poligono in eventuali aree protette, siti della Rete Natura
+    2000, popolamenti da seme e relativi portaseme, categorie forestali e beni
+    paesaggistici tutelati ai sensi dell'art. 136 del Dlgs 42/2004, attraverso
+    intersezione geografica del poligono con i livelli geografici in oggetto. E'
+    necessario ricordare che le ricadenze proposte sono delle approssimazioni
+    (le geometrie incrociate sono acquisite a scale diverse a seconda degli
+    ambiti) quindi non costituiscono un dato ufficiale e devono essere intese
+    come un semplice aiuto alla compilazione.
+  </div>
+  <hr />
+  <p-accordion [styleClass]="'my-4'">
+    <p-accordionTab header="{{ accordionHeders[0] }}" [selected]="true">
+      <div>
+        La geometria può essere disegnata a mano richiamando la funzionalità
+        “Georiferisci” (icona <i class="far fa-edit" aria-hidden="true"></i> in
+        alto a destra all'interno del visualizzatore geografico) oppure
+        caricando un file geografico di tipo "shapefile" richiamando la
+        funzionalità "Acquisizione dati" (icona
+        <i class="fa fa-download" aria-hidden="true"></i>). Nel caso di
+        shapefile verificare che le geometrie siano topologicamente corrette e
+        seguire quanto indicato nel manuale utente nel capitolo relativo alla
+        localizzazione. Al termine della georeferenziazione, per chiudere il
+        visualizzatore geografico e tornare alla pagina applicativa di partenza
+        è necessario cliccare sull'icona "chiudi mappa" presente in alto a
+        destra nel visualizzatore.
+      </div>
+      <div class="text-center">
+        <p-button
+          class="full-width-media"
+          label="Disegna su mappa"
+          [styleClass]="'btn-geco'"
+          (onClick)="openGeeco()"
+        >
+        </p-button>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="{{ accordionHeders[1] }}">
+      <search-for-parcels-tagli
+        (emitShowParcels)="emitedShowParcels($event)"
+        [listParticelle]="parcelsTable"
+        [idIntervento]="editMode"
+      ></search-for-parcels-tagli>
+    </p-accordionTab>
+  </p-accordion>
+
+  <ng-container *ngIf="parcelsTable && parcelsTable.length > 0">
+    <list-of-parcels-tagli
+      (deleteRowEmitter)="deleteRowGetter($event)"
+      (openGeecoEmitter)="openGeeco()"
+      [polygonForm]="polygonForm"
+      [enabledGeneraPoligono]="
+        (polygonForm
+          ? polygonForm.get('particelleCatastali').invalid
+          : false || parcelsTable.length === 0) ||
+        invalid ||
+        parcelsTable.length === 0
+      "
+      [tableData]="parcelsTable"
+    >
+    </list-of-parcels-tagli>
+  </ng-container>
+
+  <ng-container *ngIf="polygonForm && parcelsTable.length >= 0">
+    <geometry-result-tagli
+      [polygonForm]="polygonForm"
+      [tableDataInput]="tableData"
+    ></geometry-result-tagli>
+
+    <hr class="black-hr" />
+    <div [formGroup]="polygonForm" class="grey1 grey-form">
+      <h4>Fascia Altimetrica <span class="text-danger">*</span></h4>
+      <p-dropdown
+        [options]="fasceAltimetriche"
+        [placeholder]="'Selezionare la fascia altimetrica'"
+        [optionLabel]="'fasciaAltimetricaMAX'"
+        [showClear]="true"
+        formControlName="fasciaAltimetrica"
+        [style]="{ width: '100%' }"
+        [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+      >
+        <ng-template let-item pTemplate="item">
+          {{ item.value.fasciaAltimetricaMIN }} -
+          {{ item.value.fasciaAltimetricaMAX }}
+        </ng-template>
+
+        <ng-template let-item pTemplate="selectedItem">
+          {{ item.value.fasciaAltimetricaMIN }} -
+          {{ item.value.fasciaAltimetricaMAX }}
+        </ng-template>
+      </p-dropdown>
+      <div
+        *ngIf="
+          polygonForm.controls['fasciaAltimetrica'].invalid &&
+          (polygonForm.controls['fasciaAltimetrica'].dirty ||
+            polygonForm.controls['fasciaAltimetrica'].touched ||
+            showError)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="polygonForm.controls['fasciaAltimetrica'].errors.required">
+          Attenzione! Campo obbligatorio
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!--
+  <ng-container *ngIf="polygonForm && hiddenNote">
+    <hr class="black-hr" />
+    <div [formGroup]="polygonForm" class="grey1 grey-form">
+      <h4>Annotazioni</h4>
+      <label>
+        Compilare solo se ci sono incongruenze sui dati importati da catasto o altro
+        da segnalare (max 10000 caratteri)
+      </label>
+      <textarea class="w-100" formControlName="annotazioni" (change)='changeValueAnnotazioni($event)'></textarea>
+    </div>
+  </ng-container>
+
+ -->
+  <hr class="black-hr" *ngIf="polygonForm" />
+
+  <ng-container
+    *ngIf="polygonForm ? polygonForm.get('ricadenzaPfa').value.value : false"
+  >
+    <div
+      class="d-flex justify-content-between buttons"
+      *ngIf="!boMode && !isIstanzaInviata"
+    >
+      <p-button
+        [styleClass]="
+          'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+        "
+        label="Salva"
+        (onClick)="save()"
+        [disabled]="true"
+      ></p-button>
+      <p-button
+        [styleClass]="
+          'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+        "
+        label="Salva e prosegui"
+        (onClick)="continue()"
+        [disabled]="true"
+      ></p-button>
+    </div>
+  </ng-container>
+  <ng-container
+    *ngIf="!(polygonForm ? polygonForm.get('ricadenzaPfa').value.value : false)"
+  >
+    <div
+      class="d-flex justify-content-between buttons"
+      *ngIf="!boMode && !isIstanzaInviata"
+    >
+      <p-button
+        [styleClass]="
+          'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+        "
+        label="Salva"
+        (onClick)="save()"
+        [disabled]="polygonForm ? !polygonForm.valid : true"
+      ></p-button>
+      <p-button
+        [styleClass]="
+          'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+        "
+        label="Salva e prosegui"
+        (onClick)="continue()"
+        [disabled]="polygonForm ? !polygonForm.valid : true"
+      ></p-button>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div class="col-md-12 my-4" *ngIf="showGeeco">
+  <div class="row">
+    <iframe width="100%" height="700px" [src]="mapUrl"></iframe>
+  </div>
+  <hr class="black-hr" />
+  <div class="row">
+    <p-button
+      class="full-width-media"
+      label="Chiudi Geeco"
+      (onClick)="closeGeeco()"
+      [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<p-dialog
+  [title]="title"
+  [responsive]="true"
+  [minY]="70"
+  [baseZIndex]="999"
+  [(visible)]="display"
+  [styleClass]="'dialog-width'"
+>
+  <p-header>{{ title }}</p-header>
+  <div class="d-flex align-items-center mx-0 my-3">
+    <div class="col-2">
+      <i [class]="iconClass"></i>
+    </div>
+    <div class="col-10 justify-content-center">
+      <p [innerHTML]="message">
+        <!-- {{ message }} -->
+      </p>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end" *ngIf="buttons">
+    <div class="d-flex flex-row-reverse">
+      <button
+        *ngFor="let btnInfo of buttons"
+        class="dialog-button"
+        type="button"
+        (click)="btnClicked(btnInfo)"
+        pButton
+        label="{{ btnInfo.label | titlecase }}"
+      ></button>
+    </div>
+  </div>
+</p-dialog>

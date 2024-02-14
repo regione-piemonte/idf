@@ -1,0 +1,62 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div>
+  <div class="my-3">
+    <ng-container *ngIf="grayPanel">
+      <app-tipologia-panel [panelData]="grayPanel"> </app-tipologia-panel>
+    </ng-container>
+  </div>
+
+  <div id="container">
+    <div id="line"></div>
+    <div class="step-item" *ngFor="let step of stepsconfig; let i = index">
+      <a
+        (click)="active(i)"
+        [class.step-active]="step.isActive"
+        [ngClass]="step.className()"
+        [class.step-disabled]="!step.enabled"
+      >
+        <div style="text-align: center">
+          <span class="circle">{{ i + 1 }}</span>
+          <span *ngIf="step.noOfErrors > 0" class="badge">{{
+            step.noOfErrors
+          }}</span>
+        </div>
+
+        <label>{{ step.label }}</label>
+      </a>
+    </div>
+  </div>
+</div>
+<app-dati-stazionali-tabs-first
+  *ngIf="activeStep.activeIndex === 0"
+  [id]="id"
+  [grayPanel]="grayPanel"
+  (datiStazionaliFirstEmitter)="next($event)"
+></app-dati-stazionali-tabs-first>
+<app-dati-stazionali-tabs-second
+  *ngIf="activeStep.activeIndex === 1"
+  [id]="id"
+  [grayPanel]="grayPanel"
+  (datiStazionaliSecondEmitter)="next($event)"
+></app-dati-stazionali-tabs-second>
+<ng-container>
+  <app-alberi-campione-step
+    *ngIf="activeStep.activeIndex === 2"
+    [id]="id"
+    [grayPanel]="grayPanel"
+    (thirdFormEmitter)="next($event)"
+  ></app-alberi-campione-step>
+  <ng-container>
+    <app-alberi-cavallettati-step
+      [stepsErrors]="stepsErrors"
+      [hidden]="activeStep.activeIndex !== 3"
+      [id]="id"
+      (consolidationError)="onConsolidaValidationError($event)"
+      (consolidationSuccess)="onColidationSuccess()"
+    ></app-alberi-cavallettati-step>
+  </ng-container>
+</ng-container>

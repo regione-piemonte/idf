@@ -1,0 +1,65 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<app-table
+  *ngIf="classiDiametricheM3"
+  [data]="classiDiametricheM3"
+  [title]="'Volumi (m<sup>3</sup>) per classi diametriche e per specie'"
+>
+</app-table>
+<br />
+<app-table
+  *ngIf="classiDiametrichePercentuali"
+  [data]="classiDiametrichePercentuali"
+  [title]="'Volumi (%) per classi diametriche e per specie'"
+>
+</app-table>
+<br />
+
+<div *ngIf="specieList">
+  <h3>Grafico per specie</h3>
+  <select id="specieFilter" (change)="drowChartSpecie($event.target.value)">
+    <option value="">-- Seleziona specie --</option>
+    <option *ngFor="let item of specieList">{{ item }}</option>
+  </select>
+</div>
+
+<div class="scrollbar-table scrollbar-primary">
+  <app-google-chart
+    *ngIf="chartData2 && specieList"
+    [title]="selectedSpecie"
+    [id]="'classiDiametricheChart'"
+    [type]="'ColumnChart'"
+    [data]="chartData2"
+    [columnNames]="['', 'm³']"
+    [options]="optionsSpecie"
+    [width]="1300"
+    [height]="500"
+  >
+    >
+  </app-google-chart>
+</div>
+<app-table
+  *ngIf="volumiPerSpecie"
+  [data]="volumiPerSpecie"
+  [title]="'Volumi per specie'"
+>
+</app-table>
+<div class="scrollbar-table scrollbar-primary">
+  <app-google-chart
+    *ngIf="graficoVolumiPerSpecie"
+    [title]="'Volumi per specie'"
+    [id]="'graficoVolumiPerSpecie'"
+    [type]="'ColumnChart'"
+    [data]="graficoVolumiPerSpecie"
+    [columnNames]="['', 'm³']"
+    [options]="optionsSpecieDiametriche"
+    [width]="1300"
+    [height]="500"
+  >
+    >
+  </app-google-chart>
+</div>

@@ -1,0 +1,15 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<h3 *ngIf="title">{{ title }}</h3>
+<p-chart [id]="id" [type]="type" [data]="data"></p-chart>
+
+<div style="margin-top: 5px; text-align: right">
+  <button (click)="printPage()" class="btn btn-primary">
+    <i class="fa fa-print"></i>
+    Print
+  </button>
+</div>

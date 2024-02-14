@@ -1,0 +1,238 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<header>
+  <nav class="navbar navbar-light">
+    <div class="container border1">
+      <div class="navbar pl-0">
+        <a (click)="openNav()" class="menu-icon"
+          ><span class="sr-only">Apri menu</span></a
+        >
+        <div id="myNav" class="overlay">
+          <div class="overlay-content">
+            <div class="title-menu">
+              <h2>
+                <a href="{{ siforHomeUrl }}"
+                  ><span class="desktop"
+                    >Sistema Informativo Forestale Regionale</span
+                  >
+                  <span class="mobile-only"
+                    ><abbr title="Sistema Informativo Forestale Regionale"
+                      >SIFOR</abbr
+                    ></span
+                  ></a
+                >
+              </h2>
+              <a
+                href="javascript:void(0)"
+                class="closebtn float-right"
+                (click)="closeNav()"
+                ><i class="fa fa-times" aria-hidden="true"></i
+                ><span class="sr-only">Chiudi menu</span></a
+              >
+            </div>
+            <a href="/idf/idfpfa" class="pfa"
+              >Piani di Gestione Forestale (PGF)- Gestionale Interventi ed
+              eventi</a
+            >
+            <a href="/idf/idfinv" class="ifr">Inventari forestali</a>
+            <a href="/idf/idfistafor" class="tb"
+              >Sistema di gestione delle istanze ai sensi della L.R. 4/2009
+              (legge forestale)</a
+            >
+          </div>
+        </div>
+        <a class="navbar-brand" href="{{ siforHomeUrl }}">
+          <h1>
+            <span class="desktop">Sistema Informativo Forestale Regionale</span>
+            <span class="mobile-only"
+              ><abbr title="Sistema Informativo Forestale Regionale"
+                >SIFOR</abbr
+              ></span
+            >
+          </h1>
+        </a>
+      </div>
+      <!--/navbar-->
+      <div class="right">
+        <ul class="navbar-nav navbar-expand">
+          <li class="nav-item info-item">
+            <a
+              class="nav-link menu-info"
+              href="#"
+              data-toggle="modal"
+              data-target="#info"
+              title="Informazioni"
+              ><span class="sr-only">Informazioni</span></a
+            >
+          </li>
+
+          <li class="nav-item dropdown">
+            <button
+              class="btn-name dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="utente">{{ userIniziali }}</span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item user" href="/idf"
+                >{{ user?.nome }} {{ user?.cognome }}</a
+              >
+              <div class="dropdown-divider"></div>
+              <a
+                class="dropdown-item esci popup-link"
+                href="#"
+                data-toggle="modal"
+                data-target="#logout"
+                title="Esci"
+              >
+                Esci
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- /navbar-collapse -->
+    </div>
+    <!--container-->
+  </nav>
+</header>
+
+<!-- Modal logout -->
+<div
+  class="modal fade"
+  id="logout"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="logout"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Esci</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="grey mb-5">Sei sicuro di voler uscire?</div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-primary float-left"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+        <a
+          href="javascript:void(0)"
+          class="btn btn-primary float-right"
+          (click)="logout()"
+          data-dismiss="modal"
+          >Si</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Modal logout -->
+
+<!-- Modal info -->
+<div
+  class="modal fade"
+  id="info"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="info"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Informazioni / Aiuto</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="headerModalInfo">
+        <div class="grey mb-5 text-left">
+          <p>
+            Per ulteriori informazioni e assistenza sulla normativa rivolgersi
+            a:
+          </p>
+          <p>
+            Regione Piemonte, Settore Foreste, piazza Piemonte 1, 10127
+            Torino<br /><a
+              href="mailto:foreste@regione.piemonte.it"
+              target="_blank"
+              title="Si apre in una nuova finestra"
+              ><span
+                class="sr-only"
+                aria-label="Clicca per inviare una email"
+              ></span
+              >foreste@regione.piemonte.it
+              <i class="fas fa-external-link-alt"></i
+            ></a>
+          </p>
+          <br />
+          <p>
+            Per <strong>supporto tecnico</strong> scrivere a: CSI Piemonte
+            <a
+              href="mailto:servizi.montagna@csi.it"
+              target="_blank"
+              title="Si apre in una nuova finestra"
+              ><span
+                class="sr-only"
+                aria-label="Clicca per inviare una email"
+              ></span
+              >servizi.montagna@csi.it <i class="fas fa-external-link-alt"></i
+            ></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar green">
+  <div class="container">
+    <h2>
+      <a href="/idf/idfistafor" class="link"
+        >Sistema di gestione delle istanze ai sensi della L.R. 4/2009
+        <span class="small">(legge forestale)</span></a
+      >
+    </h2>
+    <div class="right">
+      <ul class="navbar-nav navbar-expand">
+        <li class="nav-item">
+          <a
+            class="nav-link guida"
+            href="https://www.servizi.piemonte.it/srv/sifor/dwd/manuali/manuale_utente_idfistafor.pdf"
+            target="_blank"
+            title="Guida - Il link si apre in una nuova finestra"
+            ><span class="sr-only">Guida</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--container-->
+</nav>

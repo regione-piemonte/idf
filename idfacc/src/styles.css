@@ -1,0 +1,714 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import"bootstrap/dist/css/bootstrap.min.css";
+@import"~primeng/resources/themes/nova-light/theme.css";
+@import"~primeng/resources/primeng.min.css";
+html body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+}
+body a{text-decoration: underline !important;}
+
+h1 {
+    font-size: 3rem;
+    line-height: 1.2em;
+}
+
+h2 {
+    font-size: 40px;
+    line-height: 1.2em;
+    padding: 4px 0;
+}
+
+h3 {
+    font-size: 23px;
+    line-height: 1.2em;
+}
+
+h4 {
+    font-size: 20px;
+    line-height: 1.2em;
+}
+
+small,
+.small {
+    font-size: 80%;
+    font-weight: 400;
+}
+
+.header-title {
+    font-size: 21px;
+}
+
+.sendButton {
+    padding: 2px 70px;
+    background-color: #2ecc71 !important;
+    border-color: #2ecc71 !important;
+    margin-bottom: 20px !important;
+}
+
+.outlined-button {
+    padding: 2px 70px;
+    color: #007bff !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: #007bff !important;
+}
+
+.active-color {
+    background-color: #0174ed !important;
+}
+
+.form-label {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.push-label-right {
+    justify-content: flex-end !important;
+    padding: .375rem .75rem;
+}
+
+.form-title-div {
+    background-color: #2ecc71;
+    color: #fff;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.form-title {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    padding: 5px 0;
+}
+
+.content-field {
+    min-height: 100%;
+}
+
+.header-color {
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+.field-text-size {
+    font-size: 15px;
+    word-wrap: break-word;
+}
+
+.gray-field {
+   /* background-color: #ecf0f1;*/
+}
+
+.under-table-buttons {
+    padding: 2px 35px;
+    background-color: #2ecc71 !important;
+    border-color: #2ecc71 !important;
+    margin-bottom: 20px !important;
+}
+
+.first-steps .ui-steps-item {
+    width: 25%;
+}
+
+.insert-steps .ui-steps-item {
+    width: 50% !important;
+}
+
+.under-angolaro {
+    background: #2ecc71 !important;
+    border: 1px #2ecc71 !important;
+    padding: 3px 55px;
+}
+
+.light-bottom-border {
+  margin-top: 40px;
+   /* border-bottom: 1px solid #006CB4;*/
+}
+
+.list-component p{
+  font-size: 20px;
+  margin: 0;
+  padding: 10px 0 10px 0px;
+}
+
+.list-component p a {
+  font-weight: bold;
+}
+#idEleborazioniReportContent {  padding-bottom: 10px;}
+#idEleborazioniReportContent p{ min-height: 40px; padding: 10px 0 10px 50px;}
+#idEleborazioniReportContent p a {
+  color: #000; font-weight: normal;
+}
+
+.grey-form {
+    background: /*#f2f2f2*/ #e5f1fc;
+    padding: 34px 40px 40px 40px;
+}
+
+label {
+    font-size: 16px; margin-right: 5px;
+}
+/*p-dropdown{margin-left: 15px;}*/
+body .ui-dropdown.ui-dropdown-clearabl {
+  display: inline-block;
+}
+body .ui-dropdown .ui-dropdown-label{padding-right: 50px;}
+body .ui-button {
+  margin: 0;
+  color: #ffffff;
+  background-color: #0153a9;
+  border: 1px solid #0153a9;
+  padding: 0.6rem 3.2rem 0.6rem 3.2rem;
+  font-size: 18px;
+  transition: background-color 0.2s;
+}
+
+body .ui-button.ui-button-text-only .ui-button-text {
+  padding: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+body .ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button{ padding: 3px 8px;}
+/*p-calendar{ margin-left: 15px;}*/
+
+.black-hr {
+    border-bottom: 1px solid #000;
+}
+
+.agree-alert {
+    border-radius: 0 !important;
+    color: #000;
+    border-width: 0 0 0 18px;
+    background: #DAEEF6;
+    border-left-color: #01B5EA;
+    font-size: 18px;
+    position: relative;
+    /* padding-left: 100px; */
+    padding-right: 20px;
+}
+
+.agree-alert:before {
+    content: "\f05a";
+    width: 6%;
+    font-family: FontAwesome;
+    font-weight: 900;
+    font-size: 48px;
+    top: 10px;
+    line-height: 1.2;
+    left: 20px;
+    /* position: absolute; */
+    display: flex;
+    justify-content: center;
+}
+
+.f-18 {
+    font-size: 14px !important;
+}
+
+.form-button,
+.under-search-buttons {
+    border-radius: 0px !important;
+    border: 1px solid transparent !important;
+    color: #fff !important;
+    background-color: #0153a9 !important;
+    border-color: #0153a9 !important;
+    transition: all 0.2s linear !important;
+}
+
+.form-button {
+    padding: 0.6rem 3.2rem 0.6rem 3.2rem !important;
+}
+
+.form-button:hover,
+.under-search-buttons:hover {
+    background-color: #114172 !important;
+    border-color: #114172 !important;
+}
+
+.form-button:active,
+.under-search-buttons:active {
+    background-color: #14233A !important;
+    border-color: #14233A !important;
+}
+
+.form-button:disabled,
+.under-search-buttons:disabled {
+    background-color: #C9C8C8 !important;
+    border-color: #C9C8C8 !important;
+}
+
+.form-outline-button {
+    color: #005CA9 !important;
+    background-color: #f8f8f8 !important;
+    border: 1px solid transparent !important;
+    /* border-color: #d8d8d8 !important; */
+    border-color: #005CA9 !important;
+    border-radius: 0px !important;
+    /*padding: 6px 10px  !important;*/
+    transition: all 0.2s linear !important;
+}
+body .form-outline-button.add  {  padding: 0rem 3.2rem !important;}
+body .form-outline-button.add .ui-button-text { font-size: 28px; font-weight: bold; }
+.dropdown {
+    z-index: 10
+}
+
+.form-outline-button:hover {
+    background-color: #eaedec !important;
+    /* border-color: #d8d8d8 !important; */
+    border-color: #114172;
+}
+
+.form-outline-button:active {
+    background-color: #eaedec !important;
+    /* border-color: #d8d8d8 !important; */
+    border-color: #14234A;
+}
+
+.form-outline-button:disabled {
+    background-color: #C9C8C8 !important;
+    border-color: #C9C8C8 !important;
+    color: #005CA9;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
+}
+
+.btn-close {
+    border-radius: 50%;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    padding-bottom: 3px;
+    padding-right: 5px;
+    border: 0;
+    background-color:transparent;
+    cursor: pointer;
+}
+
+.action-button {
+  width: 25px;
+  padding: 3px;
+  margin: 3px;
+  align-items: center;
+  position: relative;
+  height: 25px;
+  color: #0153a9;
+  font-size: 1.4rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.action-button:disabled {
+  color: #92b0ce;
+  cursor: inherit;
+}
+
+
+body .ui-button.btn-geco, body .ui-button.btn-geco:hover, body .ui-button.btn-geco:focus, body .ui-button.btn-geco:active,
+body .btn-geco, body .btn-geco:hover, body .btn-geco:focus, body .btn-geco:active{ background:#c7e5a7 url(assets/img/GEKO.png) 0 0 no-repeat; color: #000; font-weight: bold; padding: 0.6rem 3.2rem 0.6rem 3.2rem; background-size: contain; border: 1px solid #4f9604;}
+
+.align-cancel-icon {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.align-cancel-icon em {
+    margin-top: 2px;
+}
+
+.no-decoration {
+    text-decoration: none !important;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.form-control {
+    border-color: #a6a6a6;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.d-contents {
+    display: contents;
+}
+
+.dialog-button {
+    margin: 0 5px;
+}
+
+.dialog-width {
+    width: 500px;
+    min-width: 300px;
+}
+
+.dialog-icon {
+    margin-top: -10px;
+    font-size: 3em !important;
+    color: #4CAF50;
+    padding-top: 4px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    margin-right: 20px;
+    float: left;
+}
+
+.success-message .dialog-icon {
+    border: 2px solid #4CAF50;
+    color: #4CAF50;
+    border: 2px solid #4CAF50;
+    border-radius: 50%;
+}
+
+.information-message .dialog-icon {
+    color: #0153a9;
+}
+
+.warning-message .dialog-icon {
+    color: #DB9C15;
+}
+
+.error-message .dialog-icon {
+    color: #9C3737;
+}
+
+.hide-tabs ul {
+    display: none;
+}
+
+.t-fixed {
+    table-layout: fixed;
+}
+
+.w-6 {
+    width: 6%;
+}
+
+
+/******************************* MEDIA QUERY ******************************/
+
+@media all and (max-width: 992px) {
+    .navbar {
+        padding: .5rem 0rem;
+    }
+    .container {
+        width: 100%;
+        max-width: 100%;
+    }
+    .header-text {
+        font-size: 2rem;
+        margin-bottom: 0px
+    }
+    h3 {
+        font-size: 1.8rem;
+    }
+    label {
+        font-size: 14px;
+    }
+    .f-18 {
+        font-size: 14px !important;
+    }
+    .form-control {
+        font-size: .8rem;
+    }
+    body .ui-inputtext {
+        font-size: .8rem;
+    }
+}
+
+@media all and (max-width: 767.98px) {
+    .header-text {
+        font-size: 1.4rem;
+        margin-bottom: 0px
+    }
+    .full-width-media {
+        width: 100%;
+        display: block;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    .form-button {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        width: 100%;
+        display: block;
+    }
+    h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 1440px){
+  .container {
+      max-width: 1380px !important;
+  }
+}
+
+/********************************************** COLORS **********************************************/
+
+
+/* PLATINUM - #E5E5E5 */
+
+
+/* OSAFA BLUE - #005095 */
+
+
+/* WHITE SMOKE - #F7F7F7 */
+
+
+/*************************** COMMENTS *************************************/
+
+
+/* .form-button:focus {
+  background-color: #0153a9 !important;
+  border-color: #0153a9 !important;
+} */
+
+
+/* .form-outline-button:focus {
+  background-color: #eaedec !important;
+  border-color: #d8d8d8 !important;
+  border-color: #005CA9;
+} */
+
+
+/* input.ng-valid.ng-touched{
+  border: 1px solid greenyellow !important;
+} */
+
+
+/* ul {
+  list-style: none;
+}
+ul li::before {
+  content: "\2022";
+  color: #005095 !important;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+ol {
+  list-style: none;
+  counter-reset: li;
+}
+ol li {
+  counter-increment: li;
+}
+ol li::before {
+  content: counter(li) ".";
+  color: #005095;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em
+}
+.nav-item::before {
+  content: none !important;
+} */
+
+a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
+  cursor: pointer;
+}
+
+table .action-button{padding: 0; width: auto;}
+svg:not(:root).svg-inline--fa.fa-question-circle {
+  color: #0153a9;
+}
+svg:not(:root).svg-inline--fa.fa-trash{ color: #d9534f;}
+
+.action-button:disabled svg:not(:root).svg-inline--fa.fa-trash {
+  color: #c19493;
+}
+
+.nav-tabs .nav-link, .nav-tabs .nav-link:hover {
+  border: 2px solid #dee2e6;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  border-color: #007ad9 #007ad9 #ccc;
+  padding: 0.5rem 2rem;
+  font-weight: bold;
+  margin-right: 5px;
+}
+.nav-tabs .nav-item{ margin-bottom: -2px;}
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #495057;
+  background-color: #fff;
+  border-color: #ccc #ccc #fff;
+}
+
+body p-paginator .ui-dropdown {
+  width: 100px;
+}
+
+.nav-tabs {
+  border-bottom: 2px solid #ccc;
+}
+
+table .svg-inline--fa {
+   vertical-align: 0;
+   font-size: 21px;
+}
+.svg-inline--fa.fa-w-14{
+  font-size: 21px;
+}
+
+body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item .ui-helper-clearfix {
+  height: auto !important;
+}
+
+.float-left{
+  float: left;
+}
+.float-right{
+  float: right;
+}
+.border-row .row{border-bottom: 1px solid #ccc;}
+.btn.btn-primary{
+  font-size: 16px !important;border-radius: 0px !important;
+  border: 1px solid transparent !important;
+  color: #fff !important;
+  background-color: #0153a9 !important;
+  border-color: #0153a9 !important;
+  transition: all 0.2s linear !important;
+}
+
+  .btn-outline-primary{
+    font-size: 16px !important;border-radius: 0px !important;
+    border: 1px solid transparent !important;
+    color: #0153a9 !important;
+    background-color: #fff !important;
+    border-color: #0153a9 !important;
+    transition: all 0.2s linear !important;
+  }
+#dataRilevamento{width: 100%; display: block;}
+
+header .navbar-light a.menu-icon{
+  position: relative;
+}
+
+header .navbar-light a.menu-icon::after {
+  font-family: 'FontAwesome';
+  content: "\f0c9";
+  font-weight: 900;
+  color: #fff;
+  font-size: 38px;
+  margin-right: 10px;
+}
+
+.external-link::after {
+  font-family: 'FontAwesome';
+  content: "\f08e";
+  font-weight: 400;
+  padding-left: 5px;
+}
+
+.external-link::after {
+  font-family: 'FontAwesome';
+  content: "\f08e";
+  font-weight: 400;
+  margin-left: 5px;
+}
+/*salta contenuto*/
+.skip-link{
+  border:0;clip:rect(1px,1px,1px,1px);
+  -webkit-clip-path:inset(50%);
+  clip-path:inset(50%);
+  height:1px;margin:-1px;
+  overflow:hidden;
+  padding:0;
+  position:absolute;
+  width:1px;
+  word-wrap:normal!important;
+  }
+
+  .skip-link:focus{
+  background-color:#fff;
+  clip:auto!important;
+  -webkit-clip-path:none;
+  clip-path:none;
+  color:#005b9f;
+  display:block;
+  font-size:1em;
+  height:auto;
+  left:5px;
+  line-height:normal;
+  padding:15px 23px 14px;
+  text-decoration:none;
+  top:5px;
+  width:auto;
+  z-index:100000;
+  }
+/* for table scroll */
+.scrollbar-table {
+  min-width: 100%;
+  overflow-x: auto;
+  padding:0 0;
+  position: relative;
+}
+.scrollbar-primary::-webkit-scrollbar {
+  height: 10px;
+  background-color: #fff;
+}
+
+.scrollbar-primary::-webkit-scrollbar-thumb {
+  background-color: #0153a9;
+}
+
+@media (max-width: 520px){
+  .ui-datepicker{
+      left: -60px !important;
+      width: 250px;
+  }
+  body .ui-datepicker table td {
+      padding: 0;
+  }
+  body .ui-datepicker table th {
+      padding: 0;
+  }
+
+  body .ui-datepicker .ui-button.ui-state-default.ui-button-secondary{padding: 5px 15px;}
+
+  .ui-table table {
+      table-layout: auto !important;
+  }
+
+  .dialog-width {
+      width: 300px;
+      min-width: auto;
+  }
+
+  .dialog-icon {
+      width: 30px;
+      height: 30px;
+  }
+  p-button { 
+    margin: 3px;
+  }
+  body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+    width: 100px !important;
+ }
+ body .ui-button.btn-geco, body .ui-button.btn-geco:hover, body .ui-button.btn-geco:focus, body .ui-button.btn-geco:active {
+  padding: 0.6rem 1rem 0.6rem 3.2rem;
+  text-align: right;
+}
+body .ui-button.ui-button-text-only .ui-button-text {
+  font-size: 16px;
+}
+.form-button {
+  padding: 0.6rem 1.2rem 0.6rem 1.2rem !important;
+}
+.grey1 {
+  padding: 0 !important;      
+}
+.card{padding: 1rem !important;}
+}

@@ -1,0 +1,90 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div (keydown.enter)="$event.preventDefault()">
+  <p-dialog
+    header="Modifica "
+    [(visible)]="display"
+    [contentStyle]="{ 'max-height': '600px' }"
+    *ngIf="copySearchForm"
+    [transitionOptions]="'0ms'"
+    [modal]="true"
+    [closeOnEscape]="false"
+    (onHide)="onHide()"
+  >
+    <p-header> Ricadenza in categorie forestali </p-header>
+    <ng-container
+      *ngIf="copySearchForm.get('ricadenzaCategorieForestali').value.length > 0"
+    >
+      <span
+        class="d-block"
+        *ngFor="
+          let item of copySearchForm.get('ricadenzaCategorieForestali').value;
+          let i = index
+        "
+      >
+        <span> {{ item.codiceAmministrativo }} - </span>
+        <span> {{ item.nome }} - </span>
+        <span>
+          {{ item.percentualeRicadenza }}
+        </span>
+        <p-button icon="fa fa-times" (click)="delete(i)"></p-button>
+      </span>
+    </ng-container>
+
+    <!-- <table>
+        <tr formArrayName="searchParcel"
+        *ngFor="let angolare of searchForParcelsForm.get('searchParcel')['controls'];
+        let i= index">
+          <ng-container [formGroupName]="i">
+            <td><input class="form-control" type="text" name="comune" formControlName="comune"/></td>
+            <td>
+              <button *ngIf="i !== 0" type="button" class="btn-close" (click)="deleteFiledValue(i)">
+                <em class="fa fa-close" aria-hidden="true"></em>
+              </button>
+            </td>
+          </ng-container>
+        </tr>
+      </table> -->
+    <div>
+      <label *ngIf="errorMessage" for="errorMsg"> {{ errorMessage }}</label>
+    </div>
+    <p-autoComplete
+      *ngIf="addEntry"
+      (onSelect)="entryDataIntoCopyForm($event)"
+      [forceSelection]="true"
+      [required]="true"
+      autoHighlight="true"
+      [suggestions]="items"
+      (completeMethod)="filterItem($event)"
+      [styleClass]="'autoComplete'"
+      [minLength]="1"
+      [dropdown]="true"
+      inputId="errorMsg"
+    ></p-autoComplete>
+    <!-- <input (change)="entryDataIntoCopyForm($event.target.value)"> -->
+    <!-- <p-button *ngIf="addEntry" label="conferma" (click)="confirmEntryClick()"></p-button> -->
+
+    <p-footer>
+      <p-button
+        icon="pi pi-close"
+        (click)="addEntryClick()"
+        label="Aggiungi"
+      ></p-button>
+      <p-button
+        icon="pi pi-close"
+        (click)="closeAndSave()"
+        label="Conferma"
+        class="ui-button-secondary"
+      ></p-button>
+      <p-button
+        icon="pi pi-close"
+        (click)="close()"
+        label="Annulla"
+        class="ui-button-secondary"
+      ></p-button>
+    </p-footer>
+  </p-dialog>
+</div>

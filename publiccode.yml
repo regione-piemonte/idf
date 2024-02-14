@@ -1,0 +1,226 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+applicationSuite: SIFOR
+categories:
+  - business-process-management
+  - document-management
+  - office
+dependsOn:
+  open:
+    - name: APACHE 2
+      optional: true
+      version: 2.4.41
+      versionMax: ''
+      versionMin: '2'
+    - name: JBOSS
+      optional: true
+      version: EAP 6.4.0.GA
+      versionMax: ''
+      versionMin: EAP 6
+    - name: PostgreSQL
+      optional: true
+      version: 9.6.11
+      versionMax: ''
+      versionMin: '9'
+description:
+  it:
+    features:
+      - Consultazione dei Piani di Gestione Forestale
+      - Gestione degli interventi e degli eventi dei Piani di Gestione Forestale
+      - Gestione degli Inventari Forestali
+      - Gestione delle Istanze Forestali
+    genericName: IDF
+    longDescription: |
+      L'Infrastruttura Dati Forestali (in seguito denominata IDF) è un insieme
+
+      di banche dati e servizi informatici tra loro interconnessi e inseriti nel
+
+      contesto del Sistema Informativo Forestale Regionale (SIFOR), definito
+
+      dalla L.R. 4/2009, art. 34, che permette la condivisione di informazioni
+
+      aggiornate sul comparto forestale piemontese.  IDF è rivolta agli
+
+      operatori del settore forestale: imprenditori, addetti del settore
+
+      forestale (compresi i tecnici liberi professionisti) e gestori del
+
+      territorio agroforestale operanti su tutto il territorio regionale
+
+      (Consorzi, Associazioni forestali che gestiscono superfici pubbliche o
+
+      private, nonché proprietari di vaste superfici boscate (che si sono dotate
+
+      di Piani Forestali Aziendali per la gestione delle stesse). Essa comprende
+
+      le seguenti componenti:
+
+
+
+      1)	Piani di Gestione Forestale (ex Piani Forestali Aziendali) che permette
+
+      la consultazione dei Piani di Gestione Forestale (PGF ex PFA) approvati e
+
+      gestione del relativo registro degli interventi ed eventi. Il Piano di
+
+      Gestione Forestale (PGF) è lo strumento che permette la programmazione, le
+
+      richieste di comunicazione e autorizzazioni e la gestione degli interventi
+
+      selvicolturali e delle opere connesse. La Legge forestale (l.r. 4/2009)
+
+      riconosce la funzione dei PGF all'interno del sistema della pianificazione
+
+      forestale regionale e attribuisce l'iniziativa della redazione dei PGF ai
+
+      proprietari boschivi pubblici o privati. Ha una durata da 10 a 15 anni,
+
+      con programma degli interventi selvicolturali flessibile su base triennale
+
+      o quinquennale. Interessa una superficie di estensione minima indicativa
+
+      di almeno 50 ettari boscati con gestione attiva, appartenenti anche a
+
+      proprietà diverse associate o con unico soggetto gestore;
+
+
+
+      2)	Inventari forestali (produttività dei boschi piemontesi) che permette
+
+      la gestione, la consultazione alfanumerica e cartografica e le
+
+      elaborazioni dendrometriche degli inventari forestali. Il ruolo e
+
+      l'importanza dell'Inventario Forestale Regionale è definito dalla Legge
+
+      forestale del Piemonte (L.R. 4/09). Esso è una componente essenziale del
+
+      Piano Forestale Regionale (PFR) (L.R. 4/09 art. 9) e in Piemonte deriva
+
+      dagli studi per i PFT, che sono stati redatti sull'intera superficie
+
+      regionale e che costituiscono la fonte di dati rilevati con metodologia
+
+      omogenea e codificata che ha permesso l'elaborazione dell'inventario. La
+
+      procedura consente ai gestori del territorio agro-forestale e le imprese
+
+      boschive di elaborare autonomamente i parametri fondamentali (aree
+
+      basimetriche, altezze, volumi, incrementi) per definire la produttività
+
+      dei boschi piemontesi con indicazioni della loro valenza statistica in
+
+      funzione del campione o delle selezioni territoriali prese in
+
+      considerazione. 
+
+
+
+      3)	Sistema di gestione delle istanze ai sensi della L.R. 4/2009 (legge
+
+      forestale) che permette la presentazione e consultazione delle
+
+      autocertificazioni e dei progetti di compensazione fisica relativi a
+
+      interventi di trasformazione del bosco, delle comunicazioni semplici e
+
+      delle richieste di autorizzazione per gli interventi selvicolturali e
+
+      delle istanze di autorizzazione al recupero di castagneti e noccioleti da
+
+      frutto. In particolare, la procedura riguarda la compilazione e l'invio ai
+
+      soggetti regionali competenti di istanze forestali relative ai seguenti
+
+      procedimenti: 
+
+
+
+      - Trasformazione del bosco: autocertificazione e dichiarazione d'atto
+
+      notorio ai sensi del DPR 445/2000
+
+
+      - Interventi selvicolturali: comunicazioni semplici e autorizzazioni con
+
+      progetto ai sensi dell'articolo 14 della Legge Regionale n° 4 del 10
+
+      Febbraio 2009 ‘'Gestione e promozione economica delle foreste'';
+
+      presentazione dei progetti di compensazione fisica relativi a interventi
+
+      di trasformazione del bosco e delle istanze di autorizzazione al recupero
+
+      di castagneti e noccioleti da frutto.
+
+
+
+      IDF  rappresenta un valido supporto alle attività di Pianificazione
+
+      Forestale, di programmazione e verifica dell'ammissibilità degli
+
+      interventi nell'ambito delle misure di interesse forestale del PSR ,
+
+      facilitando  la diffusione delle informazioni relative alla gestione del
+
+      patrimonio silvo-pastorale,  armonizzando i dati territoriali con la base
+
+      dati geografica di riferimento per il territorio piemontese BDTRE e
+
+      integrando le funzionalità offerte dalle diverse componenti del sistema,
+
+      nell'ottica di migliorare la gestione e la fruibilità delle informazioni
+
+      trattate. 
+    screenshots:
+      - screenshots/IDF_INV_1.jpg
+      - screenshots/IDF_INV_2.jpg
+      - screenshots/IDF_IST_1.jpg
+      - screenshots/IDF_IST_2.jpg
+      - screenshots/IDF_PFA.jpg
+      - screenshots/IDF_PFA_2.jpg
+    shortDescription: Infrastruttura Dati Forestali
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: true
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: true
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: true
+    pagopa: false
+    spid: true
+  riuso:
+    codiceIPA: r_piemon
+landingURL: 'https://github.com/regione-piemonte/idf'
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Regione Piemonte
+  repoOwner: Regione Piemonte
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+maintenance:
+  contacts:
+    - email: marisa.matta@csi.it
+      name: Marisa Matta
+  type: internal
+name: Infrastruttura Dati Forestali
+platforms:
+  - web
+releaseDate: '2023-12-11'
+softwareType: configurationFiles
+softwareVersion: 3.4.0
+url: 'https://github.com/regione-piemonte/idf.git'
+intendedAudience:
+  scope:
+    - environment
+    - agriculture

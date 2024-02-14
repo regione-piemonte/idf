@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+  SPDX-License-Identifier: EUPL-1.2
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+                            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd"
+	default-autowire="autodetect">
+
+	<!-- ApplicationContext -->
+	<bean name="applicationContextManager"
+		class="it.csi.util.beanlocatorfactory.SpringApplicationContextManager" />
+
+
+	<bean id="apiManagerServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.ApiManagerServiceHelper">
+		<constructor-arg index="0"
+			value="https://tst-api-ent.ecosis.csi.it/api/token" />
+	</bean>
+
+	<bean id="geecoServiceLocalHelper" class="it.csi.idf.idfapi.business.be.service.helper.GeecoServiceLocalHelper"> 
+		<constructor-arg index="0" value="http://tst-api-ent.ecosis.csi.it:80/api/geeco-int-api/1.0"/> 
+		<constructor-arg index="1" value="prod"/> <property name="geecoLocalDAO"> 
+		<bean class="it.csi.idf.idfapi.business.be.impl.dao.impl.GeecoDAOLocalImpl"> 
+		<property name="jdbcTemplate" ref="namedJdbcTemplate" /> </bean> </property> 
+		</bean> 
+		
+	<bean id="aaepServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.AaepServiceHelper">
+		<constructor-arg index="0"
+			value="http://tst-api-ent.ecosis.csi.it:80/api/aaepsv_wsfad_wsi/1.0" />
+		<property name="apiManagerServiceHelper"
+			ref="apiManagerServiceHelper" />
+	</bean>
+
+	<bean id="sigmaterServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.SigmaterServiceHelper">
+		<constructor-arg index="0"
+			value="http://tst-api-ent.ecosis.csi.it:80/api/CATASTO_sigalfsrv_Terreni/2.0" />
+		<constructor-arg index="1"
+			value="http://tst-api-ent.ecosis.csi.it:80/api/CATASTO_sigwgssrv/2.0" />
+		<constructor-arg index="2"
+			value="USER_REG_028:tst_028" />
+		<property name="apiManagerServiceHelper"
+			ref="apiManagerServiceHelper" />
+	</bean>
+
+	<bean id="parkapiServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.ParkApiServiceHelper">
+		<constructor-arg index="0"
+			value="http://tst-api-ent.ecosis.csi.it:80/api/TERRITORIO_parkapi_AreeProtette/1.0" />
+		<constructor-arg index="1"
+			value="http://tst-api-ent.ecosis.csi.it:80/api/TERRITORIO_parkapi_Sic/1.0" />
+		<constructor-arg index="2"
+			value="http://tst-api-ent.ecosis.csi.it:80/api/TERRITORIO_parkapi_Zps/1.0" />
+		<property name="apiManagerServiceHelper"
+			ref="apiManagerServiceHelper" />
+	</bean>
+
+	<bean id="actaServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.ActaServiceHelper">
+		<constructor-arg index="0" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_backoffice-T/1.0"></constructor-arg>
+    	<constructor-arg index="1" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_management-T/1.0"></constructor-arg>
+    	<constructor-arg index="2" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_multifilling-T/1.0"></constructor-arg>
+    	<constructor-arg index="3" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_navigation-T/1.0"></constructor-arg>
+    	<constructor-arg index="4" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_navigation-T/1.0"></constructor-arg>
+    	<constructor-arg index="5" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_officialbook-T/1.0"></constructor-arg>
+    	<constructor-arg index="6" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_relationships-T/1.0"></constructor-arg>
+    	<constructor-arg index="7" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_document-T/1.0"></constructor-arg>
+    	<constructor-arg index="8" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_repository-T/1.0"></constructor-arg>
+    	<constructor-arg index="9" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_sms-T/1.0"></constructor-arg>
+    	<constructor-arg index="10" value="http://tst-api-ent.ecosis.csi.it:80/api/DOC_ACTA_subjectRegistry-T/1.0"></constructor-arg>
+    	<property name="apiManagerServiceHelper" ref="apiManagerServiceHelper" />
+	</bean>
+
+	<bean id="siforsrvCategorieForestaliServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.SiforsrvCategorieForestaliServiceHelper">
+		<constructor-arg index="0"
+			value="http://tst-api-ent.ecosis.csi.it:80/api/TERRITORIO_siforsrv_CategorieForestali/1.0" />
+		<property name="apiManagerServiceHelper"
+			ref="apiManagerServiceHelper" />
+	</bean>
+
+	<bean id="primpaforservServiceHelper"
+		class="it.csi.idf.idfapi.business.be.service.helper.PrimpaforservServiceHelper">
+		<constructor-arg index="0"
+			value="http://tst-applogic.reteunitaria.piemonte.it/primpaforservApplIstanzaWsfad/services/primpaforservIstanza" />
+	</bean>
+
+	<!-- Beans -->
+	<bean id="identita" class=" it.csi.iride2.policy.entity.Identita">
+		<!-- DEMO 23 -->
+		<constructor-arg
+			value="AAAAAA00A11D000L/CSI PIEMONTE/DEMO 23/IPA/20150223095441/2/z3W/rtwMv/CTx22DyxgVLg==" />
+	</bean>
+	
+	<bean id="indexServiceHelper"
+    	class="it.csi.idf.idfapi.business.be.service.helper.IndexServiceHelper">
+    	<!-- constructor-arg index="0" value="http://applogic-nmsf2e.csi.it/ecmenginews-rp01/services/EcmEngineManagement?wsdl"/-->
+    	<constructor-arg index="0" value="http://applogic-nmsf2e.csi.it/ecmenginews-rp02/services/EcmEngineManagement?wsdl"/>
+    </bean>
+
+	<bean id="myDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="org.postgresql.Driver" />
+		<property name="url"
+			value="jdbc:postgresql://10.138.154.6:10506/MONFOR" />
+		<property name="username" value="idf" />
+		<property name="password" value="myPass!8" />
+	</bean>
+
+	<bean id="namedJdbcTemplate"
+		class="it.csi.idf.idfapi.business.be.impl.dao.util.NamedParameterJdbcTemplateWithQueryDebug">
+		<constructor-arg ref="myDataSource" />
+	</bean>
+	
+	<bean id="actaScheduler"
+	    class="it.csi.idf.idfapi.business.be.service.ActaScheduler">
+	</bean>
+	
+	<task:scheduled-tasks scheduler="protocolScheduler">
+  <task:scheduled ref="actaScheduler" method="schedule" fixed-delay="3000" />
+ </task:scheduled-tasks>
+ 
+ <task:scheduler id="protocolScheduler" />
+
+</beans>

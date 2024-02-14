@@ -1,0 +1,135 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<div class="my-3">
+  <ng-container *ngIf="grayPanel">
+    <app-tipologia-panel [panelData]="grayPanel"> </app-tipologia-panel>
+  </ng-container>
+</div>
+<div class="row" *ngIf="grayPanel">
+  <div class="col-md-12">
+    <ngb-tabset
+      [ngClass]="grayPanel.tipologia === sempliceTipologia ? 'hide-tabs' : ''"
+    >
+      <ngb-tab title="Dettaglio">
+        <ng-template ngbTabContent>
+          <div class="row">
+            <!--div class="col-md-12">
+                            <h3 class="light-bottom-border font-weight-bold">
+                                Dettaglio
+                            </h3>
+                        </div-->
+            <div class="col-md-12 my-2">
+              <ng-container *ngIf="dataStazionaliFields.length > 0">
+                <app-dettaglio-grid
+                  [dataStazionaliFields]="dataStazionaliFields"
+                >
+                </app-dettaglio-grid>
+              </ng-container>
+            </div>
+            <div class="col-md-12">
+              <h3 class="light-bottom-border font-weight-bold">
+                Conteggio Angolare
+              </h3>
+            </div>
+            <div class="col-md-12 mt-2 mb-4">
+              <ng-container>
+                <app-reusable-no-select-table
+                  id="idTableConteggioAngolare"
+                  *ngIf="tipologia"
+                  [initiallySortedColumn]="sortedColumn"
+                  [headers]="conteggioAngolareTableHeaders"
+                  [data]="conteggioTableData"
+                  [totalElements]="totalElementsDettaglio"
+                >
+                </app-reusable-no-select-table>
+                <ng-container *ngFor="let conteggio of conteggioTableData">
+                  <div class="col-md-12 mb-4 mt-3" *ngIf="conteggio.note">
+                    <div class="row">
+                      <div
+                        class="col-md-4 header-color text-right font-weight-bold py-2"
+                      >
+                        <span>Note</span>
+                      </div>
+                      <div class="col-md-8 header-color py-2">
+                        {{ conteggio.note }}
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="row">
+                  <div class="col-md-12 mb-2 text-right">
+                    <p-button
+                      label="Consulta su mappa"
+                      [styleClass]="'btn-geco mr-1'"
+                      (click)="openGeeco()"
+                    ></p-button>
+                    <p-button
+                      label="Scarica in excel"
+                      [styleClass]="'f-18 font-weight-bold form-button ml-1'"
+                      (click)="exportExcel('conteggio')"
+                    ></p-button>
+                  </div>
+                  <div class="mb-2">
+                    <p-button
+                      label="Torna ai risultati ricerca"
+                      [styleClass]="'f-18 font-weight-bold form-button ml-1'"
+                      (click)="navigateToSearch()"
+                    ></p-button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab
+        title="Cavallettamento"
+        *ngIf="grayPanel.tipoAds === completaTipologia"
+      >
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-12 my-4">
+              <app-reusable-no-select-table
+                id="idDettaglioAlberiCavallettati"
+                [headers]="alberiTableHeaders"
+                [data]="alberiTableData"
+                [initiallySortedColumn]="alberiSortedColumn"
+                (updateTableChanges)="getTableChanges($event)"
+                [totalElements]="totalElementsCavaletti"
+                [sortable]="true"
+                [pagination]="true"
+              >
+              </app-reusable-no-select-table>
+              <div *ngIf="alberiTableData.length > 0">
+                <div class="text-right mb-2 mt-3">
+                  <p-button
+                    label="Consulta su mappa"
+                    [styleClass]="'btn-geco mr-1'"
+                    (click)="openGeeco()"
+                  ></p-button>
+                  <p-button
+                    label="Scarica in excel"
+                    [styleClass]="'f-18 font-weight-bold form-button ml-1'"
+                    (click)="exportExcel('alberi')"
+                  ></p-button>
+                </div>
+                <div class="mb-2">
+                  <p-button
+                    label="Torna ai risultati ricerca"
+                    [styleClass]="'f-18 font-weight-bold form-button ml-1'"
+                    (click)="navigateToSearch()"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+    <!-- <hr class="black-hr" /> -->
+  </div>
+</div>

@@ -1,0 +1,312 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="grey-form">
+  <div *ngIf="isCompleted && invioFinished && viewMode === false">
+    <!-- <div *ngIf="tipoAccreditamento === 'Professionista' && !istanzaInviata.dataInvio"> -->
+    <div *ngIf="!istanzaInviata.dataInvio">
+      <div class="grey1 px-3">
+        <button
+          _ngcontent-c14=""
+          title="Scarica"
+          type="button"
+          (click)="downloadDichiarazione($event, 2)"
+          class="ng-star-inserted action-button mr-2"
+        >
+          <em _ngcontent-c14="" aria-hidden="true" class="fa fa-download"></em>
+        </button>
+        <span>Scarica dichiarazione per firma digitale</span><br />
+        <button
+          _ngcontent-c14=""
+          title="Scarica"
+          type="button"
+          (click)="downloadDichiarazione($event, 3)"
+          class="ng-star-inserted action-button mr-2"
+        >
+          <em _ngcontent-c14="" aria-hidden="true" class="fa fa-download"></em>
+        </button>
+        <span>Scarica dichiarazione per firma autografa</span><br /><br /><span
+          *ngIf="isDownloadSuccess"
+          >Dichiarazione scaricato.</span
+        >
+
+        <h4 class="header">Carica la dichiarazione firmata dal richiedente</h4>
+
+        <div class="row">
+          <div class="col-md-9">
+            <label for="digitalSignature" class="font-weight-bold"
+              >Allega Dichiarazione</label
+            >
+          </div>
+          <div class="col-md-9">
+            <input
+              type="radio"
+              name="radio-docType"
+              [checked]="docType == 2"
+              (change)="changeDocType(2)"
+            />
+            <label style="padding-left: 5px; padding-right: 30px"
+              >Digitale</label
+            >
+            <input
+              type="radio"
+              name="radio-docType"
+              [checked]="docType == 3"
+              (change)="changeDocType(3)"
+            />
+            <label style="padding-left: 5px; padding-right: 30px"
+              >Autografa</label
+            >
+
+            <p-fileUpload
+              accept="{{ docType == 2 ? '.pdf,.p7m' : '.pdf' }}"
+              id="fileUpload_0"
+              chooseLabel="Scegli file"
+              uploadLabel="Carica"
+              cancelLabel="Cancella"
+              [disabled]="isDichiarazioneUploaded()"
+              name="image"
+              maxFileSize="50000000"
+              customUpload="true"
+              (uploadHandler)="uploadImage($event, 0)"
+              [styleClass]="'mb-3'"
+            ></p-fileUpload>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="docType == 3">
+          <div class="col-md-9">
+            <label for="signature" class="font-weight-bold"
+              >Allega scansione documento</label
+            ><p-fileUpload
+              accept=".pdf,.jpeg,.jpg"
+              chooseLabel="Scegli file"
+              uploadLabel="Carica"
+              cancelLabel="Cancella"
+              [disabled]="idDocPresent(4)"
+              name="image"
+              maxFileSize="50000000"
+              customUpload="true"
+              (uploadHandler)="uploadImage($event, 4)"
+              [styleClass]="'mb-3'"
+              id="signature"
+            ></p-fileUpload>
+          </div>
+        </div>
+      </div>
+      <!-- <app-list-of-attachments [tableData]=""></app-list-of-attachments> -->
+      <h4 class="header">Dichiarazione e suoi allegati</h4>
+      <app-reusable-front-table
+        *ngIf="tableData && tableData.length > 0"
+        [data]="tableData"
+        [headers]="allegatiTableHeaders"
+        [download]="true"
+        [delete]="true"
+        [fieldToDownload]="'idDocumentoAllegato'"
+        [fieldToDelete]="'idDocumentoAllegato'"
+        (deleteRow)="fieldToDelete($event, 'elenco')"
+        (downloadEmitter)="fieldToDownload($event)"
+      >
+      </app-reusable-front-table>
+      <div style="margin-top: 1rem; text-align: center">
+        <p-button
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+          [disabled]="isInviaDisabled()"
+          label="Invia"
+          (onClick)="submit($event)"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="isCompleted && !istanzaInviata.dataInvio && tipoAccreditamento !== 'Professionista'">
+  <button _ngcontent-c14=""
+    title="Scarica"
+    type="button"
+    (click)="downloadDichiarazione($event, 1)"
+    class="ng-star-inserted action-button mr-2">
+      <em _ngcontent-c14="" aria-hidden="true" class="fa fa-download"></em>
+  </button>
+  <span>Scarica dichiarazione</span>
+
+  <h4 class="alert alert-success mt-4" >Scheda completa. Prosegui con l’invio dell’istanza</h4>
+  <div style="margin-top: 1rem; text-align: center;">
+    <p-button [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+      label="Invia" (onClick)="submit($event)">
+    </p-button>
+  </div>
+</div> -->
+
+  <h4
+    class="header"
+    *ngIf="
+      isCompleted &&
+      istanzaInviata.dataInvio &&
+      istanzaInviata.fkStatoIstanza > 1
+    "
+  >
+    Istanza numero {{ istanzaInviata.nrIstanzaForestale }}, anno
+    {{ istanzaInviata.annoInserimento }}
+  </h4>
+  <h4
+    class="header"
+    *ngIf="
+      isCompleted &&
+      istanzaInviata.dataInvio &&
+      istanzaInviata.fkStatoIstanza > 1
+    "
+  >
+    Scheda inviata in data {{ istanzaInviata.dataInvioFormated }}
+    {{
+      istanzaInviata.nrProtocollo == null
+        ? "(Numero di protocollo e Data di protocollo in fase di attribuzione)"
+        : " con Numero di protocollo " +
+          istanzaInviata.nrProtocollo +
+          " e Data di protocollo " +
+          istanzaInviata.dataProtocollo
+    }}
+  </h4>
+  <h4
+    class="header"
+    *ngIf="
+      isCompleted &&
+      istanzaInviata.dataInvio &&
+      istanzaInviata.fkStatoIstanza > 1
+    "
+  >
+    Titolarità: {{ istanzaInviata.utenteCompilatore }}
+  </h4>
+  <p-button
+    *ngIf="
+      istanzaInviata &&
+      istanzaInviata.fkStatoIstanza > 1 &&
+      istanzaInviata.fkStatoIstanza < 4 &&
+      boMode &&
+      setTitolarita()
+    "
+    [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+    label="Cambia titolarità"
+    (onClick)="cambiaTitolarita()"
+  >
+  </p-button>
+
+  <h4
+    class="header"
+    *ngIf="isCompleted && istanzaInviata && istanzaInviata.fkStatoIstanza == 3"
+  >
+    Scheda validata in data {{ istanzaInviata.dataVerifica }} dall’operatore
+    {{ istanzaInviata.utenteApprovatore }}
+  </h4>
+  <h4
+    class="header"
+    *ngIf="isCompleted && istanzaInviata && istanzaInviata.fkStatoIstanza == 4"
+  >
+    Scheda rifiutata in data
+    {{ istanzaInviata.dataAggiornamento }} dall’operatore
+    {{ istanzaInviata.utenteApprovatore }} con la seguente motivazione:
+    {{ istanzaInviata.motivazioneRifiuto }}
+  </h4>
+</div>
+
+<div
+  *ngIf="
+    isCompleted && istanzaInviata.dataInvio && tableData && tableData.length > 0
+  "
+>
+  <h4 class="header">ELENCO ALLEGATI CARICATI</h4>
+  <app-reusable-front-table
+    *ngIf="tableData && tableData.length > 0"
+    [data]="tableData"
+    [headers]="allegatiTableHeaders"
+    [download]="true"
+    [fieldToDownload]="'idDocumentoAllegato'"
+    [fieldToDelete]="'idDocumentoAllegato'"
+    (downloadEmitter)="fieldToDownload($event)"
+  >
+  </app-reusable-front-table>
+</div>
+<p-dialog
+  header=""
+  [(visible)]="filePopUp"
+  [contentStyle]="{ 'max-height': '600px' }"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+>
+  <p-header> Errore </p-header>
+  <h5 class="red">
+    Il nome del file esiste già! Cambia il nome del file o elimina quello
+    vecchio dalla tabella.
+  </h5>
+  <p-footer>
+    <p-button
+      (click)="closeDialog()"
+      label="Chiudi"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header=""
+  [(visible)]="titolaritaPopUp"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+>
+  <p-header> Cambio titolarità </p-header>
+  <div
+    *ngIf="titolaritaForm"
+    [formGroup]="titolaritaForm"
+    style="width: 1000px; height: 300px; overflow-x: hidden"
+  >
+    <div class="row">
+      <div class="col-lg-9 col-md-6 col-12 mb-3">
+        <label
+          for="professionista"
+          class="row-lg-6 col-form-label font-weight-bold"
+          >Professionista
+        </label>
+        <div class="row-lg-6">
+          <p-autoComplete
+            formControlName="professionista"
+            autoHighlight="true"
+            [suggestions]="professionistiFilteredList"
+            (completeMethod)="filterProfessionista($event)"
+            inputId="professionista"
+            [minLength]="3"
+            [dropdown]="true"
+            [forceSelection]="true"
+            emptyMessage="{{ emptyMessageAC }}"
+            field="field"
+            (onClear)="clear('professionista')"
+            [styleClass]="'autoComplete d-flex justify-content-end'"
+            [inputStyleClass]="'autoComplete-input'"
+          >
+          </p-autoComplete>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-12 mb-3">
+        <br />
+        <p-button
+          (click)="salvaCambioTitolarita()"
+          label="Salva"
+          style="margin-top: 10px"
+          [disabled]="titolaritaForm.invalid"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <p-button
+      (click)="closeTitolarita()"
+      label="Chiudi"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>

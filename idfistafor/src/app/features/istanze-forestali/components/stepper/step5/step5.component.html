@@ -1,0 +1,120 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<p>
+  Sulla base dei dati inseriti finora il calcolo economico della compensazione è
+  il seguente:
+</p>
+<app-reusable-no-select-table
+  [initiallySortedColumn]="sortedColumn"
+  [headers]="tableHeaders"
+  [data]="tableData"
+  (rowIdEmitter)="getRowId($event)"
+  (updateTableChanges)="getUpdatedTable($event)"
+  (deleteRow)="deleteRow($event)"
+  [simpleTable]="true"
+></app-reusable-no-select-table>
+<h5>
+  Link :
+  <a
+    rel="noopener noreferrer"
+    href="{{ hrefTabellaPesiAttributi }}"
+    target="_blank"
+    rel="noopener"
+  >
+    Apri tabella dei pesi attribuiti ad ogni parametro</a
+  >
+</h5>
+<!-- <p>Apri tabella dei pesi attribuiti ad ogni parametro</p> -->
+
+<div class="col-md-12 my-4" *ngIf="valoreRealeForm">
+  <div class="grey-form" [formGroup]="valoreRealeForm">
+    <div class="row">
+      <div class="col-lg-2 col-md-6 col-12 mb-3">
+        <label for="valoreReale" class="font-weight-bold"
+          >Valore reale in Euro</label
+        >
+      </div>
+      <div class="col-lg-4 col-md-6 col-12 mb-3">
+        <input
+          type="number"
+          class="form-control"
+          formControlName="valoreReale"
+          id="valoreReale"
+          (keyup)="onValoreRealeChange()"
+          (focusout)="onValoreRealeLostFocus()"
+        />
+        <div
+          *ngIf="valoreRealeForm.controls['valoreReale'].invalid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="valoreRealeForm.controls['valoreReale'].errors.pattern">
+            Attenzione! Il campo ammette valori decimali con il punto seguito da
+            2 cifre decimali
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 col-md-6 col-12 mb-3">
+        <label for="note" class="font-weight-bold">Note</label>
+      </div>
+      <div class="col-lg-9 col-md-6 col-12 mb-3">
+        <textarea
+          class="w-100"
+          formControlName="note"
+          id="note"
+          [rows]="3"
+        ></textarea>
+        <div
+          *ngIf="
+            valoreRealeForm.invalid && valoreRealeForm.controls['note'].invalid
+          "
+          class="alert alert-danger"
+        >
+          <div>Attenzione! Campo obbligatorio di almeno 20 caratteri</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+
+  <h5><strong>Dati del tecnico forestale abilitato</strong></h5>
+  <app-persona-form
+    *ngIf="personaDatiOption"
+    [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+    (codiceFiscaleEmitter)="getCodiceFiscale()"
+    [personaDatiOption]="personaDatiOption"
+    [isTecnicoForestale]="1 == 1"
+    [personalOrCompanyForm]="personalOrCompanyForm"
+    (resetFormEmitter)="restartForm(personaDatiOption)"
+    (clearAllEmitter)="clearAll(personaDatiOption)"
+  >
+  </app-persona-form>
+
+  <hr class="black-hr" />
+  <div
+    class="d-flex justify-content-between buttons"
+    *ngIf="!boMode && !isIstanzaInviata"
+  >
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva"
+      (onClick)="save()"
+      [disabled]="personalOrCompanyForm.invalid || valoreRealeForm.invalid"
+    ></p-button>
+
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva e prosegui"
+      (onClick)="continue()"
+      [disabled]="personalOrCompanyForm.invalid || valoreRealeForm.invalid"
+    ></p-button>
+  </div>
+</div>

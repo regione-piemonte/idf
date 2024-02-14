@@ -1,0 +1,132 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="!showGeeco">
+  <div class="alert alert-info">
+    Si richiede la georeferenziazione della superficie boscata che si intende
+    trasformare. Una volta generato il poligono con una delle modalità indicate,
+    i valori delle superfici totali oggetto dell’intervento verranno
+    automaticamente calcolati. Contemporaneamente verranno calcolate le
+    ricadenze del poligono in area protetta, siti Natura 2000, popolamenti da
+    seme, categorie forestali e vincolo idrogeologico.
+  </div>
+  <hr />
+  <p-accordion [styleClass]="'my-4'">
+    <p-accordionTab header="{{ accordionHeders[0] }}" [selected]="true">
+      <div>
+        La geometria può essere disegnata a mano richiamando la funzionalità
+        “Georiferisci” (icona <i class="far fa-edit" aria-hidden="true"></i> in
+        alto a destra all'interno del visualizzatore geografico) oppure
+        caricando un file geografico di tipo "shapefile" richiamando la
+        funzionalità "Acquisizione dati" (icona
+        <i class="fa fa-download" aria-hidden="true"></i>).
+      </div>
+      <div class="text-center">
+        <p-button
+          class="full-width-media"
+          label="Disegna su mappa"
+          [styleClass]="'btn-geco'"
+          (onClick)="openGeeco()"
+        >
+        </p-button>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="{{ accordionHeders[1] }}">
+      <search-for-parcels-vid
+        (emitShowParcels)="emitedShowParcels($event)"
+        [listParticelle]="secondStepTable"
+        [idIntervento]="editMode"
+      ></search-for-parcels-vid>
+    </p-accordionTab>
+  </p-accordion>
+
+  <ng-container *ngIf="secondStepTable && secondStepTable.length > 0">
+    <list-of-parcels-vid
+      (deleteRowEmitter)="deleteRowGetter($event)"
+      (openGeecoEmitter)="openGeeco()"
+      [polygonForm]="polygonForm"
+      [enabledGeneraPoligono]="
+        (polygonForm
+          ? polygonForm.invalid
+          : false || secondStepTable.length === 0) ||
+        invalid ||
+        secondStepTable.length === 0
+      "
+      [tableData]="secondStepTable"
+    >
+    </list-of-parcels-vid>
+  </ng-container>
+
+  <ng-container *ngIf="polygonForm && secondStepTable.length > 0">
+    <geometry-result-vid [polygonForm]="polygonForm"></geometry-result-vid>
+  </ng-container>
+
+  <ng-container *ngIf="polygonForm && hiddenNote">
+    <div [formGroup]="polygonForm">
+      <hr class="black-hr" />
+      <h4>Annotazioni</h4>
+      <label>
+        Compilare solo se ci sono incongruenze sui dati importati da catasto o
+        altro da segnalare (max 10000 caratteri)
+      </label>
+      <textarea
+        class="w-100"
+        formControlName="annotazioni"
+        (change)="changeValueAnnotazioni($event)"
+      ></textarea>
+    </div>
+  </ng-container>
+
+  <hr class="black-hr" *ngIf="polygonForm" />
+
+  <!--<div class="d-flex justify-content-between buttons" *ngIf="!boMode && !isIstanzaInviata">-->
+  <div class="d-flex justify-content-between buttons" *ngIf="!boMode">
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva"
+      (onClick)="save()"
+      [disabled]="
+        (polygonForm
+          ? polygonForm.invalid
+          : false || secondStepTable.length === 0) ||
+        invalid ||
+        secondStepTable.length === 0
+      "
+    ></p-button>
+
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva e prosegui"
+      (onClick)="continue()"
+      [disabled]="
+        (polygonForm
+          ? polygonForm.invalid
+          : false || secondStepTable.length === 0) ||
+        invalid ||
+        secondStepTable.length === 0
+      "
+    ></p-button>
+  </div>
+</ng-container>
+
+<div class="col-md-12 my-4" *ngIf="showGeeco">
+  <div class="row">
+    <iframe width="100%" height="700px" [src]="mapUrl"></iframe>
+  </div>
+  <hr class="black-hr" />
+  <div class="row">
+    <p-button
+      class="full-width-media"
+      label="Chiudi Geeco"
+      (onClick)="closeGeeco()"
+      [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+  </div>
+</div>

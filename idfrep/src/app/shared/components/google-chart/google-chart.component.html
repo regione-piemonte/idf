@@ -1,0 +1,25 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<google-chart
+  #chart
+  [title]="title"
+  [id]="id"
+  [type]="type"
+  [data]="data"
+  [columnNames]="columnNames"
+  [options]="options"
+  [width]="width"
+  [height]="height"
+>
+</google-chart>
+
+<div style="margin-top: 5px; text-align: right">
+  <button (click)="printPage()" class="btn btn-primary">
+    <i class="fa fa-print"></i>
+    Print
+  </button>
+</div>

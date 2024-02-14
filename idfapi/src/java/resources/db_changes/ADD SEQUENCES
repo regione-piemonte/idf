@@ -1,0 +1,42 @@
+--For MINVALUE you need to put current max value for that id column + 1
+-- to see current max value = SELECT MAX(column_name) FROM table_name;
+
+CREATE SEQUENCE t_soggetto_id_seq MINVALUE 6;
+ALTER TABLE idf_t_soggetto ALTER id_soggetto SET DEFAULT nextval('t_soggetto_id_seq');
+ALTER SEQUENCE t_soggetto_id_seq OWNED BY idf_t_soggetto.id_soggetto;
+
+CREATE SEQUENCE config_utente_id_seq MINVALUE 1;
+ALTER TABLE public.idf_cnf_config_utente ALTER id_config_utente SET DEFAULT nextval('config_utente_id_seq');
+ALTER SEQUENCE config_utente_id_seq OWNED BY idf_cnf_config_utente.id_config_utente;
+
+CREATE SEQUENCE intervento_id_seq MINVALUE 1;
+ALTER TABLE idf_t_intervento ALTER id_intervento SET DEFAULT nextval('intervento_id_seq');
+ALTER SEQUENCE intervento_id_seq OWNED BY idf_t_intervento.id_intervento;
+
+CREATE SEQUENCE geo_pl_prop_catasto_id_seq MINVALUE 6880;
+ALTER TABLE idf_geo_pl_prop_catasto ALTER idgeo_pl_prop_catasto SET DEFAULT nextval('geo_pl_prop_catasto_id_seq');
+ALTER SEQUENCE geo_pl_prop_catasto_id_seq OWNED BY idf_geo_pl_prop_catasto.idgeo_pl_prop_catasto;
+
+CREATE SEQUENCE idf_geo_pl_interv_trasf_id_seq MINVALUE 1;
+ALTER TABLE idf_geo_pl_interv_trasf ALTER idgeo_pl_interv_trasf SET DEFAULT nextval('idf_geo_pl_interv_trasf_id_seq');
+ALTER SEQUENCE idf_geo_pl_interv_trasf_id_seq OWNED BY idf_geo_pl_interv_trasf.idgeo_pl_interv_trasf;
+
+CREATE SEQUENCE idf_t_evento_id_seq MINVALUE 9;
+ALTER TABLE idf_t_evento ALTER id_evento SET DEFAULT nextval('idf_t_evento_id_seq');
+ALTER SEQUENCE idf_t_evento_id_seq OWNED BY idf_t_evento.id_evento;
+
+CREATE SEQUENCE idf_geo_pl_lotto_int_id_seq MINVALUE 2;
+ALTER TABLE idf_geo_pl_lotto_intervento ALTER idgeo_pl_lotto_intervento SET DEFAULT nextval('idf_geo_pl_lotto_int_id_seq');
+ALTER SEQUENCE idf_geo_pl_lotto_int_id_seq OWNED BY idf_geo_pl_lotto_intervento.idgeo_pl_lotto_intervento;
+
+CREATE SEQUENCE idf_geo_pl_evento_id_seq MINVALUE 1;
+ALTER TABLE idf_geo_pl_evento ALTER idgeo_pl_evento SET DEFAULT nextval('idf_geo_pl_evento_id_seq');
+ALTER SEQUENCE idf_geo_pl_evento_id_seq OWNED BY idf_geo_pl_evento.idgeo_pl_evento;
+
+CREATE SEQUENCE idf_geo_pt_evento_id_seq MINVALUE 1;
+ALTER TABLE idf_geo_pt_evento ALTER idgeo_pt_evento SET DEFAULT nextval('idf_geo_pt_evento_id_seq');
+ALTER SEQUENCE idf_geo_pt_evento_id_seq OWNED BY idf_geo_pt_evento.idgeo_pt_evento;
+
+CREATE SEQUENCE idf_geo_ln_evento_id_seq MINVALUE 1;
+ALTER TABLE idf_geo_ln_evento ALTER idgeo_ln_evento SET DEFAULT nextval('idf_geo_ln_evento_id_seq');
+ALTER SEQUENCE idf_geo_ln_evento_id_seq OWNED BY idf_geo_ln_evento.idgeo_ln_evento;

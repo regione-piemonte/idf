@@ -1,0 +1,782 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div id="pippo" class="grey-form">
+  <div *ngIf="isCompleted && invioFinished && viewMode === false">
+    <!-- <div *ngIf="tipoAccreditamento === 'Professionista' && !istanzaInviata.dataInvio"> -->
+    <div *ngIf="!istanzaInviata.dataInvio">
+      <div class="grey1 px-3">
+        <button
+          _ngcontent-c14=""
+          title="Scarica"
+          type="button"
+          (click)="downloadDichiarazione($event, 22)"
+          class="ng-star-inserted action-button mr-2"
+        >
+          <em _ngcontent-c14="" aria-hidden="true" class="fa fa-download"></em>
+        </button>
+        <span>Scarica richiesta di autorizzazione per firma digitale</span
+        ><br />
+        <button
+          _ngcontent-c14=""
+          title="Scarica"
+          type="button"
+          (click)="downloadDichiarazione($event, 23)"
+          class="ng-star-inserted action-button mr-2"
+        >
+          <em _ngcontent-c14="" aria-hidden="true" class="fa fa-download"></em>
+        </button>
+        <span>Scarica richiesta di autorizzazione per firma autografa</span
+        ><br /><br /><span *ngIf="isDownloadSuccess"
+          >Dichiarazione scaricato.</span
+        >
+
+        <h4 class="header">
+          Carica la richiesta di autorizzazione firmata dal richiedente
+        </h4>
+
+        <div class="row">
+          <div class="col-md-9">
+            <input
+              type="radio"
+              name="radio-docType"
+              [checked]="docType == 22"
+              (change)="changeDocType(22)"
+            />
+            <label style="padding-left: 5px; padding-right: 30px"
+              >Digitale</label
+            >
+            <input
+              type="radio"
+              name="radio-docType"
+              [checked]="docType == 23"
+              (change)="changeDocType(23)"
+            />
+            <label style="padding-left: 5px; padding-right: 30px"
+              >Autografa</label
+            >
+
+            <p-fileUpload
+              accept="{{ docType == 22 ? '.pdf,.p7m' : '.pdf' }}"
+              id="fileUpload_0"
+              chooseLabel="Scegli file"
+              uploadLabel="Carica"
+              cancelLabel="Cancella"
+              [disabled]="idDichiarazioneUploaded()"
+              name="image"
+              maxFileSize="50000000"
+              customUpload="true"
+              (uploadHandler)="uploadDocumento($event, 0)"
+              [styleClass]="'mb-3'"
+            ></p-fileUpload>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="docType == 23">
+          <div class="col-md-9">
+            <label for="fileUpload_4" class="font-weight-bold"
+              >Allega scansione documento</label
+            ><p-fileUpload
+              accept=".pdf"
+              id="fileUpload_24"
+              chooseLabel="Scegli file"
+              uploadLabel="Carica"
+              cancelLabel="Cancella"
+              name="image"
+              maxFileSize="50000000"
+              [disabled]="idDocPresent(24)"
+              customUpload="true"
+              (uploadHandler)="uploadDocumento($event, 24)"
+              [styleClass]="'mb-3'"
+            ></p-fileUpload>
+          </div>
+        </div>
+      </div>
+      <!-- <app-list-of-attachments [tableData]=""></app-list-of-attachments> -->
+      <h4 class="header">Richiesta di autorizzazione e suoi allegati</h4>
+      <app-reusable-front-table
+        *ngIf="tableData && tableData.length > 0"
+        [data]="tableData"
+        [headers]="allegatiTableHeaders"
+        [download]="true"
+        [delete]="true"
+        [fieldToDownload]="'idDocumentoAllegato'"
+        [fieldToDelete]="'idDocumentoAllegato'"
+        (deleteRow)="fieldToDelete($event, 'elenco')"
+        (downloadEmitter)="fieldToDownload($event)"
+      >
+      </app-reusable-front-table>
+      <div style="margin-top: 1rem; text-align: center">
+        <p-button
+          [disabled]="!idDichiarazioneUploaded() || !idDocIdentitaOk()"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+          label="Invia"
+          (onClick)="submit($event)"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="!boMode && isCompleted && !istanzaInviata.dataInvio && tipoAccreditamento !== 'Professionista'">
+
+    <button _ngcontent-c14=""
+      title="Scarica"
+      type="button"
+      (click)="downloadDichiarazione($event, 21)"
+      class="ng-star-inserted action-button mr-2">
+        <em _ngcontent-c14="" aria-hidden="true" class="fa fa-download"></em>
+    </button>
+    <span>Scarica richiesta di autorizzazione</span>
+
+    <h4 class="alert alert-success mt-4" >Scheda completa. Prosegui con l’invio dell’istanza</h4>
+    <div style="margin-top: 1rem; text-align: center;">
+      <p-button [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+        label="Invia" (onClick)="submit($event)">
+      </p-button>
+    </div>
+  </div> -->
+
+  <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+    Istanza numero {{ istanzaInviata.nrIstanzaForestale }}, anno
+    {{ istanzaInviata.annoInserimento }}
+  </h4>
+  <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+    Scheda inviata in data {{ istanzaInviata.dataInvioFormated }}
+    {{
+      istanzaInviata.nrProtocollo == null
+        ? "(Numero di protocollo e Data di protocollo in fase di attribuzione)"
+        : " con Numero di protocollo " +
+          istanzaInviata.nrProtocollo +
+          " e Data di protocollo " +
+          istanzaInviata.dataProtocollo
+    }}
+  </h4>
+  <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+    Titolarità: {{ istanzaInviata.utenteCompilatore }}
+  </h4>
+  <p-button
+    *ngIf="
+      istanzaInviata &&
+      istanzaInviata.fkStatoIstanza > 1 &&
+      istanzaInviata.fkStatoIstanza < 4 &&
+      boMode &&
+      boOperatingEnabled &&
+      setTitolarita()
+    "
+    [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+    label="Cambia titolarità"
+    (onClick)="cambiaTitolarita()"
+    style="margin-left: 30px"
+  >
+  </p-button>
+
+  <div
+    *ngIf="isCompleted && istanzaInviata && istanzaInviata.fkStatoIstanza == 3"
+  >
+    <h4 class="header">
+      Scheda autorizzata in data
+      {{ istanzaInviata.dataVerifica }} dall’operatore
+      {{ istanzaInviata.utenteApprovatore }}
+    </h4>
+    <h4 class="header">
+      Numero determina autorizzazione: {{ istanzaInviata.nrDeterminaAut }}
+    </h4>
+    <h4 class="header">
+      Data scadenza provvedimento: {{ getDataTermineAutorizzazione() }}
+    </h4>
+    <h4 class="header" *ngIf="istanzaInviata.dataFineIntervento">
+      Data termine intervento:
+      {{ getFormatDate(istanzaInviata.dataFineIntervento) }}
+    </h4>
+  </div>
+
+  <h4
+    class="header"
+    *ngIf="isCompleted && istanzaInviata && istanzaInviata.fkStatoIstanza == 4"
+  >
+    Scheda rifiutata in data
+    {{ istanzaInviata.dataAggiornamento }} dall’operatore
+    {{ istanzaInviata.utenteApprovatore }} con la seguente motivazione:
+    {{ istanzaInviata.motivazioneRifiuto }}
+  </h4>
+  <div
+    *ngIf="
+      dataFineInterventoForm &&
+      istanzaInviata.fkStatoIstanza == 3 &&
+      boMode &&
+      boOperatingEnabled
+    "
+  >
+    <div style="background-color: yellow">
+      Attenzione! Risulta mancante la data termine intervento. Impostala ora e
+      fai click su "Salva data termine intervento"
+    </div>
+    <div
+      class="row"
+      style="padding-top: 20px; padding-bottom: 20px"
+      [formGroup]="dataFineInterventoForm"
+    >
+      <div class="col-md-3">
+        <label for="dataFineIntervento" class="font-weight-bold"
+          >Data termine intervento:
+        </label>
+      </div>
+      <div class="col-md-3">
+        <p-calendar
+          [yearNavigator]="true"
+          [locale]="it"
+          [monthNavigator]="true"
+          yearRange="{{ currentYear }}:{{ currentYear + 10 }}"
+          dateFormat="dd-mm-yy"
+          inputId="dataFineIntervento"
+          formControlName="dataFineIntervento"
+          [style]="{ width: '100%' }"
+          [inputStyle]="{ width: '100%' }"
+          showButtonBar="true"
+          [showIcon]="true"
+        >
+        </p-calendar>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-5">
+        <p-button
+          [disabled]="!dataFineInterventoForm || dataFineInterventoForm.invalid"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+          label="Salva data termine intervento"
+          (onClick)="salvaDataFineIntervento()"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!boMode" style="padding-bottom: 10px">
+  <div class="d-flex justify-content-between buttons">
+    <p-button
+      *ngIf="
+        isCompleted &&
+        istanzaInviata.dataInvio &&
+        istanzaInviata.fkStatoIstanza == 3
+      "
+      style="padding-bottom: 5px"
+      (click)="creaVariante()"
+      label="CREA VARIANTE"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+    <p-button
+      *ngIf="infoVarianteProroga?.numVarianti > 0"
+      style="padding-bottom: 5px"
+      (click)="visualizzaVarianti()"
+      label="VISUALIZZA VARIANTI"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+    <p-button
+      *ngIf="
+        infoVarianteProroga?.idPadreProroga > 0 ||
+        infoVarianteProroga?.idPadreVariante > 0
+      "
+      style="padding-bottom: 5px"
+      (click)="visualizzaInterventoAutorizzato()"
+      label="VISUALIZZA INTERVENTO AUTORIZZATO"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+    <p-button
+      *ngIf="
+        isCompleted &&
+        istanzaInviata.dataInvio &&
+        istanzaInviata.fkStatoIstanza == 3
+      "
+      style="padding-bottom: 5px"
+      (click)="creaProroga()"
+      label="CREA PROROGA"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+    <p-button
+      *ngIf="infoVarianteProroga?.numProroghe > 0"
+      style="padding-bottom: 5px"
+      (click)="visualizzaProroghe()"
+      label="VISUALIZZA PROROGHE"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+  </div>
+</div>
+<br />
+
+<div *ngIf="boMode" style="padding-bottom: 10px">
+  <div class="d-flex justify-content-between buttons">
+    <p-button
+      *ngIf="
+        istanzaInviata &&
+        istanzaInviata.fkStatoIstanza > 1 &&
+        istanzaInviata.fkStatoIstanza < 4 &&
+        isCompensazioneFisica &&
+        boOperatingEnabled
+      "
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+      label="Gestisci Istanze di taglio"
+      (onClick)="openIstanzeTaglio()"
+      style="margin-left: 30px"
+    >
+    </p-button>
+    <p-button
+      *ngIf="infoVarianteProroga?.numVarianti > 0"
+      style="padding-bottom: 5px"
+      (click)="visualizzaVarianti()"
+      label="VISUALIZZA VARIANTI"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+    <p-button
+      *ngIf="infoVarianteProroga?.numProroghe > 0"
+      style="padding-bottom: 5px"
+      (click)="visualizzaProroghe()"
+      label="VISUALIZZA PROROGHE"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+    <p-button
+      *ngIf="
+        infoVarianteProroga?.idPadreProroga > 0 ||
+        infoVarianteProroga?.idPadreVariante > 0
+      "
+      style="padding-bottom: 5px"
+      (click)="visualizzaInterventoAutorizzato()"
+      label="VISUALIZZA INTERVENTO AUTORIZZATO"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+  </div>
+</div>
+
+<ng-container
+  *ngIf="
+    isCompleted &&
+    istanzaInviata.dataInvio &&
+    istanzaInviata.fkStatoIstanza != 4 &&
+    !boMode
+  "
+>
+  <div
+    *ngIf="infoDocsPagamenti && infoDocsPagamenti.cauzioneMancante"
+    class="div-border"
+  >
+    <div style="background-color: yellow">
+      Attenzione! Risulta mancante la ricevuta di versamento della cauzione.
+      Prima dell’inizio dei lavori autorizzati occorre caricare la ricevuta e
+      cliccare su "Invia integrazione" per trasmetterla all’Ufficio competente.
+    </div>
+    <div class="row" style="padding-top: 20px; padding-bottom: 20px">
+      <div class="col-md-3">
+        <label for="noteDocumento_106" class="font-weight-bold"
+          >Note al documento da caricare</label
+        >
+      </div>
+      <div class="col-md-8">
+        <input
+          type="text"
+          id="noteDocumento_106"
+          style="width: 100%"
+          maxlength="50"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <p-fileUpload
+          accept=".pdf,.jpg,.jpeg"
+          id="fileUpload_106"
+          chooseLabel="Scegli file"
+          uploadLabel="Carica"
+          cancelLabel="Cancella"
+          name="image"
+          accept=".pdf"
+          [disabled]="idDocEditPresent(106)"
+          maxFileSize="50000000"
+          customUpload="true"
+          (uploadHandler)="uploadRicevutaCauzione($event, 106)"
+          [styleClass]="'mb-3'"
+        ></p-fileUpload>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="infoDocsPagamenti && infoDocsPagamenti.compensazioneFisicaMancante"
+    class="div-border"
+  >
+    <div style="background-color: yellow">
+      Attenzione! Risulta mancante la ricevuta di versamento della cauzione per
+      compensazione fisica. Prima dell’inizio dei lavori autorizzati occorre
+      caricare la ricevuta e cliccare su "Invia integrazione" per trasmetterla
+      all’Ufficio competente.
+    </div>
+    <div class="row" style="padding-top: 20px; padding-bottom: 20px">
+      <div class="col-md-3">
+        <label for="noteDocumento_152" class="font-weight-bold"
+          >Note al documento da caricare</label
+        >
+      </div>
+      <div class="col-md-8">
+        <input
+          type="text"
+          id="noteDocumento_152"
+          style="width: 100%"
+          maxlength="50"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <p-fileUpload
+          accept=".pdf,.jpg,.jpeg"
+          id="fileUpload_152"
+          chooseLabel="Scegli file"
+          uploadLabel="Carica"
+          cancelLabel="Cancella"
+          name="image"
+          accept=".pdf"
+          [disabled]="idDocEditPresent(152)"
+          maxFileSize="50000000"
+          customUpload="true"
+          (uploadHandler)="uploadRicevutaCauzione($event, 152)"
+          [styleClass]="'mb-3'"
+        ></p-fileUpload>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="
+      infoDocsPagamenti && infoDocsPagamenti.compensazioneMonetariaMancante
+    "
+    class="div-border"
+  >
+    <div style="background-color: yellow">
+      Attenzione! Risulta mancante la ricevuta di versamento della cauzione per
+      compensazione monetaria. Prima dell’inizio dei lavori autorizzati occorre
+      caricare la ricevuta e cliccare su "Invia integrazione" per trasmetterla
+      all’Ufficio competente.
+    </div>
+    <div class="row" style="padding-top: 20px; padding-bottom: 20px">
+      <div class="col-md-3">
+        <label for="noteDocumento_153" class="font-weight-bold"
+          >Note al documento da caricare</label
+        >
+      </div>
+      <div class="col-md-8">
+        <input
+          type="text"
+          id="noteDocumento_153"
+          style="width: 100%"
+          maxlength="50"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <p-fileUpload
+          accept=".pdf,.jpeg,.jpg"
+          id="fileUpload_153"
+          chooseLabel="Scegli file"
+          uploadLabel="Carica"
+          cancelLabel="Cancella"
+          name="image"
+          accept=".pdf"
+          [disabled]="idDocEditPresent(153)"
+          maxFileSize="50000000"
+          customUpload="true"
+          (uploadHandler)="uploadRicevutaCauzione($event, 153)"
+          [styleClass]="'mb-3'"
+        ></p-fileUpload>
+      </div>
+    </div>
+  </div>
+
+  <app-reusable-front-table
+    *ngIf="allegatiEditData && allegatiEditData.length > 0"
+    [data]="allegatiEditData"
+    [simpleTable]="true"
+    [headers]="allegatiTableHeaders"
+    [delete]="true"
+    [fieldToDelete]="'idDocumentoAllegato'"
+    (deleteRow)="deleteCauzione($event)"
+  >
+  </app-reusable-front-table>
+</ng-container>
+
+<app-varianti-proroghe-table
+  *ngIf="showListVarintiProroghe"
+  [data]="showListVarintiProroghe"
+>
+</app-varianti-proroghe-table>
+
+<div
+  *ngIf="istanzaInviata && istanzaInviata.dataInvio"
+  style="padding-top: 25px"
+>
+  <p-button
+    class="full-width-media"
+    label="Visualizza su mappa"
+    [styleClass]="'btn-geco d-flex justify-content-between'"
+    (onClick)="openMappa()"
+  >
+  </p-button>
+</div>
+
+<div
+  *ngIf="
+    isCompleted && istanzaInviata.dataInvio && tableData && tableData.length > 0
+  "
+>
+  <h4 class="header">ELENCO ALLEGATI CARICATI</h4>
+  <app-reusable-front-table
+    *ngIf="tableData && tableData.length > 0"
+    [data]="tableData"
+    [headers]="allegatiTableHeaders"
+    [download]="true"
+    [fieldToDownload]="'idDocumentoAllegato'"
+    [fieldToDelete]="'idDocumentoAllegato'"
+    (downloadEmitter)="fieldToDownload($event)"
+  >
+  </app-reusable-front-table>
+</div>
+
+<br />
+
+<div
+  *ngIf="
+    !boMode &&
+    isDocsPagamentiMisssing() &&
+    isCompleted &&
+    istanzaInviata.dataInvio &&
+    istanzaInviata.fkStatoIstanza != 4
+  "
+  style="text-align: center"
+>
+  <p-button
+    *ngIf="allegatiEditData && allegatiEditData.length > 0"
+    style="padding-bottom: 5px"
+    label="Invia integrazione"
+    (onClick)="inviaIntegrazione()"
+    [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+  >
+  </p-button>
+</div>
+
+<p-dialog
+  header=""
+  [(visible)]="filePopUp"
+  [contentStyle]="{ 'max-height': '600px' }"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+>
+  <p-header> Errore </p-header>
+  <h5 class="red">
+    Il nome del file esiste già! Cambia il nome del file o elimina quello
+    vecchio dalla tabella.
+  </h5>
+  <p-footer>
+    <p-button
+      (click)="closeDialog()"
+      label="Chiudi"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header=""
+  [(visible)]="titolaritaPopUp"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+>
+  <p-header> Cambio titolarità </p-header>
+  <div
+    *ngIf="titolaritaForm"
+    [formGroup]="titolaritaForm"
+    style="width: 1000px; height: 300px; overflow-x: hidden"
+  >
+    <div class="row">
+      <div class="col-lg-9 col-md-6 col-12 mb-3">
+        <label
+          for="professionista"
+          class="row-lg-6 col-form-label font-weight-bold"
+          >Professionista
+        </label>
+        <div class="row-lg-6">
+          <p-autoComplete
+            formControlName="professionista"
+            autoHighlight="true"
+            [suggestions]="professionistiFilteredList"
+            (completeMethod)="filterProfessionista($event)"
+            inputId="professionista"
+            [minLength]="3"
+            [dropdown]="true"
+            [forceSelection]="true"
+            emptyMessage="{{ emptyMessageAC }}"
+            field="field"
+            (onClear)="clear('professionista')"
+            [styleClass]="'autoComplete d-flex justify-content-end'"
+            [inputStyleClass]="'autoComplete-input'"
+          >
+          </p-autoComplete>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-12 mb-3">
+        <br />
+        <p-button
+          (click)="salvaCambioTitolarita()"
+          label="Salva"
+          style="margin-top: 10px"
+          [disabled]="titolaritaForm.invalid"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <p-button
+      (click)="closeTitolarita()"
+      label="Chiudi"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header=""
+  [(visible)]="istanzeTaglioPopUp"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+  width="1270"
+>
+  <p-header> Gestisci istanze di taglio </p-header>
+  <div
+    *ngIf="istanzeTaglioForm"
+    [formGroup]="istanzeTaglioForm"
+    style="width: 1200px; height: 400px; padding-left: 25px"
+  >
+    <div class="row grey-form">
+      <div class="col-lg-9 col-md-6 col-12 mb-3">
+        <label
+          for="istanzaTaglio"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Ricerca l’istanza o le istanze di taglio relativa/e alla compensazione
+          fisica inserendo il numero identificativo, e clicca sul tasto “salva”
+          per associarla/e alla richiesta di autorizzazione in oggetto
+        </label>
+        <div class="row-lg-6">
+          <input
+            type="text"
+            formControlName="istanzaTaglio"
+            class="form-control"
+            [id]="istanzaTaglio"
+            maxlength="20"
+          />
+          <div
+            *ngIf="
+              istanzeTaglioForm.controls['istanzaTaglio'].invalid &&
+              (istanzeTaglioForm.controls['istanzaTaglio'].dirty ||
+                istanzeTaglioForm.controls['istanzaTaglio'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="
+                istanzeTaglioForm.controls['istanzaTaglio'].errors.required
+              "
+            >
+              Attenzione! Campo obbligatorio
+            </div>
+            <div
+              *ngIf="istanzeTaglioForm.controls['istanzaTaglio'].errors.pattern"
+            >
+              Attenzione! Il campo deve essere numerico
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-12 mb-3">
+        <br />
+        <p-button
+          (click)="salvaIstanzaTaglio()"
+          label="Salva"
+          style="margin-top: 10px"
+          [disabled]="istanzeTaglioForm.invalid"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+        >
+        </p-button>
+      </div>
+    </div>
+    <div *ngIf="istanzeTaglioTable && istanzeTaglioTable.length > 0">
+      <h4 class="header">
+        ELENCO ISTANZE DI TAGLIO PRESENTATE PER LA COMPENSAZIONE FISICA
+      </h4>
+      <app-reusable-front-table
+        *ngIf="istanzeTaglioTable && istanzeTaglioTable.length > 0"
+        [data]="istanzeTaglioTable"
+        [headers]="istanzeTaglioHeaders"
+        (deleteRow)="deleteIstanzaTaglio($event, 'elenco')"
+        [delete]="true"
+        [fieldToDelete]="'idIstanza'"
+      >
+      </app-reusable-front-table>
+    </div>
+    <div
+      style="text-align: center; width: 100%; padding-top: 40px"
+      *ngIf="!istanzeTaglioTable || istanzeTaglioTable.length == 0"
+    >
+      <b>Nessuna istanza di taglio associata!</b>
+    </div>
+  </div>
+  <p-footer>
+    <p-button
+      (click)="closeIstanzeTaglio()"
+      label="Chiudi"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    ></p-button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header=""
+  [(visible)]="showPopupVarianteProroga"
+  [contentStyle]="{ 'max-height': '600px' }"
+  [transitionOptions]="'0ms'"
+  [modal]="true"
+  [closeOnEscape]="true"
+>
+  <p-header> Attenzione </p-header>
+  <h5 class="red">Definire la competenza territoriale della pratica:</h5>
+  <br />
+  <div class="d-flex justify-content-between buttons"></div>
+  <p-footer>
+    <p-button
+      style="padding-bottom: 5px"
+      (click)="creaVarianteProroga(false)"
+      label="COMUNALE"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+    <p-button
+      style="padding-bottom: 5px"
+      (click)="creaVarianteProroga(true)"
+      label="REGIONALE"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+  </p-footer>
+</p-dialog>

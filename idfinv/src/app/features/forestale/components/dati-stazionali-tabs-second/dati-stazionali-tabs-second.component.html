@@ -1,0 +1,613 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div
+  class="row"
+  *ngIf="secondStepsForm"
+  [formGroup]="secondStepsForm"
+  #container
+>
+  <div class="col-md-12">
+    <div class="grey-form">
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="destinazione" class="font-weight-bold"
+              >Destinazione <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('destinazione').touched &&
+                secondStepsForm.get('destinazione').errors?.required
+              "
+            >
+              Attenzione! Campo obbligatorio</span
+            >
+            <ng-container *ngIf="destinazione$ | async as destinazione">
+              <p-dropdown
+                [options]="destinazione"
+                [placeholder]="'Seleziona destinazione'"
+                formControlName="destinazione"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                inputId="destinazione"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="intervento" class="font-weight-bold"
+              >Intervento <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('intervento').touched &&
+                secondStepsForm.get('intervento').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco</span
+            >
+            <ng-container *ngIf="intervento$ | async as intervento">
+              <p-dropdown
+                [options]="intervento"
+                [placeholder]="'Seleziona intervento'"
+                formControlName="intervento"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                inputId="intervento"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <label for="priorita" class="font-weight-bold"
+            >Priorità intervento <span class="text-danger">*</span></label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('priorita').touched &&
+              secondStepsForm.get('priorita').errors?.required
+            "
+          >
+            Errore: selezionare una voce dall'elenco</span
+          >
+          <ng-container
+            *ngIf="prioritaIntervento$ | async as prioritaIntervento"
+          >
+            <p-dropdown
+              [options]="prioritaIntervento"
+              [placeholder]="'Seleziona priorità intervento'"
+              formControlName="priorita"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              [autoWidth]="false"
+              inputId="priorita"
+            >
+              <ng-template let-type pTemplate="item">
+                <div
+                  class="ui-helper-clearfix"
+                  style="position: relative; height: 25px"
+                >
+                  <div style="font-size: 14px">
+                    {{ type.label }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+        <div class="col">
+          <label for="esbosco" class="font-weight-bold"
+            >Tipologia di Esbosco <span class="text-danger">*</span></label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('esbosco').touched &&
+              secondStepsForm.get('esbosco').errors?.required
+            "
+          >
+            Errore: selezionare una voce dall'elenco</span
+          >
+          <ng-container
+            *ngIf="tipologiaDiEsbosco$ | async as tipologiaDiEsbosco"
+          >
+            <p-dropdown
+              [options]="tipologiaDiEsbosco"
+              [placeholder]="'Seleziona tipologia di Esbosco'"
+              formControlName="esbosco"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              [autoWidth]="false"
+              inputId="esbosco"
+            >
+              <ng-template let-type pTemplate="item">
+                <div
+                  class="ui-helper-clearfix"
+                  style="position: relative; height: 25px"
+                >
+                  <div style="font-size: 14px">
+                    {{ type.label }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <label for="defp" class="font-weight-bold"> DEFP (metri) </label>
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('defp').touched &&
+              secondStepsForm.get('defp').errors?.required
+            "
+          >
+            Errore: campo obbligatorio</span
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('defp').touched &&
+              secondStepsForm.get('defp').errors?.pattern
+            "
+          >
+            Attenzione! Valore non valido</span
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('defp').touched &&
+              secondStepsForm.get('defp').errors?.maxlength
+            "
+          >
+            Attenzione! La stringa digitata è troppo lunga</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="defp"
+            formControlName="defp"
+            name="defp"
+            OnlyNumber="true"
+            pTooltip="{{ tooltipProperty.defp }}"
+            tooltipPosition="top"
+          />
+        </div>
+        <div class="col">
+          <label for="desp" class="font-weight-bold"> DESP (metri) </label>
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('desp').touched &&
+              secondStepsForm.get('desp').errors?.required
+            "
+          >
+            Errore: campo obbligatorio</span
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('desp').touched &&
+              secondStepsForm.get('desp').errors?.pattern
+            "
+          >
+            Attenzione! Valore non valido</span
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('desp').touched &&
+              secondStepsForm.get('desp').errors?.maxlength
+            "
+          >
+            Attenzione! La stringa digitata è troppo lunga</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="desp"
+            formControlName="desp"
+            name="desp"
+            OnlyNumber="true"
+            pTooltip="{{ tooltipProperty.desp }}"
+            tooltipPosition="top"
+          />
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="mdp" class="font-weight-bold"
+              >MDP (metri) <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('mdp').touched &&
+                secondStepsForm.get('mdp').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('mdp').touched &&
+                secondStepsForm.get('mdp').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('mdp').touched &&
+                secondStepsForm.get('mdp').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="mdp"
+              formControlName="mdp"
+              name="mdp"
+              OnlyNumber="true"
+              pTooltip="{{ tooltipProperty.mdp }}"
+              tooltipPosition="top"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dannoPrevalente" class="font-weight-bold"
+          >Danno prevalente <span class="text-danger">*</span></label
+        >
+        <span
+          class="text-danger f-18"
+          *ngIf="
+            secondStepsForm.get('dannoPrevalente').touched &&
+            secondStepsForm.get('dannoPrevalente').errors?.required
+          "
+        >
+          Errore: selezionare una voce dall'elenco</span
+        >
+        <span
+          class="text-danger f-18"
+          *ngIf="
+            secondStepsForm.get('dannoPrevalente').touched &&
+            secondStepsForm.get('dannoPrevalente').errors?.pattern
+          "
+        >
+          Attenzione! Valore non valido</span
+        >
+        <!-- <input
+          type="text"
+          class="form-control"
+          id="dannoPrevalente"
+          formControlName="dannoPrevalente"
+          name="dannoPrevalente"
+          OnlyNumber="true"
+        /> -->
+        <ng-container *ngIf="dannoPrevalente$ | async as dannoPrevalente">
+          <p-dropdown
+            [options]="dannoPrevalente"
+            [placeholder]="'Seleziona danno prevalente'"
+            formControlName="dannoPrevalente"
+            [style]="{ width: '100%' }"
+            [showClear]="true"
+            [autoWidth]="false"
+            inputId="dannoPrevalente"
+          >
+            <ng-template let-type pTemplate="item">
+              <div
+                class="ui-helper-clearfix"
+                style="position: relative; height: 25px"
+              >
+                <div style="font-size: 14px">
+                  {{ type.label }}
+                </div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="intesitaDanni" class="font-weight-bold"
+              >Intensità danni (%) <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('intesitaDanni').touched &&
+                secondStepsForm.get('intesitaDanni').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('intesitaDanni').touched &&
+                secondStepsForm.get('intesitaDanni').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('intesitaDanni').touched &&
+                secondStepsForm.get('intesitaDanni').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="intesitaDanni"
+              formControlName="intesitaDanni"
+              name="intesitaDanni"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="nPianteMorte" class="font-weight-bold"
+              >N° piante morte <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('nPianteMorte').touched &&
+                secondStepsForm.get('nPianteMorte').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('nPianteMorte').touched &&
+                secondStepsForm.get('nPianteMorte').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('nPianteMorte').touched &&
+                secondStepsForm.get('nPianteMorte').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="nPianteMorte"
+              formControlName="nPianteMorte"
+              name="nPianteMorte"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="defogliazione" class="font-weight-bold"
+            >Defogliazione (%) <span class="text-danger">*</span></label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('defogliazione').touched &&
+              secondStepsForm.get('defogliazione').errors?.required
+            "
+          >
+            Errore: campo obbligatorio</span
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('defogliazione').touched &&
+              secondStepsForm.get('defogliazione').errors?.pattern
+            "
+          >
+            Attenzione! Valore non valido</span
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              secondStepsForm.get('defogliazione').touched &&
+              secondStepsForm.get('defogliazione').errors?.maxlength
+            "
+          >
+            Attenzione! La stringa digitata è troppo lunga</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="defogliazione"
+            formControlName="defogliazione"
+            name="defogliazione"
+            OnlyNumber="true"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="ingiallimento" class="font-weight-bold"
+              >Ingiallimento (%) <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('ingiallimento').touched &&
+                secondStepsForm.get('ingiallimento').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('ingiallimento').touched &&
+                secondStepsForm.get('ingiallimento').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('ingiallimento').touched &&
+                secondStepsForm.get('ingiallimento').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="ingiallimento"
+              formControlName="ingiallimento"
+              name="ingiallimento"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="pascolamento" class="font-weight-bold"
+              >Pascolamento <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('pascolamento').touched &&
+                secondStepsForm.get('pascolamento').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                secondStepsForm.get('pascolamento').touched &&
+                secondStepsForm.get('pascolamento').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+
+            <input
+              type="text"
+              class="form-control"
+              id="pascolamento"
+              formControlName="pascolamento"
+              name="pascolamento"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="note" class="font-weight-bold"> Note </label>
+            <input
+              type="text"
+              class="form-control"
+              id="note"
+              formControlName="note"
+              name="note"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <p-button
+            label="Pulisci"
+            (onClick)="resetForm()"
+            [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+    <hr class="black-hr" />
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <p-button
+          label="Torna ai risultati ricerca"
+          (onClick)="navigateToSearch()"
+          [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'"
+        ></p-button>
+        <p-button
+          label="SALVA e prosegui"
+          (onClick)="sendSecondForm()"
+          [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="col-md-12">
+
+     
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end">
+          <p-button
+            label="PULISCI"
+            (onClick)="resetForm()"
+            [styleClass]="'outlined-button mr-2'"
+          ></p-button>
+          <p-button
+            label="SALVA e prosegui"
+            (onClick)="sendSecondForm()"
+            [styleClass]="'sendButton ml-2'"
+            [disabled]="secondStepsForm.invalid"
+          ></p-button>
+        </div>
+      </div>
+    </div> -->
+</div>

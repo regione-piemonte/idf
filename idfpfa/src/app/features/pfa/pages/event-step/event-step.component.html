@@ -1,0 +1,35 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="denom">
+  <app-denominazione [denominazione]="denom" class="my-lg-4"></app-denominazione
+></ng-container>
+
+<p-steps
+  [model]="items"
+  [styleClass]="'event-steps-width steps-custom'"
+  [styleClass]=""
+  [readonly]="false"
+  [(activeIndex)]="activeIndex"
+></p-steps>
+<app-disegna-evento
+  [hidden]="activeIndex !== 0"
+  (emitBack)="backToTabs()"
+  (emitIndex)="proceed()"
+  [editMode]="editMode"
+  [eventoId]="editIdEventi"
+></app-disegna-evento>
+<app-evento-dati-tecnici
+  *ngIf="eventoForm"
+  [hidden]="activeIndex === 0"
+  (emitBack)="backToTabs()"
+  (emitForm)="saveEventiDatiTecnici()"
+  (enableFields)="enableFields()"
+  [eventoForm]="eventoForm"
+  [isFormValid]="eventoForm.valid"
+  [tipoEventi]="tipoEventi"
+  [editMode]="editMode"
+  [disabledFields]="disabledFields"
+></app-evento-dati-tecnici>

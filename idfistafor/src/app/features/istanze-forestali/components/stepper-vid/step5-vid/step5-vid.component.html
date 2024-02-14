@@ -1,0 +1,434 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div [formGroup]="compensazioneForm">
+  <div class="grey-form">
+    <input
+      type="radio"
+      value="F"
+      formControlName="flagCompensazione"
+      id="compensazioneF"
+      (change)="changeCompensazione('F')"
+    />
+    <label class="font-weight-bold" for="compensazioneF"
+      >COMPENSAZIONE FISICA</label
+    >
+
+    <div class="ml-50">
+      <div class="">
+        <input type="checkbox" id="lavori" formControlName="flagLavori" />
+        <label class="font-weight-bold" for="lavori"
+          >Si impegna ad eseguire i lavori di rimboschimento di cui all'art. 9,
+          comma 2, della L.R. 45/1989 e art. 19, comma 6, della L.R.
+          4/2009</label
+        >
+      </div>
+      <div class="">
+        <input type="checkbox" id="cauzione" formControlName="flagCauzioneVi" />
+        <label class="font-weight-bold inline" for="cauzione"
+          >Si impegna a versare prima dell'inizio dei lavori il deposito
+          cauzionale previsto dall'art. 19, comma 8, della L.R. 4/2009 a favore
+          della Regione Piemonte</label
+        >
+      </div>
+    </div>
+
+    <br />
+    <div class="">
+      <input
+        type="radio"
+        value="M"
+        formControlName="flagCompensazione"
+        id="cm"
+        (change)="changeCompensazione('M')"
+      />
+      <label class="font-weight-bold" for="cm"> COMPENSAZIONE MONETARIA </label
+      ><span class="question-badge" (click)="op.toggle($event)"
+        ><i
+          class="fa fa-question-circle icon-question-size mx-2"
+          aria-hidden="true"
+        ></i>
+      </span>
+
+      <div class="ml-50">
+        Si impegna a versare il corrispettivo del costo di rimboschimento e
+        della compensazione monetaria ai sensi dell'art. 9, comma 3, della L.R.
+        45/1989 e dell'art. 19, comma 4 bis, della L.R. 4/2009, determinato come
+        segue:
+        <div class="row mt-15">
+          <div class="col-md-6">
+            Totale superficie modificata o trasformata (ha)
+          </div>
+          <div class="col-md-2">
+            {{
+              totaleSuperficieTrasf.toString().includes(".")
+                ? totaleSuperficieTrasf.toString().replace(".", ",")
+                : totaleSuperficieTrasf
+            }}
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2"></div>
+        </div>
+        <div class="row mt-15">
+          <div class="col-md-6">
+            <label for="dcboscata">Di cui boscata (ha)</label>
+          </div>
+          <div class="col-md-2">
+            <input
+              formControlName="superficieBosc"
+              type="number"
+              (change)="calculate()"
+              id="dcboscata"
+            />
+            <div
+              *ngIf="
+                compensazioneForm.controls['superficieBosc'].invalid &&
+                (compensazioneForm.controls['superficieBosc'].dirty ||
+                  compensazioneForm.controls['superficieBosc'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  compensazioneForm.controls['superficieBosc'].errors.required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+              <div
+                *ngIf="
+                  compensazioneForm.controls['superficieBosc'].errors.pattern
+                "
+              >
+                Attenzione! Il campo ammette valori decimali con il punto
+                seguito da 4 cifre decimali
+              </div>
+              <div
+                *ngIf="compensazioneForm.controls['superficieBosc'].errors.max"
+              >
+                Attenzione! Il valore non può essere maggiore di
+                {{ superficiOriginali.totaleSuperficieBoscata }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2"></div>
+        </div>
+        <div class="row mt-15">
+          <div class="col-md-6">
+            <label for="supnoscata"
+              >Superficie non boscata (art. 9, comma 1, L.R. 45/1989)
+              (ha)</label
+            >
+          </div>
+          <div class="col-md-2">
+            <input
+              formControlName="superficieNoBosc"
+              type="number"
+              (change)="calculate()"
+              id="supnoscata"
+            />
+            <div
+              *ngIf="
+                compensazioneForm.controls['superficieNoBosc'].invalid &&
+                (compensazioneForm.controls['superficieNoBosc'].dirty ||
+                  compensazioneForm.controls['superficieNoBosc'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  compensazioneForm.controls['superficieNoBosc'].errors.required
+                "
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+              <div
+                *ngIf="
+                  compensazioneForm.controls['superficieNoBosc'].errors.pattern
+                "
+              >
+                Attenzione! Il campo ammette valori decimali con il punto
+                seguito da 4 cifre decimali
+              </div>
+              <div
+                *ngIf="
+                  compensazioneForm.controls['superficieNoBosc'].errors.max
+                "
+              >
+                Attenzione! Il valore non può essere maggiore di
+                {{ superficiOriginali.totaleSuperficieNonBoscata }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2" style="padding-left: 30px">
+            x €
+            {{
+              coefficiente.toString().includes(".")
+                ? coefficiente.toString().replace(".", ",")
+                : coefficiente
+            }}
+            = €
+          </div>
+          <div class="col-md-2">
+            {{
+              cmNoBoscEuro.toString().includes(".")
+                ? cmNoBoscEuro.toString().replace(".", ",")
+                : cmNoBoscEuro
+            }}
+          </div>
+        </div>
+        <div class="row mt-15">
+          <div class="col-md-6">
+            <label for="impcomp"
+              >Importo compensazione monetaria (Euro) relativo alla superficie
+              boscata (art. 19, comma 4bis, L.R. 4/2009)</label
+            >
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2">
+            <input
+              formControlName="cmBoscEuro"
+              type="number"
+              (change)="calculate()"
+              id="impcomp"
+            />
+            <div
+              *ngIf="
+                compensazioneForm.controls['cmBoscEuro'].invalid &&
+                (compensazioneForm.controls['cmBoscEuro'].dirty ||
+                  compensazioneForm.controls['cmBoscEuro'].touched)
+              "
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="compensazioneForm.controls['cmBoscEuro'].errors.required"
+              >
+                Attenzione! Campo obbligatorio
+              </div>
+              <div
+                *ngIf="compensazioneForm.controls['cmBoscEuro'].errors.pattern"
+              >
+                Attenzione! Il campo ammette valori decimali con il punto
+                seguito da 2 cifre decimali
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-15">
+          <div class="col-md-10">
+            Ammontare complessivo del corrispettivo da versare (Euro)
+          </div>
+          <div class="col-md-2">
+            {{
+              ammontareComplessivo.toString().includes(".")
+                ? ammontareComplessivo.toString().replace(".", ",")
+                : ammontareComplessivo
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="">
+      <input
+        type="radio"
+        value="N"
+        name="flagCompensazione"
+        formControlName="flagCompensazione"
+        id="edc"
+        (change)="changeCompensazione('N')"
+      />
+      <label class="font-weight-bold" for="edc">ESENTE DA COMPENSAZIONE</label>
+      <div class="ml-50">
+        <div class="d-flex">
+          <input
+            class="mt5"
+            type="radio"
+            value="1"
+            formControlName="flagEsenzione"
+            id="modificazione"
+            (change)="changeEsenzione(1)"
+          />
+          <label
+            style="padding-left: 5px; padding-right: 30px"
+            for="modificazione"
+            >Dichiara che la modificazione e/o trasformazione ricade in uno dei
+            seguenti casi, esenti dall'obbligo di rimboschimento e dal
+            versamento del corrispettivo ai sensi dell'art. 9, comma 4, della
+            L.R. 45/1989, in quanto:</label
+          >
+        </div>
+        <div class="ml-50">
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="asp"
+              formControlName="flagArt9A"
+            />
+            <label class="pl5" for="asp"
+              >è finalizzata all'esclusiva valorizzazione agro-silvo-pastorale
+              del territorio</label
+            >
+          </div>
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="conseguente"
+              formControlName="flagArt9B"
+            />
+            <label class="pl5" for="conseguente"
+              >è conseguente alla realizzazione di opere o lavori pubblici o di
+              impianti d'interesse pubblico;</label
+            >
+          </div>
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="interventi"
+              formControlName="flagArt9C"
+            />
+            <label class="pl5" for="interventi"
+              >riguarda interventi costituenti mera ristrutturazione o
+              manutenzione di opere esistenti o costruzione di nuova abitazione
+              a carattere uni-bifamiliare, escluse quelle di lusso, a condizione
+              che il titolare sia residente nel Comune sede di
+              intervento;</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="ml-50">
+        <div class="d-flex">
+          <input
+            class="mt5"
+            type="radio"
+            value="2"
+            formControlName="flagEsenzione"
+            id="trasformazione"
+            (change)="changeEsenzione(2)"
+          />
+          <label
+            style="padding-left: 5px; padding-right: 30px"
+            for="trasformazione"
+            >Dichiara che la trasformazione della superficie boscata ricade in
+            uno dei seguenti casi, esenti dall'obbligo di compensazione ai sensi
+            dell'art. 19, comma 7, della L.R. 4/2009, in quanto:</label
+          >
+        </div>
+        <div class="ml-50">
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="cinquecento"
+              formControlName="flagArt7A"
+            />
+            <label class="pl5" for="cinquecento"
+              >interessa superfici inferiori ai cinquecento metri
+              quadrati</label
+            >
+          </div>
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="conservazione"
+              formControlName="flagArt7B"
+            />
+            <label class="pl5" for="conservazione"
+              >è finalizzata alla conservazione del paesaggio o al ripristino
+              degli habitat di interesse comunitario, se previste dagli
+              strumenti di gestione o pianificazione di dettaglio
+              vigenti;</label
+            >
+          </div>
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="recupero"
+              formControlName="flagArt7C"
+            />
+            <label class="pl5" for="recupero"
+              >è volta al recupero a fini produttivi per l'esercizio
+              dell'attività agro-pastorale svolte da coltivatori diretti e da
+              imprenditori agricoli singoli o associati, di boschi di
+              neoformazione insediatisi su ex coltivi, prati e pascoli
+              abbandonati da non oltre trent'anni</label
+            >
+          </div>
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="incendi"
+              formControlName="flagArt7D"
+            />
+            <label class="pl5" for="incendi"
+              >riguarda la realizzazione o l'adeguamento di opere di difesa
+              dagli incendi, di opere pubbliche di difesa del suolo, se previsti
+              dagli strumenti di gestione o pianificazione di dettaglio
+              vigenti</label
+            >
+          </div>
+          <div class="d-flex">
+            <input
+              type="checkbox"
+              class="mt5"
+              id="nonservite"
+              formControlName="flagArt7DBis"
+            />
+            <label class="pl5" for="nonservite"
+              >riguarda la realizzazione di viabilità forestale in aree non
+              servite</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="black-hr" />
+
+  <div class="d-flex justify-content-between buttons">
+    <p-button
+      [disabled]="compensazioneForm ? compensazioneForm.invalid : true"
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva"
+      (onClick)="save()"
+    ></p-button>
+
+    <p-button
+      [disabled]="compensazioneForm ? compensazioneForm.invalid : true"
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva e prosegui"
+      (onClick)="continue()"
+    ></p-button>
+  </div>
+</div>
+<p-overlayPanel
+  #op
+  [showCloseIcon]="true"
+  [appendTo]="'body'"
+  [style]="{ width: '450px' }"
+>
+  <p>
+    NOTA ALLA COMPILAZIONE: il sistema presenta inizialmente i valori di
+    superfici trasformate, boscate, non boscate pari ai totali dell’intero
+    intervento. Modificare riducendo il valore della superfice boscata o della
+    superficie non boscata: il totale della superficie trasformata e l’importo
+    in euro da versare verranno ricalcolati automaticamente.
+  </p>
+</p-overlayPanel>

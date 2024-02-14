@@ -1,0 +1,232 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="alert alert-success">
+  Sulla base dei dati raccolti finora, il sistema ha calcolato che l'istanza in
+  oggetto è una
+  <div class="float-right">
+    <strong>{{
+      fifthFormData.tipoIstanzaProposta === tipoIstanzaEnum.COMUNICAZIONE
+        ? "Comunicazione semplice"
+        : "Autorizzazione con progetto"
+    }}</strong>
+  </div>
+</div>
+
+<div
+  class="alert alert-warning"
+  *ngIf="fifthFormData.tipoIstanzaProposta !== fifthFormData.tipoIstanza"
+>
+  Tipo di istanza impostata dall'utente
+  <div class="float-right">
+    <strong>{{
+      fifthFormData.tipoIstanza === tipoIstanzaEnum.COMUNICAZIONE
+        ? "Comunicazione semplice"
+        : "Autorizzazione
+      con progetto"
+    }}</strong>
+  </div>
+</div>
+<div class="d-flex">
+  <div class="float-right">
+    <p-button
+      label="Cambia"
+      (onClick)="changeTipologia()"
+      [disabled]="false"
+    ></p-button>
+  </div>
+</div>
+
+<div class="form-group" *ngIf="motivazioneVisibile">
+  <label for="noteMotivazione" class="font-weight-bold"
+    >Motivazione <span class="text-danger">*</span></label
+  >
+  <input
+    [(ngModel)]="noteMotivazione"
+    type="text"
+    class="form-control"
+    id="noteMotivazione"
+    name="nome"
+    (ngModelChange)="motivazioneChange()"
+  />
+</div>
+
+<hr class="black-hr" />
+<div class="grey1 grey-form">
+  <h4><strong>Allegati</strong></h4>
+  <table
+    *ngIf="tipiAllegato != null && tipiAllegato.length > 0"
+    class="table table-striped table-sm"
+  >
+    <caption>
+      Seleziona la tipologia di allegato
+    </caption>
+    <thead>
+      <tr>
+        <td></td>
+        <th>Tipo di allegato</th>
+        <th>Obbligatorio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tipo of tipiAllegato">
+        <td class="radio">
+          <input
+            type="radio"
+            name="radiogroup"
+            [value]="tipo.idTipoAllegato"
+            (change)="onTipoAllegatoChange(tipo.idTipoAllegato)"
+          />
+        </td>
+        <td>{{ tipo.descrTipoAllegato }}</td>
+        <td>
+          <span *ngIf="tipo.flgObbligatorio">
+            <em class="fa fa-check fa-sm"></em>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="form-group">
+    <label for="noteAllegato" class="font-weight-bold">Note allegato</label>
+    <input
+      [(ngModel)]="noteAllegato"
+      type="text"
+      class="form-control"
+      id="noteAllegato"
+      name="nome"
+    />
+  </div>
+  <div>
+    <input
+      type="radio"
+      name="radio-docFirma"
+      [checked]="versioneDoc == 'firma'"
+      (change)="changeDocType('firma')"
+      [disabled]="isDocRadioDisabled"
+    />
+    <label style="padding-left: 5px; padding-right: 30px"
+      >FIRMATO DIGITALMENTE
+    </label>
+    <input
+      type="radio"
+      name="radio-docFirma"
+      [checked]="versioneDoc == 'noFirma'"
+      (change)="changeDocType('noFirma')"
+      [disabled]="isDocRadioDisabled"
+    />
+    <label style="padding-left: 5px; padding-right: 30px"
+      >NON FIRMATO DIGITALMENTE
+    </label>
+    <p-fileUpload
+      id="fileUpload"
+      [disabled]="!versioneDoc"
+      accept="{{ versioneDoc == 'firma' ? '.pdf,.p7m' : '.pdf,.jpeg,.jpg' }}"
+      chooseLabel="Scegli file"
+      uploadLabel="Carica"
+      cancelLabel="Cancella"
+      name="file"
+      maxFileSize="50000000"
+      customUpload="true"
+      (uploadHandler)="uploadFile($event)"
+      [styleClass]="'mb-3'"
+    ></p-fileUpload>
+  </div>
+
+  <h4 class="header">ELENCO ALLEGATI</h4>
+  <app-reusable-front-table
+    *ngIf="filteredTable && filteredTable.length > 0; else nodata"
+    [data]="filteredTable"
+    [headers]="allegatiTableHeaders"
+    [download]="true"
+    [delete]="true"
+    [fieldToDownload]="'idDocumentoAllegato'"
+    [fieldToDelete]="'idDocumentoAllegato'"
+    (deleteRow)="fieldToDelete($event, 'elenco')"
+    (downloadEmitter)="fieldToDownload($event)"
+  >
+  </app-reusable-front-table>
+  <ng-template #nodata>Nessun documento presente</ng-template>
+</div>
+
+<ng-container [formGroup]="personalOrCompanyForm">
+  <hr class="black-hr" />
+  <div class="grey1 grey-form">
+    <h4>
+      <strong *ngIf="!tecnico_obbligatorio"
+        >Dati del tecnico forestale abilitato che ha redatto il progetto di
+        intervento
+        {{
+          fifthFormData.tipoIstanza === tipoIstanzaEnum.COMUNICAZIONE
+            ? "(opzionale)"
+            : "(obbligatorio)"
+        }}
+      </strong>
+      <strong *ngIf="tecnico_obbligatorio"
+        >Dati del tecnico forestale abilitato che ha redatto il progetto di
+        intervento (obbligatorio)</strong
+      >
+    </h4>
+
+    <app-pf-form-tagli
+      [isTecnicoForestale]="true"
+      [tipoAccreditamento]="tipoAccreditamento"
+      [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+      (codiceFiscaleEmitter)="getCodiceFiscale()"
+      [personaDatiOption]="personaDatiOption"
+      [personalOrCompanyForm]="personalOrCompanyForm"
+      (resetFormEmitter)="restartForm()"
+    >
+    </app-pf-form-tagli>
+  </div>
+</ng-container>
+
+<hr class="black-hr" />
+<div class="grey1 grey-form">
+  <h4>
+    <strong>Note del richiedente</strong>
+  </h4>
+  <div class="grey1 grey-form">
+    <textarea
+      [(ngModel)]="noteFinaliRichiedente"
+      id="noteFinaliRichiedente"
+      name="noteFinaliRichiedente"
+      rows="4"
+      cols="70"
+    ></textarea>
+  </div>
+</div>
+
+<hr class="black-hr" />
+<div
+  class="d-flex justify-content-between buttons"
+  *ngIf="!boMode && !isIstanzaInviata"
+>
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva"
+    (onClick)="save()"
+    [disabled]="!isBotonActivado"
+  ></p-button>
+  <!--
+  <p-button
+    [styleClass]="'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'"
+    label="Salva e prosegui"
+    (onClick)="continue()"
+    [disabled]="personalOrCompanyForm.invalid"
+  > </p-button> -->
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva e prosegui"
+    [disabled]="!isBotonActivado"
+    (onClick)="continue()"
+  >
+  </p-button>
+</div>

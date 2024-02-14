@@ -1,0 +1,169 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<p-table
+  [hidden]="data.length === 0"
+  [columns]="headers"
+  [rows]="5"
+  [value]="data ? data : []"
+  [lazy]="true"
+  [paginator]="simpleTable ? false : true"
+  [totalRecords]="totalSize ? totalSize : 6"
+  [rowsPerPageOptions]="[5, 10, 15]"
+  (onLazyLoad)="updateData($event)"
+  [customSort]="simpleTable ? false : true"
+  [sortField]="simpleTable ? null : initiallySortedColumn"
+  [sortOrder]="simpleTable ? null : 1"
+  [sortMode]="simpleTable ? 'off' : 'single'"
+  [tableStyleClass]="'no-select-table'"
+  [styleClass]="'mb-3'"
+  [resizableColumns]="true"
+  [responsive]="true"
+  [autoLayout]="true"
+>
+  >
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th
+        *ngFor="let col of columns"
+        [pSortableColumn]="col.field"
+        [ngSwitch]="col.field"
+      >
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th
+        *ngIf="download || delete || edit || visualizaTable"
+        style="width: 35px"
+      ></th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-car
+    let-columns="columns"
+    let-index="rowIndex"
+  >
+    <tr>
+      <td *ngFor="let col of columns">
+        <ng-container *ngIf="col.field === 'statoCauzione'">
+          <div *ngFor="let item of getValues(car, col)">
+            <span [style.background-color]="getBgColor(item, col)">
+              {{ getValue(item) }}
+            </span>
+          </div>
+        </ng-container>
+
+        <ng-container
+          *ngIf="
+            col.field === 'varianteProroga' || col.field === 'rimboschimento'
+          "
+        >
+          <span [style.background-color]="getBgColor(car, col)">
+            {{ getValue(car[col.field]) }}
+          </span>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            col.field != 'varianteProroga' &&
+            col.field != 'statoCauzione' &&
+            col.field != 'rimboschimento'
+          "
+        >
+          {{ getValue(car[col.field]) }}
+        </ng-container>
+      </td>
+      <ng-container *ngIf="isSportello">
+        <td *ngIf="download || delete || edit || visualizaTable">
+          <button
+            type="button"
+            *ngIf="
+              view ||
+              isConsultazione ||
+              (visualizaTable && [4, 5, 6, 7].includes(car['idStato']))
+            "
+            (click)="viewRow(car[fieldToEdit])"
+            title="Visualizza elemento {{ getDescr(car) }}"
+            class="action-button"
+          >
+            <em class="far fa-file-alt" aria-hidden="true"></em>
+          </button>
+          <button
+            type="button"
+            *ngIf="
+              edit || (visualizaTable && [1, 2, 3].includes(car['idStato']))
+            "
+            (click)="editRow(car[fieldToEdit])"
+            title="Modifica elemento {{ getDescr(car) }}"
+            class="action-button"
+          >
+            <em class="fas fa-pencil-alt" aria-hidden="true"></em>
+          </button>
+          <button
+            type="button"
+            *ngIf="download"
+            (click)="downloadRow(car[fieldToDownload])"
+            title="Scarica elemento {{ getId(car) }}"
+            class="action-button"
+          >
+            <em class="fas fa-download" aria-hidden="true"></em>
+          </button>
+          <button
+            type="button"
+            *ngIf="delete || (visualizaTable && car['idStato'] === 1)"
+            (click)="
+              deleteRowFromParcels(
+                car[fieldToDelete] ? car[fieldToDelete] : index
+              )
+            "
+            title="Elimina elemento {{ getDescr(car) }}"
+            class="action-button"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="!isSportello">
+        <td *ngIf="download || delete || edit || visualizaTable">
+          <button
+            type="button"
+            *ngIf="
+              view ||
+              isConsultazione ||
+              (visualizaTable && [4, 5, 6, 7].includes(car['idStato']))
+            "
+            (click)="viewRow(car[fieldToEdit])"
+            title="Visualizza elemento {{ getDescr(car) }}"
+            class="action-button"
+          >
+            <em class="far fa-file-alt" aria-hidden="true"></em>
+          </button>
+          <button
+            type="button"
+            *ngIf="
+              !isConsultazione &&
+              (edit || (visualizaTable && [2, 3].includes(car['idStato'])))
+            "
+            (click)="editRow(car[fieldToEdit])"
+            title="Modifica elemento {{ getDescr(car) }}"
+            class="action-button"
+          >
+            <em class="fas fa-pencil-alt" aria-hidden="true"></em>
+          </button>
+          <button
+            type="button"
+            *ngIf="download"
+            (click)="downloadRow(car[fieldToDownload])"
+            title="Scarica elemento {{ getId(car) }}"
+            class="action-button"
+          >
+            <em class="fas fa-download" aria-hidden="true"></em>
+          </button>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-template>
+</p-table>

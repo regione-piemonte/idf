@@ -1,0 +1,294 @@
+<div *ngIf="!boModificaOn">
+  <h5 class="light-bottom-border font-weight-bold hai-selezionato">Hai selezionato:</h5>
+
+      <div class="grey1">
+        <app-selezionato></app-selezionato>
+        <div class="selection f-15" *ngIf="newPlan">Inserisci nuova</div>
+        <!--div class="selection f-15" *ngIf="tipoAccreditamento === 'Professionista' && delegates.length>0">delegato da
+          <ng-container *ngFor="let delegate of delegates; let i = index">
+            <span>{{ delegate + (delegates.length - i !== 1 ? ',' : '.') }}</span></ng-container>
+        </!--div-->
+      </div>
+      <div class="d-flex justify-content-between buttons ng-star-inserted mt-3">
+
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna a elenco istanze"
+            icon="fa fa-fast-backward fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="goVisualizza()"
+          ></p-button>
+
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna alla home"
+            icon="fa fa-home fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="goHome()"
+          ></p-button>
+
+      </div>
+
+</div>
+<div class="col-12 col-md-12 col-lg-12 col-xl-12" *ngIf="boModificaOn">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col text-left mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna all'elenco risultati"
+            icon="fa fa-fast-backward fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="returnToArhiveList()"
+          ></p-button>
+        </div>
+        <div class="col text-right mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna alla home"
+            icon="fa fa-home fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="goHome()"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="black-hr" />
+<div class="nav nav-tabs wizard d-flex justify-content-center" [ngClass]="{'disabledALL': modificaModeOn}">
+  <p-steps
+    [model]="items"
+    [readonly]="false"
+    [(activeIndex)]="activeIndex"
+    (activeIndexChange)="onChangeStep($event)"
+    styleClass="steps-custom"
+  ></p-steps>
+</div>
+<div *ngIf="modificaModeOn && !viewModeOn">
+  <div class="alert alert-warning" role="alert">Scheda incompleta. Per poter effettuare l’invio è necessario completare la sezione corrente e le eventuali successive sezioni evidenziate in giallo </div>
+  <div class="pbutton d-flex justify-content-center" style="margin-top: 1rem;">
+  <p-button (onClick)="backward()" [styleClass]="'conferma'" label="Procedi"></p-button>
+</div>
+</div>
+<div *ngIf="boModificaOn">
+  <div *ngIf="!isCompleted && !istanzaInviata.dataInvio">
+    <div class="alert alert-warning" role="alert">Scheda non inviata.</div>
+  </div>
+  <div *ngIf="personaOwner !== undefined && instanzaOwnership === 'Professionista'" class="persona-ric-wrapper">
+    <div class="row mt-3">
+      <div class="col">
+        <span class="font-weight-bold mt-2">Professionista</span>
+      </div>
+      <div class="col" style="text-align: end;">
+        <p-button (click)="getAllProfessionals($event)" label="Modificare soggeto"></p-button>
+      </div>
+    </div>
+    <div class="row" style="width: 100%; margin: auto; margin-bottom: 2rem;">
+      <div class="col">
+        <label for="codiceFiscale" class="font-weight-bold">Codice fiscale <span class="text-danger">*</span></label>
+        <p-dropdown [ngClass]="{'disabledALL': editProfessionista }" [options]='allProfessionals' (onChange)="changeOwner($event)"
+          autoHighlight="true" inputId="codiceFiscale" [styleClass]="'autoComplete form-control d-flex justify-content-end'">
+      </p-dropdown>
+      </div>
+      <div class="col" [ngClass]="{'disabledALL': instanzaOwnership === 'Professionista'}">
+        <label for="nome" class="font-weight-bold">Nome</label>
+        <input class="form-control" type="text" id="nome" value="{{personaOwner.richNome}}">
+      </div>
+      <div class="col" [ngClass]="{'disabledALL': instanzaOwnership === 'Professionista'}">
+        <label for="cognome" class="font-weight-bold">Cognome</label>
+        <input class="form-control" type="text" id="cognome" value="{{personaOwner.richCognome}}">
+      </div>
+    </div>
+  </div>
+  <div *ngIf="personaOwner !== undefined && instanzaOwnership === 'Richiedente'" class="persona-ric-wrapper" [ngClass]="{'disabledALL': instanzaOwnership === 'Richiedente'}">
+    <div class="row" style="margin: auto;">
+      <span class="font-weight-bold mt-2">Richiedente</span>
+    </div>
+    <div class="row" style="width: 100%; margin: auto; margin-bottom: 2rem;">
+      <div class="col">
+        <label for="codiceFiscale" class="font-weight-bold">Codice Fiscale</label>
+        <input class="form-control" type="text" id="codiceFiscale" value="{{personaOwner.richCodiceFiscale}}">
+      </div>
+      <div class="col">
+        <label for="nome" class="font-weight-bold">Nome</label>
+        <input class="form-control" type="text" id="nome" value="{{personaOwner.richNome}}">
+      </div>
+      <div class="col">
+        <label for="cognome" class="font-weight-bold">Cognome</label>
+        <input class="form-control" type="text" id="cognome" value="{{personaOwner.richCognome}}">
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="istanzaInviata && istanzaInviata.fkStatoIstanza < 3 && user && user.ruolo != 5">
+    <div class="col-md">
+      <label for="uploadDocuments" class="font-weight-bold">Associare ulteriori documenti.</label>
+      <p-fileUpload
+        chooseLabel='Scegli file'
+        uploadLabel='Carica'
+        cancelLabel='Cancella'
+        name="image"
+        maxFileSize="50000000"
+        customUpload="true"
+        [styleClass]="'mb-3'"
+        id="uploadDocuments"
+        (uploadHandler)="upload($event, 7)"
+        >
+      </p-fileUpload>
+    </div>
+  </div>
+  <div *ngIf="tableData && tableData.length > 0 && istanzaInviata.fkStatoIstanza == 2; else nodata">
+    <label for="elanco" class="font-weight-bold">ELENCO ALLEGATI CARICATI DAL GESTORE</label>
+      <app-reusable-front-table
+        id="elanco"
+        [data]="tableData"
+        [headers]="allegatiTableHeaders"
+        [fieldToDelete]="'idDocumentoAllegato'"
+        (deleteRow)="fieldToDelete($event, 'elenco')"
+<<<<<<< HEAD
+        [delete]="true"
+        [fieldToDownload]="'idDocumentoAllegato'"
+        (downloadEmitter)="fieldToDownload($event)"
+        [download]="true">
+=======
+        [delete]="toDelete()">
+>>>>>>> c5a60897912a71e7c15e182fb9dbd99995249ca1
+      </app-reusable-front-table>
+  </div>
+  <div style="margin: auto; text-align: center;">
+    <label for="" class="font-weight-bold d-block">
+      <span class="invisible">invisible</span>
+    </label>
+    <!--p-button (click)="associareDocumenti()" [disabled]="activateInserci" [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'" label="Associare documenti"></!--p-button-->
+  </div>
+  <div *ngIf='!boFinishedAssociareDocumenti'>
+    <h4 class="header" class="font-weight-bold mt-3 mb-3" style=" text-align: center;">Documenti aggiuntivi sono associati.</h4>
+  </div>
+  <div class="pbutton d-flex justify-content-center" style="margin-top: 1rem;"
+    *ngIf="istanzaInviata && istanzaInviata.fkStatoIstanza == 2 && user && user.ruolo != 5">
+    <p-button (click)="verificataIstanza()" [disabled]="!istanzaInviata || istanzaInviata.fkStatoIstanza != 2"  [styleClass]="'mr-2 f-18 font-weight-bold form-button'" label="Verificata e accolta"></p-button>
+    <p-button (click)="onRifiutataClick()" [disabled]="!istanzaInviata || istanzaInviata.fkStatoIstanza != 2" [styleClass]="'mr-2 f-18 font-weight-bold form-button'" label="Verificata e negata"></p-button>
+  </div>
+</div>
+<!-- <div class="pbutton d-flex justify-content-center">
+  <p-button [hidden]="activeIndex===0" (onClick)="backward()" [styleClass]="'conferma'" label="<-- indietro"></p-button>
+</div> -->
+<div class="card" *ngIf="!modificaModeOn">
+  <app-dynamic-header [activeIndex]="activeIndex"></app-dynamic-header>
+  <div [ngClass]="{'disabledALL': viewModeOn}">
+    <app-step1
+      *ngIf="activeIndex === 0"
+      (emitNextStep)="setActiveIndex()"
+      [editMode] = "editMode"
+      [boMode] = "boModificaOn"
+      [isIstanzaInviata] = "isIstanzaInviata"
+      (emitIdIstanze)="setIdIstanze($event)"
+    ></app-step1>
+    <ng-container *ngIf="secondFormData$ | async as secondFormData">
+      <app-step2
+        *ngIf="activeIndex === 1"
+        [editMode]="editMode"
+        [secondFormData]="secondFormData"
+        [boMode] = "boModificaOn"
+        [isIstanzaInviata] = "isIstanzaInviata"
+        (emitNextStep)="setActiveIndex()">
+      </app-step2>
+    </ng-container>
+    <ng-container *ngIf="thirdFormData$ | async as thirdFormData">
+    <app-step3
+      *ngIf="activeIndex === 2"
+      [editMode]="editMode"
+      [boMode] = "boModificaOn"
+      [isIstanzaInviata] = "isIstanzaInviata"
+      [thirdFormData]="thirdFormData"
+      (nextStepEmitter)="setActiveIndex()"
+    ></app-step3>
+    </ng-container>
+    <ng-container *ngIf="fourthFormData$ | async as fourthFormData">
+      <app-step4
+        *ngIf="activeIndex === 3"
+        [fourthStepForm]="fourthStepForm"
+        [fourthFormData]="fourthFormData"
+        [editMode]="editMode"
+        [boMode] = "boModificaOn"
+        [isIstanzaInviata] = "isIstanzaInviata"
+        (emitNextStep)="setActiveIndex()"
+        (noNecessariaChange)="setNoNecessaria($event)"
+      ></app-step4>
+    </ng-container>
+    <app-step5
+      *ngIf="activeIndex === 4"
+      [editMode]="editMode"
+      [boMode] = "boModificaOn"
+      [isIstanzaInviata] = "isIstanzaInviata"
+      (emitNextStep)="setActiveIndex()"
+    ></app-step5>
+    <ng-container *ngIf="sixthStepData$ | async as sixthStepData">
+      <app-step6 *ngIf="activeIndex === 5"
+      [editMode]="editMode"
+      [boMode] = "boModificaOn"
+      [isIstanzaInviata] = "isIstanzaInviata"
+      [sixthStepData]="sixthStepData"
+      (emitActiveIndex)="setActiveIndex()"
+      ></app-step6>
+    </ng-container>
+  </div>
+  <ng-container>
+    <app-signature *ngIf="activeIndex === 6" (emitCompleted)="setCompleted($event)"
+    [editMode]="editMode"
+    [viewMode]="viewModeOn"
+    [activeIndex]="activeIndex"
+    [boMode]="boModificaOn"
+    [istanzaInviata]="istanzaInviata"
+    [user]="user"
+    ></app-signature>
+  </ng-container>
+</div>
+<div *ngIf="istanzaInviata && istanzaInviata.dataInvio && activeIndex < 6"> 
+  <p-button style="padding-bottom: 5px;" (click)="mostraDettaglioFinale()" 
+    label="Torna a dettaglio iniziale" [styleClass]="'mr-2 f-18 font-weight-bold form-button'">
+  </p-button>
+</div>
+<div *ngIf="istanzaInviata && istanzaInviata.dataInvio && activeIndex == 6">
+  <p-button
+    class="full-width-media" label="Visualizza su mappa"
+    [styleClass]="'btn-geco d-flex justify-content-between'"
+    (onClick)="openMappa()"
+  >
+  </p-button>
+  
+  
+</div>
+<p-dialog header="" [(visible)]="filePopUp" [contentStyle]="{'max-height':'600px'}" [transitionOptions]="'0ms'"
+  [modal]="true" [closeOnEscape]="true">
+  <p-header>
+    Errore
+  </p-header>
+  <h5 class='red'>Il nome del file esiste già! Cambia il nome del file o elimina quello vecchio dalla tabella.</h5>
+  <p-footer>
+    <p-button (click)="closeDialog()" label="Chiudi" [styleClass]="'mr-2 f-18 font-weight-bold form-button'"></p-button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog header="" [(visible)]="rifiutoPupUp" [contentStyle]="{'max-height':'600px'}" [transitionOptions]="'0ms'"
+  [modal]="true">
+  <p-header>
+    <b>Motivazione rifiuto </b>(almeno 20 caratteri)
+  </p-header>
+  <textarea (keyup)="onMotivoRifiutoChange($event)" id="w3review" name="w3review"
+      maxlength="1990" rows="4" cols="50">
+  </textarea>
+  <p-footer>
+    <p-button (click)="rifiutataIstanza()" label="Conferma" [disabled]="disabledRifiuto()"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"></p-button>
+  </p-footer>
+</p-dialog>
+
+
+

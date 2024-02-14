@@ -1,0 +1,217 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-md-12">
+  <div class="row my-2">
+    <div class="alert alert-info">
+      Si richiede la georeferenziazione della superficie oggetto
+      dell’intervento. Una volta generato il poligono dell'intervento con una
+      delle modalità indicate, i valori delle superfici totali oggetto
+      dell’intervento verranno automaticamente calcolati. Contemporaneamente
+      verranno calcolate le ricadenze del poligono in eventuali aree protette,
+      siti della Rete Natura 2000, popolamenti da seme e relativi portaseme,
+      categorie forestali e beni paesaggistici tutelati ai sensi dell'art. 136
+      del Dlgs 42/2004, attraverso intersezione geografica del poligono con i
+      livelli geografici in oggetto. E' necessario ricordare che le ricadenze
+      proposte sono delle approssimazioni (le geometrie incrociate sono
+      acquisite a scale diverse a seconda degli ambiti) quindi non costituiscono
+      un dato ufficiale e devono essere intese come un semplice aiuto alla
+      compilazione.
+    </div>
+    <hr />
+    <p-accordion [styleClass]="'my-4'" (onClose)="onTabClose($event)">
+      <p-accordionTab header="Disegna su mappa" [selected]="true">
+        <div>
+          La geometria può essere disegnata a mano richiamando la funzionalità
+          “Georiferisci” (icona
+          <i class="far fa-edit" aria-hidden="true"></i> in alto a destra
+          all'interno del visualizzatore geografico) oppure caricando un file
+          geografico di tipo "shapefile" richiamando la funzionalità
+          "Acquisizione dati" (icona
+          <i class="fa fa-download" aria-hidden="true"></i>). Nel caso di
+          shapefile verificare che le geometrie siano topologicamente corrette e
+          seguire quanto indicato nel manuale utente nel capitolo relativo alla
+          localizzazione. Al termine della georeferenziazione, per chiudere il
+          visualizzatore geografico e tornare alla pagina applicativa di
+          partenza è necessario cliccare sull'icona "chiudi mappa" presente in
+          alto a destra nel visualizzatore.
+        </div>
+        <br />
+        <div class="text-center">
+          <p-button
+            class="full-width-media"
+            label="Disegna su mappa"
+            [styleClass]="'btn-geco'"
+            (onClick)="createInterventoAndOpenGeeco()"
+          >
+          </p-button>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab
+        header="Genera intervento da elenco  particelle catastali"
+        [selected]="viewMode"
+      >
+        <div>
+          Ricerca alfanumerica di tutte le particelle catastali su cui ricade
+          l'intervento. Il sistema verifica l'esistenza della particella
+          ricercata sul livello geografico relativo al catasto riposizionato
+          pubblicato su BDTRE e ne visualizza la superficie in ettari. A partire
+          dalle particelle indicate, il sistema, cliccando su ‘acquisisci
+          particelle e genera poligono’ crea automaticamente un poligono
+          risultante dall'unione delle singole superfici catastali. Tale
+          poligono, creato nel sistema di riferimento WGS84, è visualizzato e
+          modificabile nel visualizzatore geografico integrato alla procedura.
+        </div>
+        <br />
+        <app-search-for-parcels
+          (emitShowParcels)="emitedShowParcels($event)"
+          (emitIdInterventoForEdit)="emitIdInterventoForEdit($event)"
+          [pfaPlanId]="pfaPlanId"
+          [parcelleTable]="parcelTable"
+          [formDisabled]="formDisabled"
+          [idInterventoForEdit]="idInterventoForEdit"
+          [editMode]="editMode"
+          [idIntervento]="idIntervento"
+        ></app-search-for-parcels>
+        <app-list-of-parcels
+          (emitAcquisici)="openMappa()"
+          (deleteRowEmitter)="deleteRowGetter($event)"
+          [disableAcquisisci]="disableAcquisisci"
+          [tableData]="parcelTable"
+        ></app-list-of-parcels>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+  <br />
+
+  <br />
+  <app-list-of-geometries [tableData]="drawedGeometryInfo">
+  </app-list-of-geometries>
+  <br />
+
+  <ng-container *ngIf="ricadenzeForm">
+    <app-geometry-result
+      [ricadenzeForm]="ricadenzeForm"
+      [fasceAltimetriche]="fasceAltimetriche"
+      [tableDataInput]="tableData"
+    ></app-geometry-result>
+    <hr class="black-hr" />
+    <div [formGroup]="ricadenzeForm" class="grey1 grey-form">
+      <div class="form-group col">
+        <label for="localita" class="col-form-label">
+          Località <span class="text-danger">*</span>
+        </label>
+        <input
+          type="text"
+          class="form-control font-weight-normal"
+          formControlName="localita"
+          id="localita"
+          required
+        />
+        <div
+          *ngIf="
+            ricadenzeForm.controls['localita'].invalid &&
+            (ricadenzeForm.controls['localita'].dirty ||
+              ricadenzeForm.controls['localita'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="ricadenzeForm.controls['localita'].errors.required">
+            Attenzione! Campo obbligatorio
+          </div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label class="col-form-label"
+          >Fascia Altimetrica <span class="text-danger">*</span></label
+        >
+        <p-dropdown
+          [options]="fasceAltimetriche"
+          [placeholder]="'Selezionare la fascia altimetrica'"
+          [optionLabel]="'fasciaAltimetricaMAX'"
+          [showClear]="true"
+          formControlName="fasciaAltimetrica"
+          [style]="{ width: '100%' }"
+          [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+          [required]="'true'"
+        >
+          <ng-template let-item pTemplate="item">
+            {{ item.value.fasciaAltimetricaMIN }} -
+            {{ item.value.fasciaAltimetricaMAX }}
+          </ng-template>
+
+          <ng-template let-item pTemplate="selectedItem">
+            {{ item.value.fasciaAltimetricaMIN }} -
+            {{ item.value.fasciaAltimetricaMAX }}
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isAcquisisci">
+    <div class="row w-100">
+      <app-subtitle [subtitle]="sub2"></app-subtitle>
+    </div>
+    <div class="row">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th *ngFor="let col of ricadeHeader; let i = index">
+              {{ col.header }}
+            </th>
+            <th>Elimina</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let data of ricadeData; let i = index"
+            [class.active-color]="i === selectedRow2"
+            (click)="getFieldId2(i)"
+          >
+            <th>{{ data.comune }}</th>
+            <td>{{ data.sezione }}</td>
+            <td>{{ data.foglio }}</td>
+            <td>{{ data.particella }}</td>
+            <td>{{ data.supCatastale }}</td>
+            <td>{{ data.supIntervento }}</td>
+            <td>
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="info-hr my-4" />
+
+    <div class="row my-3 align-items-center" *ngFor="let item of polje">
+      <div class="col-md-4 stil-filda">{{ item.name }}</div>
+      <div class="col-md-6 stil-value">
+        <strong
+          ><i>{{ item.token }}</i></strong
+        >
+      </div>
+    </div>
+  </ng-container>
+  <div class="row my-4 justify-content-lg-between">
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva"
+      (onClick)="save(false)"
+      [disabled]="ricadenzeForm ? ricadenzeForm.invalid : false"
+    ></p-button>
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva e prosegui"
+      (onClick)="continue()"
+      [disabled]="ricadenzeForm ? ricadenzeForm.invalid : false"
+    ></p-button>
+  </div>
+</div>

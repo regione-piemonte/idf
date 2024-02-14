@@ -1,0 +1,40 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="col-12 col-md-12 col-lg-12 col-xl-12">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <!--         <div class="col text-left mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna all'elenco risultati"
+            icon="fa fa-fast-backward fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="returnToArhiveList()"
+          ></p-button>
+        </div>
+ -->
+        <div class="col text-right mt-3 mb-3">
+          <p-button
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+            label="Torna alla home"
+            icon="fa fa-home fa-lg
+            ui-button-icon-left-home"
+            iconPos="left"
+            (onClick)="goHome()"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="black-hr" />
+<div>
+  <app-search-in-arhive (deleteRowEmitter)="deleteRow($event)">
+    >
+  </app-search-in-arhive>
+</div>

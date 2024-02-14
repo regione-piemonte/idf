@@ -1,0 +1,15 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!--The content below is only a placeholder and can be replaced.-->
+
+<app-loader [hidden]="!isLoadingOperation"></app-loader>
+<a class="skip-link" href="#content">Salta al contenuto</a>
+<app-header></app-header>
+<div class="container" id="content">
+  <router-outlet></router-outlet>
+</div>
+<app-error-dialog></app-error-dialog>
+<app-footer></app-footer>

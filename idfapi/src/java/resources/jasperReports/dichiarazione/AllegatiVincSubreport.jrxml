@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2021-11-18T10:37:35 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BoscoSubreport" pageWidth="531" pageHeight="20" whenNoDataType="AllSectionsNoDetail" columnWidth="531" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="58fe874c-51cd-4d53-a965-020da1fdae5c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nomeAllegato" class="java.lang.String"/>
+	<field name="isChecked" class="java.lang.Boolean"/>
+	<field name="nikeImg" class="java.io.InputStream"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<frame>
+				<reportElement x="0" y="0" width="531" height="20" isPrintWhenDetailOverflows="true" uuid="24543b71-dfb0-42d8-bc98-64b958c7fbb1">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textField>
+					<reportElement x="20" y="-1" width="470" height="15" uuid="b687637e-87e2-41a9-b855-ee7f6f137160">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{nomeAllegato}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="1" y="1" width="11" height="11" uuid="db06300d-7335-4277-906d-0409b191569e"/>
+				</rectangle>
+				<image isUsingCache="true">
+					<reportElement key="" x="2" y="0" width="10" height="11" uuid="368682b4-7052-4041-9b5f-9d9c49e67427">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{isChecked}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{nikeImg}]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

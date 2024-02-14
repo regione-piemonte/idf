@@ -1,0 +1,250 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="grey1">
+  <form [formGroup]="polygonForm">
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label" for="supcat"
+        >Totale superficie catastale (ha)</label
+      >
+      <div class="row-sm-12">
+        <input
+          type="number"
+          class="form-control"
+          id="supcat"
+          formControlName="particelleCatastali"
+        />
+      </div>
+    </div>
+    <div class="form-group col">
+      <div class="row">
+        <div class="col">
+          <label class="row-sm-12 col-form-label" for="supint"
+            >Totale superficie intervento (ha)</label
+          >
+          <div class="row-sm-12">
+            <input
+              type="number"
+              class="form-control"
+              id="supint"
+              formControlName="totaleSuperficieTransf"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <label class="row-sm-12 col-form-label" for="supboscata"
+            >Totale superficie boscata (ha)</label
+          >
+          <div class="row-sm-12">
+            <input
+              type="number"
+              class="form-control"
+              id="supboscata"
+              formControlName="totaleSuperficieBoscata"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <label class="row-sm-12 col-form-label" for="supnonboscata"
+            >Totale superficie non boscata (ha)</label
+          >
+          <div class="row-sm-12">
+            <input
+              type="number"
+              class="form-control"
+              id="supnonboscata"
+              formControlName="totaleSuperficieNonBoscata"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label class="row-sm-12 col-form-label" for="vincoloidro"
+            >di cui in vincolo idrogeologico (ha)</label
+          >
+          <div class="row-sm-12">
+            <input
+              type="number"
+              class="form-control"
+              id="vincoloidro"
+              formControlName="totaleSuperficieInVincolo"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <label class="row-sm-12 col-form-label" for="boscatavincoloidro"
+            >boscata in vincolo idrogeologico (ha)</label
+          >
+          <div class="row-sm-12">
+            <input
+              type="number"
+              class="form-control"
+              id="boscatavincoloidro"
+              formControlName="totaleSuperficieBoscataInVincolo"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <label class="row-sm-12 col-form-label" for="nonboscatavincoloidro"
+            >non boscata in vincolo idrogeologico (ha)</label
+          >
+          <div class="row-sm-12">
+            <input
+              type="number"
+              class="form-control"
+              id="nonboscatavincoloidro"
+              formControlName="totaleSuperficieNonBoscataInVincolo"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label">Ricadenza in Aree Protette</label>
+      <div class="row-sm-12 categorie">
+        <!-- <input type="text" class="form-control" formControlName='ricadenzaAreeProtette'> -->
+        <ng-container
+          formArrayName="ricadenzaAreeProtette"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaAreeProtette'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              -
+              {{ ricadenzaInCategorieForestali.get("nome").value }}
+
+              {{
+                ricadenzaInCategorieForestali.get("percentualeRicadenza").value
+              }};&nbsp;</span
+            >
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Ricadenza in Rete Natura 2000</label
+      >
+      <div class="row-sm-12 categorie">
+        <!-- <input type="text" class="form-control" formControlName='ricadenzaNatura2000'> -->
+        <ng-container
+          formArrayName="ricadenzaNatura2000"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaNatura2000'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              -
+              {{ ricadenzaInCategorieForestali.get("nome").value }}
+
+              {{
+                ricadenzaInCategorieForestali.get("percentualeRicadenza").value
+              }};&nbsp;</span
+            >
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Ricadenza in Popolamenti da Seme</label
+      >
+      <div class="row-sm-12 categorie">
+        <!-- <input type="text" class="form-control" formControlName='ricadenzaNatura2000'> -->
+        <ng-container
+          formArrayName="ricadenzaPopolamentiDaSeme"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaPopolamentiDaSeme'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              - {{ ricadenzaInCategorieForestali.get("nome").value }} -
+              {{
+                ricadenzaInCategorieForestali.get("percentualeRicadenza").value
+              }}%;&nbsp;
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Ricadenza in Categorie Forestali</label
+      >
+      <div class="form-group row">
+        <div class="col-lg-12 col-md-12 col-12 categorie">
+          <ng-container
+            formArrayName="ricadenzaCategorieForestali"
+            *ngFor="
+              let ricadenzaInCategorieForestali of polygonForm.get(
+                'ricadenzaCategorieForestali'
+              )['controls'];
+              let i = index
+            "
+          >
+            <ng-container [formGroupName]="i">
+              <span
+                >{{
+                  ricadenzaInCategorieForestali.get("codiceAmministrativo")
+                    .value
+                }}
+                - {{ ricadenzaInCategorieForestali.get("nome").value }} -
+                {{
+                  ricadenzaInCategorieForestali.get("percentualeRicadenza")
+                    .value
+                }}%;&nbsp;
+              </span>
+              <!-- <input type="text" class="form-control"
+                formControlName='name' placeholder="Ricadenza in
+                Categorie Forestali"> -->
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <!-- <p-button class="col-4" [styleClass]="'conferma'" label="Modifica" icon="pi pi-info-circle" (click)="edit()"></p-button> -->
+    <div class="form-group row">
+      <div class="col-lg-12 col-md-12 col-12">
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            [id]="'customControlValidation2'"
+            formControlName="ricadenzaVincoloIdrogeologico"
+          />
+          <label
+            class="custom-control-label checkbox"
+            [for]="'customControlValidation2'"
+            >Ricadenza in Vincolo Idrogeologico
+          </label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,37 @@
+CREATE TABLE idf_d_tipo_titolarita
+(
+  id_tipo_titolarita integer not null,
+  descr_tipo_titolarita character varying(100)  not null,
+	
+  mtd_ordinamento numeric(2,0),
+  flg_visibile numeric(1,0) NOT NULL DEFAULT 0,
+  CONSTRAINT pk_idf_d_tipo_titolarita PRIMARY KEY (id_tipo_titolarita),
+  CONSTRAINT check_idf_d_tipo_titolarita CHECK (flg_visibile = ANY (ARRAY[0::numeric, 1::numeric]))
+);
+
+COMMENT ON TABLE idf_d_tipo_titolarita IS 'Rappresenta con quale titolarità si vuole presentare l’istanza';
+
+INSERT INTO idf_d_tipo_titolarita(id_tipo_titolarita, descr_tipo_titolarita, mtd_ordinamento, flg_visibile) VALUES(1, 'Il richiedente sono io (persona fisica che inserisce la domanda)', 1, 1);
+INSERT INTO idf_d_tipo_titolarita(id_tipo_titolarita, descr_tipo_titolarita, mtd_ordinamento, flg_visibile) VALUES(2, 'Il richiedente è l’Azienda/Ente di cui sono Titolare/Legale rappresentante/Presidente', 2, 1);
+INSERT INTO idf_d_tipo_titolarita(id_tipo_titolarita, descr_tipo_titolarita, mtd_ordinamento, flg_visibile) VALUES(3, 'Il richiedente è una Persona Fisica', 3, 1);
+INSERT INTO idf_d_tipo_titolarita(id_tipo_titolarita, descr_tipo_titolarita, mtd_ordinamento, flg_visibile) VALUES(4, 'Il richiedente è una Persona Giuridica', 4, 1);
+
+
+
+ALTER TABLE idf_r_soggetto_intervento
+ADD COLUMN fk_tipo_titolarita integer;
+
+UPDATE idf_r_soggetto_intervento SET fk_tipo_titolarita = 1;
+--Aggiornamento manuale di fk_tipo_titolarita col valore corretto
+
+ALTER TABLE idf_r_soggetto_intervento ALTER COLUMN fk_tipo_titolarita SET NOT NULL;
+
+ALTER TABLE idf_r_soggetto_intervento
+ADD CONSTRAINT  fk_idf_d_tipo_titolarita_01 FOREIGN KEY (fk_tipo_titolarita) references idf_d_tipo_titolarita(id_tipo_titolarita);
+
+ALTER TABLE idf_cnf_delega
+ADD COLUMN data_utilizzo TIMESTAMP;
+
+--Manually change column data_utilizzo to correct value, avoid using same values for one config_utente!
+
+ALTER TABLE idf_cnf_delega ALTER COLUMN data_utilizzo SET NOT NULL;

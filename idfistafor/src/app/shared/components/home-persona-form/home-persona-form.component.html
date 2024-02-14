@@ -1,0 +1,267 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<form class="grey-form" [formGroup]="personaForm" (ngSubmit)="conferma()">
+  <h4 class="header">Scheda dati personali</h4>
+  <div style="margin-top: 3rem">
+    <div class="form-group row">
+      <label for="codiceFiscale" class="col-sm-3 col-form-label"
+        ><strong>Codice fiscale</strong></label
+      >
+      <div class="col-sm-5">
+        <input
+          type="text"
+          class="form-control"
+          id="codiceFiscale"
+          formControlName="codiceFiscale"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="cognome" class="col-sm-3 col-form-label"
+        ><strong>Cognome</strong></label
+      >
+      <div class="col-sm-5">
+        <input
+          type="text"
+          class="form-control"
+          id="cognome"
+          formControlName="cognome"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="nome" class="col-sm-3 col-form-label"
+        ><strong>Nome</strong></label
+      >
+      <div class="col-sm-5">
+        <input
+          type="text"
+          class="form-control"
+          id="nome"
+          formControlName="nome"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="comuneResidenza" class="col-sm-3 col-form-label"
+        ><strong>Comune residenza </strong
+        ><span class="text-danger">*</span></label
+      >
+      <div class="col-sm-5">
+        <p-autoComplete
+          [forceSelection]="'true'"
+          autoHighlight="true"
+          [suggestions]="comune"
+          formControlName="comuneResidenza"
+          inputId="comuneResidenza"
+          [minLength]="3"
+          [dropdown]="false"
+          [forceSelection]="true"
+          emptyMessage="{{ emptyMessageAC }}"
+          field="denominazioneComune"
+          [styleClass]="'br-custom autoComplete d-flex'"
+          [inputStyleClass]="'autoComplete-input'"
+          (completeMethod)="getComune($event)"
+        >
+        </p-autoComplete>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="recapitoTelefonico" class="col-sm-3 col-form-label"
+        ><strong>Recapito telefonico </strong
+        ><span class="text-danger">*</span></label
+      >
+      <div class="col-sm-9">
+        <input
+          type="text"
+          class="form-control"
+          id="recapitoTelefonico"
+          formControlName="recapitoTelefonico"
+        />
+        <div
+          *ngIf="
+            personaForm.controls['recapitoTelefonico'].invalid &&
+            (personaForm.controls['recapitoTelefonico'].dirty ||
+              personaForm.controls['recapitoTelefonico'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="personaForm.controls['recapitoTelefonico'].errors.required"
+          >
+            Attenzione! Campo obbligatorio.
+          </div>
+          <div
+            *ngIf="personaForm.controls['recapitoTelefonico'].errors.maxlength"
+          >
+            Attenzione! La stringa digitata è troppo lunga.
+          </div>
+          <div
+            *ngIf="personaForm.controls['recapitoTelefonico'].errors.minlength"
+          >
+            Attenzione! La stringa inserita è troppo corta.
+          </div>
+          <div
+            *ngIf="personaForm.controls['recapitoTelefonico'].errors.pattern"
+          >
+            Attenzione! Il campo deve essere numerico
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email" class="col-sm-3 col-form-label"
+        ><strong>E-mail personale </strong
+        ><span class="text-danger">*</span></label
+      >
+      <div class="col-sm-9">
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          formControlName="email"
+        />
+        <div
+          *ngIf="
+            personaForm.controls['email'].invalid &&
+            (personaForm.controls['email'].dirty ||
+              personaForm.controls['email'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="personaForm.controls['email'].errors.required">
+            Attenzione! Campo obbligatorio.
+          </div>
+          <div *ngIf="personaForm.controls['email'].errors.pattern">
+            Attenzione! eMail non valido!
+          </div>
+          <div *ngIf="personaForm.controls['email'].errors.maxlength">
+            Attenzione! La stringa digitata è troppo lunga
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="indirizzoResidenza" class="col-sm-3 col-form-label"
+        ><strong>Indirizzo residenza </strong
+        ><span class="text-danger">*</span></label
+      >
+      <div class="col-sm-9">
+        <input
+          type="text"
+          class="form-control"
+          id="indirizzoResidenza"
+          formControlName="indirizzoResidenza"
+        />
+        <div
+          *ngIf="
+            personaForm.controls['indirizzoResidenza'].invalid &&
+            (personaForm.controls['indirizzoResidenza'].dirty ||
+              personaForm.controls['indirizzoResidenza'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="personaForm.controls['indirizzoResidenza'].errors.required"
+          >
+            Attenzione! Campo obbligatorio.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="civico" class="col-sm-3 col-form-label"
+        ><strong>Civico </strong><span class="text-danger">*</span></label
+      >
+      <div class="col-sm-3">
+        <input
+          type="text"
+          class="form-control"
+          id="civico"
+          formControlName="civico"
+          style="width: 50%"
+        />
+      </div>
+      <div class="col-sm-6">
+        <div
+          *ngIf="
+            personaForm.controls['civico'].invalid &&
+            (personaForm.controls['civico'].dirty ||
+              personaForm.controls['civico'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="personaForm.controls['civico'].errors.required">
+            Attenzione! Campo obbligatorio.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="cap" class="col-sm-3 col-form-label"
+        ><strong>CAP </strong><span class="text-danger">*</span></label
+      >
+      <div class="col-sm-3">
+        <input
+          type="text"
+          class="form-control"
+          id="cap"
+          formControlName="cap"
+          style="width: 50%"
+        />
+      </div>
+      <div class="col-sm-6">
+        <div
+          *ngIf="
+            personaForm.controls['cap'].invalid &&
+            (personaForm.controls['cap'].dirty ||
+              personaForm.controls['cap'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="personaForm.controls['cap'].errors.required">
+            Attenzione! Campo obbligatorio.
+          </div>
+          <div *ngIf="personaForm.controls['cap'].errors.pattern">
+            <div *ngIf="personaForm.controls['cap'].value.length !== 5">
+              Attenzione! Il campo deve essere di 5 cifre
+            </div>
+            <div *ngIf="personaForm.controls['cap'].value.length === 5">
+              Attenzione! Il campo deve essere numerico
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <hr />
+      <h5
+        class="header"
+        style="background-color: #b2ff59; margin-top: 1rem; margin-bottom: 1rem"
+      >
+        ll/La sottoscritto/a dichiara di avere preso visione
+        <a
+          style="color: firebrick"
+          href="{{ HREF }}"
+          target="_blank"
+          rel="noopener"
+          >dell'informativa sulla privacy</a
+        >
+        ai sensi del GDPR 2016/679.
+      </h5>
+      <hr />
+    </div>
+    <div class="row">
+      <div class="col text-center mt-3 mb-3">
+        <p-button
+          [disabled]="personaForm.invalid"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+          label="Conferma"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,311 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div>
+  <div *ngIf="tipoAccreditamento">
+    <div *ngIf="tipoAccreditamento === 'Richiedente' && !boMode">
+      <div class="custom-control custom-radio">
+        <input
+          type="radio"
+          class="custom-control-input"
+          id="customControlValidation11"
+          name="radio-stacked"
+          (change)="option($event.target.value)"
+          [value]="'RF'"
+          [checked]="personaDatiOption === 'RF' || personaDatiOption === 'PF'"
+        />
+        <label class="custom-control-label" for="customControlValidation11">
+          Il richiedente sono io (persona fisica che inserisce la
+          domanda)</label
+        >
+      </div>
+      <div class="custom-control custom-radio">
+        <input
+          type="radio"
+          class="custom-control-input"
+          id="customControlValidation12"
+          name="radio-stacked"
+          (change)="option($event.target.value)"
+          [value]="'RG'"
+          [checked]="personaDatiOption === 'RG' || personaDatiOption === 'PG'"
+        />
+        <label class="custom-control-label" for="customControlValidation12">
+          Il richiedente è l’Azienda/Ente di cui sono Titolare/Legale
+          rappresentante/Presidente</label
+        >
+      </div>
+      <div
+        class="grey-back"
+        *ngIf="this.personaDatiOption === 'RG' || personaDatiOption === 'PG'"
+      >
+        <div *ngIf="companies.length > 0">
+          <!-- <ul *ngFor="let company of companies;let i = index"><li><span class="company"
+          (click)="companyFillFields(company.partitaIva)">
+          {{ company.partitaIva }} - {{ company.denominazione }}</span></li></ul> -->
+          <div class="row mt-3 mb-2">
+            <div class="col-2">
+              <label for="codiceFiscale" class="font-weight-bold"
+                >Codice fiscale:</label
+              >
+            </div>
+            <div class="col-3">
+              <p-dropdown
+                [options]="codiceFiscaleSelectItem"
+                autoHighlight="true"
+                inputId="codiceFiscale"
+                placeholder="Selezionare"
+                (onChange)="chooseCompany($event)"
+                [styleClass]="
+                  'autoComplete form-control d-flex justify-content-end'
+                "
+              >
+              </p-dropdown>
+            </div>
+            <div class="col-7">
+              <div class="row">
+                <div class="col-sm-4">
+                  <label for="companyInfoIVA" class="font-weight-bold"
+                    >Partita IVA:</label
+                  >
+                </div>
+                <div class="col-sm-8">
+                  <span id="companyInfoIVA">
+                    {{ companyInfoIVA }}
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <label for="companyInfoDenominazione" class="font-weight-bold"
+                    >Denominazione:</label
+                  >
+                </div>
+                <div class="col-sm-8">
+                  <span id="companyInfoDenominazione">
+                    {{ companyInfoDenominazione }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="alert alert-warning"
+            *ngIf="!loading && tipoAccreditamento !== 'Professionista'"
+          >
+            Se sei titolare di un’azienda che non compare in questo elenco
+            clicca
+            <span (click)="enterCompanyData()" class="qui">qui</span>
+            ed inserisci i dati della tua azienda.
+          </div>
+        </div>
+        <div
+          *ngIf="
+            companies.length === 0 &&
+            !loading &&
+            tipoAccreditamento !== 'Professionista'
+          "
+          class="alert alert-warning"
+        >
+          Attenzione! Sull’Anagrafe delle Attività Economiche e Produttive non
+          risulti associato a nessuna azienda. Se sei titolare di un’azienda che
+          non compare in questa ricerca clicca
+          <span (click)="enterCompanyData()" class="qui">qui</span>
+          ed inserisci i dati della tua azienda.
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tipoAccreditamento === 'Professionista'">
+      <div class="custom-control custom-radio">
+        <input
+          type="radio"
+          class="custom-control-input"
+          id="customControlValidation13"
+          name="radio-stacked"
+          (change)="option($event.target.value)"
+          [value]="'PF'"
+          [checked]="personaDatiOption === 'RF' || personaDatiOption === 'PF'"
+        />
+        <label class="custom-control-label" for="customControlValidation13">
+          Il richiedente è una Persona Fisica</label
+        >
+      </div>
+      <div class="custom-control custom-radio">
+        <input
+          type="radio"
+          class="custom-control-input"
+          id="customControlValidation14"
+          name="radio-stacked"
+          (change)="option($event.target.value)"
+          [value]="'PG'"
+          [checked]="personaDatiOption === 'RG' || personaDatiOption === 'PG'"
+        />
+        <label class="custom-control-label" for="customControlValidation14">
+          Il richiedente è una Persona Giuridica</label
+        >
+      </div>
+      <div class="grey-back" *ngIf="this.personaDatiOption === 'PG'">
+        <!--div>
+        <div class="row mt-6 mb-2">
+          <div class="col-3">
+            <label for="codiceFiscale" class="font-weight-bold">Codice fiscale delgato:</label>
+          </div>
+          <div class="col-3">
+            <form [formGroup]="delegatoForm">
+              <p-dropdown [options]='codiceFiscaleDelegati'  autoHighlight="true" id="delegatoId"
+                placeholder="Selezionare" formControlName="delegatoId"
+                (onChange)="chooseDelegato($event)" [styleClass]="'autoComplete form-control d-flex justify-content-end'">
+              </p-dropdown>
+            </form>
+          </div>
+        </div>
+      </!--div-->
+        <div>
+          <!-- <ul *ngFor="let company of companies;let i = index"><li><span class="company"
+          (click)="companyFillFields(company.partitaIva)">
+          {{ company.partitaIva }} - {{ company.denominazione }}</span></li></ul> -->
+          <div class="row mt-3 mb-2">
+            <div class="col-3">
+              <label for="codiceFiscale" class="font-weight-bold"
+                >Codice fiscale azienda:</label
+              >
+            </div>
+            <div class="col-3">
+              <p-dropdown
+                [options]="codiceFiscaleSelectItem"
+                autoHighlight="true"
+                inputId="codiceFiscale"
+                placeholder="Selezionare"
+                (onChange)="chooseCompany($event)"
+                [styleClass]="
+                  'autoComplete form-control d-flex justify-content-end'
+                "
+              >
+              </p-dropdown>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-sm-4">
+                  <label for="companyInfoIVA" class="font-weight-bold"
+                    >Partita IVA:</label
+                  >
+                </div>
+                <div class="col-sm-8">
+                  <span id="companyInfoIVA">
+                    {{ companyInfoIVA }}
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <label for="companyInfoDenominazione" class="font-weight-bold"
+                    >Denominazione:</label
+                  >
+                </div>
+                <div class="col-sm-8">
+                  <span id="companyInfoDenominazione">
+                    {{ companyInfoDenominazione }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="alert alert-warning"
+            *ngIf="
+              onlyAzienda === false &&
+              !loading &&
+              !companyData &&
+              tipoAccreditamento !== 'Professionista'
+            "
+          >
+            Se sei titolare di un’azienda che non compare in questo elenco
+            clicca
+            <span (click)="enterCompanyData()" class="qui">qui</span>
+            ed inserisci i dati della tua azienda.
+          </div>
+        </div>
+        <div
+          *ngIf="
+            companies.length === 0 &&
+            cfOwner &&
+            !loading &&
+            !companyData &&
+            tipoAccreditamento !== 'Professionista'
+          "
+          class="alert alert-warning"
+        >
+          Attenzione! Sull’Anagrafe delle Attività Economiche e Produttive non
+          risulti associato a nessuna azienda. Se sei titolare di un’azienda che
+          non compare in questa ricerca clicca
+          <span (click)="enterCompanyData()" class="qui">qui</span>
+          ed inserisci i dati della tua azienda.
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        (personaDatiOption === 'RG' && qui) ||
+        personaDatiOption === 'PG' ||
+        personaDatiOption === 'RF' ||
+        tipoAccreditamento === 'Professionista'
+      "
+    >
+      <hr />
+      <app-persona-form
+        [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+        [codiceFiscaleSONOIO]="codiceFiscaleSONOIO"
+        (codiceFiscaleEmitter)="getCodiceFiscale()"
+        [personaDatiOption]="personaDatiOption"
+        [personalOrCompanyForm]="
+          personaDatiOption === 'RF' || personaDatiOption === 'PF'
+            ? personaForm
+            : companyForm
+        "
+        (resetFormEmitter)="restartForm(personaDatiOption)"
+      ></app-persona-form>
+    </div>
+    <!-- <div *ngIf="personaDatiOption === 'PG' && qui && tipoAccreditamento === 'Professionista'">
+    <hr>
+    zare 2
+    <app-persona-form *ngIf="(personaDatiOption && codiceFiscaleSelectItem?.length === 0) || personaDatiOption === 'PF'"
+      [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+      [codiceFiscaleSONOIO]="codiceFiscaleSONOIO"
+      (codiceFiscaleEmitter)="getCodiceFiscale()"
+      [personaDatiOption]="personaDatiOption"
+      [personalOrCompanyForm]="personaDatiOption === 'RF' || personaDatiOption === 'PF' ? personaForm : companyForm"
+      (resetFormEmitter)="restartForm(personaDatiOption)"></app-persona-form>
+  </div> -->
+  </div>
+  <hr class="black-hr" />
+  <div
+    class="d-flex justify-content-between buttons"
+    *ngIf="personaDatiOption && !boMode && !isIstanzaInviata"
+  >
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva"
+      [disabled]="
+        personaDatiOption === 'RF' || personaDatiOption === 'PF'
+          ? personaForm?.invalid
+          : companyForm?.invalid
+      "
+      (onClick)="save()"
+    ></p-button>
+    <p-button
+      [styleClass]="
+        'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+      "
+      label="Salva e prosegui"
+      [disabled]="
+        personaDatiOption === 'RF' || personaDatiOption === 'PF'
+          ? personaForm?.invalid
+          : companyForm?.invalid
+      "
+      (onClick)="continue()"
+    ></p-button>
+  </div>
+</div>

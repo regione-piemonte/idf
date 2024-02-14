@@ -1,0 +1,92 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<p-table
+  [columns]="headers"
+  [rows]="5"
+  [value]="data ? data : []"
+  [paginator]="simpleTable ? false : true"
+  [rowsPerPageOptions]="[5, 10, 15]"
+  [totalRecords]="data && data.length ? data.length : 6"
+  [rows]="5"
+  [sortField]="simpleTable ? null : initiallySortedColumn"
+  [sortOrder]="simpleTable ? null : 1"
+  [sortMode]="simpleTable ? 'off' : 'single'"
+  [tableStyleClass]="'no-select-table'"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <ng-container
+        *ngFor="let col of columns"
+        [pSortableColumn]="col.field"
+        [ngSwitch]="col.field"
+      >
+        <th [ngStyle]="{ width: col.width }">
+          {{ col.header }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </ng-container>
+      <th
+        [ngStyle]="{ width: '150px' }"
+        *ngIf="download || delete || edit"
+      ></th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-car
+    let-columns="columns"
+    let-index="rowIndex"
+  >
+    <tr>
+      <td *ngFor="let col of columns">
+        {{ car[col.field] }}
+      </td>
+      <td *ngIf="download || delete || edit">
+        <button
+          type="button"
+          *ngIf="view"
+          (click)="viewRow()"
+          title="Visualizza elemento {{ getDescr(car) }}"
+          class="action-button"
+        >
+          <em class="fa fa-file-o" aria-hidden="true"></em>
+        </button>
+        <button
+          type="button"
+          *ngIf="edit"
+          (click)="editRow(car[fieldToEdit])"
+          title="Modifica elemento {{ getDescr(car) }}"
+          class="action-button"
+        >
+          <em class="fa fa-pencil" aria-hidden="true"></em>
+        </button>
+        <button
+          type="button"
+          *ngIf="download"
+          (click)="downloadRow(car[fieldToDownload])"
+          title="Scarica elemento {{ getDescr(car) }}"
+          class="action-button"
+        >
+          <em class="fa fa-download" aria-hidden="true"></em>
+        </button>
+        <button
+          type="button"
+          *ngIf="delete"
+          (click)="
+            deleteRowFromParcels(
+              car[fieldToDelete] ? car[fieldToDelete] : index,
+              index
+            )
+          "
+          title="Elimina elemento {{ getDescr(car) }}"
+          class="action-button"
+        >
+          <em class="fa fa-trash" aria-hidden="true"></em>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -1,0 +1,69 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div [hidden]="data?.length === 0">
+  <strong>Tolale risultati: {{ totalSize }}</strong>
+  <div class="scrollbar-table scrollbar-primary">
+    <p-table
+      [columns]="headers"
+      [rows]="pageSize"
+      [value]="data"
+      [tableStyleClass]="'reusable-table-hover'"
+      [lazy]="true"
+      [paginator]="true"
+      [totalRecords]="totalSize"
+      [rowsPerPageOptions]="[25, 50, 100]"
+      (onLazyLoad)="updateData($event)"
+      [customSort]="true"
+      [sortField]="initiallySortedColumn"
+      [sortOrder]="sortOrder"
+      [first]="(currentPage - 1) * pageSize"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th
+            *ngFor="let col of columns"
+            [pSortableColumn]="col.field"
+            [ngSwitch]="col.field"
+          >
+            {{ col.header }}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+
+          <th>Dettaglio</th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-rowObject
+        let-columns="columns"
+        let-index="rowIndex"
+      >
+        <tr [class.active-color]="index === selectedRow">
+          <td
+            *ngFor="let col of columns"
+            (click)="getFieldId(rowObject[selectableId], index, rowObject)"
+          >
+            {{ rowObject | deepFieldValue : col.field }}
+          </td>
+          <td style="width: max-content">
+            <ng-container
+              *ngTemplateOutlet="
+                buttonsTempRef;
+                context: { $implicit: rowObject, index: index }
+              "
+            ></ng-container>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<div
+  [hidden]="data.length !== 0 || totalSize !== 0"
+  class="text-center gray-field py-2 font-italic"
+>
+  No data
+</div>

@@ -1,0 +1,84 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!--app-table [data]="tableDati" [title]="'Alberi campione'"></!--app-table-->
+
+<div class="row justify-content-center my-4">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-lg-4 col-md-12 col-12 text-center">
+        <label class="font-weight-bold mt-4">Specie</label><br />
+        <select style="width: 300px" id="incrementiSpecieFilter">
+          <option value="">-- Seleziona --</option>
+          <option *ngFor="let item of specieFilter">{{ item }}</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-md-12 col-12 text-center">
+        <label class="font-weight-bold mt-4">Diametro minimo</label>
+        <select style="width: 250px" id="incrementiMinDiametroFilter">
+          <option value="">-- Seleziona --</option>
+          <option value="2.5">Classe 5 da 2,5 a 7,5</option>
+          <option value="7.5">Classe 10 da 7,5 a 12,5</option>
+          <option value="12.5">Classe 15 da 12,5 a 17,5</option>
+          <option value="17.5">Classe 20 da 17,5 a 22,5</option>
+          <option value="22.5">Classe 25 da 22,5 a 27,5</option>
+          <option value="27.5">Classe 30 da 27,5 a 32,5</option>
+          <option value="32.5">Classe 35 da 32,5 a 37,5</option>
+          <option value="37.5">Classe 40 da 37,5 a 42,5</option>
+          <option value="42.5">Classe 45 da 42,5 a 47,5</option>
+          <option value="47.5">Classe 50 da 47,5 a 52,5</option>
+          <option value="52.5">Classe 55 da 52,5 a 57,5</option>
+          <option value="57.5">Classe 60 da 57,5 a 62,5</option>
+          <option value="62.5">Classe 55 da 62,5 a 67,5</option>
+          <option value="67.5">Classe 70 da 67,5 a 72,5</option>
+          <option value="72.5">Classe 75 da 72,5 a 77,5</option>
+          <option value="77.5">Classe 80 oltre il 77,5</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-md-12 col-12 text-center">
+        <label class="font-weight-bold mt-4">Diametro massimo</label>
+        <select style="width: 250px" id="incrementiMaxDiametroFilter">
+          <option value="">-- Seleziona --</option>
+          <option value="7.5">Classe 5 da 2,5 a 7,5</option>
+          <option value="12.5">Classe 10 da 7,5 a 12,5</option>
+          <option value="17.5">Classe 15 da 12,5 a 17,5</option>
+          <option value="22.5">Classe 20 da 17,5 a 22,5</option>
+          <option value="27.5">Classe 25 da 22,5 a 27,5</option>
+          <option value="32.5">Classe 30 da 27,5 a 32,5</option>
+          <option value="37.5">Classe 35 da 32,5 a 37,5</option>
+          <option value="42.5">Classe 40 da 37,5 a 42,5</option>
+          <option value="47.5">Classe 45 da 42,5 a 47,5</option>
+          <option value="52.5">Classe 50 da 47,5 a 52,5</option>
+          <option value="57.5">Classe 55 da 52,5 a 57,5</option>
+          <option value="62.5">Classe 60 da 57,5 a 62,5</option>
+          <option value="67.5">Classe 55 da 62,5 a 67,5</option>
+          <option value="72.5">Classe 70 da 67,5 a 72,5</option>
+          <option value="77.5">Classe 75 da 72,5 a 77,5</option>
+          <option value="999">Classe 80 oltre il 77,5</option>
+        </select>
+      </div>
+
+      <div class="col-lg-2 col-md-12 col-12 text-center">
+        <br /><br />
+        <p-button label="Filtra report" (onClick)="executeFilter()"> </p-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-table [data]="tableCavallettati" [title]="'Dati risultato'"></app-table>
+
+<!--ng-container *ngIf="pointsDiametriIncrementi.length > 0">
+    <app-google-chart 
+    [title]="'Diametri e incrementi alberi campione'"
+    [id]="'pointsDiametriIncrementi'"
+    [type]="'ScatterChart'"
+    [data]="pointsDiametriIncrementi"
+    [columnNames]="['Diametri', 'Diametri/incrementi']"
+    [options]="options"
+    [width]="1100"
+    [height]="500">
+    ></app-google-chart>
+</|ng-container-->

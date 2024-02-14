@@ -1,0 +1,47 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<p-table
+  [columns]="headers"
+  [rows]="5"
+  [value]="data ? data : []"
+  [tableStyleClass]="'reusable-table-hover'"
+  [lazy]="true"
+  [paginator]="true"
+  [totalRecords]="6"
+  [rowsPerPageOptions]="[5, 10, 15]"
+  (onLazyLoad)="updateData($event)"
+  [customSort]="true"
+  [sortField]="initiallySortedColumn"
+  [sortOrder]="1"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th
+        *ngFor="let col of columns"
+        [pSortableColumn]="col.field"
+        [ngSwitch]="col.field"
+      >
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-car
+    let-columns="columns"
+    let-index="rowIndex"
+  >
+    <tr [class.active-color]="index === selectedRow">
+      <td
+        *ngFor="let col of columns"
+        (click)="getFieldId(car[selectableId], index)"
+      >
+        {{ car[col.field] }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

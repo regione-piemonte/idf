@@ -1,0 +1,716 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="this.step4Form" [formGroup]="step4Form">
+  <div class="grey1 grey-form">
+    <div class="row" *ngIf="governiPrincipali">
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="idGovernoPrincipale"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Governo principale <span class="text-danger">*</span>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <p-dropdown
+          formControlName="governoPrincipale"
+          id="idGovernoPrincipale"
+          [options]="governiPrincipali"
+          placeholder="Seleziona governo principale"
+          optionLabel="descrGoverno"
+          [showClear]="true"
+          (onChange)="changeGovernoPrincipale($event.value)"
+          [style]="{ width: '100%' }"
+          [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+          [required]="'true'"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="tipoInterventoPrincipale"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Intervento principale <span class="text-danger">*</span>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <p-dropdown
+          formControlName="interventoPrincipale"
+          id="tipoInterventoPrincipale"
+          [options]="tipiInterventoPrincipali"
+          placeholder="Seleziona intervento principale"
+          optionLabel="descrTipoIntervento"
+          [showClear]="true"
+          (onChange)="changeTipoInterventoPrincipale($event.value)"
+          [style]="{ width: '100%' }"
+          [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+          [required]="'true'"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        showSupPrincipale && this.step4Form.get('interventoSecondario').value
+          ? this.step4Form.get('interventoSecondario').value.idTipoIntervento !=
+            0
+          : false
+      "
+    >
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="superficiePrincipale"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Superficie interessata (ha) <span class="text-danger">*</span>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <input
+          type="number"
+          maxlength="6"
+          class="form-control col-lg-2 col-md-2 col-2 mb-3"
+          formControlName="superficiePrincipale"
+          id="superficiePrincipale"
+        />
+        <div
+          *ngIf="
+            (step4Form.controls['superficiePrincipale'].invalid &&
+              (step4Form.controls['superficiePrincipale'].dirty ||
+                step4Form.controls['superficiePrincipale'].touched)) ||
+            (step4Form.hasError('wrongValue') &&
+              (step4Form.controls['superficiePrincipale'].dirty ||
+                step4Form.controls['superficiePrincipale'].touched))
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="step4Form.controls['superficiePrincipale'].errors?.required"
+          >
+            Attenzione! Campo obbligatorio
+          </div>
+          <div
+            *ngIf="step4Form.controls['superficiePrincipale'].errors?.pattern"
+          >
+            Attenzione! Inserire solo valori numerici
+          </div>
+          <div *ngIf="step4Form.hasError('wrongValue')">
+            Attenzione! Il valore deve essere inferiore alla superficie totale
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        governiSecondari && this.step4Form.get('interventoPrincipale').value
+          ? this.step4Form.get('interventoPrincipale').value.idTipoIntervento !=
+            0
+          : false
+      "
+    >
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="idGovernoSecondario"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Governo secondario <cite class="h6">(opzionale)</cite>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <p-dropdown
+          formControlName="governoSecondario"
+          id="idGovernoSecondario"
+          [options]="governiSecondari"
+          placeholder="Seleziona governo secondario"
+          optionLabel="descrGoverno"
+          [showClear]="true"
+          (onChange)="changeGovernoSecondario($event.value)"
+          [style]="{ width: '100%' }"
+          [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        this.step4Form.get('interventoPrincipale').value
+          ? this.step4Form.get('interventoPrincipale').value.idTipoIntervento !=
+            0
+          : false
+      "
+    >
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="tipoInterventoSecondario"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Intervento secondario <cite class="h6">(opzionale)</cite>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <p-dropdown
+          formControlName="interventoSecondario"
+          [options]="tipiInterventoSecondari"
+          placeholder="Seleziona intervento secondario"
+          optionLabel="descrTipoIntervento"
+          [showClear]="true"
+          (onChange)="changeTipoInterventoSecondario($event.value)"
+          [style]="{ width: '100%' }"
+          [styleClass]="'autoComplete form-control d-flex justify-content-end'"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        showSupSecondaria && this.step4Form.get('interventoSecondario').value
+          ? this.step4Form.get('interventoSecondario').value.idTipoIntervento !=
+            0
+          : false
+      "
+    >
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="superficieSecondaria"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Superficie interessata (ha) <cite class="h6">(opzionale)</cite>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <div class="ml-0 row">
+          <input
+            type="number"
+            maxlength="6"
+            class="form-control col-lg-2 col-md-2 col-2 mb-3"
+            formControlName="superficieSecondaria"
+            id="superficieSecondaria"
+          />
+          <div class="col col-10">
+            <p-button
+              [styleClass]="
+                'f-4 font-weight-bold form-button d-flex justify-content-between'
+              "
+              label="Annulla intervento secondario"
+              (onClick)="cancelasec()"
+            ></p-button>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (step4Form.controls['superficieSecondaria'].invalid &&
+              (step4Form.controls['superficieSecondaria'].dirty ||
+                step4Form.controls['superficieSecondaria'].touched)) ||
+            (step4Form.hasError('wrongValue') &&
+              (step4Form.controls['superficieSecondaria'].dirty ||
+                step4Form.controls['superficieSecondaria'].touched))
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="step4Form.controls['superficieSecondaria'].errors?.pattern"
+          >
+            Attenzione! Inserire solo valori numerici
+          </div>
+          <div *ngIf="step4Form.hasError('wrongValue')">
+            Attenzione! Il valore deve essere inferiore alla superficie totale
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="superficieTotale"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Superficie totale (ha)
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <input
+          type="number"
+          class="form-control col-lg-2 col-md-2 col-2 mb-3"
+          formControlName="superficieTotale"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-12 mb-3">
+        <label
+          for="descrizioneTecnica"
+          class="row-lg-6 col-form-label font-weight-bold"
+        >
+          Descrizione tecnica intervento selvicolturale
+          <span class="text-danger">*</span>
+          <cite class="h6">(min 100 caratteri)</cite>
+        </label>
+      </div>
+      <div class="col-lg-8 col-md-8 col-12 mb-3">
+        <div class="textarea-wrapper">
+          <textarea
+            rows="3"
+            class="form-control"
+            id="descrizioneTecnica"
+            formControlName="descrizioneTecnica"
+          >
+          </textarea>
+          <span
+            class="remaning"
+            *ngIf="
+              step4Form.controls['descrizioneTecnica'].value &&
+              step4Form.controls['descrizioneTecnica'].value.length < 100
+            "
+          >
+            inserire altri
+            {{
+              100 -
+                (step4Form.controls["descrizioneTecnica"].value
+                  ? step4Form.controls["descrizioneTecnica"].value.length
+                  : 0)
+            }}
+            caratteri</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="black-hr mb-3" />
+</ng-container>
+
+<ng-container *ngIf="this.superficieTotale">
+  <ng-container *ngIf="this.step4Form.get('headings')">
+    <div class="grey1 grey-form" [formGroup]="step4Form">
+      <h4>Tipi di esbosco <span class="text-danger">*</span></h4>
+      <div
+        class="section"
+        *ngFor="
+          let header of step4Form.get('headings')['controls'];
+          let i = index
+        "
+      >
+        <input
+          [type]="'checkbox'"
+          class="custom-control-input"
+          [name]="'tipoEsbosco' + header.controls.id.value"
+          [id]="'headerControlValidation3' + header.controls.id.value"
+          [value]="header.controls.id.value"
+          [checked]="header.controls.checked.value"
+          [disabled]="header.controls.disabled.value"
+          (change)="onChange(i, $event)"
+        />
+        <label
+          [className]="'custom-control-label checkbox'"
+          [for]="'headerControlValidation3' + header.controls.id.value"
+        >
+          {{ header.controls.name.value }}
+        </label>
+
+        <!-- [disabled]="((header.controls.id.value === 2 && disableCategoriaForestale) || (header.controls.id.value === 4 && subHeader.controls.id.value === 9 ? true : false)) ? true : false" -->
+        <ng-container
+          *ngFor="
+            let subHeader of header.controls.subheadings.controls;
+            let subI = index
+          "
+        >
+          <div
+            [className]="
+              header.controls.type.value === 'checkbox'
+                ? 'custom-control custom-checkbox'
+                : 'custom-control custom-radio'
+            "
+          >
+            <input
+              [type]="header.controls.type.value"
+              class="custom-control-input"
+              [name]="
+                header.controls.type.value === 'checkbox'
+                  ? 'tipoAccreditamento3' + subHeader.controls.id.value
+                  : 'tipoAccreditamento3' + header.controls.id.value
+              "
+              [id]="
+                header.controls.id.value + '_' + subHeader.controls.id.value
+              "
+              [value]="subHeader.controls.id.value"
+              [checked]="subHeader.controls.checked.value"
+              (change)="onChangeSub(i, subI, $event)"
+              [disabled]="subHeader.controls.disabled.value"
+            />
+            <label
+              [className]="
+                header.controls.type.value === 'checkbox'
+                  ? 'custom-control-label checkbox'
+                  : 'custom-control-label'
+              "
+              [for]="
+                header.controls.id.value + '_' + subHeader.controls.id.value
+              "
+            >
+              {{ subHeader.controls.name.value }} (
+              {{ subHeader.controls.codice.value }} )
+            </label>
+          </div>
+        </ng-container>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 mb-3">
+          <label
+            for="noteEsbosco"
+            class="row-lg-6 col-form-label font-weight-bold"
+          >
+            Note esbosco
+          </label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 mb-3">
+          <textarea
+            class="form-control"
+            id="noteEsbosco"
+            formControlName="noteEsbosco"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <hr class="black-hr mb-3" />
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="this.superficieTotale">
+  <div class="grey1 grey-form" [formGroup]="step4Form">
+    <h4>Specie interessate dall'intervento</h4>
+
+    <div class="row">
+      <div class="col-2 d-flex justify-content-center">Specie</div>
+      <div class="col-1 d-flex justify-content-center">Nr.Piante</div>
+      <div class="col-4 d-flex justify-content-center">Quantità</div>
+      <div class="col-3 d-flex justify-content-center">Finalità del taglio</div>
+      <div class="col-2 d-flex justify-content-center">% Destinazione</div>
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-1"></div>
+      <div class="col-4">
+        <div class="row">
+          <div class="col-4 d-flex justify-content-center">metri cubi</div>
+          <div class="col-4 d-flex justify-content-center">tonnellate</div>
+          <div class="col-4 d-flex justify-content-center">quintali</div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+      <div class="col-2">
+        <div class="row">
+          <div class="col-6 d-flex justify-content-center">Auto-consumo</div>
+          <div class="col-6 d-flex justify-content-center">Commer-ciale</div>
+        </div>
+      </div>
+    </div>
+    <hr class="black-hr mb-3" />
+
+    <div formArrayName="specieInteressate">
+      <div
+        *ngFor="
+          let team of step4Form.get('specieInteressate')['controls'];
+          let i = index
+        "
+        [formGroupName]="i"
+      >
+        <div class="row">
+          <div class="col-2 p-2">
+            <p-dropdown
+              formControlName="specie"
+              [options]="specie"
+              placeholder="Seleziona specie"
+              optionLabel="volgare"
+              [showClear]="true"
+              (onChange)="changeSpecie($event.value, i)"
+              [style]="{ width: '100%' }"
+              [styleClass]="
+                'autoComplete form-control d-flex justify-content-end'
+              "
+              [required]="'true'"
+            >
+            </p-dropdown>
+          </div>
+          <div class="col-1 p-2 pr-3">
+            <input
+              type="number"
+              class="form-control mb-2"
+              formControlName="numPiante"
+              (change)="calculateTotals()"
+              [style.font-size]="'0.7rem'"
+            />
+          </div>
+          <div class="col-4 p-1">
+            <div class="row">
+              <div class="col-4 p-1">
+                <input
+                  type="number"
+                  class="form-control mb-2"
+                  formControlName="mc"
+                  (change)="handleVolume($event, i, team)"
+                  [style.font-size]="'0.7rem'"
+                />
+              </div>
+              <div class="col-4 p-1">
+                <input
+                  type="number"
+                  class="form-control mb-2"
+                  formControlName="t"
+                  (change)="handleVolume($event, i, team)"
+                  [style.font-size]="'0.7rem'"
+                />
+              </div>
+              <div class="col-4 p-1">
+                <input
+                  type="number"
+                  class="form-control mb-2"
+                  formControlName="q"
+                  (change)="handleVolume($event, i, team)"
+                  [style.font-size]="'0.7rem'"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-3"></div>
+          <div class="col-2">
+            <button
+              type="button"
+              (click)="deleteSpecie(i)"
+              title="Elimina"
+              class="action-button float-right"
+            >
+              <em class="fa fa-trash" aria-hidden="true"></em>
+            </button>
+          </div>
+        </div>
+
+        <div formArrayName="finalitaTaglio">
+          <div
+            *ngFor="
+              let fin of team.get('finalitaTaglio').controls;
+              let ii = index
+            "
+            [formGroupName]="ii"
+            class="row"
+          >
+            <div class="col-2"></div>
+            <div class="col-1"></div>
+
+            <div class="col-4 p-1">
+              <div class="row">
+                <div class="col-4 p-1">
+                  <input
+                    type="number"
+                    class="form-control mb-2"
+                    formControlName="mc"
+                    [attr.disabled]="true"
+                    [style.font-size]="'0.7rem'"
+                  />
+                </div>
+                <div class="col-4 p-1">
+                  <input
+                    type="number"
+                    class="form-control mb-2"
+                    formControlName="t"
+                    [attr.disabled]="true"
+                    [style.font-size]="'0.7rem'"
+                  />
+                </div>
+                <div class="col-4 p-1">
+                  <input
+                    type="number"
+                    class="form-control mb-2"
+                    formControlName="q"
+                    [attr.disabled]="true"
+                    [style.font-size]="'0.7rem'"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3 p-2 pl-3">
+              <input
+                type="text"
+                class="form-control mb-2"
+                disabled="true"
+                formControlName="description"
+                [style.font-size]="'0.8rem'"
+              />
+            </div>
+
+            <div class="col-2">
+              <div class="row">
+                <div class="col-6 p-2">
+                  <input
+                    type="number"
+                    class="form-control mb-2"
+                    formControlName="autoconsumo"
+                    (change)="handleDestinazione($event, i, ii, fin)"
+                    [style.font-size]="'0.7rem'"
+                    [attr.disabled]="switchOff ? true : null"
+                  />
+                </div>
+                <div class="col-6 p-2">
+                  <input
+                    *ngIf="ii < 3"
+                    type="number"
+                    class="form-control mb-2"
+                    formControlName="commerciale"
+                    (change)="handleDestinazione($event, i, ii, fin)"
+                    [style.font-size]="'0.7rem'"
+                    [attr.disabled]="switchOff ? true : null"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-end">
+            <div
+              *ngIf="team.get('finalitaTaglio').hasError('wrongPerc')"
+              class="alert alert-danger col-6 align-self-end"
+            >
+              Attenzione! Il valore totale delle percentuali di destinazione
+              deve essere 100
+            </div>
+          </div>
+        </div>
+
+        <hr class="black-hr mb-3" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2 p-2">
+        <label class="col-form-label font-weight-bold">Totali</label>
+      </div>
+      <div class="col-1 p-2 pr-3">
+        <input
+          type="number"
+          class="form-control p-1 mb-3"
+          disabled="true"
+          formControlName="totaliPiante"
+          [style.font-size]="'0.7rem'"
+        />
+      </div>
+      <div class="col-4 p-1">
+        <div class="row">
+          <div class="col-4 p-1">
+            <input
+              type="number"
+              class="form-control mb-3"
+              disabled="true"
+              formControlName="totaliMc"
+              [style.font-size]="'0.7rem'"
+            />
+          </div>
+          <div class="col-4 p-1">
+            <input
+              type="number"
+              class="form-control mb-3"
+              disabled="true"
+              formControlName="totaliT"
+              [style.font-size]="'0.7rem'"
+            />
+          </div>
+          <div class="col-4 p-1">
+            <input
+              type="number"
+              class="form-control mb-3"
+              disabled="true"
+              formControlName="totaliQ"
+              [style.font-size]="'0.7rem'"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+      <div class="col-3">
+        <p-button
+          [styleClass]="
+            'mr-2 f-12 font-weight-bold form-button d-flex justify-content-between'
+          "
+          label="Aggiungi specie"
+          (onClick)="addSpecie()"
+        ></p-button>
+      </div>
+    </div>
+    <div class="row" [formGroup]="step4Form">
+      <div class="col-3">
+        <label class="col-form-label font-weight-bold">Ramaglia</label>
+      </div>
+      <div class="col-4 p-1">
+        <div class="row">
+          <div class="col-4 p-1">
+            <input
+              type="number"
+              class="form-control mb-3"
+              formControlName="ramagliaMc"
+              (change)="handleRamaglia($event)"
+              [style.font-size]="'0.7rem'"
+            />
+          </div>
+          <div class="col-4 p-1">
+            <input
+              type="number"
+              class="form-control mb-3"
+              formControlName="ramagliaT"
+              (change)="handleRamaglia($event)"
+              [style.font-size]="'0.7rem'"
+            />
+          </div>
+          <div class="col-4 p-1">
+            <input
+              type="number"
+              class="form-control mb-3"
+              formControlName="ramagliaQ"
+              (change)="handleRamaglia($event)"
+              [style.font-size]="'0.7rem'"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+      <div class="col-3"></div>
+    </div>
+  </div>
+  <hr class="black-hr mb-3" />
+</ng-container>
+
+<div
+  class="d-flex justify-content-between buttons"
+  *ngIf="!boMode && !isIstanzaInviata"
+>
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva"
+    (onClick)="save()"
+    [disabled]="invalid || this.step4Form.invalid"
+  ></p-button>
+
+  <p-button
+    [styleClass]="
+      'mr-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+    "
+    label="Salva e prosegui"
+    (onClick)="continue()"
+    [disabled]="invalid || this.step4Form.invalid"
+  ></p-button>
+</div>

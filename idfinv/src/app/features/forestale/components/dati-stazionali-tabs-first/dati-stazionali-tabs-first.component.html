@@ -1,0 +1,681 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="row" *ngIf="stepsForm" [formGroup]="stepsForm" #container>
+  <div class="col-md-12">
+    <div class="grey-form">
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="densitaCamp" class="font-weight-bold"
+              >Densità di campionamento (ettari)<span class="text-danger"
+                >*</span
+              ></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('densitaCamp').touched &&
+                stepsForm.get('densitaCamp').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('densitaCamp').touched &&
+                stepsForm.get('densitaCamp').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('densitaCamp').touched &&
+                stepsForm.get('densitaCamp').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="densitaCamp"
+              formControlName="densitaCamp"
+              name="densitaCamp"
+              OnlyNumber="true"
+              pTooltip="{{ tooltipProperty.densitaCamp }}"
+              tooltipPosition="top"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="raggioArea" class="font-weight-bold"
+              >Raggio area (metri)<span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('raggioArea').touched &&
+                stepsForm.get('raggioArea').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('raggioArea').touched &&
+                stepsForm.get('raggioArea').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('raggioArea').touched &&
+                stepsForm.get('raggioArea').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="raggioArea"
+              formControlName="raggioArea"
+              name="raggioArea"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <label for="categoriaForstale" class="font-weight-bold"
+            >Categoria forestale <span class="text-danger">*</span></label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              stepsForm.get('categoriaForestale').touched &&
+              stepsForm.get('categoriaForestale').errors?.required
+            "
+          >
+            Errore: selezionare una voce dall'elenco</span
+          >
+          <ng-container
+            *ngIf="categoriaForstale$ | async as categoriaForestale"
+          >
+            <p-dropdown
+              [options]="categoriaForestale"
+              [placeholder]="'Seleziona categoria forestale'"
+              formControlName="categoriaForestale"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              [autoWidth]="false"
+              inputId="categoriaForestale"
+              (onChange)="fillTipoForestale()"
+            >
+              <ng-template let-type pTemplate="item">
+                <div
+                  class="ui-helper-clearfix"
+                  style="position: relative; height: 25px"
+                >
+                  <div style="font-size: 14px">
+                    {{ type.label }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+        <div class="col">
+          <label for="tipoForestale" class="font-weight-bold"
+            >Tipo forestale <span class="text-danger">*</span></label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              stepsForm.get('tipoForestale').touched &&
+              stepsForm.get('tipoForestale').errors?.required
+            "
+          >
+            Errore: selezionare una voce dall'elenco</span
+          >
+          <ng-container *ngIf="tipoForestale$ | async as tipoForestale">
+            <p-dropdown
+              filter="true"
+              [options]="tipoForestaleList"
+              [placeholder]="'Seleziona tipo forestale'"
+              formControlName="tipoForestale"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              [autoWidth]="false"
+              inputId="tipoForestale"
+            >
+              <ng-template let-type pTemplate="item">
+                <div
+                  class="ui-helper-clearfix"
+                  style="position: relative; height: 25px"
+                >
+                  <div style="font-size: 14px">
+                    {{ type.label }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <label for="assettoEvolutivoColturale" class="font-weight-bold"
+            >Assetto evolutivo colturale
+            <span class="text-danger">*</span></label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              stepsForm.get('assettoEvolutivoColturale').touched &&
+              stepsForm.get('assettoEvolutivoColturale').errors?.required
+            "
+          >
+            Errore: selezionare una voce dall'elenco</span
+          >
+          <ng-container *ngIf="colturale$ | async as colturale">
+            <p-dropdown
+              [options]="colturale"
+              [placeholder]="'Seleziona assetto evolutivo-colturale'"
+              formControlName="assettoEvolutivoColturale"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              [autoWidth]="false"
+              inputId="assettoEvolutivoColturale"
+            >
+              <ng-template let-type pTemplate="item">
+                <div
+                  class="ui-helper-clearfix"
+                  style="position: relative; height: 25px"
+                >
+                  <div style="font-size: 14px">
+                    {{ type.label }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+        <div class="col">
+          <label for="tipoStrutturale" class="font-weight-bold"
+            >Tipo strutturale<span class="text-danger">*</span></label
+          >
+          <span
+            class="text-danger f-18"
+            *ngIf="
+              stepsForm.get('tipoStrutturale').touched &&
+              stepsForm.get('tipoStrutturale').errors?.required
+            "
+          >
+            Errore: selezionare una voce dall'elenco</span
+          >
+          <ng-container *ngIf="tipoStrutturale$ | async as tipoStrutturale">
+            <p-dropdown
+              filter="true"
+              [options]="tipoStrutturale"
+              [placeholder]="'Seleziona tipo strutturale'"
+              formControlName="tipoStrutturale"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              [autoWidth]="false"
+              inputId="tipoStrutturale"
+            >
+              <ng-template let-type pTemplate="item">
+                <div
+                  class="ui-helper-clearfix"
+                  style="position: relative; height: 25px"
+                >
+                  <div style="font-size: 14px">
+                    {{ type.label }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="classeDiFertilita" class="font-weight-bold"
+              >Classe di fertilità <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('idClasseDiFertilita').touched &&
+                stepsForm.get('idClasseDiFertilita').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco
+            </span>
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('idClasseDiFertilita').touched &&
+                stepsForm.get('idClasseDiFertilita').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <!-- <input
+            type="text"
+            class="form-control"
+            id="classeDiFertilita"
+            formControlName="classeDiFertilita"
+            name="classeDiFertilita"
+            OnlyNumber="true"
+            pTooltip={{tooltipProperty.classeDiFertilita}}
+            tooltipPosition="top"
+          /> -->
+            <ng-container
+              *ngIf="classeDiFertilita$ | async as classeDiFertilita"
+            >
+              <p-dropdown
+                [options]="classeDiFertilita"
+                [placeholder]="'Seleziona classe Di Fertilita'"
+                formControlName="idClasseDiFertilita"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                [filter]="false"
+                inputId="classeDiFertilita"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="nCepaie" class="font-weight-bold"
+              >N° ceppaie <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('nCepaie').touched &&
+                stepsForm.get('nCepaie').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            ><span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('nCepaie').touched &&
+                stepsForm.get('nCepaie').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="nCepaie"
+              formControlName="nCepaie"
+              name="nCepaie"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="rinnovazione" class="font-weight-bold"
+              >Rinnovazione (decine)
+            </label>
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('rinnovazione').touched &&
+                stepsForm.get('rinnovazione').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('rinnovazione').touched &&
+                stepsForm.get('rinnovazione').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('rinnovazione').touched &&
+                stepsForm.get('rinnovazione').errors?.minlength
+              "
+            >
+              Attenzione! Almeno una lettera</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('rinnovazione').touched &&
+                stepsForm.get('rinnovazione').errors?.maxlength
+              "
+            >
+              Attenzione! Massimo due lettere</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="rinnovazione"
+              formControlName="rinnovazione"
+              name="rinnovazione"
+              OnlyNumber="true"
+              maxlength="2"
+              pTooltip="{{ tooltipProperty.rinnovazione }}"
+              tooltipPosition="top"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="speciePrevalenteRinnovazione" class="font-weight-bold"
+              >Specie prevalente rinnovazione
+              <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('speciePrevalenteRinnovazione').touched &&
+                stepsForm.get('speciePrevalenteRinnovazione').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco</span
+            >
+            <ng-container *ngIf="specie$ | async as specie">
+              <p-dropdown
+                [options]="specie"
+                [placeholder]="'Seleziona specie'"
+                formControlName="speciePrevalenteRinnovazione"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                [filter]="true"
+                inputId="speciePrevalenteRinnovazione"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="stadioDiSviluppo" class="font-weight-bold"
+              >Stadio di sviluppo <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('stadioDiSviluppo').touched &&
+                stepsForm.get('stadioDiSviluppo').errors?.required
+              "
+            >
+              Errore: selezionare una voce dall'elenco</span
+            >
+            <ng-container *ngIf="sviluppo$ | async as sviluppo">
+              <p-dropdown
+                [options]="sviluppo"
+                [placeholder]="'Seleziona stadio di sviluppo'"
+                formControlName="stadioDiSviluppo"
+                [style]="{ width: '100%' }"
+                [showClear]="true"
+                [autoWidth]="false"
+                inputId="stadioDiSviluppo"
+              >
+                <ng-template let-type pTemplate="item">
+                  <div
+                    class="ui-helper-clearfix"
+                    style="position: relative; height: 25px"
+                  >
+                    <div style="font-size: 14px">
+                      {{ type.label }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-group">
+            <label for="coperturaChiome" class="font-weight-bold"
+              >Copertura chiome % <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaChiome').touched &&
+                stepsForm.get('coperturaChiome').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaChiome').touched &&
+                stepsForm.get('coperturaChiome').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaChiome').touched &&
+                stepsForm.get('coperturaChiome').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="coperturaChiome"
+              formControlName="coperturaChiome"
+              name="coperturaChiome"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="lettiera" class="font-weight-bold"
+              >Copertura lettiera % <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('lettiera').touched &&
+                stepsForm.get('lettiera').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('lettiera').touched &&
+                stepsForm.get('lettiera').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('lettiera').touched &&
+                stepsForm.get('lettiera').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="lettiera"
+              formControlName="lettiera"
+              name="lettiera"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="coperturaErbacea" class="font-weight-bold"
+              >Copertura erbacea % <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaErbacea').touched &&
+                stepsForm.get('coperturaErbacea').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaErbacea').touched &&
+                stepsForm.get('coperturaErbacea').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaErbacea').touched &&
+                stepsForm.get('coperturaErbacea').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="coperturaErbacea"
+              formControlName="coperturaErbacea"
+              name="coperturaErbacea"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="coperturaCespugli" class="font-weight-bold"
+              >Copertura cespugli suffrutici %
+              <span class="text-danger">*</span></label
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaCespugli').touched &&
+                stepsForm.get('coperturaCespugli').errors?.required
+              "
+            >
+              Errore: campo obbligatorio</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaCespugli').touched &&
+                stepsForm.get('coperturaCespugli').errors?.pattern
+              "
+            >
+              Attenzione! Valore non valido</span
+            >
+            <span
+              class="text-danger f-18"
+              *ngIf="
+                stepsForm.get('coperturaCespugli').touched &&
+                stepsForm.get('coperturaCespugli').errors?.maxlength
+              "
+            >
+              Attenzione! La stringa digitata è troppo lunga</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="coperturaCespugli"
+              formControlName="coperturaCespugli"
+              name="coperturaCespugli"
+              OnlyNumber="true"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p-button
+            label="Pulisci"
+            (onClick)="resetForm()"
+            [styleClass]="'mt-3 f-18 font-weight-bold form-outline-button'"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+    <hr class="black-hr" />
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <p-button
+          label="Torna ai risultati ricerca"
+          (onClick)="navigateToSearch()"
+          [styleClass]="'mr-2 mb-3 f-18 font-weight-bold form-button'"
+        ></p-button>
+        <p-button
+          label="SALVA e prosegui"
+          (onClick)="sendFirstForm()"
+          [styleClass]="'ml-2 mb-3 f-18 font-weight-bold form-button'"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</div>

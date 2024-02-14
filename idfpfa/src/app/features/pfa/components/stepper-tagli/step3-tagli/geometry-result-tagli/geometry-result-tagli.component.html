@@ -1,0 +1,314 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<div class="grey1">
+  <form [formGroup]="polygonForm">
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Totale superficie catastale (ha)</label
+      >
+      <div class="row-sm-12">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="particelleCatastali"
+        />
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Totale superficie intervento (ha)</label
+      >
+      <div class="row-sm-12">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="totaleSuperficieIntervento"
+        />
+      </div>
+      <div
+        class="alert alert-warning"
+        *ngIf="polygonForm.get('particelleCatastali').value > 0.5"
+      >
+        "Art. 31, comma 1 del Regolamento Forestale": A decorrere dal 1°
+        settembre 2015 gli interventi selvicolturali eseguiti su superfici
+        superiori a 5.000 metri quadrati devono essere realizzati da almeno un
+        operatore, stabilmente presente in cantiere, in possesso delle
+        competenze professionali riferite all'unità formativa denominata
+        "Utilizzo in sicurezza della motosega nelle operazioni di abbattimento
+        ed allestimento" (UF3)
+      </div>
+    </div>
+
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Ricadenza in Aree Protette
+        <span
+          *ngIf="
+            polygonForm.get('ricadenzaAreeProtette')['controls'].length > 0
+          "
+          class="font-weight-bold"
+        >
+          - Si dichiara che l’intervento rispetta le misure di conservazione
+        </span>
+      </label>
+      <div class="row-sm-12 categorie">
+        <ng-container
+          formArrayName="ricadenzaAreeProtette"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaAreeProtette'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              -
+              {{ ricadenzaInCategorieForestali.get("nome").value }}
+
+              {{
+                ricadenzaInCategorieForestali.get("percentualeRicadenza").value
+              }};&nbsp;</span
+            >
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Ricadenza in Rete Natura 2000
+        <span
+          *ngIf="polygonForm.get('ricadenzaNatura2000')['controls'].length > 0"
+          class="font-weight-bold"
+        >
+          - Si dichiara che l’intervento rispetta le misure di conservazione
+        </span>
+      </label>
+      <div class="row-sm-12 categorie">
+        <ng-container
+          formArrayName="ricadenzaNatura2000"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaNatura2000'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              -
+              {{ ricadenzaInCategorieForestali.get("nome").value }}
+
+              {{
+                ricadenzaInCategorieForestali.get("percentualeRicadenza").value
+              }};&nbsp;</span
+            >
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Ricadenza in Popolamenti da Seme</label
+      >
+      <div class="row-sm-12 categorie">
+        <!-- <input type="text" class="form-control" formControlName='ricadenzaNatura2000'> -->
+        <ng-container
+          formArrayName="ricadenzaPopolamentiDaSeme"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaPopolamentiDaSeme'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{
+                ricadenzaInCategorieForestali.get("codiceAmministrativo").value
+              }}
+              - {{ ricadenzaInCategorieForestali.get("nome").value }} -
+              {{
+                ricadenzaInCategorieForestali.get("percentualeRicadenza").value
+              }}%;&nbsp;
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label">Ricadenza in Portaseme</label>
+      <div class="row-sm-12 categorie">
+        <ng-container
+          formArrayName="ricadenzaPortaSeme"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaPortaSeme'
+            )['controls'];
+            let i = index
+          "
+        >
+          <ng-container [formGroupName]="i">
+            <span
+              >{{ ricadenzaInCategorieForestali?.get("localita")?.value }} -
+              {{ ricadenzaInCategorieForestali?.get("specie")?.value }}
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="row-sm-12 col-form-label"
+        >Ricadenza in Categorie Forestali</label
+      >
+      <div class="form-group row">
+        <ng-container
+          formArrayName="ricadenzaCategorieForestali"
+          *ngFor="
+            let ricadenzaInCategorieForestali of polygonForm.get(
+              'ricadenzaCategorieForestali'
+            )['controls'];
+            let i = index
+          "
+        >
+          <div class="col-lg-12 col-md-12 col-12 categorie mb-2">
+            <ng-container [formGroupName]="i">
+              <span
+                >{{
+                  ricadenzaInCategorieForestali.get("codiceAmministrativo")
+                    .value
+                }}
+                - {{ ricadenzaInCategorieForestali.get("nome").value }} -
+                {{
+                  ricadenzaInCategorieForestali.get("percentualeRicadenza")
+                    .value
+                }}%;&nbsp;
+              </span>
+              <span class="float-right" (click)="remove($event, i)"
+                ><i class="fa fa-trash"></i
+              ></span>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-group col">
+      <div class="form-group row">
+        <ng-container *ngIf="display">
+          <div class="col-lg-8 col-md-8 col-8">
+            <p-dropdown
+              [options]="categorieForestali"
+              placeholder="Seleziona categoria forestale"
+              optionLabel="descrizione"
+              [showClear]="true"
+              (onChange)="onCategoryChange($event.value)"
+              [style]="{ width: '100%' }"
+              [styleClass]="
+                'autoComplete form-control d-flex justify-content-end'
+              "
+            >
+              <ng-template let-item pTemplate="item">
+                {{ item.value.codiceAmministrativo }} -
+                {{ item.value.descrizione }}
+              </ng-template>
+
+              <ng-template let-item pTemplate="selectedItem">
+                {{ item.value.codiceAmministrativo }} -
+                {{ item.value.descrizione }}
+              </ng-template>
+            </p-dropdown>
+          </div>
+
+          <div class="float-right">
+            <p-button
+              [styleClass]="
+                'ml-2 f-18 font-weight-bold form-button d-flex justify-content-between'
+              "
+              label="Inserisci"
+              (onClick)="addElement($event)"
+              [disabled]="!catSelected"
+            ></p-button>
+            <p-button
+              [styleClass]="
+                'ml-2 f-18 font-weight-bold form-outline-button d-flex justify-content-between'
+              "
+              label="Annulla"
+              (onClick)="cancelAddRicadenza($event)"
+            ></p-button>
+          </div>
+        </ng-container>
+        <p-button
+          *ngIf="!display"
+          [styleClass]="
+            'mt-3 f-12 font-weight-bold form-button d-flex justify-content-between'
+          "
+          label="Aggiungi categoria forestale"
+          (onClick)="showAdd()"
+        ></p-button>
+      </div>
+    </div>
+    <br />
+    <div>
+      <div class="row">
+        <div class="col-md-12 mb-4">
+          <label class="row-sm-12 col-form-label"
+            >Ricadenze in Piano Paesaggistico Regionale</label
+          >
+        </div>
+      </div>
+      <!-- <app-reusable-table *ngIf="valorizzata"
+    [headers]="tableHeaders"
+    [data]= "tableData ? tableData : []"
+    ></app-reusable-table> -->
+
+      <ng-template [ngIf]="tableData?.length > 0" [ngIfElse]="noData">
+        <table>
+          <thead>
+            <tr>
+              <th *ngFor="let col of tableHeaders">
+                {{ col.header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ric of tableData">
+              <td>{{ ric?.tipoVincolo }}</td>
+              <td>{{ ric?.nomeVincolo }}</td>
+              <td>{{ ric?.provvedimento }}</td>
+              <td>{{ ric?.percentuale }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+      <ng-template #noData>
+        <div class="row">
+          <div class="col-md-12 mb-4">
+            <label class="row-sm-12 col-form-label">Nessuna</label>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+    <div
+      class="form-group row"
+      *ngIf="polygonForm.get('ricadenzaPfa').value.value"
+    >
+      <div class="col-lg-12 col-md-12 col-12">
+        <div class="alert alert-danger">
+          Attenzione, una parte dell'area ricade in zona PGF. Non è possibile
+          proseguire
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="utilizzatoreDettaglio$ | async as utillizzatore">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Richiedenti</th>
+          <td>
+            {{ getDescrizione(utillizzatore.richiedente) }}
+          </td>
+          <th>Utilizzatori</th>
+          <td>
+            {{ getDescrizione(utillizzatore.utilizzatore) }}
+          </td>
+          <th>Tecnico forestale</th>
+          <td>
+            {{ getDescrizione(utillizzatore.tecnicoForestale) }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-container>

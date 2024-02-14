@@ -1,0 +1,1064 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<ng-container *ngIf="mainContent">
+  <div id="pippo" class="grey-form">
+    <div *ngIf="isCompleted && invioFinished && viewMode === false">
+      <div *ngIf="!istanzaInviata.dataInvio">
+        <div class="grey1 px-3">
+          <ng-container
+            *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE"
+          >
+            <button
+              _ngcontent-c14=""
+              title="Scarica"
+              type="button"
+              (click)="
+                downloadDichiarazione(
+                  $event,
+                  tipoAllegatoEnum.RICHIESTA_DI_AUTORIZZAZIONE_DI_TAGLIO_IN_BOSCO_DIGIT
+                )
+              "
+              class="ng-star-inserted action-button mr-2"
+            >
+              <em
+                _ngcontent-c14=""
+                aria-hidden="true"
+                class="fa fa-download"
+              ></em>
+            </button>
+            <span
+              >Scarica la Richiesta di autorizzazione con progetto per firma
+              digitale</span
+            ><br />
+            <button
+              _ngcontent-c14=""
+              title="Scarica"
+              type="button"
+              (click)="
+                downloadDichiarazione(
+                  $event,
+                  tipoAllegatoEnum.RICHIESTA_DI_AUTORIZZAZIONE_DI_TAGLIO_IN_BOSCO_AUTOG
+                )
+              "
+              class="ng-star-inserted action-button mr-2"
+            >
+              <em
+                _ngcontent-c14=""
+                aria-hidden="true"
+                class="fa fa-download"
+              ></em>
+            </button>
+            <span
+              >Scarica la Richiesta di autorizzazione con progetto per firma
+              autografa</span
+            ><br /><br />
+          </ng-container>
+
+          <ng-container
+            *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE"
+          >
+            <button
+              _ngcontent-c14=""
+              title="Scarica"
+              type="button"
+              (click)="
+                downloadDichiarazione(
+                  $event,
+                  tipoAllegatoEnum.COMUNICAZIONE_DI_TAGLIO_IN_BOSCO_DIGIT
+                )
+              "
+              class="ng-star-inserted action-button mr-2"
+            >
+              <em
+                _ngcontent-c14=""
+                aria-hidden="true"
+                class="fa fa-download"
+              ></em>
+            </button>
+            <span>Scarica la Comunicazione semplice per firma digitale</span
+            ><br />
+            <button
+              _ngcontent-c14=""
+              title="Scarica"
+              type="button"
+              (click)="
+                downloadDichiarazione(
+                  $event,
+                  tipoAllegatoEnum.COMUNICAZIONE_DI_TAGLIO_IN_BOSCO_AUTOG
+                )
+              "
+              class="ng-star-inserted action-button mr-2"
+            >
+              <em
+                _ngcontent-c14=""
+                aria-hidden="true"
+                class="fa fa-download"
+              ></em>
+            </button>
+            <span>Scarica la Comunicazione semplice per firma autografa</span
+            ><br /><br />
+          </ng-container>
+
+          <span *ngIf="isDownloadSuccess">Documento scaricato.</span>
+
+          <h4
+            *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE"
+            class="header"
+          >
+            Carica la Comunicazione semplice firmata dal richiedente
+          </h4>
+          <h4
+            *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE"
+            class="header"
+          >
+            Carica la Richiesta di autorizzazione con progetto firmata dal
+            richiedente
+          </h4>
+
+          <div class="row">
+            <div class="col-md-9">
+              <ng-container
+                *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE"
+              >
+                <input
+                  type="radio"
+                  name="radio-docType"
+                  [checked]="docType == 25"
+                  (change)="changeDocType(25)"
+                />
+                <label style="padding-left: 5px; padding-right: 30px"
+                  >Digitale</label
+                >
+                <input
+                  type="radio"
+                  name="radio-docType"
+                  [checked]="docType == 36"
+                  (change)="changeDocType(36)"
+                />
+                <label style="padding-left: 5px; padding-right: 30px"
+                  >Autografa</label
+                >
+              </ng-container>
+
+              <ng-container
+                *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE"
+              >
+                <input
+                  type="radio"
+                  name="radio-docType"
+                  [checked]="docType == 26"
+                  (change)="changeDocType(26)"
+                />
+                <label style="padding-left: 5px; padding-right: 30px"
+                  >Digitale</label
+                >
+                <input
+                  type="radio"
+                  name="radio-docType"
+                  [checked]="docType == 37"
+                  (change)="changeDocType(37)"
+                />
+                <label style="padding-left: 5px; padding-right: 30px"
+                  >Autografa</label
+                >
+              </ng-container>
+
+              <p-fileUpload
+                id="fileUpload_0"
+                chooseLabel="Scegli file"
+                uploadLabel="Carica"
+                cancelLabel="Cancella"
+                [disabled]="idDichiarazioneUploaded()"
+                name="image"
+                maxFileSize="50000000"
+                customUpload="true"
+                (uploadHandler)="uploadDocumento($event, 0)"
+                [styleClass]="'mb-3'"
+              ></p-fileUpload>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="docType === 36 || docType === 37">
+            <div class="col-md-9">
+              <label for="fileUpload_4" class="font-weight-bold"
+                >Allega scansione documento</label
+              >
+              <p-fileUpload
+                id="fileUpload_38"
+                chooseLabel="Scegli file"
+                uploadLabel="Carica"
+                cancelLabel="Cancella"
+                name="image"
+                maxFileSize="50000000"
+                [disabled]="idDocPresent(38)"
+                customUpload="true"
+                (uploadHandler)="uploadDocumento($event, 38)"
+                [styleClass]="'mb-3'"
+              ></p-fileUpload>
+            </div>
+          </div>
+        </div>
+
+        <h4
+          *ngIf="
+            tableData &&
+            tableData.length > 0 &&
+            tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE
+          "
+          class="header"
+        >
+          Comunicazione semplice e suoi allegati
+        </h4>
+        <h4
+          *ngIf="
+            tableData &&
+            tableData.length > 0 &&
+            tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE
+          "
+          class="header"
+        >
+          Richiesta di autorizzazione con progetto e suoi allegati
+        </h4>
+        <app-reusable-front-table
+          *ngIf="tableData && tableData.length > 0"
+          [data]="tableData"
+          [headers]="allegatiTableHeaders"
+          [download]="true"
+          [delete]="true"
+          [fieldToDownload]="'idDocumentoAllegato'"
+          [fieldToDelete]="'idDocumentoAllegato'"
+          (deleteRow)="fieldToDelete($event, 'elenco')"
+          (downloadEmitter)="fieldToDownload($event)"
+        >
+        </app-reusable-front-table>
+        <div style="margin-top: 1rem; text-align: center">
+          <p-button
+            [disabled]="!idDichiarazioneUploaded() || !idDocIdentitaOk()"
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+            label="Invia"
+            (onClick)="submit($event)"
+          >
+          </p-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+      Numero intervento: {{ istanzaInviata.idIstanzaIntervento }}
+    </h4>
+    <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+      Stato intervento: <span class="uppercase">
+        {{istanzaInviata.descrStatoIntervento }}
+      </span>
+    </h4> -->
+    <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+      Istanza numero {{ istanzaInviata.nrIstanzaForestale }}, anno
+      {{ istanzaInviata.annoInserimento }}
+    </h4>
+    <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+      Scheda inviata in data {{ istanzaInviata.dataInvioFormated }}
+      {{
+        istanzaInviata.nrProtocollo == null
+          ? "(Numero di protocollo e Data di protocollo in fase di attribuzione)"
+          : " con Numero di protocollo " +
+            istanzaInviata.nrProtocollo +
+            " e Data di protocollo " +
+            istanzaInviata.dataProtocollo
+      }}
+    </h4>
+    <h4 class="header" *ngIf="isCompleted && istanzaInviata.dataInvio">
+      Titolarità: {{ istanzaInviata.utenteCompilatore }}
+    </h4>
+    <p-button
+      *ngIf="
+        istanzaInviata &&
+        istanzaInviata.fkStatoIstanza > 1 &&
+        istanzaInviata.fkStatoIstanza < 4 &&
+        boMode &&
+        setTitolarita()
+      "
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+      label="Cambia titolarità"
+      (onClick)="cambiaTitolarita()"
+      style="margin-left: 30px"
+    >
+    </p-button>
+
+    <div
+      *ngIf="
+        isCompleted && istanzaInviata && istanzaInviata.fkStatoIstanza == 3
+      "
+    >
+      <ng-container *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE">
+        <h4 class="header">
+          Scheda verificata in data
+          {{ istanzaInviata.dataVerifica }} dall’operatore
+          {{ istanzaInviata.utenteApprovatore }}
+        </h4>
+      </ng-container>
+      <ng-container *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE">
+        <h4 class="header">
+          Scheda autorizzata in data
+          {{ istanzaInviata.dataVerifica }} dall’operatore
+          {{ istanzaInviata.utenteApprovatore }}
+        </h4>
+        <h4 class="header">
+          Numero determina autorizzazione: {{ istanzaInviata.nrDeterminaAut }}
+        </h4>
+        <h4 class="header">
+          Data scadenza provvedimento: {{ getDataTermineAutorizzazione() }}
+        </h4>
+        <h4 class="header" *ngIf="istanzaInviata.dataFineIntervento">
+          Data termine intervento:
+          {{ getFormatDate(istanzaInviata.dataFineIntervento) }}
+        </h4>
+      </ng-container>
+    </div>
+
+    <h4
+      class="header"
+      *ngIf="
+        isCompleted && istanzaInviata && istanzaInviata.fkStatoIstanza == 4
+      "
+    >
+      Scheda rifiutata in data
+      {{ istanzaInviata.dataAggiornamento }} dall’operatore
+      {{ istanzaInviata.utenteApprovatore }} con la seguente motivazione:
+      {{ istanzaInviata.motivazioneRifiuto }}
+    </h4>
+    <div *ngIf="dataFineInterventoForm && istanzaInviata.fkStatoIstanza == 3">
+      <div style="background-color: yellow">
+        Attenzione! Risulta mancante la data termine intervento. Impostala ora e
+        fai click su "Salva data termine intervento"
+      </div>
+      <div
+        class="row"
+        style="padding-top: 20px; padding-bottom: 20px"
+        [formGroup]="dataFineInterventoForm"
+      >
+        <div class="col-md-3">
+          <label for="dataFineIntervento" class="font-weight-bold"
+            >Data termine intervento:
+          </label>
+        </div>
+        <div class="col-md-3">
+          <p-calendar
+            [yearNavigator]="true"
+            [locale]="it"
+            [monthNavigator]="true"
+            yearRange="{{ currentYear }}:{{ currentYear + 10 }}"
+            dateFormat="dd-mm-yy"
+            inputId="dataFineIntervento"
+            formControlName="dataFineIntervento"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+            showButtonBar="true"
+            [showIcon]="true"
+          >
+          </p-calendar>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+          <p-button
+            [disabled]="
+              !dataFineInterventoForm || dataFineInterventoForm.invalid
+            "
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+            label="Salva data termine intervento"
+            (onClick)="salvaDataFineIntervento()"
+          >
+          </p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!boMode" style="padding-bottom: 10px">
+    <div class="d-flex justify-content-between buttons">
+      <!--
+    <p-button *ngIf="isCompleted && istanzaInviata.dataInvio && istanzaInviata.fkStatoIstanza == 3"
+      style="padding-bottom: 5px;" (click)="creaVariante()"
+      label="CREA VARIANTE" [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button'">
+    </p-button>
+    -->
+      <p-button
+        *ngIf="infoVarianteProroga?.numVarianti > 0"
+        style="padding-bottom: 5px"
+        (click)="visualizzaVarianti()"
+        label="VISUALIZZA VARIANTI"
+        [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+      <!--
+    <p-button *ngIf=" isCompleted && istanzaInviata.dataInvio && istanzaInviata.fkStatoIstanza == 3"
+      style="padding-bottom: 5px;" (click)="creaProroga()"
+      label="CREA PROROGA" [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button'">
+    </p-button>
+    -->
+      <p-button
+        *ngIf="infoVarianteProroga?.numProroghe > 0"
+        style="padding-bottom: 5px"
+        (click)="visualizzaProroghe()"
+        label="VISUALIZZA PROROGHE"
+        [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+    </div>
+    <div class="d-flex justify-content-between buttons" *ngIf="annullaVisible">
+      <p-button
+        *ngIf="
+          isCompleted &&
+          istanzaInviata.dataInvio &&
+          istanzaInviata.fkStatoIstanza == 3
+        "
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+        label="CAMBIA UTILIZZATORE"
+        (onClick)="cambiaUtilizzatore()"
+        style="margin-left: 30px"
+      >
+      </p-button>
+    </div>
+  </div>
+  <br />
+
+  <div *ngIf="boMode" style="padding-bottom: 10px">
+    <div class="d-flex justify-content-between buttons">
+      <p-button
+        *ngIf="
+          istanzaInviata &&
+          istanzaInviata.fkStatoIstanza > 1 &&
+          istanzaInviata.fkStatoIstanza < 4 &&
+          isCompensazioneFisica &&
+          boOperatingEnabled
+        "
+        [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button padding-0'"
+        label="Gestisci Istanze di taglio"
+        (onClick)="openIstanzeTaglio()"
+        style="margin-left: 30px"
+      >
+      </p-button>
+      <p-button
+        *ngIf="infoVarianteProroga?.numVarianti > 0"
+        style="padding-bottom: 5px"
+        (click)="visualizzaVarianti()"
+        label="VISUALIZZA VARIANTI"
+        [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+      <p-button
+        *ngIf="infoVarianteProroga?.numProroghe > 0"
+        style="padding-bottom: 5px"
+        (click)="visualizzaProroghe()"
+        label="VISUALIZZA PROROGHE"
+        [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+      <p-button
+        *ngIf="
+          infoVarianteProroga?.idPadreProroga > 0 ||
+          infoVarianteProroga?.idPadreVariante > 0
+        "
+        style="padding-bottom: 5px"
+        (click)="visualizzaInterventoAutorizzato()"
+        label="VISUALIZZA INTERVENTO AUTORIZZATO"
+        [styleClass]="'mt-3 mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <ng-container
+    *ngIf="
+      istanzaInviata.fkStatoIstanza === 3 &&
+      isCompleted &&
+      istanzaInviata.dataInvio &&
+      !boMode
+    "
+  >
+    <div
+      *ngIf="infoDocsMancanti && infoDocsMancanti.missing"
+      class="div-border"
+    >
+      <div style="background-color: yellow">
+        Attenzione! Risulta mancante la {{ getDescrizioneDocMancante() }}.
+        <br />
+        Ad intervento ultimato caricare il documento in versione pdf e cliccare
+        su <strong>invia integrazione</strong> per trasmetterla all'Ufficio
+        competente.
+      </div>
+      <div class="row" style="padding-top: 20px; padding-bottom: 20px">
+        <div class="col-md-3">
+          <label for="noteDocumento_35" class="font-weight-bold"
+            >Note al documento da caricare</label
+          >
+        </div>
+        <div class="col-md-8">
+          <input
+            type="text"
+            id="noteDocumento_35"
+            style="width: 100%"
+            maxlength="50"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <p-fileUpload
+            id="fileUpload_35"
+            chooseLabel="Scegli file"
+            uploadLabel="Carica"
+            cancelLabel="Cancella"
+            name="image"
+            accept=".pdf"
+            [disabled]="idDocEditPresent(35)"
+            maxFileSize="50000000"
+            customUpload="true"
+            (uploadHandler)="uploadDrel($event, 35)"
+            [styleClass]="'mb-3'"
+          ></p-fileUpload>
+        </div>
+      </div>
+    </div>
+
+    <app-reusable-front-table
+      *ngIf="allegatiEditData && allegatiEditData.length > 0"
+      [data]="allegatiEditData"
+      [simpleTable]="true"
+      [headers]="allegatiTableHeaders"
+      [delete]="true"
+      [fieldToDelete]="'idDocumentoAllegato'"
+      (deleteRow)="deleteCauzione($event)"
+    >
+    </app-reusable-front-table>
+  </ng-container>
+
+  <app-varianti-proroghe-selvicolturali-table
+    *ngIf="showListVarintiProroghe"
+    [data]="showListVarintiProroghe"
+  >
+  </app-varianti-proroghe-selvicolturali-table>
+
+  <!-- <div *ngIf="istanzaInviata && istanzaInviata.dataInvio" style="padding-top: 25px">
+    <p-button class="full-width-media" label="Visualizza su mappa"
+      [styleClass]="'btn-geco d-flex justify-content-between'" (onClick)="openMappa()">
+    </p-button>
+  </div> -->
+
+  <div
+    *ngIf="
+      isCompleted &&
+      istanzaInviata.dataInvio &&
+      tableData &&
+      tableData.length > 0
+    "
+  >
+    <h4 class="header">ELENCO ALLEGATI CARICATI</h4>
+    <app-reusable-front-table
+      *ngIf="tableData && tableData.length > 0"
+      [data]="tableData"
+      [headers]="allegatiTableHeaders"
+      [download]="true"
+      [fieldToDownload]="'idDocumentoAllegato'"
+      [fieldToDelete]="'idDocumentoAllegato'"
+      (downloadEmitter)="fieldToDownload($event)"
+    >
+    </app-reusable-front-table>
+  </div>
+
+  <br />
+
+  <div
+    *ngIf="
+      !boMode && isDocsMisssing() && isCompleted && istanzaInviata.dataInvio
+    "
+    style="text-align: center"
+  >
+    <p-button
+      *ngIf="allegatiEditData && allegatiEditData.length > 0"
+      style="padding-bottom: 5px"
+      label="Invia integrazione"
+      (onClick)="inviaIntegrazione()"
+      [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+    >
+    </p-button>
+  </div>
+
+  <p-dialog
+    header=""
+    [(visible)]="filePopUp"
+    [contentStyle]="{ 'max-height': '600px' }"
+    [transitionOptions]="'0ms'"
+    [modal]="true"
+    [closeOnEscape]="true"
+  >
+    <p-header> Errore </p-header>
+    <h5 class="red">
+      Il nome del file esiste già! Cambia il nome del file o elimina quello
+      vecchio dalla tabella.
+    </h5>
+    <p-footer>
+      <p-button
+        (click)="closeDialog()"
+        label="Chiudi"
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+    </p-footer>
+  </p-dialog>
+
+  <p-dialog
+    header=""
+    [(visible)]="titolaritaPopUp"
+    [transitionOptions]="'0ms'"
+    [modal]="true"
+    [closeOnEscape]="true"
+  >
+    <p-header> Cambio titolarità </p-header>
+    <div
+      *ngIf="titolaritaForm"
+      [formGroup]="titolaritaForm"
+      style="width: 1000px; height: 300px; overflow-x: hidden"
+    >
+      <div class="row">
+        <div class="col-lg-9 col-md-6 col-12 mb-3">
+          <label
+            for="professionista"
+            class="row-lg-6 col-form-label font-weight-bold"
+            >Professionista
+          </label>
+          <div class="row-lg-6">
+            <p-autoComplete
+              formControlName="professionista"
+              autoHighlight="true"
+              [suggestions]="professionistiFilteredList"
+              (completeMethod)="filterProfessionista($event)"
+              inputId="professionista"
+              [minLength]="3"
+              [dropdown]="true"
+              [forceSelection]="true"
+              emptyMessage="{{ emptyMessageAC }}"
+              field="field"
+              (onClear)="clear('professionista')"
+              [styleClass]="'autoComplete d-flex justify-content-end'"
+              [inputStyleClass]="'autoComplete-input'"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-12 mb-3">
+          <br />
+          <p-button
+            (click)="salvaCambioTitolarita()"
+            label="Salva"
+            style="margin-top: 10px"
+            [disabled]="titolaritaForm.invalid"
+            [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+          >
+          </p-button>
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <p-button
+        (click)="closeTitolarita()"
+        label="Chiudi"
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+    </p-footer>
+  </p-dialog>
+
+  <p-dialog
+    header=""
+    [(visible)]="showPopupVarianteProroga"
+    [contentStyle]="{ 'max-height': '600px' }"
+    [transitionOptions]="'0ms'"
+    [modal]="true"
+    [closeOnEscape]="true"
+  >
+    <p-header> Attenzione </p-header>
+    <h5 class="red">Definire la competenza territoriale della pratica:</h5>
+    <br />
+    <div class="d-flex justify-content-between buttons"></div>
+    <p-footer>
+      <p-button
+        style="padding-bottom: 5px"
+        (click)="creaVarianteProroga(false)"
+        label="COMUNALE"
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+      <p-button
+        style="padding-bottom: 5px"
+        (click)="creaVarianteProroga(true)"
+        label="REGIONALE"
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+      >
+      </p-button>
+    </p-footer>
+  </p-dialog>
+
+  <p-dialog
+    header=""
+    [(visible)]="annullaPupUp"
+    [contentStyle]="{ 'max-height': '600px' }"
+    [transitionOptions]="'0ms'"
+    [modal]="true"
+  >
+    <p-header> <b>Motivazione annullamento </b>(almeno 20 caratteri) </p-header>
+    <textarea
+      (keyup)="onMotivoAnnullamentoChange($event)"
+      id="w3review"
+      name="w3review"
+      maxlength="1990"
+      rows="4"
+      cols="50"
+    >
+    </textarea>
+    <p-footer>
+      <p-button
+        (click)="annullaIstanza()"
+        label="Conferma annullamento"
+        [disabled]="disabledAnnullamento()"
+        [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+      ></p-button>
+    </p-footer>
+  </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="showCambioUtilizzatore">
+  <div class="grey-form">
+    <p class="h6 font-weight-bold">
+      Utilizzatore attuale: {{ currentUtilizzatore }}
+    </p>
+    <hr class="black-hr" />
+    <p class="h6 font-weight-bold">Nuovo utilizzatore</p>
+    <div class="row" *ngFor="let ut of utilizzatoriOptions; let i = index">
+      <div class="col-lg-12 col-md-12 col-12 mb-3">
+        <div class="custom-control custom-radio utilizzatore">
+          <input
+            type="radio"
+            name="tipoUtilizzatore"
+            class="custom-control-input"
+            id="tipoUtilizzatoreValidation{{ i }}"
+            (change)="changeUtilizzatoreOption($event.target.value)"
+            [checked]="tipoUtilizzatoreSelected === ut.id"
+            [value]="ut.id"
+          />
+          <label
+            class="custom-control-label"
+            for="tipoUtilizzatoreValidation{{ i }}"
+            >{{ ut.descr }}</label
+          >
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tipoUtilizzatoreSelected === 3">
+      <app-pf-form-tagli
+        [isUtilizzatore]="true"
+        [tipoAccreditamento]="tipoAccreditamento"
+        [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+        (codiceFiscaleEmitter)="getCodiceFiscale()"
+        [personaDatiOption]="
+          tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+            ? 'SF'
+            : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE
+            ? 'RF'
+            : 'PF'
+        "
+        [personalOrCompanyForm]="utilizzatorePersonaForm"
+        (resetFormEmitter)="restartForm(personaDatiOption)"
+      >
+      </app-pf-form-tagli>
+    </div>
+
+    <div *ngIf="tipoUtilizzatoreSelected === 4">
+      <app-pg-form-tagli
+        [isUtilizzatore]="true"
+        [isTAIF]="utilizzatoreCompanyForm.get('taif').value"
+        (changePGEmitter)="changeTipoPGUtil($event)"
+        (chooseCompanyEmitter)="chooseCompany($event)"
+        [loadFromAnagrafica]="loadFromAnagrafica"
+        [isEntePubblico]="isUtilizzatoreEntePubblico"
+        [tipoAccreditamento]="tipoAccreditamento"
+        [codiceFiscaleSelectItem]="codiceFiscaleSelectItem"
+        [codiceFiscaleSONOIO]="codiceFiscaleSONOIO"
+        [personaDatiOption]="
+          tipoAccreditamento === TipoAccreditamentoEnum.SPORTELLO
+            ? 'SG'
+            : tipoAccreditamento === TipoAccreditamentoEnum.RICHIEDENTE
+            ? 'RG'
+            : 'PG'
+        "
+        [personalOrCompanyForm]="utilizzatoreCompanyForm"
+        (codiceFiscaleEmitter)="getCodiceFiscale()"
+        (resetFormEmitter)="restartForm(personaDatiOption)"
+      >
+      </app-pg-form-tagli>
+    </div>
+
+    <div style="padding-bottom: 10px">
+      <hr class="black-hr" />
+      <div class="d-flex justify-content-between buttons">
+        <p-button
+          (click)="closeCambioUtilizzatore()"
+          label="ANNULLA"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-outline-button'"
+        >
+        </p-button>
+        <p-button
+          *ngIf="true"
+          (click)="salvaUtilizzatore()"
+          label="SALVA UTILIZZATORE"
+          [styleClass]="'mr-2 f-18 font-weight-bold form-button'"
+        >
+        </p-button>
+      </div>
+    </div>
+
+    <!-- caricamento documenti firmati -->
+
+    <ng-container *ngIf="showCaricaDocumenti">
+      <div>
+        <div>
+          <div class="grey1 px-3">
+            <ng-container
+              *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE"
+            >
+              <button
+                _ngcontent-c14=""
+                title="Scarica"
+                type="button"
+                (click)="
+                  downloadDichiarazione(
+                    $event,
+                    tipoAllegatoEnum.RICHIESTA_DI_AUTORIZZAZIONE_DI_TAGLIO_IN_BOSCO_DIGIT
+                  )
+                "
+                class="ng-star-inserted action-button mr-2"
+              >
+                <em
+                  _ngcontent-c14=""
+                  aria-hidden="true"
+                  class="fa fa-download"
+                ></em>
+              </button>
+              <span
+                >Scarica la Richiesta di autorizzazione con progetto per firma
+                digitale</span
+              ><br />
+              <button
+                _ngcontent-c14=""
+                title="Scarica"
+                type="button"
+                (click)="
+                  downloadDichiarazione(
+                    $event,
+                    tipoAllegatoEnum.RICHIESTA_DI_AUTORIZZAZIONE_DI_TAGLIO_IN_BOSCO_AUTOG
+                  )
+                "
+                class="ng-star-inserted action-button mr-2"
+              >
+                <em
+                  _ngcontent-c14=""
+                  aria-hidden="true"
+                  class="fa fa-download"
+                ></em>
+              </button>
+              <span
+                >Scarica la Richiesta di autorizzazione con progetto per firma
+                autografa</span
+              ><br /><br />
+            </ng-container>
+
+            <ng-container
+              *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE"
+            >
+              <button
+                _ngcontent-c14=""
+                title="Scarica"
+                type="button"
+                (click)="
+                  downloadDichiarazione(
+                    $event,
+                    tipoAllegatoEnum.COMUNICAZIONE_DI_TAGLIO_IN_BOSCO_DIGIT
+                  )
+                "
+                class="ng-star-inserted action-button mr-2"
+              >
+                <em
+                  _ngcontent-c14=""
+                  aria-hidden="true"
+                  class="fa fa-download"
+                ></em>
+              </button>
+              <span>Scarica la Comunicazione semplice per firma digitale</span
+              ><br />
+              <button
+                _ngcontent-c14=""
+                title="Scarica"
+                type="button"
+                (click)="
+                  downloadDichiarazione(
+                    $event,
+                    tipoAllegatoEnum.COMUNICAZIONE_DI_TAGLIO_IN_BOSCO_AUTOG
+                  )
+                "
+                class="ng-star-inserted action-button mr-2"
+              >
+                <em
+                  _ngcontent-c14=""
+                  aria-hidden="true"
+                  class="fa fa-download"
+                ></em>
+              </button>
+              <span>Scarica la Comunicazione semplice per firma autografa</span
+              ><br /><br />
+            </ng-container>
+
+            <span *ngIf="isDownloadSuccess">Documento scaricato.</span>
+
+            <h4
+              *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE"
+              class="header"
+            >
+              Carica la Comunicazione semplice firmata dal richiedente
+            </h4>
+            <h4
+              *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE"
+              class="header"
+            >
+              Carica la Richiesta di autorizzazione con progetto firmata dal
+              richiedente
+            </h4>
+
+            <div class="row">
+              <div class="col-md-9">
+                <ng-container
+                  *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE"
+                >
+                  <input
+                    type="radio"
+                    name="radio-docType-bis"
+                    [checked]="docTypeUtil == 25"
+                    (change)="changeDocType(25)"
+                  />
+                  <label style="padding-left: 5px; padding-right: 30px"
+                    >Digitale</label
+                  >
+                  <input
+                    type="radio"
+                    name="radio-docType-bis"
+                    [checked]="docTypeUtil == 36"
+                    (change)="changeDocType(36)"
+                  />
+                  <label style="padding-left: 5px; padding-right: 30px"
+                    >Autografa</label
+                  >
+                </ng-container>
+
+                <ng-container
+                  *ngIf="tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE"
+                >
+                  <input
+                    type="radio"
+                    name="radio-docType-bis"
+                    [checked]="docTypeUtil == 26"
+                    (change)="changeDocType(26)"
+                  />
+                  <label style="padding-left: 5px; padding-right: 30px"
+                    >Digitale</label
+                  >
+                  <input
+                    type="radio"
+                    name="radio-docType-bis"
+                    [checked]="docTypeUtil == 37"
+                    (change)="changeDocType(37)"
+                  />
+                  <label style="padding-left: 5px; padding-right: 30px"
+                    >Autografa</label
+                  >
+                </ng-container>
+
+                <p-fileUpload
+                  id="fileUpload_0"
+                  chooseLabel="Scegli file"
+                  uploadLabel="Carica"
+                  cancelLabel="Cancella"
+                  name="image"
+                  maxFileSize="50000000"
+                  customUpload="true"
+                  (uploadHandler)="uploadDocumentoUtil($event, 0)"
+                  [styleClass]="'mb-3'"
+                ></p-fileUpload>
+              </div>
+            </div>
+            <div class="row" *ngIf="docTypeUtil === 36 || docTypeUtil === 37">
+              <div class="col-md-9">
+                <label for="fileUpload_38" class="font-weight-bold"
+                  >Allega scansione documento</label
+                >
+                <p-fileUpload
+                  id="fileUpload_38"
+                  chooseLabel="Scegli file"
+                  uploadLabel="Carica"
+                  cancelLabel="Cancella"
+                  name="image"
+                  maxFileSize="50000000"
+                  customUpload="true"
+                  (uploadHandler)="uploadDocumentoUtil($event, 38)"
+                  [styleClass]="'mb-3'"
+                ></p-fileUpload>
+              </div>
+            </div>
+          </div>
+
+          <h4
+            *ngIf="
+              tableData &&
+              tableData.length > 0 &&
+              tipoIstanzaDescr === tipoIstanzaEnum.COMUNICAZIONE
+            "
+            class="header"
+          >
+            Comunicazione semplice e suoi allegati
+          </h4>
+          <h4
+            *ngIf="
+              tableData &&
+              tableData.length > 0 &&
+              tipoIstanzaDescr === tipoIstanzaEnum.AUTORIZZAZIONE
+            "
+            class="header"
+          >
+            Richiesta di autorizzazione con progetto e suoi allegati
+          </h4>
+          <app-reusable-front-table
+            *ngIf="tableData && tableData.length > 0"
+            [data]="tableData"
+            [headers]="allegatiTableHeaders"
+            [download]="true"
+            [delete]="true"
+            [fieldToDownload]="'idDocumentoAllegato'"
+            [fieldToDelete]="'idDocumentoAllegato'"
+            (deleteRow)="fieldToDelete($event, 'elenco')"
+            (downloadEmitter)="fieldToDownload($event)"
+          >
+          </app-reusable-front-table>
+          <div style="margin-top: 1rem; text-align: center">
+            <p-button
+              [disabled]="!idDichiarazioneUploaded() || !idDocIdentitaOk()"
+              [styleClass]="'mr-2 f-18 font-weight-bold form-button padding-0'"
+              label="Conferma"
+              (onClick)="closeCambioUtilizzatore()"
+            >
+            </p-button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

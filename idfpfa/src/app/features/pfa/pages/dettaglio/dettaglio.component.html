@@ -1,0 +1,267 @@
+<!--
+SPDX-FileCopyrightText: (C) Copyright 2023 Regione Piemonte
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+<!-- <div class="col-md-12">
+  <div class="row border-bottom border-dark">
+    <div class="col-md-6 two-towers">
+      <div class="row">
+        <div class="col-md-4 text-center descript">Data inizio validità</div>
+        <div class="col-md-8 d-flex data">
+          <span
+            >{{ denominazione?.data_inizio_validita.dayOfMonth }}.{{
+              denominazione?.data_inizio_validita.month
+            }}.{{ denominazione?.data_inizio_validita.year }}</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 two-towers">
+      <div class="row">
+        <div class="col-md-4 text-center descript">Data inizio validità</div>
+        <div class="col-md-8 d-flex data">
+          <span
+            >{{ denominazione?.data_inizio_validita.dayOfMonth }}.{{
+              denominazione?.data_inizio_validita.month
+            }}.{{ denominazione?.data_inizio_validita.year }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="col-12">
+    <div class="scrollbar-table scrollbar-primary">
+      <table class="table table-pfa-detagglio">
+        <tbody>
+          <tr>
+            <th class="uno">Provincia/e</th>
+            <td>{{ denominazione?.denominazioneProvincie }}</td>
+            <th class="uno">Comuni interessati</th>
+            <td>{{ denominazione?.denominazioneComuni }}</td>
+            <th>Gestore</th>
+            <td>
+              {{ getStringList(denominazione?.gestori) }}
+            </td>
+          </tr>
+          <tr>
+            <th class="uno">Fonte finanziamento</th>
+            <td>
+              {{ denominazione?.fonteFinanziamento }}
+            </td>
+            <th class="uno">Proprietà</th>
+            <td>{{ denominazione?.descrPropriete }}</td>
+            <th class="due">Revisione</th>
+            <td>{{ denominazione?.flgRevisione == 1 ? "Si" : "No" }}</td>
+          </tr>
+          <!-- <tr>
+            <th>Ricadenza in area protetta</th>
+            <td></td>
+            <th>Ricadenza in Reta Natura 2000</th>
+            <td></td>
+            <th>Ricadenza in bosco daa seme</th>
+            <td></td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+    <!--/scrollbar-table-->
+  </div>
+  <!--/col-md-6-->
+
+  <div class="col-12">
+    <div class="grafico">
+      <!-- *ngIf='personaGiurdica' -->
+      <!--div class="grafico"  *ngIf='!isTecnicoForestale'-->
+      <!-- *ngIf='personaGiurdica' -->
+
+      <div>
+        <span class="label">Proprietà non forestale (ha)</span
+        ><span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.propNonForestaleHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label"> Superficie pianificata non forestale (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.supPianifNonForestaleHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label">Proprietà silvo pastorale (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.proprietaSilvopastHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label">Superficie boscata a gestione attiva (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.superfBocsGestAttivaHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label">Proprietà forestale (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.proprietaForestaleHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label">Superficie pianificata forestale (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.supPianifForestaleHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label">Superficie totale a gestione non attiva (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.superfGestNonAttivaTotHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label">Superficie in monitoraggio (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.superfGestNonAttivaMonHa)
+          }}</strong></span
+        >
+      </div>
+
+      <div>
+        <span class="label">Superficie in evoluzione libera (ha)</span>
+        <span class="number"
+          ><strong>{{
+            formatNumber(denominazione?.superfGestNonAttivaEvlHa)
+          }}</strong></span
+        >
+      </div>
+    </div>
+  </div>
+  <hr />
+
+  <div class="col-12">
+    <div class="scrollbar-table scrollbar-primary">
+      <table
+        class="table table-striped table-bordered table-pfa-detagglio-ricadenza"
+      >
+        <colgroup>
+          <col class="uno" />
+          <col class="due" />
+          <col class="tre" />
+          <col class="quattro" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Ricadenza *</th>
+            <th>Nome</th>
+            <th>ha</th>
+            <th>%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>In area protetta</th>
+            <td>
+              <p *ngFor="let aree of denominazione?.ricadenzeAree">
+                {{ aree?.nome }}
+              </p>
+            </td>
+            <td class="text-number">
+              <p *ngFor="let aree of denominazione?.ricadenzeAree">
+                {{ formatNumber(aree?.supHa) }}
+              </p>
+            </td>
+            <td class="text-number">
+              <p *ngFor="let aree of denominazione?.ricadenzeAree">
+                {{ formatNumber(aree?.percRicadenza) }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <th>In Rete Natura 2000</th>
+            <td>
+              <p *ngFor="let aree of denominazione?.ricadenzeRn2000">
+                {{ aree?.nome }}
+              </p>
+            </td>
+            <td class="text-number">
+              <p *ngFor="let aree of denominazione?.ricadenzeRn2000">
+                {{ formatNumber(aree?.supHa) }}
+              </p>
+            </td>
+            <td class="text-number">
+              <p *ngFor="let aree of denominazione?.ricadenzeRn2000">
+                {{ formatNumber(aree?.percRicadenza) }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <th id="bosco">In bosco da seme</th>
+            <td>
+              <p *ngFor="let aree of denominazione?.ricadenzePopseme">
+                {{ aree?.nome }}
+              </p>
+            </td>
+            <td class="text-number">
+              <p *ngFor="let aree of denominazione?.ricadenzePopseme">
+                {{ formatNumber(aree?.supHa) }}
+              </p>
+            </td>
+            <td class="text-number">
+              <p *ngFor="let aree of denominazione?.ricadenzePopseme">
+                {{ formatNumber(aree?.percRicadenza) }}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>* Calcolata sulla base dell’intersezione geografica risultante</p>
+    <!--/scrollbar-table-->
+  </div>
+  <!--/col-md-6-->
+</div>
+
+<!-- end of top part -->
+<hr />
+
+<div class="row my-5 justify-content-md-between">
+  <p-button
+    label="Indietro"
+    [styleClass]="'mb-3 f-18 font-weight-bold indietro-button'"
+    (onClick)="toPfaGestiti()"
+  ></p-button>
+  <p-button
+    label="Visualizza su mappa"
+    (onClick)="openMappa()"
+    [styleClass]="'mb-3 btn-geco'"
+  ></p-button>
+  <p-button
+    label="Torna alla home"
+    [styleClass]="'mb-3 f-18 font-weight-bold form-button'"
+  >
+  </p-button>
+</div>
